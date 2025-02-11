@@ -1,5 +1,6 @@
 'use client';
 import ComingSoonComponent from '#/ui/coming-soon';
+import { useIsMobile } from '#/ui/useMobile';
 import newStyled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 
@@ -22,12 +23,12 @@ const Backdrop = newStyled.div`
   z-index: 500; /* Ensure it appears above content */
 `;
 
-const Modal = newStyled.div`
+const Modal = newStyled.div<{ isMobile: boolean }>`
   position: fixed;
-  top: 25%;
-  left: 25%;
-  width: 50vw;
-  height: 50vh;
+  top: ${({ isMobile }) => (isMobile ? '15%' : '25%')};
+  left: ${({ isMobile }) => (isMobile ? '15%' : '25%')};
+  width: ${({ isMobile }) => (isMobile ? '70vw' : '50vw')};
+  height: ${({ isMobile }) => (isMobile ? '70vh' : '50vh')};
   background: #5F1E1E; /* Blue tint with transparency */
   z-index: 600; /* Ensure it appears above content */
 `;
@@ -35,6 +36,7 @@ const Modal = newStyled.div`
 export default function ComingSoonPage() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [columns, setColumns] = useState<ImageData[][]>([]);
+  const isMobile = useIsMobile();
 
   const images: string[] = [
     '/images/whitelist/1.png',
@@ -130,7 +132,7 @@ export default function ComingSoonPage() {
   return (
     <>
       <Backdrop />
-      <Modal className="rounded-lg">
+      <Modal isMobile={isMobile} className="rounded-lg">
         <ComingSoonComponent />
       </Modal>
       <div

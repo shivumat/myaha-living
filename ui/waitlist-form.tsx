@@ -27,6 +27,10 @@ const CTA1 = newStyled.span`
     text-align: center;
 `;
 
+const Form = newStyled.div`
+    height: 80%;
+`;
+
 export default function WaitlistForm(props: { updateStage: () => void }) {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -41,6 +45,9 @@ export default function WaitlistForm(props: { updateStage: () => void }) {
   }, []);
 
   const sendOtpServer = async () => {
+    if (!email.trim() || !name.trim()) {
+      return;
+    }
     console.log(email, name);
     const res = await fetch('/api/waitlist/sendOtp', {
       method: 'POST',
@@ -53,6 +60,9 @@ export default function WaitlistForm(props: { updateStage: () => void }) {
   };
 
   const verifyOtpServer = async () => {
+    if (!email.trim() || !otp.trim()) {
+      return;
+    }
     const res = await fetch('/api/waitlist/sendOtp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -63,44 +73,40 @@ export default function WaitlistForm(props: { updateStage: () => void }) {
     props.updateStage();
   };
 
-  return (
-    <div>
-      {step === 1 ? (
-        <div className="flex h-80 flex-col items-center justify-center gap-y-4 ">
-          <Header1>
-            Let us know about you and we will make sure your are the first one
-            to checkout the Designs to Cherish.
-          </Header1>
-          <input
-            type="text"
-            placeholder="Your Name"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
-          <input
-            type="email"
-            placeholder="Your Email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-          <CTA1 onClick={sendOtpServer}>Send OTP</CTA1>
-        </div>
-      ) : (
-        <div className="flex h-80 flex-col items-center justify-center gap-y-4 ">
-          <Header1>You're Almost There!</Header1>
-          <SubHeader1>
-            We’ve sent an OTP to your email. Please enter it below to confirm
-            your spot on the waitlist.
-          </SubHeader1>
-          <input
-            type="text"
-            placeholder="Enter OTP"
-            onChange={(e) => setOtp(e.target.value)}
-            value={otp}
-          />
-          <CTA1 onClick={verifyOtpServer}>Verify OTP</CTA1>
-        </div>
-      )}
-    </div>
+  return step === 1 ? (
+    <Form className="flex flex-col items-center justify-center gap-y-4 ">
+      <Header1>
+        Let us know about you and we will make sure your are the first one to
+        checkout the Designs to Cherish.
+      </Header1>
+      <input
+        type="text"
+        placeholder="Your Name"
+        onChange={(e) => setName(e.target.value)}
+        value={name}
+      />
+      <input
+        type="email"
+        placeholder="Your Email"
+        onChange={(e) => setEmail(e.target.value)}
+        value={email}
+      />
+      <CTA1 onClick={sendOtpServer}>Send OTP</CTA1>
+    </Form>
+  ) : (
+    <Form className="flex flex-col items-center justify-center gap-y-4 ">
+      <Header1>You're Almost There!</Header1>
+      <SubHeader1>
+        We’ve sent an OTP to your email. Please enter it below to confirm your
+        spot on the waitlist.
+      </SubHeader1>
+      <input
+        type="text"
+        placeholder="Enter OTP"
+        onChange={(e) => setOtp(e.target.value)}
+        value={otp}
+      />
+      <CTA1 onClick={verifyOtpServer}>Verify OTP</CTA1>
+    </Form>
   );
 }

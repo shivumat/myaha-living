@@ -39,28 +39,32 @@ const StyledContainer = newStyled.div`
     row-gap: 8px;
 `;
 
+const Form = newStyled.div`
+    height: 80%;
+`;
+
 const ComingSoonComponent = () => {
   const [satge, setStage] = useState(0);
 
   const DefaultStage = (
-    <div className="flex h-80 flex-col items-center justify-center gap-y-4 ">
+    <Form className="flex flex-col items-center justify-center gap-y-4 ">
       <Header1>Crafting emotions, not just essentials – Coming Soon</Header1>
       <SubHeader1>
         Be among the first to explore our exclusive collection. Join the
         waitlist and unlock an early bird discount.
       </SubHeader1>
       <CTA1 onClick={() => setStage(1)}>Join the Waitlist</CTA1>
-    </div>
+    </Form>
   );
 
   const VerifiedStage = (
-    <div className="flex h-80 flex-col items-center justify-center gap-y-4 ">
+    <Form className="flex flex-col items-center justify-center gap-y-4 ">
       <Header1>You’re In! 🎉</Header1>
       <SubHeader1>
         Welcome to Myaha! You’re now on the waitlist. The top 100 users will
         receive an exclusive early bird discount.
       </SubHeader1>
-    </div>
+    </Form>
   );
 
   const renderStage = () => {
@@ -70,9 +74,9 @@ const ComingSoonComponent = () => {
       case 1:
         return <WaitlistForm updateStage={() => setStage(2)} />;
       case 2:
-        return <WaitlistForm updateStage={() => setStage(2)} />;
-      default:
         return VerifiedStage;
+      default:
+        return DefaultStage;
     }
   };
 
