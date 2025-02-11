@@ -89,8 +89,8 @@ export default function WaitlistForm(props: { updateStage: () => void }) {
         <div className="flex h-80 flex-col items-center justify-center gap-y-4 ">
           <Header1>You're Almost There!</Header1>
           <SubHeader1>
-            We’ve sent an OTP to your email. Enter it below to confirm your spot
-            on the waitlist.
+            We’ve sent an OTP to your email. Please enter it below to confirm
+            your spot on the waitlist.
           </SubHeader1>
           <input
             type="text"
