@@ -1,22 +1,17 @@
 import '#/styles/globals.css';
-import { AddressBar } from '#/ui/address-bar';
-import Byline from '#/ui/byline';
-import { GlobalNav } from '#/ui/global-nav';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Next.js App Router',
-    template: '%s | Next.js App Router',
+    default: 'Myaha Living',
+    template: '%s',
   },
-  metadataBase: new URL('https://app-router.vercel.app'),
   description:
-    'A playground to explore new Next.js App Router features such as nested layouts, instant loading states, streaming, and component level data fetching.',
+    'Elevate your indoor or outdoor greenery with our Sage Green Ceramic Planter. Its soft, soothing hue and clean lines add a touch of elegance to any space, blending seamlessly with a variety of decor styles.',
   openGraph: {
-    title: 'Next.js App Router Playground',
+    title: 'Myaha Living',
     description:
-      'A playground to explore new Next.js App Router features such as nested layouts, instant loading states, streaming, and component level data fetching.',
-    images: [`/api/og?title=Next.js App Router`],
+      'Elevate your indoor or outdoor greenery with our Sage Green Ceramic Planter. Its soft, soothing hue and clean lines add a touch of elegance to any space, blending seamlessly with a variety of decor styles.',
   },
   twitter: {
     card: 'summary_large_image',
@@ -29,25 +24,49 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="[color-scheme:dark]">
-      <body className="overflow-y-scroll bg-gray-1100 bg-[url('/grid.svg')] pb-36">
-        <GlobalNav />
+    <html lang="en" className="h-full w-full">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
+          rel="stylesheet"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function rotateFavicon() {
+              let angle = 0;
+              const canvas = document.createElement("canvas");
+              const ctx = canvas.getContext("2d");
+              const img = new Image();
+              img.src = "/favicon.ico";
 
-        <div className="lg:pl-72">
-          <div className="mx-auto max-w-4xl space-y-8 px-2 pt-20 lg:px-8 lg:py-8">
-            <div className="rounded-lg bg-vc-border-gradient p-px shadow-lg shadow-black/20">
-              <div className="rounded-lg bg-black">
-                <AddressBar />
-              </div>
-            </div>
+              img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                setInterval(() => {
+                  ctx.clearRect(0, 0, canvas.width, canvas.height);
+                  ctx.save();
+                  ctx.translate(canvas.width / 2, canvas.height / 2);
+                  ctx.rotate((angle * Math.PI) / 180);
+                  ctx.drawImage(img, -img.width / 2, -img.height / 2);
+                  ctx.restore();
+                  
+                  const link = document.querySelector("link[rel='icon']") || document.createElement("link");
+                  link.rel = "icon";
+                  link.href = canvas.toDataURL("image/png");
+                  document.head.appendChild(link);
 
-            <div className="rounded-lg bg-vc-border-gradient p-px shadow-lg shadow-black/20">
-              <div className="rounded-lg bg-black p-3.5 lg:p-6">{children}</div>
-            </div>
-            <Byline />
-          </div>
-        </div>
-      </body>
+                  angle += 180;
+                }, 1000);
+              };
+            })();
+          `,
+          }}
+        />
+      </head>
+      <body className="h-full w-full overflow-y-scroll">{children}</body>
     </html>
   );
 }
