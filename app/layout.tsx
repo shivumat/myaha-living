@@ -32,39 +32,6 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
           rel="stylesheet"
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function rotateFavicon() {
-              let angle = 0;
-              const canvas = document.createElement("canvas");
-              const ctx = canvas.getContext("2d");
-              const img = new Image();
-              img.src = "/favicon.ico";
-
-              img.onload = function() {
-                canvas.width = img.width;
-                canvas.height = img.height;
-                setInterval(() => {
-                  ctx.clearRect(0, 0, canvas.width, canvas.height);
-                  ctx.save();
-                  ctx.translate(canvas.width / 2, canvas.height / 2);
-                  ctx.rotate((angle * Math.PI) / 180);
-                  ctx.drawImage(img, -img.width / 2, -img.height / 2);
-                  ctx.restore();
-                  
-                  const link = document.querySelector("link[rel='icon']") || document.createElement("link");
-                  link.rel = "icon";
-                  link.href = canvas.toDataURL("image/png");
-                  document.head.appendChild(link);
-
-                  angle += 180;
-                }, 1000);
-              };
-            })();
-          `,
-          }}
-        />
       </head>
       <body className="h-full w-full overflow-y-scroll">{children}</body>
     </html>
