@@ -63,7 +63,7 @@ export default function WaitlistForm(props: { updateStage: () => void }) {
     if (!email.trim() || !otp.trim()) {
       return;
     }
-    const res = await fetch('/api/waitlist/sendOtp', {
+    const res = await fetch('/api/waitlist/verifyOtp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, otp }),
