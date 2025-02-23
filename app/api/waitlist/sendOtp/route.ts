@@ -24,13 +24,6 @@ export const POST = async (req: Request) => {
       verified: false,
       createdAt: new Date(),
     });
-    await db.doc(`waitlist_users/${email}`).set({
-      email,
-      name,
-      otp,
-      verified: false,
-      createdAt: new Date(),
-    });
 
     // Send OTP via Email (Using Nodemailer)
     const transporter = nodemailer.createTransport({

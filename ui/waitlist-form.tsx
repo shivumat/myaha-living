@@ -1,112 +1,109 @@
-import newStyled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+/** @jsxImportSource @emotion/react */
+import { keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
+import { useState } from 'react';
 
-const Header1 = newStyled.span`
-    font-family: Roboto Flex;
-    font-size: 20px;
-    color: #ffffff;
-    margin: 0 12px;
-    text-align: center;
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 `;
 
-const SubHeader1 = newStyled.span`
-    font-family: Roboto Flex;
-    font-style: italic;
-    font-size: 16px;
-    color: #ffffff;
-    margin: 0 12px;
-    text-align: center;
+const Label = styled.label`
+  display: block;
+  color: white;
+  font-size: 14px;
+  margin-bottom: 5px;
+  text-align: left;
+  font-size: 22px;
+  font-weight: lighter;
+  @media (max-width: 800px) {
+    font-size: 18px;
+  }
 `;
 
-const CTA1 = newStyled.span`
-    cursor: pointer;
-    font-family: Roboto Flex;
-    font-size: 20px;
-    color: #ffffff;
-    text-decoration: underline;
-    text-align: center;
+const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid white;
+  background: transparent;
+  color: white;
+  font-size: 16px;
+  outline: none;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  @media (max-width: 800px) {
+    font-size: 12px;
+  }
 `;
 
-const Form = newStyled.div`
-    height: 80%;
+const Button = styled.button<{ submitted: boolean }>`
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: ${(props) => (props.submitted ? 'default' : 'pointer')};
+  background: ${(props) => (props.submitted ? '#4CAF50' : 'white')};
+  color: ${(props) => (props.submitted ? 'white' : 'black')};
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  animation: ${(props) => (props.submitted ? fadeIn : 'none')} 0.5s ease-in-out;
+
+  &:hover {
+    background: ${(props) => (props.submitted ? '#45A049' : '#ddd')};
+  }
+  @media (max-width: 800px) {
+    font-size: 12px;
+  }
 `;
 
-export default function WaitlistForm(props: { updateStage: () => void }) {
+const WaitlistForm = () => {
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [otp, setOtp] = useState('');
-  const [step, setStep] = useState(1);
+  const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
-    setEmail('');
-    setName('');
-    setOtp('');
-    setStep(1);
-  }, []);
-
-  const sendOtpServer = async () => {
-    if (!email.trim() || !name.trim()) {
-      return;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim() !== '') {
+      setSubmitted(true);
+      await fetch('/api/waitlist/addEmail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      setTimeout(() => {
+        setEmail('');
+        setSubmitted(false);
+      }, 5000); // Clear input after submission
     }
-    console.log(email, name);
-    const res = await fetch('/api/waitlist/sendOtp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, name }),
-    });
-
-    console.log(res);
-    setStep(2);
   };
 
-  const verifyOtpServer = async () => {
-    if (!email.trim() || !otp.trim()) {
-      return;
-    }
-    const res = await fetch('/api/waitlist/verifyOtp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, otp }),
-    });
-
-    console.log(res);
-    props.updateStage();
-  };
-
-  return step === 1 ? (
-    <Form className="flex flex-col items-center justify-center gap-y-4 ">
-      <Header1>
-        Let us know about you and we will make sure your are the first one to
-        checkout the Designs to Cherish.
-      </Header1>
-      <input
-        type="text"
-        placeholder="Your Name"
-        onChange={(e) => setName(e.target.value)}
-        value={name}
-      />
-      <input
+  return (
+    <form onSubmit={handleSubmit}>
+      <Label>Email Address</Label>
+      <Input
         type="email"
-        placeholder="Your Email"
-        onChange={(e) => setEmail(e.target.value)}
+        placeholder=""
         value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        disabled={submitted}
       />
-      <CTA1 onClick={sendOtpServer}>Send OTP</CTA1>
-    </Form>
-  ) : (
-    <Form className="flex flex-col items-center justify-center gap-y-4 ">
-      <Header1>You're Almost There!</Header1>
-      <SubHeader1>
-        We’ve sent an OTP to your email. Please enter it below to confirm your
-        spot on the waitlist.
-      </SubHeader1>
-      <input
-        type="text"
-        placeholder="Enter OTP"
-        onChange={(e) => setOtp(e.target.value)}
-        value={otp}
-      />
-      <CTA1 onClick={verifyOtpServer}>Verify OTP</CTA1>
-    </Form>
+      <Button type="submit" submitted={submitted} disabled={submitted}>
+        {submitted ? 'You have been added to Myaha List (✔)' : 'Signup'}
+      </Button>
+    </form>
   );
-}
+};
+
+export default WaitlistForm;
