@@ -21,7 +21,7 @@ const HeroContainer = newStyled.div`
 `;
 
 const Logo = newStyled(Image)`
-  position: absolute;
+  position: sticky;
   top: 5%;
   left: 5%;
 `;
@@ -42,7 +42,7 @@ const JoinCTA = newStyled.div`
   }
   @media (max-width: 800px) {
     max-width: 250px;
-    top: 40%;
+    top: 30%;
     left: calc(50% - 125px);
 
     .heading, .sub-heading {
@@ -73,7 +73,7 @@ const Form = newStyled.div`
   padding: 20px;
   @media (max-width: 800px) {
     width: 80%;
-    top: 70%;
+    top: 60%;
     left: 10%;
   }
 `;
