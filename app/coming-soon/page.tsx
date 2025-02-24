@@ -86,7 +86,7 @@ const Form = newStyled.div`
   height: max-content;
   @media (max-width: 800px) {
     width: 80%;
-    bottom: 80px;
+    bottom: 40px;
     left: 10%;
   }
 `;
