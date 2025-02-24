@@ -79,13 +79,14 @@ const Form = newStyled.div`
   backdrop-filter: blur(10px);
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  top: 65%;
+  bottom: 15%;
   left: 60%;
   width : 475px;
   padding: 20px;
+  height: max-content;
   @media (max-width: 800px) {
     width: 80%;
-    bottom: 40px;
+    bottom: 80px;
     left: 10%;
   }
 `;
