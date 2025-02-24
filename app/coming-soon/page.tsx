@@ -6,7 +6,7 @@ import newStyled from '@emotion/styled';
 import Image from 'next/image';
 
 const HeroContainer = newStyled.div`
-  background-image: url('/images/whitelist/background1.png');
+  background-image: url('/images/whitelist/background.png');
   position: relative;
   width: 100dvw;
   height: 100dvh;
@@ -16,7 +16,7 @@ const HeroContainer = newStyled.div`
   background-position: center;
 
   @media (max-width: 800px) {
-    background-position: 60% center; /* Adjust focus for mobile */
+    background-position: 30% center; /* Adjust focus for mobile */
     height: 100dvh;
   }
 }
