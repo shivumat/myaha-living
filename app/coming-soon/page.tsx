@@ -18,6 +18,7 @@ const HeroContainer = newStyled.div`
     background-position: 60% center; /* Adjust focus for mobile */
     height: 100dvh;
   }
+}
 `;
 
 const Logo = newStyled(Image)`
@@ -32,6 +33,7 @@ const JoinCTA = newStyled.div`
   top: 50%;
   left: 60%;
   color: white;
+  animation: blurIn 2s ease-out;
   .heading {
     font-size: 48px;
     font-weight: 600;
@@ -42,7 +44,7 @@ const JoinCTA = newStyled.div`
   }
   @media (max-width: 800px) {
     max-width: 250px;
-    top: 30%;
+    top: 40%;
     left: calc(50% - 125px);
 
     .heading, .sub-heading {
@@ -56,6 +58,16 @@ const JoinCTA = newStyled.div`
       font-size: 14px;
       font-weight: lighter;
     }
+  }
+
+  @keyframes blurIn {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
   }
 `;
 
@@ -73,7 +85,7 @@ const Form = newStyled.div`
   padding: 20px;
   @media (max-width: 800px) {
     width: 80%;
-    top: 60%;
+    bottom: 40px;
     left: 10%;
   }
 `;
