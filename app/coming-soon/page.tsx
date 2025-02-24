@@ -7,8 +7,8 @@ import Image from 'next/image';
 const HeroContainer = newStyled.div`
   background-image: url('/images/whitelist/background1.png');
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   overflow: hidden;
   background-size: cover;
   background-repeat: no-repeat;
@@ -16,7 +16,7 @@ const HeroContainer = newStyled.div`
 
   @media (max-width: 800px) {
     background-position: 60% center; /* Adjust focus for mobile */
-    height: 100vh;
+    height: 100dvh;
   }
 `;
 
