@@ -1,6 +1,7 @@
 'use client';
 import { useIsMobile } from '#/ui/useMobile';
 import WaitlistForm from '#/ui/waitlist-form';
+import { keyframes } from '@emotion/react';
 import newStyled from '@emotion/styled';
 import Image from 'next/image';
 
@@ -27,13 +28,18 @@ const Logo = newStyled(Image)`
   left: 5%;
 `;
 
+const fadeSlide = keyframes`
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+`;
+
 const JoinCTA = newStyled.div`
   position: absolute;
   max-width: 450px;
   top: 50%;
   left: 60%;
   color: white;
-  animation: blurIn 2s ease-out;
+  animation: ${fadeSlide} 1.5s ease-in-out;
   .heading {
     font-size: 48px;
     font-weight: 600;
@@ -58,16 +64,6 @@ const JoinCTA = newStyled.div`
       font-size: 14px;
       font-weight: lighter;
     }
-  }
-
-  @keyframes blurIn {
-  from {
-    opacity: 0;
-    filter: blur(10px);
-  }
-  to {
-    opacity: 1;
-    filter: blur(0);
   }
 `;
 
