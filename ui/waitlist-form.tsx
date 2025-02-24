@@ -37,6 +37,11 @@ const Input = styled.input`
   font-size: 16px;
   outline: none;
 
+  :focus {
+    border-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 1px rgba(255, 255, 255);
+  }
   &::placeholder {
     color: rgba(255, 255, 255, 0.7);
   }
