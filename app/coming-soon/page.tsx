@@ -115,6 +115,8 @@ const CenterContainer = newStyled.div`
 
 const ConfirmationMessage = newStyled.div`
   color: white;
+  display: flex;
+  flex-direction: column;
   animation: ${fadeSlideSubmitted} 1.5s ease-in-out;
   font-size: 48px;
   font-weight: 600;
@@ -164,6 +166,13 @@ export default function ComingSoonPage() {
     }, 100);
   };
 
+  const mobileSubmitMessage = (
+    <>
+      <span>Welcome to</span>
+      <span>the Myaha commune</span>
+    </>
+  );
+
   const BodyMap: { [K in States]: React.ReactNode } = {
     [States.INIT]: (
       <>
@@ -190,7 +199,9 @@ export default function ComingSoonPage() {
     ),
     [States.SUBMITTED]: (
       <CenterContainer>
-        <ConfirmationMessage>Welcome to the Myaha commune</ConfirmationMessage>
+        <ConfirmationMessage>
+          {isMobile ? mobileSubmitMessage : 'Welcome to the Myaha commune'}
+        </ConfirmationMessage>
         <ConfirmationSubMessage>
           {`Exclusive discount coupons will be shared with you once we’re live. ${isMobile ? 'See you!' : '\u00A0\u00A0See you!'}`}
         </ConfirmationSubMessage>
