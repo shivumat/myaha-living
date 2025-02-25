@@ -99,7 +99,7 @@ const WaitlistForm = (props: { onSubmit: () => void }) => {
         required
       />
       <Button type="submit" submitted={false}>
-        'Signup'
+        Signup
       </Button>
     </form>
   );

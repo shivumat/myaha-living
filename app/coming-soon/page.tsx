@@ -23,7 +23,7 @@ const HeroContainer = newStyled.div`
 }
 `;
 
-const Logo = newStyled(Image)`
+const Logo = newStyled.img`
   position: sticky;
   top: 5%;
   left: 5%;
@@ -34,17 +34,11 @@ const fadeSlide = keyframes`
   100% { opacity: 1; transform: translateY(0); }
 `;
 
-const fadeSlideSubmitted = keyframes`
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
-`;
-
 const JoinCTA = newStyled.div`
-  position: absolute;
+
   max-width: 450px;
-  top: 50%;
-  left: 60%;
   color: white;
+  margin-bottom: 20px;
   animation: ${fadeSlide} 1.5s ease-in-out;
   .heading {
     font-size: 48px;
@@ -55,6 +49,7 @@ const JoinCTA = newStyled.div`
     font-weight: lighter;
   }
   @media (max-width: 800px) {
+    position: absolute;
     max-width: 250px;
     top: 40%;
     left: calc(50% - 125px);
@@ -74,19 +69,17 @@ const JoinCTA = newStyled.div`
 `;
 
 const Form = newStyled.div`
-  position: absolute;
   background-color: #D9D9D933;
   padding: 20px;
   border-radius: 10px;
   backdrop-filter: blur(10px);
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  bottom: 15%;
-  left: 60%;
   width : 475px;
   padding: 20px;
   height: max-content;
   @media (max-width: 800px) {
+    position: absolute;
     width: 80%;
     bottom: 40px;
     left: 10%;
@@ -113,11 +106,16 @@ const CenterContainer = newStyled.div`
   }
 `;
 
+const LeftContainer = newStyled.div`
+  position: absolute;
+  top: 50%;
+  right: 100px;
+`;
+
 const ConfirmationMessage = newStyled.div`
   color: white;
   display: flex;
   flex-direction: column;
-  animation: ${fadeSlideSubmitted} 1.5s ease-in-out;
   font-size: 48px;
   font-weight: 600;
   margin-bottom: 10px;
@@ -163,7 +161,7 @@ export default function ComingSoonPage() {
     setUserState(States.LOADING);
     setTimeout(() => {
       setUserState(States.SUBMITTED);
-    }, 100);
+    }, 1000);
   };
 
   const mobileSubmitMessage = (
@@ -174,7 +172,7 @@ export default function ComingSoonPage() {
   );
 
   const BodyMap: { [K in States]: React.ReactNode } = {
-    [States.INIT]: (
+    [States.INIT]: isMobile ? (
       <>
         <JoinCTA>
           <div className="heading">Join the waitlist</div>
@@ -186,6 +184,18 @@ export default function ComingSoonPage() {
           <WaitlistForm onSubmit={onSubmit} />
         </Form>
       </>
+    ) : (
+      <LeftContainer>
+        <JoinCTA>
+          <div className="heading">Join the waitlist</div>
+          <div className="sub-heading">
+            Exclusive offers on the most expressive home accents in town.
+          </div>
+        </JoinCTA>
+        <Form>
+          <WaitlistForm onSubmit={onSubmit} />
+        </Form>
+      </LeftContainer>
     ),
     [States.LOADING]: (
       <CenterContainer>
