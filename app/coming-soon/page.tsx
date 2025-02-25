@@ -1,4 +1,5 @@
 'use client';
+import MyahaLogo from '#/ui/myaha-logo';
 import { useIsMobile } from '#/ui/useMobile';
 import WaitlistForm from '#/ui/waitlist-form';
 import { keyframes } from '@emotion/react';
@@ -8,10 +9,10 @@ import React, { useState } from 'react';
 
 const HeroContainer = newStyled.div`
   background-image: url('/images/whitelist/background.png');
+  overflow-y: auto;
   position: relative;
   width: 100dvw;
   height: 100dvh;
-  overflow: hidden;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -23,10 +24,14 @@ const HeroContainer = newStyled.div`
 }
 `;
 
-const Logo = newStyled.img`
+const Logo = newStyled(MyahaLogo)`
   position: sticky;
-  top: 5%;
-  left: 5%;
+  top: 50px;
+  left: 50px;
+  @media (max-width: 800px) {
+    top: 20px;
+    left: 15px;
+  }
 `;
 
 const fadeSlide = keyframes`
@@ -221,12 +226,7 @@ export default function ComingSoonPage() {
 
   return (
     <HeroContainer>
-      <Logo
-        src="/images/myaha_logo.svg"
-        alt="Myaha Logo"
-        width={isMobile ? 150 : 200}
-        height={isMobile ? 30 : 40}
-      />
+      <Logo width={isMobile ? '129' : '194'} height={isMobile ? '40' : '60'} />
       {BodyMap[userState]}
     </HeroContainer>
   );
