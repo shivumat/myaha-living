@@ -7,11 +7,11 @@ export const metadata: Metadata = {
     template: '%s',
   },
   description:
-    'Elevate your indoor or outdoor greenery with our Sage Green Ceramic Planter. Its soft, soothing hue and clean lines add a touch of elegance to any space, blending seamlessly with a variety of decor styles.',
+    'Crafting emotions, not just essentials – where every design tells your story',
   openGraph: {
     title: 'Myaha Living',
     description:
-      'Elevate your indoor or outdoor greenery with our Sage Green Ceramic Planter. Its soft, soothing hue and clean lines add a touch of elegance to any space, blending seamlessly with a variety of decor styles.',
+      'Crafting emotions, not just essentials – where every design tells your story',
   },
   twitter: {
     card: 'summary_large_image',
