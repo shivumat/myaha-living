@@ -91,7 +91,7 @@ export default function ComingSoonPage() {
   return (
     <HeroContainer>
       <Logo
-        src="/images/myaha_logo.png"
+        src="/images/myaha_logo.svg"
         alt="Myaha Logo"
         width={isMobile ? 150 : 200}
         height={isMobile ? 30 : 40}
