@@ -180,7 +180,7 @@ export default function ComingSoonPage() {
     setUserState(States.LOADING);
     setTimeout(() => {
       setUserState(States.SUBMITTED);
-    }, 200);
+    }, 1000);
   };
 
   const mobileSubmitMessage = (
