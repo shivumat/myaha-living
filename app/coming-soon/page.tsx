@@ -90,6 +90,16 @@ const Form = newStyled.div`
     left: 10%;
   }
 `;
+const fadeInScale = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+`;
 
 const CenterContainer = newStyled.div`
   max-width: 750px;
@@ -124,6 +134,8 @@ const ConfirmationMessage = newStyled.div`
   font-size: 48px;
   font-weight: 600;
   margin-bottom: 10px;
+  animation: ${fadeInScale} 0.8s ease-out;
+
   @media (max-width: 800px) {
     width: 80%; 
     font-size: 24px;
@@ -146,6 +158,8 @@ const ConfirmationSubMessage = newStyled.div`
   width : 520px;
   padding: 45px;
   height: max-content;
+  animation: ${fadeInScale} 0.8s ease-out;
+
   @media (max-width: 800px) {
     width: 100%;
     padding: 30px 48px;
@@ -166,7 +180,7 @@ export default function ComingSoonPage() {
     setUserState(States.LOADING);
     setTimeout(() => {
       setUserState(States.SUBMITTED);
-    }, 1000);
+    }, 200);
   };
 
   const mobileSubmitMessage = (
