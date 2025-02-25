@@ -73,23 +73,18 @@ const Button = styled.button<{ submitted: boolean }>`
   }
 `;
 
-const WaitlistForm = () => {
+const WaitlistForm = (props: { onSubmit: () => void }) => {
   const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim() !== '') {
-      setSubmitted(true);
+      props.onSubmit();
       await fetch('/api/waitlist/addEmail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
-      setTimeout(() => {
-        setEmail('');
-        setSubmitted(false);
-      }, 5000); // Clear input after submission
     }
   };
 
@@ -102,10 +97,9 @@ const WaitlistForm = () => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        disabled={submitted}
       />
-      <Button type="submit" submitted={submitted} disabled={submitted}>
-        {submitted ? 'You have been added to Myaha List (✔)' : 'Signup'}
+      <Button type="submit" submitted={false}>
+        'Signup'
       </Button>
     </form>
   );
