@@ -39,7 +39,7 @@ export const POST = async (req: Request) => {
           <div>
             <p style="font-size: 16px;">Hey,</p>
             <p style="font-size: 16px;">We’re putting the final touches on something truly special for you. Since you’re on our waitlist, you’ll be among the first to know when <strong>Myaha’s first collection</strong> goes live!</p>
-            <p style="font-size: 16px;">As a thank-you for signing up, enjoy an <strong>exclusive 15% off</strong> your first order!</p>
+            <p style="font-size: 16px;">As a thank-you for signing up, enjoy an <strong>exclusive 15% off</strong> on your first order!</p>
             <p style="font-size: 16px;">Get ready to elevate your space with elegance and craftsmanship like never before.</p>
             <hr style="border: 0; height: 1px; background: #ddd; margin: 20px 0;">
             <p style="font-size: 14px; color: #555;"><em>P.S. Keep an eye on your inbox – your special discount code is coming your way soon!</em></p>
