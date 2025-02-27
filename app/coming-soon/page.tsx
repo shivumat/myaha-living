@@ -208,7 +208,7 @@ export default function ComingSoonPage() {
         <JoinCTA>
           <div className="heading">Join the waitlist</div>
           <div className="sub-heading">
-            Exclusive offers on the most expressive home accents in town.
+            Exclusive offers on the most expressive home accents in town!
           </div>
         </JoinCTA>
         <Form>
