@@ -1,8 +1,8 @@
 'use client';
 import { useIsFirstMount } from '#/hooks/useIsFirstMount';
 import { usePathname } from 'next/navigation';
-import AppFooter from './AppFooter';
-import Navbar from './Navbar';
+import Footer from './footer/Footer';
+import Navbar from './navbar/Navbar';
 
 export default function LayoutWrapper({
   children,
@@ -22,7 +22,7 @@ export default function LayoutWrapper({
     <>
       {!hide && <Navbar />}
       {children}
-      {!hide && <AppFooter />}
+      {!hide && <Footer />}
     </>
   );
 }

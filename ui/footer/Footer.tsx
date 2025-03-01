@@ -5,10 +5,10 @@ const FooterContainer = newStyled.div`
   height: 100vh;
 `;
 
-const AppFooter = () => {
+const Footer = () => {
   const isMobile = useIsMobile();
   console.log(isMobile);
   return <FooterContainer>Footer</FooterContainer>;
 };
 
-export default AppFooter;
+export default Footer;
