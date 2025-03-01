@@ -6,7 +6,6 @@ const CarouselContainer = newStyled.div`
   overflow: hidden;
   width: 100%;
   position: relative;
-  touch-action: pan-x;
 `;
 
 const CarouselWrapper = newStyled.div<{ index: number }>`
