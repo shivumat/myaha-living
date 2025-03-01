@@ -1,3 +1,4 @@
+import { SearchProvider } from '#/context/SearchContext';
 import '#/styles/globals.css';
 import LayoutWrapper from '#/ui/LayoutWrapper';
 import { Metadata } from 'next';
@@ -35,7 +36,9 @@ export default function RootLayout({
         />
       </head>
       <body className="h-full w-full overflow-y-scroll">
-        <LayoutWrapper>{children}</LayoutWrapper>
+        <SearchProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
+        </SearchProvider>
       </body>
     </html>
   );

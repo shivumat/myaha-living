@@ -9,7 +9,7 @@ export function useIsDesktopHomeOnTop() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsAtTop(window.scrollY === 0);
+      setIsAtTop(window.scrollY < 20);
     };
 
     window.addEventListener('scroll', handleScroll);
