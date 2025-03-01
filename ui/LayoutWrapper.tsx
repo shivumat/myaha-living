@@ -1,7 +1,6 @@
 'use client';
 import { useFirstMount } from '#/hooks/usefirstMount';
 import { usePathname } from 'next/navigation';
-import Footer from './Footer';
 import Navbar from './Navbar';
 
 export default function LayoutWrapper({
@@ -22,7 +21,6 @@ export default function LayoutWrapper({
     <>
       {!hide && <Navbar />}
       {children}
-      {!hide && <Footer />}
     </>
   );
 }
