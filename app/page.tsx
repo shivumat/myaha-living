@@ -1,3 +1,9 @@
+import HomeTopBanner from '#/ui/home/HomeTopBanner';
+
 export default function Page() {
-  return <div>Home</div>;
+  return (
+    <>
+      <HomeTopBanner />
+    </>
+  );
 }
