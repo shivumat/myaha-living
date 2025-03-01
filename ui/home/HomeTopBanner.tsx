@@ -23,7 +23,7 @@ const Gallery = styled.div`
   grid-template-rows: 1fr 1fr;
   width: 100%;
   margin: auto;
-  height: 95%;
+  height: 90%;
 `;
 
 const ImageWrapper = styled.div`

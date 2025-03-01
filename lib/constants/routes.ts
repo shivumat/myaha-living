@@ -25,6 +25,7 @@ export interface FooterRouteTypes {
 
 export const footerRoutes: FooterRouteTypes[] = [
   { name: 'Our Story', path: '/', state: 'our_story', section: 'About Us' },
+  { name: 'About Us', path: '/about-us', state: '', section: 'About Us' },
   { name: 'Contact Us', path: '/contact', state: '', section: 'About Us' },
   { name: 'Privacy Policy', path: '/policies', state: '', section: 'Policies' },
   {
@@ -48,7 +49,19 @@ export const footerRoutes: FooterRouteTypes[] = [
   {
     name: 'Collaborate With Us',
     path: '/colaborate',
-    state: 'terms',
+    state: '',
     section: 'Collaborate With Us',
   },
+];
+
+export interface NavRouteTypes {
+  name: string;
+  path: string;
+}
+
+export const navRoutes: NavRouteTypes[] = [
+  { name: 'Home', path: '/' },
+  { name: 'Shop', path: '/products' },
+  { name: 'About Us', path: '/about-us' },
+  { name: 'Contact Us', path: '/contact' },
 ];

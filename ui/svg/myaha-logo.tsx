@@ -2,12 +2,14 @@ const MyahaLogo = (props: {
   width?: string;
   height?: string;
   className?: string;
+  onClick?: () => void;
 }) => {
-  const { width = '129', height = '40', className } = props;
+  const { width = '129', height = '40', className, onClick } = props;
 
   return (
     <svg
       className={className}
+      onClick={onClick}
       width={width}
       height={height}
       viewBox={`0 0 ${width} ${height}`}
