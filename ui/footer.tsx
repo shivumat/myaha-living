@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 const Footer = () => {
   return <div>Footer</div>;
 };
