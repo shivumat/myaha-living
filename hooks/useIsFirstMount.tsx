@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export const useFirstMount = () => {
+export const useIsFirstMount = () => {
   const [isFirstMount, setIsFirstMount] = useState(true);
 
   useEffect(() => {
