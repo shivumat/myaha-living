@@ -1,7 +1,7 @@
 'use client';
 import { useFirstMount } from '#/hooks/usefirstMount';
+import Footer from '#/ui/Footer';
 import { usePathname } from 'next/navigation';
-import Footer from './Footer';
 import Navbar from './Navbar';
 
 export default function LayoutWrapper({
