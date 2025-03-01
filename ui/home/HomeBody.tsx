@@ -6,17 +6,8 @@ const Container = newStyled.div`
   height: 200%;
 `;
 
-const TestContainer = newStyled.div`
-  height : 45%;
-`;
-
 const HomeBody = () => {
-  return (
-    <Container>
-      <TestContainer>test</TestContainer>
-      <TestContainer id="our_story">test</TestContainer>
-    </Container>
-  );
+  return <Container>HomeBody</Container>;
 };
 
 export default HomeBody;
