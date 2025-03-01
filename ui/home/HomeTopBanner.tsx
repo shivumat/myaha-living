@@ -1,3 +1,4 @@
+'use client';
 const HomeTopBanner = () => {
   return <div>HomeTopBanner</div>;
 };

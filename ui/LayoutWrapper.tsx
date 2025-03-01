@@ -1,5 +1,5 @@
 'use client';
-import { useFirstMount } from '#/hooks/usefirstMount';
+import { useFirstMount } from '#/hooks/useFirstMount';
 import { usePathname } from 'next/navigation';
 import AppFooter from './AppFooter';
 import Navbar from './Navbar';

@@ -1,9 +1,14 @@
 import { useIsMobile } from '#/hooks/useMobile';
+import newStyled from '@emotion/styled';
+
+const FooterContainer = newStyled.div`
+  height: 100vh;
+`;
 
 const AppFooter = () => {
   const isMobile = useIsMobile();
   console.log(isMobile);
-  return <div>Footer</div>;
+  return <FooterContainer>Footer</FooterContainer>;
 };
 
 export default AppFooter;
