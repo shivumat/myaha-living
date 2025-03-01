@@ -1,0 +1,17 @@
+export const routes = [
+  '/',
+  '/about',
+  '/contact',
+  '/products',
+  '/products/:id',
+  '/cart',
+  '/checkout',
+  '/login',
+  '/signup',
+  '/forgot-password',
+  '/reset-password',
+  '/orders',
+  '/orders/:id',
+  '/account',
+  '/error',
+];

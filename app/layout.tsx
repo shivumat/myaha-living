@@ -1,4 +1,5 @@
 import '#/styles/globals.css';
+import LayoutWrapper from '#/ui/LayoutWrapper';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -33,7 +34,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="h-full w-full overflow-y-scroll">{children}</body>
+      <body className="h-full w-full overflow-y-scroll">
+        <LayoutWrapper>{children}</LayoutWrapper>
+      </body>
     </html>
   );
 }

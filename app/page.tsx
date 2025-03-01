@@ -1,3 +1,4 @@
 export default function Page() {
-  return <div className="space-y-8"></div>;
+  return;
+  <div>Home</div>;
 }
