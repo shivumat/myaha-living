@@ -48,7 +48,7 @@ const TabButton = styled.button<{ active: boolean }>`
     background: ${(props) => (props.active ? '#666' : '#ddd')};
   }
   @media (max-width: 800px) {
-    padding: 5px 150px;
+    padding: 5px 15px;
   }
 `;
 
