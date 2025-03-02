@@ -52,8 +52,9 @@ const ToastContainer = styled.div<{
   position: fixed;
   bottom: 40px;
   left: ${(props) => (props.visible ? '20px' : '-500px')};
-  animation: ${(props) => (props.visible ? slideIn : slideOut)}
-    ${({ mounted }) => (mounted ? '0.5s' : '0s')} ease-in-out;
+  animation: ${(props) =>
+      props.mounted ? (props.visible ? slideIn : slideOut) : 'none'}
+    0.5s ease-in-out;
   background-color: white;
   max-width: 450px;
   border: 1px solid
@@ -90,9 +91,13 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
   const mounted = React.useRef(false);
 
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-    }
+    const timer = setTimeout(() => {
+      if (!mounted.current) {
+        mounted.current = true;
+      }
+    }, 10); // Small delay to prevent animation on refresh
+
+    return () => clearTimeout(timer);
   }, []);
 
   const showToast = (message: string, type: ToastType) => {
@@ -105,7 +110,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const isMobile = useIsMobile();
-
+  console.log(visible, mounted);
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
