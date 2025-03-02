@@ -56,6 +56,8 @@ const ToastContainer = styled.div<{
     ${({ mounted }) => (mounted ? '0.5s' : '0s')} ease-in-out;
   background-color: white;
   max-width: 450px;
+  border: 1px solid
+    ${(props) => (props.type === 'success' ? '#4D6624' : '#D9534F')};
   border-left: ${(props) =>
     props.type === 'success' ? '15px solid #4D6624' : '15px solid #D9534F'};
   padding: 20px;
@@ -99,7 +101,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
 
     setTimeout(() => {
       setVisible(false);
-    }, 20000);
+    }, 2000);
   };
 
   const isMobile = useIsMobile();
