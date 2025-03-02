@@ -108,7 +108,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         <CloseButton>
           <Title>{title ?? ' '}</Title>
           <Close onClick={onClose}>
-            <CrossLogo width="16" height="16" />
+            <CrossLogo />
           </Close>
         </CloseButton>
         {children}
