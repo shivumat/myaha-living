@@ -29,13 +29,13 @@ export const footerRoutes: FooterRouteTypes[] = [
   { name: 'Contact Us', path: '/contact', state: '', section: 'About Us' },
   { name: 'Privacy Policy', path: '/policies', state: '', section: 'Policies' },
   {
-    name: 'Returns, Refunds and Cancellation Policy',
+    name: 'Cancellation and Refund',
     path: '/policies',
     state: 'terms',
     section: 'Policies',
   },
   {
-    name: 'Shipping Policy',
+    name: 'Shipping and Delivery',
     path: '/policies',
     state: 'terms',
     section: 'Policies',
