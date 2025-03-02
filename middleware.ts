@@ -12,6 +12,10 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/_next') ||
     pathname.startsWith('/favicon.ico') ||
     pathname.startsWith('/coming-soon') ||
+    pathname.startsWith('/about-us') ||
+    pathname.startsWith('/contact') ||
+    pathname.startsWith('/colaborate') ||
+    pathname.startsWith('/policies') ||
     pathname.startsWith('/images') || // Allow images in /public/images
     pathname.startsWith('/assets') || // Allow if stored in /public/assets
     pathname.startsWith('/logo.png') // Allow specific files in /public

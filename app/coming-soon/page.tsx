@@ -1,7 +1,8 @@
 'use client';
-import MyahaLogo from '#/ui/myaha-logo';
-import { useIsMobile } from '#/ui/useMobile';
-import WaitlistForm from '#/ui/waitlist-form';
+
+import { useIsMobile } from '#/hooks/useMobile';
+import MyahaLogo from '#/ui/svg/myaha-logo';
+import WaitlistForm from '#/ui/waitlist/waitlist-form';
 import { keyframes } from '@emotion/react';
 import newStyled from '@emotion/styled';
 import Image from 'next/image';

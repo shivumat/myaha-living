@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
-import nodemailer from 'nodemailer';
-import { db } from '../../../../lib/friebaseAdmin';
+import { saveData } from '../../../../lib/db/firebaseUtil';
+import { sendEmail } from '../../../../lib/mail/init';
 
 export const POST = async (req: Request) => {
   try {
@@ -14,21 +14,17 @@ export const POST = async (req: Request) => {
         },
       );
     }
-    await db.doc(`waitlist_users/${email}`).set({
-      email,
-      name: email,
-      otp: '111111',
-      verified: false,
-      createdAt: new Date(),
-    });
-
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'hello@myahaliving.com',
-        pass: 'urghzibulsgohvev',
+    await saveData(
+      'waitlist_users',
+      {
+        email,
+        name: email,
+        otp: '111111',
+        verified: false,
+        createdAt: new Date(),
       },
-    });
+      email,
+    );
 
     const htmlEmail = `
       <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; color: #333;">
@@ -50,14 +46,12 @@ export const POST = async (req: Request) => {
     `;
 
     // Email options
-    const mailOptions = {
-      from: `"Myaha Team" <hello@myahaliving.com>`,
-      to: email,
-      subject: 'The Wait is Almost Over – Exclusive 15% Off Inside!',
-      html: htmlEmail, // HTML content
-    };
 
-    await transporter.sendMail(mailOptions);
+    sendEmail(
+      email,
+      'The Wait is Almost Over – Exclusive 15% Off Inside!',
+      htmlEmail,
+    );
 
     return new Response(
       JSON.stringify({ status: true, message: 'Email added' }),
