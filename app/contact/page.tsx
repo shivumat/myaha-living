@@ -1,4 +1,5 @@
 'use client';
+import { useToast } from '#/context/ToastContext';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
@@ -92,8 +93,10 @@ const ContactForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
+  const { showToast } = useToast();
 
   const onSubmit = async (data: any) => {
     console.log('Form submitted:', data);
@@ -102,6 +105,8 @@ const ContactForm = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
+    showToast('Form submitted successfully!', 'success');
+    reset();
   };
 
   return (

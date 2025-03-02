@@ -1,4 +1,5 @@
 'use client';
+import { ToastProvider } from '#/context/ToastContext';
 import { useIsFirstMount } from '#/hooks/useIsFirstMount';
 import { usePathname } from 'next/navigation';
 import Footer from './footer/Footer';
@@ -19,10 +20,10 @@ export default function LayoutWrapper({
   const hide = ['/test', '/test1'].includes(pathname ?? '');
 
   return (
-    <>
+    <ToastProvider>
       {!hide && <Navbar />}
       {children}
       {!hide && <Footer />}
-    </>
+    </ToastProvider>
   );
 }

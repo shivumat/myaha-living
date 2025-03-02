@@ -6,6 +6,7 @@ export const saveData = async (
   id: string,
 ) => {
   try {
+    console.log(process.env.FIREBASE_PROJECT_ID);
     await db.doc(`${collectionName}/${id}`).set(data);
     console.log('Document saved successfully');
   } catch (error) {

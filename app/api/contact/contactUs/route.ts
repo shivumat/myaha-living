@@ -1,3 +1,4 @@
+import { getCurrentTimeStamp } from '#/lib/dateUtil';
 import { notFound } from 'next/navigation';
 import { saveData } from '../../../../lib/db/firebaseUtil';
 
@@ -13,7 +14,11 @@ export const POST = async (req: Request) => {
         },
       );
     }
-    await saveData('contact-us-form', data, email);
+    await saveData(
+      'contact-us-form',
+      data,
+      `${email}-${getCurrentTimeStamp()}`,
+    );
 
     return new Response(
       JSON.stringify({ status: true, message: 'Email added' }),
