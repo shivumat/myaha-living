@@ -8,10 +8,6 @@ export class Firebase {
   private db: FirebaseFirestore.Firestore; // db object
   private constructor() {
     if (!admin.apps.length) {
-      console.log(process.env);
-      if (!process.env.FIREBASE_PROJECT_ID) {
-        throw new Error('FIREBASE_PROJECT_ID is missing');
-      }
       admin.initializeApp({
         credential: admin.credential.cert({
           projectId: process.env.FIREBASE_PROJECT_ID,
