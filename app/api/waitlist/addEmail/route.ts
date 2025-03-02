@@ -26,7 +26,7 @@ export const POST = async (req: Request) => {
       service: 'gmail',
       auth: {
         user: 'hello@myahaliving.com',
-        pass: 'cmbowfdvtwerhkqe',
+        pass: 'urghzibulsgohvev',
       },
     });
 
