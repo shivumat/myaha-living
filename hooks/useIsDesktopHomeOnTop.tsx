@@ -2,10 +2,10 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export function useIsDesktopHomeOnTop() {
+export function useIsDesktopHomeOnTop(props?: { checkPath?: string }) {
   const pathname = usePathname();
   const [isAtTop, setIsAtTop] = useState(true);
-  const isHome = pathname === '/';
+  const isHome = pathname === (props?.checkPath ?? '/');
 
   useEffect(() => {
     const handleScroll = () => {
