@@ -240,52 +240,7 @@ const TabComponent: React.FC = () => {
                   eligibility of an item will be clearly stated on its product
                   page. Shipping fees for returns are generally borne by the
                   customer unless the return is due to a defect or an error on
-                  our part. Intellectual Property All content on our website,
-                  including text, images, graphics, logos, and product designs,
-                  is the property of Myaha and is protected by copyright and
-                  intellectual property laws. You may not reproduce, distribute,
-                  modify, or commercially exploit any content from our website
-                  without our prior written consent. Unauthorized use of our
-                  intellectual property may result in legal action. Limitation
-                  of Liability Myaha is not liable for any indirect, incidental,
-                  or consequential damages arising from the use of our website,
-                  services, or products, including but not limited to loss of
-                  data, revenue, or business opportunities. While we strive to
-                  ensure the accuracy of product descriptions and website
-                  content, we do not warrant that the information is error-free,
-                  complete, or up to date. We shall not be held responsible for
-                  any failure or delay in performance due to circumstances
-                  beyond our control, including but not limited to natural
-                  disasters, labor strikes, or internet outages. Privacy and
-                  Data Protection We value your privacy and handle personal data
-                  in accordance with our Privacy Policy. Your information is
-                  securely stored and used solely for fulfilling orders and
-                  improving user experience. We do not sell, trade, or share
-                  your personal information with third parties without your
-                  consent, except as required for payment processing, order
-                  fulfillment, or legal compliance. By using our website, you
-                  consent to the collection and processing of your personal data
-                  as outlined in our Privacy Policy. Third-Party Links and
-                  Services Our website may contain links to third-party websites
-                  or services. These external sites are not operated or
-                  controlled by Myaha, and we are not responsible for their
-                  content, policies, or practices. We encourage users to review
-                  the terms and privacy policies of any third-party sites before
-                  engaging with them. Changes to Terms and Conditions We reserve
-                  the right to modify or update these terms at any time. Changes
-                  will be posted on this page with the effective date stated at
-                  the top. Continued use of our website after modifications
-                  constitute acceptance of the revised terms. Users are
-                  encouraged to review these terms periodically. Governing Law
-                  and Dispute Resolution These Terms and Conditions are governed
-                  by the laws of India, without regard to conflict of law
-                  principles. Any disputes arising from these terms shall be
-                  resolved through arbitration or mediation before pursuing
-                  formal legal action. If a provision in these terms is found to
-                  be invalid or unenforceable, the remaining provisions shall
-                  remain in full effect. Contact Information If you have any
-                  questions or concerns about these Terms and Conditions, please
-                  contact us at hello@myahaliving.com.
+                  our part.
                 </SectionDescription>
               </div>
             )}
