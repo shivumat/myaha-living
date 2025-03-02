@@ -30,6 +30,7 @@ const Div1 = styled.div`
     align-self: stretch;
     height: 318px;
     width: 318px;
+    min-width: 318px;
     justify-content: center;
     align-items: center;
     font-size: 14px;
@@ -44,7 +45,7 @@ const Div1 = styled.div`
   @media (max-width: 800px) {
     flex-direction: column;
     > img {
-      height: auto;
+      height: 250px;
     }
     > div {
       padding: 40px;
