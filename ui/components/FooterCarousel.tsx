@@ -11,9 +11,9 @@ const Container = newStyled.div<{ rounded: boolean }>`
 
 import { TouchEvent, useState } from 'react';
 
-const CarouselContainer = newStyled.div`
+const CarouselContainer = newStyled.div<{ rounded: boolean }>`
     background-color: #4B4B39;
-    border-radius: 10px;
+    ${({ rounded }) => (rounded ? 'border-radius: 10px;' : '')}
     display: flex;
     overflow: hidden;
     width: 100%;
@@ -60,7 +60,7 @@ const Dot = newStyled.div<{ active: boolean }>`
   cursor: pointer;
 `;
 
-const MobileFooterCarousel = () => {
+const MobileFooterCarousel = ({ rounded = true }: { rounded?: boolean }) => {
   const [index, setIndex] = useState<number>(0);
   const [startX, setStartX] = useState<number | null>(null);
 
@@ -83,6 +83,7 @@ const MobileFooterCarousel = () => {
 
   return (
     <CarouselContainer
+      rounded={rounded}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >
@@ -115,7 +116,7 @@ const MobileFooterCarousel = () => {
 const FooterCarousel = ({ rounded = true }: { rounded?: boolean }) => {
   const isMobile = useIsMobile();
 
-  if (isMobile) return <MobileFooterCarousel />;
+  if (isMobile) return <MobileFooterCarousel rounded={rounded} />;
 
   return (
     <Container rounded={rounded}>
