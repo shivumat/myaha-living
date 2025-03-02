@@ -1,6 +1,7 @@
 'use client';
 import { useToast } from '#/context/ToastContext';
 import ContactFormComponent from '#/ui/components/ContactForm';
+import FooterCarousel from '#/ui/components/FooterCarousel';
 import styled from '@emotion/styled';
 
 // Styled components
@@ -126,45 +127,49 @@ const Colaborate = () => {
   };
 
   return (
-    <Container>
-      <Div1>
-        <img src="/images/colaborate/colaborate2.png" />
-        <div className="colored">
-          Each product is designed to tell a unique narrative, allowing
-          customers to express their individuality and create a home that feels
-          truly their own.
-        </div>
-      </Div1>
-      <Div2>
-        <div>
-          Myaha inspires customers to see their homes as reflections of their
-          personal journeys warm, inviting spaces that evoke a sense of
-          belonging.
-        </div>
-        <div className="colored">
-          The brand merges timeless craftsmanship with modern design, ensuring
-          products that are both high-quality and innovative.
-        </div>
-        <img src="/images/about-us/about-us5.png" alt="about-us-3" />
-      </Div2>
-      <Div3>
-        <div className="left-container">
-          <div className="left-container-header">
-            We would love to collaborate with you
+    <>
+      <Container>
+        <Div1>
+          <img src="/images/colaborate/colaborate2.png" />
+          <div className="colored">
+            Each product is designed to tell a unique narrative, allowing
+            customers to express their individuality and create a home that
+            feels truly their own.
           </div>
-          <div className="left-container-subheader">
-            At Myaha, our vision is to transform the way people experience home
-            decor by creating pieces that are not only beautiful but deeply
-            personal. We aim to blend timeless craftsmanship with modern
-            creativity, offering products that resonate with individuality and
-            evoke a sense of belonging. Our goal is to inspire people to see
-            their homes as reflections of their unique stories, where each piece
-            tells a narrative and every space feels like a warm embrace.
+        </Div1>
+        <Div2>
+          <div>
+            Myaha inspires customers to see their homes as reflections of their
+            personal journeys warm, inviting spaces that evoke a sense of
+            belonging.
           </div>
-        </div>
-        <ContactFormComponent className="right-form" onSubmit={onSubmit} />
-      </Div3>
-    </Container>
+          <div className="colored">
+            The brand merges timeless craftsmanship with modern design, ensuring
+            products that are both high-quality and innovative.
+          </div>
+          <img src="/images/about-us/about-us5.png" alt="about-us-3" />
+        </Div2>
+        <Div3>
+          <div className="left-container">
+            <div className="left-container-header">
+              We would love to collaborate with you
+            </div>
+            <div className="left-container-subheader">
+              At Myaha, our vision is to transform the way people experience
+              home decor by creating pieces that are not only beautiful but
+              deeply personal. We aim to blend timeless craftsmanship with
+              modern creativity, offering products that resonate with
+              individuality and evoke a sense of belonging. Our goal is to
+              inspire people to see their homes as reflections of their unique
+              stories, where each piece tells a narrative and every space feels
+              like a warm embrace.
+            </div>
+          </div>
+          <ContactFormComponent className="right-form" onSubmit={onSubmit} />
+        </Div3>
+      </Container>
+      <FooterCarousel rounded={false} />
+    </>
   );
 };
 
