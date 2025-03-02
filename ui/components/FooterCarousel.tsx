@@ -1,9 +1,9 @@
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 
-const Container = newStyled.div`
+const Container = newStyled.div<{ rounded: boolean }>`
     background-color: #4B4B39;
-    border-radius: 10px;
+    ${({ rounded }) => (rounded ? 'border-radius: 10px;' : '')}
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -112,13 +112,13 @@ const MobileFooterCarousel = () => {
   );
 };
 
-const FooterCarousel = () => {
+const FooterCarousel = ({ rounded = true }: { rounded?: boolean }) => {
   const isMobile = useIsMobile();
 
   if (isMobile) return <MobileFooterCarousel />;
 
   return (
-    <Container>
+    <Container rounded={rounded}>
       <CarouselDiv>
         <CarousleIcon>
           <img src="/images/low-banner/low-banner1.png" />
