@@ -27,7 +27,12 @@ export const footerRoutes: FooterRouteTypes[] = [
   { name: 'Our Story', path: '/', state: 'our_story', section: 'About Us' },
   { name: 'About Us', path: '/about-us', state: '', section: 'About Us' },
   { name: 'Contact Us', path: '/contact', state: '', section: 'About Us' },
-  { name: 'Privacy Policy', path: '/policies', state: '', section: 'Policies' },
+  {
+    name: 'Privacy Policy',
+    path: '/policies',
+    state: 'privacy',
+    section: 'Policies',
+  },
   {
     name: 'Cancellation and Refund',
     path: '/policies',
