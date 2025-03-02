@@ -3,6 +3,9 @@ import { getFirestore } from 'firebase-admin/firestore';
 
 // Initialize Firebase
 if (!admin.apps.length) {
+  if (!process.env.FIREBASE_PROJECT_ID) {
+    throw new Error('FIREBASE_PROJECT_ID is missing');
+  }
   admin.initializeApp({
     credential: admin.credential.cert({
       projectId: process.env.FIREBASE_PROJECT_ID,

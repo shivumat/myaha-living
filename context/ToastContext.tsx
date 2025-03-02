@@ -1,3 +1,4 @@
+import { useIsMobile } from '#/hooks/useMobile';
 import CheckLogo from '#/ui/svg/check-logo';
 import CrossLogo from '#/ui/svg/cross-logo';
 import { keyframes } from '@emotion/react';
@@ -65,7 +66,14 @@ const ToastContainer = styled.div<{
   @media (max-width: 800px) {
     bottom: 40px;
     max-width: 300px;
+    padding: 10px;
   }
+`;
+
+const StyledCross = styled(CrossLogo)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ToastProvider: React.FC<{ children: ReactNode }> = ({
@@ -91,8 +99,10 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
 
     setTimeout(() => {
       setVisible(false);
-    }, 2000);
+    }, 20000);
   };
+
+  const isMobile = useIsMobile();
 
   return (
     <ToastContext.Provider value={{ showToast }}>
@@ -116,14 +126,21 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
           {toast.type === 'success' ? (
             <CheckLogo width="24" height="24" color="white" />
           ) : (
-            <CrossLogo width="24" height="24" color="white" />
+            <StyledCross width="24" height="24" color="white" />
           )}
         </div>
         <div>
-          <div style={{ fontSize: '20px', fontWeight: '700' }}>
+          <div
+            style={{ fontSize: isMobile ? '16px' : '20px', fontWeight: '700' }}
+          >
             {toast.type === 'success' ? 'Success' : 'Error'}
           </div>
-          <div style={{ fontSize: '16x', fontWeight: 'lighter' }}>
+          <div
+            style={{
+              fontSize: isMobile ? '12px' : '16x',
+              fontWeight: 'lighter',
+            }}
+          >
             {toast.message}
           </div>
         </div>
