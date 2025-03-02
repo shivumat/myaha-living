@@ -1,21 +1,37 @@
 import admin from 'firebase-admin';
 import { getFirestore } from 'firebase-admin/firestore';
 
-// Initialize Firebase
-if (!admin.apps.length) {
-  console.log(process.env);
-  if (!process.env.FIREBASE_PROJECT_ID) {
-    throw new Error('FIREBASE_PROJECT_ID is missing');
+// create a singleton firebase class that provides the db object
+
+export class Firebase {
+  private static instance: Firebase;
+  private db: FirebaseFirestore.Firestore; // db object
+  private constructor() {
+    if (!admin.apps.length) {
+      console.log(process.env);
+      if (!process.env.FIREBASE_PROJECT_ID) {
+        throw new Error('FIREBASE_PROJECT_ID is missing');
+      }
+      admin.initializeApp({
+        credential: admin.credential.cert({
+          projectId: process.env.FIREBASE_PROJECT_ID,
+          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+          privateKey: process.env.FIREBASE_PROVATE_KEY?.replace(/\\n/g, '\n'),
+        }),
+      });
+    }
+
+    this.db = getFirestore();
   }
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PROVATE_KEY?.replace(/\\n/g, '\n'),
-    }),
-  });
+
+  public static getInstance(): Firebase {
+    if (!Firebase.instance) {
+      Firebase.instance = new Firebase();
+    }
+    return Firebase.instance;
+  }
+
+  public getDb(): FirebaseFirestore.Firestore {
+    return this.db;
+  }
 }
-
-const db = getFirestore();
-
-export { db };
