@@ -193,11 +193,9 @@ const AboutUs = () => {
       </Div2>
       <Div3>
         <div>
-          Our pieces blend traditional craftsmanship with a contemporary twist,
-          offering a hint of playful pop. Each item is thoughtfully designed to
-          bring warmth, vibrancy, and originality into your home. From Jaipur to
-          the world, Myaha is about more than just decor—it’s about creating
-          spaces that feel personal and alive.
+          Myaha inspires customers to see their homes as reflections of their
+          personal journeys warm, inviting spaces that evoke a sense of
+          belonging.
         </div>
         <div className="colored">
           The brand merges timeless craftsmanship with modern design, ensuring
