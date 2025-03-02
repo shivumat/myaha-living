@@ -43,6 +43,9 @@ const Div1 = styled.div`
   }
   @media (max-width: 800px) {
     flex-direction: column;
+    > img {
+      height: auto;
+    }
     > div {
       padding: 40px;
       display: flex;
