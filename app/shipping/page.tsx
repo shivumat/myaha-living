@@ -85,7 +85,7 @@ const Shipping = () => {
           subHeader: '',
           pointer: [
             <span>
-              If you need urgent delivery, please contact us at
+              If you need urgent delivery, please contact us at{' '}
               <strong>hello@myahaliving.com</strong> or reach out on WhatsApp at{' '}
               <strong>+91 6350533372</strong>.
             </span>,
