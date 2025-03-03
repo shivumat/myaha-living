@@ -15,7 +15,10 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/about-us') ||
     pathname.startsWith('/contact') ||
     pathname.startsWith('/colaborate') ||
-    pathname.startsWith('/policies') ||
+    pathname.startsWith('/privacy') ||
+    pathname.startsWith('/shipping') ||
+    pathname.startsWith('/cancellation') ||
+    pathname.startsWith('/terms') ||
     pathname.startsWith('/images') || // Allow images in /public/images
     pathname.startsWith('/assets') || // Allow if stored in /public/assets
     pathname.startsWith('/logo.png') // Allow specific files in /public
