@@ -132,7 +132,7 @@ const Navbar = () => {
     router.push(item.path);
   };
 
-  if (isMobile) {
+  if (isMobile && !isDesktopHomeOnTop) {
     return (
       <>
         <NavContainer>
