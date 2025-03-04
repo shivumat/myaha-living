@@ -8,7 +8,6 @@ export const saveData = async (
     const firebaseInstance = Firebase.getInstance();
     const db = firebaseInstance.getDb();
 
-    console.log(process.env.FIREBASE_PRIVATE_KEY);
     await db.doc(`${collectionName}/${id}`).set(data);
     console.log('Document saved successfully');
   } catch (error) {
