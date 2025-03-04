@@ -47,7 +47,7 @@ export const POST = async (req: Request) => {
 
     console.log('Sending email to:', email);
 
-    sendEmail(
+    await sendEmail(
       email,
       'The Wait is Almost Over – Exclusive 15% Off Inside!',
       htmlEmail,
