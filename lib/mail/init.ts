@@ -6,6 +6,7 @@ export const sendEmail = async (
   html: string,
 ) => {
   try {
+    console.log(1);
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -13,12 +14,14 @@ export const sendEmail = async (
         pass: process.env.MAILER_PASSWORD,
       },
     });
+    console.log(2);
     const mailOptions = {
       from: `"Myaha Team" <${process.env.MAILER_EMAIL_ID}>`,
       to: email,
       subject,
       html,
     };
+    console.log(3);
     await transporter.sendMail(mailOptions);
     console.log(`Email sent to ${email}`);
   } catch (error) {
