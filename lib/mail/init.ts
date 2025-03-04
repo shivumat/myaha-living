@@ -15,6 +15,8 @@ export const sendEmail = async (
         user: process.env.MAILER_EMAIL_ID,
         pass: process.env.MAILER_PASSWORD,
       },
+      logger: true,
+      debug: true,
     });
     console.log(2);
     const mailOptions = {
