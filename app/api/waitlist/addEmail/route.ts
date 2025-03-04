@@ -45,14 +45,14 @@ export const POST = async (req: Request) => {
       </div>
     `;
 
-    // Email options
+    console.log('Sending email to:', email);
 
     sendEmail(
       email,
       'The Wait is Almost Over – Exclusive 15% Off Inside!',
       htmlEmail,
     );
-
+    console.log('Sent email to:', email);
     return new Response(
       JSON.stringify({ status: true, message: 'Email added' }),
       {
