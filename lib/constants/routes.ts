@@ -65,3 +65,17 @@ export const navRoutes: NavRouteTypes[] = [
   { name: 'About Us', path: '/about-us' },
   { name: 'Contact Us', path: '/contact' },
 ];
+
+export const hideNavbarRoutes: string[] = [];
+export const hideFooterRoutes: string[] = [
+  '/login',
+  '/signup',
+  '/forgot-password',
+  '/reset-password',
+  '/cart',
+  '/checkout',
+  '/orders',
+  '/orders/:id',
+  '/account',
+  '/error',
+];

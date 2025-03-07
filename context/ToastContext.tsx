@@ -110,7 +110,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const isMobile = useIsMobile();
-  console.log(visible, mounted);
+
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
