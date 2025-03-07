@@ -1,5 +1,4 @@
 'use client';
-import { useIsMobile } from '#/hooks/useMobile';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import newStyled from '@emotion/styled';
 
@@ -14,6 +13,9 @@ const Div1 = newStyled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    >img{
+      width: 805px;
+    }
     >div {
         display: flex;
         justify-content: center;
@@ -28,8 +30,29 @@ const Div1 = newStyled.div`
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
     }
+    
+    @media (max-width: 1350px) {
+      >div {
+        padding: 250px 70px 250px 50px;
+      }
+    }
+
+    @media (max-width: 1150px) {
+      >img {
+          width: 550px;
+      }
+        >div { 
+            width: 400px;
+            padding: 10px 30px;
+            height: 400px;
+    }
+        }   
+    }
     @media (max-width: 800px) {
         flex-direction: column; 
+        >img{
+          width: 100%;
+        }
         >div {
             width: 90%;
             border-top-right-radius: 0px;
@@ -156,15 +179,10 @@ const Div5 = newStyled.div`
 `;
 
 const AboutUs = () => {
-  const isMobile = useIsMobile();
   return (
     <Container>
       <Div1>
-        <img
-          src="/images/about-us/about-us1.png"
-          alt="about-us"
-          style={{ width: isMobile ? '100%' : '805px' }}
-        />
+        <img src="/images/about-us/about-us1.png" alt="about-us" />
         <div>
           Myaha was born from a deep love for art and design, where raw beauty
           meets modern creativity. Founded by Saumya, Myaha is a reflection of
