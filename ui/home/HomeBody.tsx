@@ -3,7 +3,6 @@ import newStyled from '@emotion/styled';
 
 const Container = newStyled.div`
   padding: 20px;
-  height: 200%;
 `;
 
 const HomeBody = () => {

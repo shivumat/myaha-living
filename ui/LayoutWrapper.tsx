@@ -1,5 +1,6 @@
 'use client';
 import AuthProvider from '#/context/AuthContext';
+import ProductProvider from '#/context/ProductContext';
 import { ToastProvider } from '#/context/ToastContext';
 import { useIsFirstMount } from '#/hooks/useIsFirstMount';
 import { hideFooterRoutes, hideNavbarRoutes } from '#/lib/constants/routes';
@@ -24,11 +25,13 @@ export default function LayoutWrapper({
 
   return (
     <AuthProvider>
-      <ToastProvider>
-        {!hideNavbar && <Navbar />}
-        {children}
-        {!hideFooter && <Footer />}
-      </ToastProvider>
+      <ProductProvider>
+        <ToastProvider>
+          {!hideNavbar && <Navbar />}
+          {children}
+          {!hideFooter && <Footer />}
+        </ToastProvider>
+      </ProductProvider>
     </AuthProvider>
   );
 }

@@ -1,5 +1,6 @@
 'use client';
 import { FirebaseAuth } from '#/lib/db/firebaseAuth';
+import Login from '#/ui/LoginModal';
 import {
   browserLocalPersistence,
   browserSessionPersistence,
@@ -11,6 +12,7 @@ import {
   signOut,
   User,
 } from 'firebase/auth';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   createContext,
   ReactNode,
@@ -96,6 +98,30 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [hasLogin, setHasLogin] = useState(false);
+
+  useEffect(() => {
+    setHasLogin(searchParams.has('login'));
+  }, [searchParams]);
+
+  const removeLoginQueryParam = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('login');
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  const toggleLogin = () => {
+    if (searchParams.has('login')) {
+      removeLoginQueryParam();
+      return;
+    }
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('login', 'true');
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -109,6 +135,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       }}
     >
       {children}
+      <Login isOpen={hasLogin} onClose={toggleLogin} />
     </AuthContext.Provider>
   );
 }
