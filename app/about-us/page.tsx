@@ -25,7 +25,7 @@ const Div1 = newStyled.div`
         margin: 40px 0px;
         height: 680px;
         padding: 250px 180px 250px 50px;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: lighter;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
@@ -45,7 +45,7 @@ const Div1 = newStyled.div`
             width: 400px;
             padding: 10px 30px;
             height: 400px;
-    }
+            font-size: 10px;
         }   
     }
     @media (max-width: 800px) {
