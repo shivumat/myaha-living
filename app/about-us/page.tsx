@@ -25,7 +25,7 @@ const Div1 = newStyled.div`
         margin: 40px 0px;
         height: 680px;
         padding: 250px 180px 250px 50px;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: lighter;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
