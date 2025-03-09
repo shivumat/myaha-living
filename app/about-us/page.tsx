@@ -45,7 +45,6 @@ const Div1 = newStyled.div`
             width: 400px;
             padding: 10px 30px;
             height: 400px;
-    }
         }   
     }
     @media (max-width: 800px) {
