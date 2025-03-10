@@ -17,7 +17,7 @@ const AddtoCart = newStyled.button`
         border: 1px solid black;
     }
     @media (max-width: 800px) {
-        font-size: 10px;
+        font-size: 12px;
         width: 70px;
     }
 `;
@@ -50,8 +50,25 @@ const ProductWithVariants = (props: { product: Product }) => {
           height: '60px',
         }}
       >
-        <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
-          {product.title}
+        <div
+          style={{
+            display: 'flex',
+            gap: '10px',
+            flexDirection: 'column',
+            flex: 1,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              gap: '10px',
+              justifyContent: 'space-between',
+              width: '100%',
+            }}
+          >
+            {`${product.title}`}{' '}
+            <strong>{`${product.variants[0].currencyCode} ${product.variants[0].price}`}</strong>
+          </div>
           <div style={{ display: 'flex', gap: '10px' }}>
             {colorVariants?.values?.map((color: string) => (
               <div

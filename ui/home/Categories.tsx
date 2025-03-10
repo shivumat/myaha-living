@@ -1,6 +1,7 @@
 import { Collection, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import Carousel from '../components/Carousel';
 
@@ -65,6 +66,7 @@ const Categories = () => {
   const ref = React.useRef<HTMLDivElement>(null);
   const { collections } = useProduct();
   const isMobile = useIsMobile();
+  const router = useRouter();
 
   const scroll = (right?: boolean) => {
     if (!ref.current) return;
@@ -76,13 +78,17 @@ const Categories = () => {
 
   const getCategoryElement = (collection: Collection) => (
     <CategoryContainer
-      onClick={() => console.log(collection)}
+      onClick={() =>
+        router.push(
+          `products/${collection.id.replace('gid://shopify/Collection/', '')}`,
+        )
+      }
       key={collection.id}
     >
       <img
         src={collection.productImage}
         alt={collection.title}
-        style={{ width: '80%', height: '350px', objectFit: 'cover' }}
+        style={{ width: '80%', height: '300px', objectFit: 'cover' }}
       />
       {collection.title}
     </CategoryContainer>

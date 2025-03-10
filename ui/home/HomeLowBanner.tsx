@@ -3,7 +3,11 @@ import { useIsMobile } from '#/hooks/useMobile';
 import styled from '@emotion/styled';
 import Carousel from '../components/Carousel';
 
-const mobileImages: string[] = ['/images/home/protrait_banner4.png'];
+const mobileImages: string[] = [
+  '/images/home/protrait_banner2.png',
+  '/images/home/protrait_banner3.png',
+  '/images/home/protrait_banner4.png',
+];
 
 // Styled Components
 const Gallery = styled.div`
@@ -50,7 +54,7 @@ const HomeLowBanner: React.FC = () => {
   const isMobile = useIsMobile();
   const Body = isMobile ? (
     <MobileWrapper>
-      <Carousel images={mobileImages} height="720px" />
+      <Carousel images={['/images/home/protrait_banner4.png']} height="720px" />
     </MobileWrapper>
   ) : (
     <ImageGrid />
