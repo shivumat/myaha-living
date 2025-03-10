@@ -40,7 +40,6 @@ export function Dropdown<T>({
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        console.log('Clicked outside, closing dropdown');
         setOpen(false);
       }
     };

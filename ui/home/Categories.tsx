@@ -30,7 +30,7 @@ const Arrow = newStyled.span`
     color: darkgray;
     border: 1px solid darkgray;
     border-radius: 50%;
-    padding: 1.5px 6px;
+    padding: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -113,8 +113,28 @@ const Categories = () => {
         <div>Product Category</div>
         {!isMobile && (
           <div style={{ display: 'flex', columnGap: '40px' }}>
-            <Arrow onClick={() => scroll()}>{'<'}</Arrow>
-            <Arrow onClick={() => scroll(true)}>{'>'}</Arrow>
+            <Arrow onClick={() => scroll()}>
+              <img
+                src="/images/caret.png"
+                alt="sort"
+                style={{
+                  width: '10px',
+                  height: '10px',
+                  transform: 'rotate(90deg)',
+                }}
+              />
+            </Arrow>
+            <Arrow onClick={() => scroll(true)}>
+              <img
+                src="/images/caret.png"
+                alt="sort"
+                style={{
+                  width: '10px',
+                  height: '10px',
+                  transform: 'rotate(-90deg)',
+                }}
+              />
+            </Arrow>
           </div>
         )}
       </div>
