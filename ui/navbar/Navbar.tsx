@@ -16,7 +16,7 @@ const NavContainer = newStyled.div<{ showTransparent?: boolean }>`
   margin: 0;
   padding: 0;
   display: flex; 
-  width: 100%;
+  width: 100vw;
   height: 60px;
   background-color: ${({ showTransparent }) => (showTransparent ? 'transparent' : 'white')};
   transition: background-color 300ms linear;

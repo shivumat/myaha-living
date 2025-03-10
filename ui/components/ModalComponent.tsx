@@ -12,6 +12,7 @@ interface ModalProps {
 const Backdrop = styled.div<{ isOpen: boolean }>`
   position: fixed;
   z-index: 1000;
+  width: 100vw;
   inset: 0;
   display: flex;
   align-items: center;

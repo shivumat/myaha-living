@@ -1,5 +1,5 @@
 import newStyled from '@emotion/styled';
-import { TouchEvent, useState } from 'react';
+import React, { ReactNode, TouchEvent, useState } from 'react';
 
 const CarouselContainer = newStyled.div`
   display: flex;
@@ -43,8 +43,12 @@ const Dot = newStyled.div<{ active: boolean }>`
   cursor: pointer;
 `;
 
-const Carousel = (props: { images: string[]; height: string }) => {
-  const { images, height } = props;
+const Carousel = (props: {
+  images: string[];
+  height: string;
+  children?: ReactNode;
+}) => {
+  const { images, height, children } = props;
   const [index, setIndex] = useState<number>(0);
   const [startX, setStartX] = useState<number | null>(null);
 
@@ -65,18 +69,38 @@ const Carousel = (props: { images: string[]; height: string }) => {
     }
   };
 
+  const CarouselChildren = !!children && (
+    <CarouselImageDiv>
+      {React.Children.map(children, (child) =>
+        React.isValidElement<React.HTMLAttributes<HTMLDivElement>>(child)
+          ? React.cloneElement(child, {
+              style: {
+                ...(child.props as React.HTMLAttributes<HTMLDivElement>).style,
+              },
+            })
+          : child,
+      )}
+    </CarouselImageDiv>
+  );
+
+  const CarouselComponents = !!images?.length ? (
+    <>
+      {images.map((src, idx) => (
+        <CarouselImageDiv key={idx}>
+          <CarouselImage src={src} alt={`Image ${idx + 1}`} height={height} />
+        </CarouselImageDiv>
+      ))}
+    </>
+  ) : (
+    CarouselChildren
+  );
+
   return (
     <CarouselContainer
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >
-      <CarouselWrapper index={index}>
-        {images.map((src, idx) => (
-          <CarouselImageDiv key={idx}>
-            <CarouselImage src={src} alt={`Image ${idx + 1}`} height={height} />
-          </CarouselImageDiv>
-        ))}
-      </CarouselWrapper>
+      <CarouselWrapper index={index}>{CarouselComponents}</CarouselWrapper>
       <DotsContainer>
         {images.map((_, idx) => (
           <Dot key={idx} active={index === idx} onClick={() => setIndex(idx)} />

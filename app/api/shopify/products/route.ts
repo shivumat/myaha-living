@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 export const POST = async () => {
   try {
     const query = `{
-  products(first: 100) {
+  products(first: 100,query: "product_status:active") {
     edges {
       node {
         options {
