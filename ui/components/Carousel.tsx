@@ -97,11 +97,17 @@ const Carousel = (props: {
       onTouchMove={handleTouchMove}
     >
       <CarouselWrapper index={index}>{CarouselComponents}</CarouselWrapper>
-      <DotsContainer>
-        {dotMap.map((_, idx) => (
-          <Dot key={idx} active={index === idx} onClick={() => setIndex(idx)} />
-        ))}
-      </DotsContainer>
+      {dotMap.length > 1 && (
+        <DotsContainer>
+          {dotMap.map((_, idx) => (
+            <Dot
+              key={idx}
+              active={index === idx}
+              onClick={() => setIndex(idx)}
+            />
+          ))}
+        </DotsContainer>
+      )}
     </CarouselContainer>
   );
 };

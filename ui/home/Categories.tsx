@@ -55,6 +55,7 @@ const CategoryContainer = newStyled.div`
     width: calc(33.33% - 20px);
     border: 1px solid lightgray;
     @media (max-width: 800px) {
+        padding: 20px 0px 30px;
         width: calc(100% - 62px);
         height: 400px;
     }

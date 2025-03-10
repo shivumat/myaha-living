@@ -28,11 +28,17 @@ const Thumbnail = newStyled.div`
     align-items: center;
     color: white;
     font-size: 36px;
+    @media (max-width: 800px) {
+        font-size: 28px;
+    }
 `;
 
 const Video = newStyled.video`
     display: none;
     height: 600px;
+    @media (max-width: 800px) {
+        width: 100%;
+    }
 `;
 
 const OurStory = () => {
