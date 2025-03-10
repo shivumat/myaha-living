@@ -49,6 +49,7 @@ const ToastContainer = styled.div<{
   visible: boolean;
   mounted: boolean;
 }>`
+  z-index: 1200;
   position: fixed;
   bottom: 40px;
   left: ${(props) => (props.visible ? '20px' : '-500px')};
@@ -144,7 +145,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
           </div>
           <div
             style={{
-              fontSize: isMobile ? '12px' : '16x',
+              fontSize: isMobile ? '16px' : '20x',
               fontWeight: 'lighter',
             }}
           >

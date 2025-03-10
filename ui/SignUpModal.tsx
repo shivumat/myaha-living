@@ -15,8 +15,12 @@ const Container = styled.div`
   background-color: #652821;
   border-radius: 10px;
   width: 60%;
-  height: 80%;
+  height: 90%;
   padding: 150px;
+  @media (max-width: 1000px) {
+    padding: 50px;
+    width: 80%;
+  }
   @media (max-width: 800px) {
     padding: 50px;
     width: 90%;
@@ -114,29 +118,12 @@ const StyledPasswordLogo = styled(PasswordLogo)`
   transform: scale(1.15);
 `;
 
-const CheckboxContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
 const LoginButton = styled(Button)`
   background: black;
   color: white;
   padding: 20px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
-`;
-
-const Footer = styled.p`
-  margin-top: 10px;
-  color: black;
-  font-size: 14px;
-  > a {
-    color: white;
-    cursor: pointer;
-  }
 `;
 
 const FlexContainer = styled.div`
@@ -152,17 +139,17 @@ const Ordiv = styled.div`
   background-color: white;
 `;
 
-const Login = (props: {
-  isOpen: boolean;
-  onClose: () => void;
-  toggleSignUp: () => void;
-}) => {
+const SignUp = (props: { isOpen: boolean; onClose: () => void }) => {
   const { isOpen: showPassword, toggle: togglePassword } = useToggle();
-  const { loginWithGoogle, login, userDetails } = useAuth();
 
+  const { handleGoogleSignup, userDetails, handleEmailSignup } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [checked, setChecked] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [pincode, setPincode] = useState('');
+  const [address, setAddress] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
@@ -203,11 +190,14 @@ const Login = (props: {
     }
   };
 
-  const handleLogin = () => {
-    if (!emailError && !passwordError && email && password) {
-      // Perform login action
-      login(email, password, checked);
-    }
+  const handleSignIn = () => {
+    handleEmailSignup(email, password, {
+      firstName,
+      lastName,
+      mobile,
+      pincode,
+      address,
+    });
   };
 
   const isFormValid = email && password && !emailError && !passwordError;
@@ -217,6 +207,11 @@ const Login = (props: {
     setPassword('');
     setEmailError('');
     setPasswordError('');
+    setFirstName('');
+    setLastName('');
+    setMobile('');
+    setPincode('');
+    setAddress('');
     props.onClose();
   };
 
@@ -225,26 +220,133 @@ const Login = (props: {
   }
 
   return (
-    <Modal isOpen={props.isOpen} onClose={onClose} title="Login">
+    <Modal isOpen={props.isOpen} onClose={onClose}>
       <Container onClick={(e) => e.stopPropagation()}>
         <Card>
-          <Title>Login</Title>
-          <GoogleButton onClick={loginWithGoogle}>
+          <Title>Sign In</Title>
+          <GoogleButton onClick={handleGoogleSignup}>
             <img
               height={30}
               width={30}
               style={{ marginRight: '10px' }}
               src="/images/google.png"
             />
-            Login with Google
+            Sign up with Google
           </GoogleButton>
           <FlexContainer>
             <Ordiv></Ordiv>
             <p style={{ margin: '0 10px' }}>OR</p>
             <Ordiv></Ordiv>
           </FlexContainer>
-
-          {/* Email Input */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '20px',
+              marginBottom: '20px',
+            }}
+          >
+            <InputDiv>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '7.5px 0px',
+                  fontSize: '10px',
+                  alignItems: 'baseline',
+                }}
+              >
+                <InputLabel>First Name</InputLabel>
+                <InputField
+                  type="text"
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+            </InputDiv>
+            <InputDiv>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '7.5px 0px',
+                  fontSize: '10px',
+                  alignItems: 'baseline',
+                }}
+              >
+                <InputLabel>Last Name</InputLabel>
+                <InputField
+                  type="text"
+                  placeholder="Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
+            </InputDiv>
+            <InputDiv>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '7.5px 0px',
+                  fontSize: '10px',
+                  alignItems: 'baseline',
+                }}
+              >
+                <InputLabel>Mobile</InputLabel>
+                <InputField
+                  type="text"
+                  placeholder="Mobile"
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value)}
+                />
+              </div>
+            </InputDiv>
+            <InputDiv>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '7.5px 0px',
+                  fontSize: '10px',
+                  alignItems: 'baseline',
+                }}
+              >
+                <InputLabel>Pincode</InputLabel>
+                <InputField
+                  type="text"
+                  placeholder="Pincode"
+                  value={pincode}
+                  onChange={(e) => setPincode(e.target.value)}
+                />
+              </div>
+            </InputDiv>
+          </div>
+          <InputDiv style={{ marginBottom: '40px' }}>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '7.5px 0px',
+                fontSize: '10px',
+                alignItems: 'baseline',
+              }}
+            >
+              <InputLabel>Address</InputLabel>
+              <InputField
+                type="text"
+                placeholder="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
+          </InputDiv>
           <InputDiv className={emailError ? 'error' : ''}>
             <EmailLogo />
             <div
@@ -300,47 +402,13 @@ const Login = (props: {
             </div>
           </InputDiv>
           <ErrorText>{!!passwordError && passwordError}</ErrorText>
-
-          {/* Checkbox */}
-          <CheckboxContainer>
-            <label
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                columnGap: '10px',
-              }}
-            >
-              <input
-                style={{ borderRadius: '50%' }}
-                type="checkbox"
-                checked={checked}
-                onClick={() => setChecked((prev) => !prev)}
-              />{' '}
-              Remember me
-            </label>
-            {/* <a href="#">Forgot Password?</a> */}
-          </CheckboxContainer>
-
-          {/* Login Button */}
-          <LoginButton onClick={handleLogin} disabled={!isFormValid}>
-            Login
+          <LoginButton disabled={!isFormValid} onClick={handleSignIn}>
+            Sign In
           </LoginButton>
-
-          {/* Footer */}
-          <Footer>
-            Don’t have an account?{' '}
-            <a
-              onClick={() => {
-                props.toggleSignUp();
-              }}
-            >
-              Register
-            </a>
-          </Footer>
         </Card>
       </Container>
     </Modal>
   );
 };
 
-export default Login;
+export default SignUp;

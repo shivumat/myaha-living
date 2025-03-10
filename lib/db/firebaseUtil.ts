@@ -8,8 +8,19 @@ export const saveData = async (
     const firebaseInstance = Firebase.getInstance();
     const db = firebaseInstance.getDb();
 
-    await db.doc(`${collectionName}/${id}`).set(data);
-    console.log('Document saved successfully');
+    return await db.doc(`${collectionName}/${id}`).set(data);
+  } catch (error) {
+    console.error('Error saving document:', error);
+    return null;
+  }
+};
+
+export const getData = async (collectionName: string, id: string) => {
+  try {
+    const firebaseInstance = Firebase.getInstance();
+    const db = firebaseInstance.getDb();
+
+    return (await db.doc(`${collectionName}/${id}`).get()).data();
   } catch (error) {
     console.error('Error saving document:', error);
     return null;

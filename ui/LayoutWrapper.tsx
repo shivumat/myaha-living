@@ -24,14 +24,14 @@ export default function LayoutWrapper({
   const hideFooter = hideFooterRoutes.includes(pathname ?? '');
 
   return (
-    <AuthProvider>
-      <ProductProvider>
-        <ToastProvider>
+    <ToastProvider>
+      <AuthProvider>
+        <ProductProvider>
           {!hideNavbar && <Navbar />}
           {children}
           {!hideFooter && <Footer />}
-        </ToastProvider>
-      </ProductProvider>
-    </AuthProvider>
+        </ProductProvider>
+      </AuthProvider>
+    </ToastProvider>
   );
 }

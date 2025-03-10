@@ -1,3 +1,4 @@
+import { useAuth } from '#/context/AuthContext';
 import { useIsDesktopHomeOnTop } from '#/hooks/useIsDesktopHomeOnTop';
 import { useIsMobile } from '#/hooks/useMobile';
 import { useToggle } from '#/hooks/useToggle';
@@ -132,7 +133,9 @@ const Navbar = () => {
     router.push(item.path);
   };
 
-  if (isMobile && !isDesktopHomeOnTop) {
+  const { user, toggleLogin, logout } = useAuth();
+
+  if (isMobile) {
     return (
       <>
         <NavContainer>
@@ -167,14 +170,25 @@ const Navbar = () => {
                 {route.name}
               </div>
             ))}
-            <div
-              onClick={() => {
-                toggle();
-                router.push('/account');
-              }}
-            >
-              <StyledUserLogo /> My Account
-            </div>
+            {!user ? (
+              <div
+                onClick={() => {
+                  toggle();
+                  toggleLogin();
+                }}
+              >
+                Login
+              </div>
+            ) : (
+              <div
+                onClick={() => {
+                  toggle();
+                  router.push('/account');
+                }}
+              >
+                <StyledUserLogo /> My Account
+              </div>
+            )}
           </LinksContainer>
         </Sidebar>
       </>
@@ -202,7 +216,12 @@ const Navbar = () => {
         )}
         <LogosContainer showTransparent={showTransparent}>
           <StyledSearchLogo />
-          {!showTransparent && <StyledUserLogo />}
+          {!showTransparent &&
+            (!!user ? (
+              <StyledUserLogo onClick={logout} />
+            ) : (
+              <StyledUserLogo onClick={toggleLogin} />
+            ))}
           {!showTransparent && <StyledCartLogo />}
         </LogosContainer>
       </NavContainer>

@@ -37,7 +37,6 @@ const ContactForm = () => {
   const { showToast } = useToast();
 
   const onSubmit = async (data: any) => {
-    console.log('Form submitted:', data);
     await fetch('/api/contact/contactUs', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

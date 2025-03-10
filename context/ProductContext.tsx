@@ -59,7 +59,6 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       body: JSON.stringify({ page: 1 }),
     });
     const productResponse = await productData.json();
-    console.log(productResponse.data.products);
     setProducts(productResponse.data.products);
 
     const collectionData = await fetch('/api/shopify/collections', {
@@ -68,7 +67,6 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       body: JSON.stringify({ page: 1 }),
     });
     const collectionResponse = await collectionData.json();
-    console.log(collectionResponse.data);
     setCollections(collectionResponse.data);
   };
 

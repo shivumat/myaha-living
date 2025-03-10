@@ -53,9 +53,7 @@ export default function Modal({
 
   return createPortal(
     <Backdrop isOpen={isOpen} onClick={onClose}>
-      <ModalContainer isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
-        {children}
-      </ModalContainer>
+      <ModalContainer isOpen={isOpen}>{children}</ModalContainer>
     </Backdrop>,
     document.body,
   );

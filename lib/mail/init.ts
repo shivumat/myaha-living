@@ -6,7 +6,6 @@ export const sendEmail = async (
   html: string,
 ) => {
   try {
-    console.log(1);
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
@@ -22,14 +21,12 @@ export const sendEmail = async (
       socketTimeout: 10000, // 10 seconds
     });
 
-    console.log(2);
     const mailOptions = {
       from: `"Myaha Team" <${process.env.MAILER_EMAIL_ID}>`,
       to: email,
       subject,
       html,
     };
-    console.log(3);
     await transporter.sendMail(mailOptions);
     console.log(`Email sent to ${email}`);
   } catch (error) {
