@@ -44,13 +44,15 @@ const Dot = newStyled.div<{ active: boolean }>`
 `;
 
 const Carousel = (props: {
-  images: string[];
+  images?: string[];
   height: string;
   children?: ReactNode;
 }) => {
-  const { images, height, children } = props;
+  const { images = [], height, children } = props;
   const [index, setIndex] = useState<number>(0);
   const [startX, setStartX] = useState<number | null>(null);
+
+  const dotMap = !!images.length ? images : React.Children.toArray(children);
 
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     setStartX(e.touches[0].clientX);
@@ -61,26 +63,20 @@ const Carousel = (props: {
     const diff = startX - e.touches[0].clientX;
 
     if (diff > 50) {
-      setIndex((prev) => (prev + 1) % images.length);
+      setIndex((prev) => (prev + 1) % dotMap.length);
       setStartX(null);
     } else if (diff < -50) {
-      setIndex((prev) => (prev - 1 + images.length) % images.length);
+      setIndex((prev) => (prev - 1 + dotMap.length) % dotMap.length);
       setStartX(null);
     }
   };
 
-  const CarouselChildren = !!children && (
-    <CarouselImageDiv>
-      {React.Children.map(children, (child) =>
-        React.isValidElement<React.HTMLAttributes<HTMLDivElement>>(child)
-          ? React.cloneElement(child, {
-              style: {
-                ...(child.props as React.HTMLAttributes<HTMLDivElement>).style,
-              },
-            })
-          : child,
-      )}
-    </CarouselImageDiv>
+  const CarouselChildren = (
+    <>
+      {React.Children.map(children, (child) => (
+        <CarouselImageDiv>{child}</CarouselImageDiv>
+      ))}
+    </>
   );
 
   const CarouselComponents = !!images?.length ? (
@@ -102,7 +98,7 @@ const Carousel = (props: {
     >
       <CarouselWrapper index={index}>{CarouselComponents}</CarouselWrapper>
       <DotsContainer>
-        {images.map((_, idx) => (
+        {dotMap.map((_, idx) => (
           <Dot key={idx} active={index === idx} onClick={() => setIndex(idx)} />
         ))}
       </DotsContainer>

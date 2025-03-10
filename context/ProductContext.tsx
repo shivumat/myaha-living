@@ -39,6 +39,7 @@ export interface Collection {
   id: string;
   handle?: string;
   description?: string;
+  url?: string;
 }
 
 interface ProductContextType {

@@ -5,14 +5,14 @@ export function useIsMobile(breakpoint: number = 800) {
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= breakpoint);
+      setIsMobile(window.outerWidth <= breakpoint);
     };
 
     checkScreenSize(); // Check on mount
     window.addEventListener('resize', checkScreenSize);
 
     return () => window.removeEventListener('resize', checkScreenSize);
-  }, [breakpoint]);
+  }, [breakpoint, window.innerWidth]);
 
   return isMobile;
 }

@@ -61,7 +61,6 @@ export const POST = async () => {
 }`;
 
     const data = await shopifyFetch({ query });
-    console.log(1, { ...data.data.data.products });
     const products = data.data.data.products.edges.map((product: any) => {
       const { id, handle, title, description, options, tags } = product.node;
       const variantInfo = options.map((option: any) => {
@@ -91,7 +90,7 @@ export const POST = async () => {
           images,
         };
       });
-      console.log(2);
+
       return {
         id,
         handle,
