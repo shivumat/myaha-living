@@ -61,6 +61,7 @@ export const POST = async () => {
 }`;
 
     const data = await shopifyFetch({ query });
+    console.log(data);
     const products = data.data.data.products.edges.map((product: any) => {
       const { id, handle, title, description, options, tags } = product.node;
       const variantInfo = options.map((option: any) => {
