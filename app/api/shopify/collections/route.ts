@@ -7,7 +7,7 @@ export const POST = async () => {
     collections(first: 100) {
       edges {
         node {
-          description
+          descriptionHtml
           handle
           id
           title
@@ -23,8 +23,14 @@ export const POST = async () => {
 
     const collections = data.data.data.collections.edges.map(
       (collection: any) => {
-        const { id, handle, title, description, image } = collection.node;
-        return { id, handle, title, description, image: image?.url };
+        const { id, handle, title, descriptionHtml, image } = collection.node;
+        return {
+          id,
+          handle,
+          title,
+          description: descriptionHtml,
+          image: image?.url,
+        };
       },
     );
 

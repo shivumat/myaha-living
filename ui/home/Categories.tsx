@@ -44,6 +44,8 @@ const CollectionContainer = newStyled.div`
 `;
 
 const CategoryContainer = newStyled.div`
+    padding: 20px 0px;
+    cursor: pointer;
     display: flex;
     flex: none;
     flex-direction: column;
@@ -54,7 +56,7 @@ const CategoryContainer = newStyled.div`
     border: 1px solid lightgray;
     @media (max-width: 800px) {
         width: calc(100% - 62px);
-        height: 300px;
+        height: 400px;
     }
 `;
 
@@ -72,11 +74,14 @@ const Categories = () => {
   };
 
   const getCategoryElement = (collection: Collection) => (
-    <CategoryContainer key={collection.id}>
+    <CategoryContainer
+      onClick={() => console.log(collection)}
+      key={collection.id}
+    >
       <img
-        src={collection.url}
+        src={collection.productImage}
         alt={collection.title}
-        style={{ width: '80%', height: '200px', objectFit: 'cover' }}
+        style={{ width: '80%', height: '350px', objectFit: 'cover' }}
       />
       {collection.title}
     </CategoryContainer>
@@ -99,10 +104,12 @@ const Categories = () => {
     <Container>
       <div className="title">
         <div>Product Category</div>
-        <div style={{ display: 'flex', columnGap: '40px' }}>
-          <Arrow onClick={() => scroll()}>{'<'}</Arrow>
-          <Arrow onClick={() => scroll(true)}>{'>'}</Arrow>
-        </div>
+        {!isMobile && (
+          <div style={{ display: 'flex', columnGap: '40px' }}>
+            <Arrow onClick={() => scroll()}>{'<'}</Arrow>
+            <Arrow onClick={() => scroll(true)}>{'>'}</Arrow>
+          </div>
+        )}
       </div>
       {CollectionComponent}
     </Container>

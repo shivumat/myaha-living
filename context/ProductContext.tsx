@@ -1,3 +1,5 @@
+import { getRandomIntInclusive } from '#/lib/util';
+import { useRouter } from 'next/navigation';
 import {
   createContext,
   ReactNode,
@@ -13,7 +15,7 @@ export interface Product {
   handle: string;
   title: string;
   description: string;
-  variantInfo: VariantInfo[];
+  variantsInfo: VariantInfo[];
   tags: any[];
   variants: Variant[];
   collections: Collections;
@@ -29,7 +31,8 @@ export interface Variant {
   availableForSale: boolean;
   price: string;
   currencyCode: string;
-  images: any[];
+  images: string[];
+  variantInfo: { name: string; value: string };
 }
 
 export type Collections = Collection[];
@@ -39,12 +42,14 @@ export interface Collection {
   id: string;
   handle?: string;
   description?: string;
-  url?: string;
+  image?: string;
+  productImage?: string;
 }
 
 interface ProductContextType {
   products: Products;
   collections: Collections;
+  openProduct: (product: Product) => void;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -52,6 +57,7 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Products>([]);
   const [collections, setCollections] = useState<Collections>([]);
+  const router = useRouter();
 
   const fetchData = async () => {
     const productData = await fetch('/api/shopify/products', {
@@ -60,7 +66,26 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       body: JSON.stringify({ page: 1 }),
     });
     const productResponse = await productData.json();
-    setProducts(productResponse.data.products);
+    const productsData: Products = productResponse.data.products.map(
+      (product: Product) => {
+        const variants = product.variants.map((variant) => {
+          let images = variant.images;
+          if (images.length === 0) {
+            const sampleImages = [];
+            const totalRandomImgaes = getRandomIntInclusive(5, 3);
+            for (let i = 0; i < totalRandomImgaes; i++) {
+              sampleImages.push(
+                `/images/sample/sample${getRandomIntInclusive(6, 1)}.png`,
+              );
+            }
+            images = sampleImages;
+          }
+          return { ...variant, images };
+        });
+        return { ...product, variants };
+      },
+    );
+    setProducts(productsData);
 
     const collectionData = await fetch('/api/shopify/collections', {
       method: 'POST',
@@ -68,15 +93,34 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       body: JSON.stringify({ page: 1 }),
     });
     const collectionResponse = await collectionData.json();
-    setCollections(collectionResponse.data);
+    const collectionsData: Collections = collectionResponse.data.map(
+      (collection: Collection) => {
+        const collectionProduct = productsData.find((product) => {
+          return product.collections.some(
+            (productCollection) => productCollection.id === collection.id,
+          );
+        });
+        const productImage =
+          collectionProduct?.variants[0].images[0] ??
+          `/images/sample/sample${getRandomIntInclusive(6, 1)}.png`;
+        const image = collection.image ?? '/images/sample/sample_banner1.png';
+        return { ...collection, productImage, image };
+      },
+    );
+    setCollections(collectionsData);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  const openProduct = (product: Product) => {
+    const id = product.id.replace('gid://shopify/Product/9618366595319', '');
+    router.push(`/product/${id}`);
+  };
+
   return (
-    <ProductContext.Provider value={{ products, collections }}>
+    <ProductContext.Provider value={{ products, collections, openProduct }}>
       {children}
     </ProductContext.Provider>
   );

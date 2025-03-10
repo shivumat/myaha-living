@@ -1,0 +1,86 @@
+import { Product } from '#/context/ProductContext';
+import { useIsMobile } from '#/hooks/useMobile';
+import newStyled from '@emotion/styled';
+
+const Description = newStyled.div`
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+`;
+
+const AddtoCart = newStyled.button`
+    height: 30px;
+    width: 100px;
+    background-color: black;
+    font-size: 14px;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    &.view{
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+    }
+    @media (max-width: 800px) {
+        font-size: 10px;
+        width: 70px;
+    }
+`;
+
+const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
+  const { product, isEven } = props;
+  const isMobile = useIsMobile();
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: !isEven ? 'row' : 'row-reverse',
+        gap: '20px',
+        justifyContent: 'space-between',
+        padding: '20px',
+        height: '300px',
+        width: '100%',
+      }}
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div
+          style={{
+            fontSize: '14px',
+            fontWeight: '600',
+            textAlign: isEven ? 'left' : 'right',
+          }}
+        >
+          {product.title}
+        </div>
+        <Description
+          style={{
+            fontSize: '12px',
+            fontWeight: 'lighter',
+            textAlign: isEven ? 'left' : 'right',
+          }}
+          dangerouslySetInnerHTML={{ __html: product.description }}
+        />
+        <div
+          style={{
+            display: 'flex',
+            gap: '10px',
+            marginTop: 'auto',
+            justifyContent: isEven ? 'flex-start' : 'flex-end',
+          }}
+        >
+          <AddtoCart>Add to cart</AddtoCart>
+          <AddtoCart className="view">View</AddtoCart>
+        </div>
+      </div>
+      <img
+        src={product.variants[0].images[0]}
+        alt={product.title}
+        style={{ height: '100%', width: isMobile ? '150px' : '200px' }}
+      />
+    </div>
+  );
+};
+
+export default ProductWithDetails;

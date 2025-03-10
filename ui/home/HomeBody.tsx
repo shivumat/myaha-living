@@ -2,6 +2,9 @@
 import newStyled from '@emotion/styled';
 import FooterCarousel from '../components/FooterCarousel';
 import Categories from './Categories';
+import CategoryProducts from './CategoryProducts';
+import OurStory from './OurStory';
+import FeaturedProducts from './ProductsFeatured';
 
 const Container = newStyled.div`
   padding: 20px;
@@ -29,6 +32,20 @@ const Div1 = newStyled.div`
 
 `;
 
+const FetaureConstainer = newStyled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  .title{
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    width: 100%;
+  }
+`;
+
 const HomeBody = () => {
   return (
     <Container>
@@ -45,7 +62,13 @@ const HomeBody = () => {
         </div>
       </Div1>
       <Categories />
+      <FetaureConstainer>
+        <div className="title">Featured products</div>
+        <FeaturedProducts />
+      </FetaureConstainer>
       <FooterCarousel />
+      <OurStory />
+      <CategoryProducts />
     </Container>
   );
 };

@@ -16,7 +16,7 @@ export const POST = async () => {
         title
         tags
         handle
-        description
+        descriptionHtml
         collections(first: 5) {
           edges {
             node {
@@ -62,41 +62,60 @@ export const POST = async () => {
 
     const data = await shopifyFetch({ query });
     const products = data.data.data.products.edges.map((product: any) => {
-      const { id, handle, title, description, options, tags } = product.node;
-      const variantInfo = options.map((option: any) => {
-        return { name: option.name, values: option.values };
-      });
+      const { id, handle, title, descriptionHtml, options, tags } =
+        product.node;
+      const variantsInfo: { name: string; values: string[] }[] = options.map(
+        (option: any) => {
+          return { name: option.name, values: option.values };
+        },
+      );
       const collections = product.node.collections.edges.map(
         (collection: any) => {
           const { title, id } = collection.node;
           return { title, id };
         },
       );
-      const variants = product.node.variants.edges.map((variant: any) => {
-        const { id, availableForSale, material, finish, dimensions, price } =
-          variant.node;
-        const images = variant.node.product.images.edges.map(
-          (image: any) => image.node.url,
-        );
+      const variants = product.node.variants.edges.map(
+        (variant: any, index: number) => {
+          const { id, availableForSale, material, finish, dimensions, price } =
+            variant.node;
+          const images = variant.node.product.images.edges.map(
+            (image: any) => image.node.url,
+          );
+          let variantInfo = {};
+          let tempIndex = 0;
+          variantsInfo.forEach((info) => {
+            info.values.forEach((value) => {
+              if (tempIndex === index) {
+                variantInfo = {
+                  name: info.name,
+                  value: value,
+                };
+              }
+              tempIndex++;
+            });
+          });
 
-        return {
-          id,
-          availableForSale,
-          material: material?.value,
-          finish: finish?.value,
-          dimensions: dimensions?.value,
-          price: price.amount,
-          currencyCode: price.currencyCode,
-          images,
-        };
-      });
+          return {
+            id,
+            availableForSale,
+            material: material?.value,
+            finish: finish?.value,
+            dimensions: dimensions?.value,
+            price: price.amount,
+            currencyCode: price.currencyCode,
+            images,
+            variantInfo,
+          };
+        },
+      );
 
       return {
         id,
         handle,
         title,
-        description,
-        variantInfo,
+        description: descriptionHtml,
+        variantsInfo,
         tags,
         variants,
         collections,
