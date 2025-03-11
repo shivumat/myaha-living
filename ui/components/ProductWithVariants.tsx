@@ -1,4 +1,4 @@
-import { Product } from '#/context/ProductContext';
+import { Product, useProduct } from '#/context/ProductContext';
 import newStyled from '@emotion/styled';
 import Carousel from './Carousel';
 
@@ -28,6 +28,7 @@ const ProductWithVariants = (props: { product: Product }) => {
   const colorVariants = product.variantsInfo.find(
     (variant) => variant.name === 'Colour',
   );
+  const { openProduct } = useProduct();
 
   return (
     <div
@@ -83,7 +84,9 @@ const ProductWithVariants = (props: { product: Product }) => {
             ))}
           </div>
         </div>
-        <AddtoCart className="view">View</AddtoCart>
+        <AddtoCart className="view" onClick={() => openProduct(product)}>
+          View
+        </AddtoCart>
       </div>
     </div>
   );

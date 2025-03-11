@@ -32,6 +32,9 @@ export interface Variant {
   price: string;
   currencyCode: string;
   images: string[];
+  material: string;
+  finish: string;
+  dimensions: string;
   variantInfo: { name: string; value: string };
 }
 
@@ -115,7 +118,8 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const openProduct = (product: Product) => {
-    const id = product.id.replace('gid://shopify/Product/9618366595319', '');
+    console.log('openProduct', product);
+    const id = product.id.replace('gid://shopify/Product/', '');
     router.push(`/product/${id}`);
   };
 

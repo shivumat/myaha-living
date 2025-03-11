@@ -1,4 +1,5 @@
 import { shopifyFetch } from '#/lib/shopify/util';
+import { getCurrencySymbol } from '#/lib/util';
 import { notFound } from 'next/navigation';
 
 export const POST = async () => {
@@ -103,7 +104,7 @@ export const POST = async () => {
             finish: finish?.value,
             dimensions: dimensions?.value,
             price: price.amount,
-            currencyCode: price.currencyCode,
+            currencyCode: getCurrencySymbol(price.currencyCode),
             images,
             variantInfo,
           };
@@ -126,7 +127,7 @@ export const POST = async () => {
       JSON.stringify({
         status: true,
         message: 'Products fetched',
-        data: { products },
+        data: { products, raw: data.data.data.products.edges },
       }),
       {
         status: 200,

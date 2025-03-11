@@ -1,4 +1,4 @@
-import { Product } from '#/context/ProductContext';
+import { Product, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 
@@ -32,6 +32,7 @@ const AddtoCart = newStyled.button`
 const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
   const { product, isEven } = props;
   const isMobile = useIsMobile();
+  const { openProduct } = useProduct();
   return (
     <div
       style={{
@@ -71,7 +72,9 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
           }}
         >
           <AddtoCart>Add to cart</AddtoCart>
-          <AddtoCart className="view">View</AddtoCart>
+          <AddtoCart className="view" onClick={() => openProduct(product)}>
+            View
+          </AddtoCart>
         </div>
       </div>
       <img
