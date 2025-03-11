@@ -34,6 +34,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
           rel="stylesheet"
         />
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       </head>
       <body className="h-full w-full overflow-y-scroll">
         <SearchProvider>

@@ -3,6 +3,7 @@ import { useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import Carousel from '#/ui/components/Carousel';
 import FooterCarousel from '#/ui/components/FooterCarousel';
+import PincodeInput from '#/ui/components/Pincode';
 import VariantContainer from '#/ui/components/VariantContainer';
 import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
@@ -65,6 +66,11 @@ const Price = newStyled.div`
     font-weight: 500;
 `;
 
+const SubHeadings = newStyled.div`
+    font-size: 18px;
+    font-weight: 500;
+`;
+
 const AddtoCart = newStyled.button`
     height: 40px;
     width: 150px;
@@ -84,11 +90,21 @@ const AddtoCart = newStyled.button`
     }
 `;
 
+const PincodeInputComp = newStyled(PincodeInput)`
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+
+`;
+
 const ProductWithId = () => {
   const { id } = useParams<{ id: string }>();
   const { products } = useProduct();
   const isMobile = useIsMobile();
   const [variant, setVariant] = useState<number>(0);
+  const [edd, setEdd] = useState<string>('');
+  const [] = useState<any>({ amount: 0, ordeId: '' });
 
   const currentProduct = products.find(
     (product) => product.id === `gid://shopify/Product/${id}`,
@@ -98,17 +114,21 @@ const ProductWithId = () => {
     setVariant(0);
   }, [id]);
 
-  // const test = async () => {
-  //   const response = await fetch('/api/delivery/checkPincode', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({ pincode: '560102' }),
-  //   });
-  //   const data = await response.json();
-  //   console.log(JSON.stringify(data.data.estimated_delivery, null, 2));
-  // };
+  const checkPincode = async (pincode: string, valid: boolean) => {
+    if (!valid || !pincode.trim()) {
+      setEdd('');
+      return;
+    }
+    const response = await fetch('/api/delivery/checkPincode', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ pincode }),
+    });
+    const data = await response.json();
+    setEdd(data.estimatedTime);
+  };
 
   if (!currentProduct) return null;
 
@@ -135,7 +155,7 @@ const ProductWithId = () => {
         gap: '10px',
       }}
     >
-      <Price>Manufacture</Price>
+      <SubHeadings>Manufacture</SubHeadings>
       <Description>Hand Made in India</Description>
       {!!showVariants &&
         currentProduct.variantsInfo.map((variantInfo, index) => (
@@ -172,26 +192,31 @@ const ProductWithId = () => {
         gap: '10px',
       }}
     >
+      <Price>Product details</Price>
+      <SubHeadings>Materials and Specs</SubHeadings>
       {!!currentProduct.variants[variant].material && (
-        <>
-          <Price>Material</Price>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Description>Material: </Description>
           <Description>{currentProduct.variants[variant].material}</Description>
-        </>
+        </div>
       )}
       {!!currentProduct.variants[variant].finish && (
-        <>
-          <Price>Finish</Price>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Description>Finish: </Description>
           <Description>{currentProduct.variants[variant].finish}</Description>
-        </>
+        </div>
       )}
       {!!currentProduct.variants[variant].dimensions && (
-        <>
-          <Price>Dimensions</Price>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Description>Dimensions: </Description>
           <Description>
             {currentProduct.variants[variant].dimensions}
           </Description>
-        </>
+        </div>
       )}
+      <div style={{ width: '100%', borderBottom: '1px solid lightgray' }}></div>
+      <SubHeadings>Get your product delivered by:</SubHeadings>
+      <PincodeInputComp edd={edd} onPincodeChange={checkPincode} />
     </div>
   );
 
@@ -253,6 +278,7 @@ const ProductWithId = () => {
     <Container>
       {Images}
       <FooterCarousel rounded={false} />
+      {/* <PaymentComponent {...order}/> */}
     </Container>
   );
 };

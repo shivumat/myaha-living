@@ -29,3 +29,35 @@ export async function shopifyFetch(payload: {
     };
   }
 }
+
+export async function shopifyAdminFetch(payload: {
+  query: string;
+  variables?: any;
+}) {
+  const key = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN;
+
+  try {
+    const response = await fetch(
+      `https://myahaliving.myshopify.com/admin/api/2025-01/graphql.json  `,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(key && { 'X-Shopify-Access-Token': key }),
+        },
+        body: JSON.stringify({
+          query: payload.query,
+          variables: payload.variables,
+        }),
+      },
+    );
+    const data = await response.json();
+    return { data };
+  } catch (error) {
+    console.error('Error:', error);
+    return {
+      status: 500,
+      error: 'Error receiving data',
+    };
+  }
+}
