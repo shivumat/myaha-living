@@ -130,6 +130,21 @@ const ProductWithId = () => {
     setEdd(data.estimatedTime);
   };
 
+  // const test = async () => {
+  //   const response = await fetch('/api/shopify/createOrder', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       amount: 100,
+  //       currency: 'INR',
+  //     }),
+  //   });
+  //   const data = await response.json();
+  //   console.log(data);
+  // };
+
   if (!currentProduct) return null;
 
   const showVariants = currentProduct.variants.length > 1;

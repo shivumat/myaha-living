@@ -10,6 +10,7 @@ import Sidebar from '../components/Sidebar';
 import CartLogo from '../svg/cart-logo';
 import MyahaLogo from '../svg/myaha-logo';
 import SearchLogo from '../svg/search-logo';
+import SignInLogo from '../svg/sign-in-logo';
 import UserLogo from '../svg/user-logo';
 
 const NavContainer = newStyled.div<{ showTransparent?: boolean }>`
@@ -98,6 +99,13 @@ const StyledUserLogo = newStyled(UserLogo)`
   }
 `;
 
+const StyledSignInLogo = newStyled(SignInLogo)`
+  cursor: pointer;
+  @media (max-width: 800px) {
+    transform: scale(0.65);
+  }
+`;
+
 const StyledSearchLogo = newStyled(SearchLogo)`
   cursor: pointer;
   @media (max-width: 800px) {
@@ -177,16 +185,16 @@ const Navbar = () => {
                   toggleLogin();
                 }}
               >
-                Login
+                <StyledUserLogo /> Log in
               </div>
             ) : (
               <div
                 onClick={() => {
                   toggle();
-                  router.push('/account');
+                  logout();
                 }}
               >
-                <StyledUserLogo /> My Account
+                <StyledSignInLogo onClick={logout} /> Log out
               </div>
             )}
           </LinksContainer>
@@ -218,7 +226,7 @@ const Navbar = () => {
           <StyledSearchLogo />
           {!showTransparent &&
             (!!user ? (
-              <StyledUserLogo onClick={logout} />
+              <StyledSignInLogo onClick={logout} />
             ) : (
               <StyledUserLogo onClick={toggleLogin} />
             ))}

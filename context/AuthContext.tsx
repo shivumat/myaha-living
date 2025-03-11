@@ -213,6 +213,13 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       params.delete('signUp');
       router.replace(`?${params.toString()}`, { scroll: false });
     }
+
+    if (!!userDetails && hasLogin) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete('login');
+      params.delete('signUp');
+      router.replace(`?${params.toString()}`, { scroll: false });
+    }
   }, [userDetails, hasSignUp]);
 
   const toggleLogin = () => {

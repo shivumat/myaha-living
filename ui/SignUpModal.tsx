@@ -37,6 +37,10 @@ const Title = styled.h2`
   font-size: 36px;
   font-weight: 500;
   margin-bottom: 40px;
+  @media (max-width: 800px) {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
 `;
 
 const Button = styled.button`
@@ -94,7 +98,8 @@ const InputField = styled.input`
   }
 
   @media (max-width: 800px) {
-    font-size: 14px;
+    padding: 0px 0px 0px 20px;
+    font-size: 12px;
   }
 `;
 
