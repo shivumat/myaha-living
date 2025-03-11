@@ -179,7 +179,6 @@ const OrderList = () => {
             );
           const productVariants =
             productVariant?.variants.filter((variant) => {
-              console.log(variant.id, item.id);
               return variant.id.includes(item.id);
             }) ?? [];
 
@@ -232,6 +231,7 @@ const OrderList = () => {
               justifyContent: 'center',
               fontSize: '20px',
               fontWeight: '400',
+              borderTop: '1px solid black',
             }}
           >
             Total : {order.currencySymbol} {order.totalPrice}

@@ -12,54 +12,18 @@ const Container = newStyled.div`
     @media (max-width: 800px) {
         width: 100%;
         flex-direction: column;
+        align-items: center;
     }
 `;
 
-const Description = newStyled.div`
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    font-weight: lighter;
-    -webkit-line-clamp: 10;
-    -webkit-box-orient: vertical;
-    @media (max-width: 800px) {
-        -webkit-line-clamp: 45;
-    }
+const Price = newStyled.div`
+    font-size:  18px;
+    font-weight: 500;
 `;
 
 const CartItem = (props: { product: Product }) => {
   const { product } = props;
   const imageSrc = props.product.variants[0].images[0];
-
-  const Material = (
-    <div
-      style={{
-        marginTop: '10px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '10px',
-      }}
-    >
-      {!!product.variants[0].material && (
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <Description>Material: </Description>
-          <Description>{product.variants[0].material}</Description>
-        </div>
-      )}
-      {!!product.variants[0].finish && (
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <Description>Finish: </Description>
-          <Description>{product.variants[0].finish}</Description>
-        </div>
-      )}
-      {!!product.variants[0].dimensions && (
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <Description>Dimensions: </Description>
-          <Description>{product.variants[0].dimensions}</Description>
-        </div>
-      )}
-    </div>
-  );
 
   return (
     <Container>
@@ -74,22 +38,27 @@ const CartItem = (props: { product: Product }) => {
           display: 'flex',
           flexDirection: 'column',
           gap: '10px',
-          justifyContent: 'center',
           width: '100%',
         }}
       >
-        <div style={{ fontSize: '20px', fontWeight: '400' }}>
+        <div style={{ fontSize: '24px', fontWeight: '400' }}>
           {props.product.title}
         </div>
-        {product.variants[0].variantInfo.map((variant, index) => (
-          <VariantContainer
-            values={[variant.value]}
-            key={index}
-            activeIndex={index}
-            name={variant.name}
-          />
-        ))}
-        {Material}
+        <div style={{ display: 'flex', gap: '10px' }}>
+          {product.variants[0].variantInfo.map((variant, index) => (
+            <div>
+              <VariantContainer
+                values={[variant.value]}
+                key={index}
+                activeIndex={index}
+                name={variant.name}
+              />
+            </div>
+          ))}
+        </div>
+        <Price>
+          {product.variants[0].currencyCode} {product.variants[0].price}
+        </Price>
       </div>
     </Container>
   );

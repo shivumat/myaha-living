@@ -15,7 +15,7 @@ const SidebarContainer = newStyled.div`
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    @media (max-width: 800px) {
+    @media (max-width: 1200px) {
         width: 100%;
         padding: 10px 50px;
     }

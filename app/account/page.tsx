@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 const Container = newStyled.div`
   display: flex;
   min-height: 100vh;
-  @media (max-width: 800px) {
+  @media (max-width: 1200px) {
     flex-direction: column-reverse;
   }
 `;

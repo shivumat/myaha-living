@@ -135,6 +135,19 @@ const ProductWithId = () => {
     );
   }, [currentProduct]);
 
+  useEffect(() => {
+    if (!currentProduct) return;
+    setVariant(
+      currentProduct?.variants.findIndex((variant) => {
+        return variant.variantInfo.every((info) =>
+          currentVariantInfo.some(
+            (vInfo) => vInfo.name === info.name && vInfo.value === info.value,
+          ),
+        );
+      }) ?? 0,
+    );
+  }, [currentProduct, currentVariantInfo]);
+
   const checkPincode = async (pincode: string, valid: boolean) => {
     if (!valid || !pincode.trim()) {
       setEdd('');
@@ -178,6 +191,8 @@ const ProductWithId = () => {
       return newInfo;
     });
   };
+
+  if (variant < 0) return null;
 
   const Manufacture = (
     <div
