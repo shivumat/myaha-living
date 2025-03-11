@@ -4,7 +4,18 @@ import { saveData } from '../../../../lib/db/firebaseUtil';
 export const POST = async (req: Request) => {
   try {
     const data = await req.json();
-    const { firstName, lastName, mobile, pincode, address, email, uuid } = data;
+    const {
+      firstName,
+      lastName,
+      mobile,
+      pincode,
+      address,
+      email,
+      uuid,
+      city,
+      country,
+      birthdate,
+    } = data;
     if (!email) {
       // Render the closest `not-found.js` Error Boundary
       return new Response(
@@ -24,6 +35,9 @@ export const POST = async (req: Request) => {
         address,
         email,
         uuid,
+        city,
+        country,
+        birthdate,
       },
       uuid,
     );
@@ -39,6 +53,9 @@ export const POST = async (req: Request) => {
           address,
           email,
           uuid,
+          city,
+          country,
+          birthdate,
         },
       }),
       {

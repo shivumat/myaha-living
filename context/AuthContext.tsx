@@ -25,13 +25,16 @@ import {
 import { useToast } from './ToastContext';
 
 interface UserDetailsInterface {
-  firstName: string;
-  lastName: string;
-  mobile: string;
-  pincode: string;
-  address: string;
+  firstName?: string;
+  lastName?: string;
+  mobile?: string;
+  pincode?: string;
+  address?: string;
   email: string;
   uuid: string;
+  birthdate?: string;
+  city?: string;
+  country?: string;
 }
 
 interface AuthContextType {
@@ -47,6 +50,7 @@ interface AuthContextType {
   loginWithGoogle: () => Promise<void>;
   handleGoogleSignup: () => Promise<void>;
   toggleLogin: () => void;
+  saveUserDetails: (userInfo: UserDetailsInterface) => Promise<void>;
   handleEmailSignup: (
     email: string,
     password: string,
@@ -271,6 +275,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         handleGoogleSignup,
         handleEmailSignup,
         toggleLogin,
+        saveUserDetails,
       }}
     >
       {children}
