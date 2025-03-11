@@ -106,6 +106,7 @@ const ProfileDetails = () => {
   const { userDetails, saveUserDetails } = useAuth();
 
   useEffect(() => {
+    console.log(userDetails);
     if (!userDetails) {
       router.push('/');
       return;

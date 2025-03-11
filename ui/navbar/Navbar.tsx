@@ -205,9 +205,6 @@ const Navbar = () => {
                 >
                   <StyledUserLogo /> My account
                 </div>
-                <div style={{ display: 'flex', gap: '10px' }} onClick={logout}>
-                  <StyledSignInLogo /> Log out
-                </div>
               </div>
             )}
           </LinksContainer>
@@ -225,8 +222,6 @@ const Navbar = () => {
       logout();
     }
   };
-
-  console.log(user);
 
   return (
     <>

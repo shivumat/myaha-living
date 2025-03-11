@@ -1,3 +1,4 @@
+import { removeUndefinedValues } from '../util';
 import { Firebase } from './firebase';
 export const saveData = async (
   collectionName: string,
@@ -8,7 +9,9 @@ export const saveData = async (
     const firebaseInstance = Firebase.getInstance();
     const db = firebaseInstance.getDb();
 
-    return await db.doc(`${collectionName}/${id}`).set(data);
+    const cleanedData = removeUndefinedValues(data);
+
+    return await db.doc(`${collectionName}/${id}`).set(cleanedData);
   } catch (error) {
     console.error('Error saving document:', error);
     return null;

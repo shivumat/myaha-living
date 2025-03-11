@@ -41,3 +41,16 @@ export const getCurrencySymbol = (currency: string) => {
       return currency;
   }
 };
+
+interface AnyObject {
+  [key: string]: any;
+}
+
+export const removeUndefinedValues = (obj: AnyObject): AnyObject => {
+  return Object.entries(obj).reduce((acc: AnyObject, [key, value]) => {
+    if (value !== undefined) {
+      acc[key] = value;
+    }
+    return acc;
+  }, {});
+};

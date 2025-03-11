@@ -82,6 +82,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   const saveUserDetails = async (userInfo: UserDetailsInterface) => {
     try {
+      console.log('userInfo:', userInfo);
       const response = await fetch('/api/user/saveUser', {
         method: 'POST',
         body: JSON.stringify(userInfo),
@@ -95,11 +96,11 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const getUserDetails = async (uuid: string) => {
+  const getUserDetails = async (uuid: string, email: string) => {
     try {
       const response = await fetch('/api/user/getUser', {
         method: 'POST',
-        body: JSON.stringify({ uuid }),
+        body: JSON.stringify({ uuid, email }),
       });
       const data = await response.json();
       if (data.status) {
@@ -114,7 +115,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     if (!user) {
       setUserDetails(null);
     } else {
-      getUserDetails(user.uid);
+      showToast('You have logged in successfully.', 'success');
+      getUserDetails(user.uid, user?.email ?? '');
     }
   }, [user]);
 
@@ -226,8 +228,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       params.delete('signUp');
       router.replace(`?${params.toString()}`, { scroll: false });
     }
-    showToast('You have logged in successfully.', 'success');
-  }, [userDetails, hasSignUp]);
+  }, [userDetails, hasSignUp, hasLogin]);
 
   const toggleLogin = () => {
     if (searchParams.has('login')) {
