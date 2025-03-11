@@ -63,32 +63,45 @@ const OrderList = () => {
     <div
       style={{
         width: '100%',
+        maxWidth: '500px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: '10px',
-        padding: '40px 10px',
-        color: 'white',
+        gap: '12px',
+        padding: '40px 20px',
+        color: '#fff',
         backgroundColor: '#5B1D1D',
-        borderRadius: '10px',
-        border: '1px solid #e0e0e0',
+        borderRadius: '12px',
+        boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
         margin: 'auto',
+        textAlign: 'center',
       }}
     >
-      <div style={{ fontSize: '20px', fontWeight: '400' }}>
-        No order placed by you yet
+      <div style={{ fontSize: '22px', fontWeight: '500' }}>
+        You haven’t placed an order yet.
       </div>
-      <div style={{ fontSize: '16px', fontWeight: 'lighter' }}>
-        Please{' '}
-        <span
-          style={{ textDecoration: 'underline', cursor: 'pointer' }}
-          onClick={() => router.push('/products')}
-        >
-          shop
-        </span>{' '}
-        with Myaha!
+      <div style={{ fontSize: '16px', fontWeight: '300', opacity: 0.9 }}>
+        Explore our selection of premium products and place your first order
+        today.
       </div>
+      <button
+        style={{
+          marginTop: '10px',
+          backgroundColor: 'black',
+          color: '#white',
+          fontSize: '16px',
+          fontWeight: '500',
+          padding: '10px 20px',
+          borderRadius: '8px',
+          border: 'none',
+          cursor: 'pointer',
+          transition: 'background 0.3s',
+        }}
+        onClick={() => router.push('/products')}
+      >
+        Browse Products
+      </button>
     </div>
   );
 
@@ -205,6 +218,7 @@ const OrderList = () => {
                   justifyContent: 'center',
                   fontSize: '16px',
                   fontWeight: '300',
+                  borderBottom: '0.5px solid gray',
                 }}
               >
                 x {item.quantity} = {order.currencySymbol}{' '}
