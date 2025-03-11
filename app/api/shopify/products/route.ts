@@ -1,5 +1,5 @@
 import { shopifyFetch } from '#/lib/shopify/util';
-import { getCurrencySymbol } from '#/lib/util';
+import { generateCombinations, getCurrencySymbol } from '#/lib/util';
 import { notFound } from 'next/navigation';
 
 export const POST = async () => {
@@ -70,6 +70,9 @@ export const POST = async () => {
           return { name: option.name, values: option.values };
         },
       );
+
+      const variantCollection = generateCombinations(variantsInfo);
+
       const collections = product.node.collections.edges.map(
         (collection: any) => {
           const { title, id } = collection.node;
@@ -83,19 +86,8 @@ export const POST = async () => {
           const images = variant.node.product.images.edges.map(
             (image: any) => image.node.url,
           );
-          let variantInfo = {};
-          let tempIndex = 0;
-          variantsInfo.forEach((info) => {
-            info.values.forEach((value) => {
-              if (tempIndex === index) {
-                variantInfo = {
-                  name: info.name,
-                  value: value,
-                };
-              }
-              tempIndex++;
-            });
-          });
+
+          const variantInfo = variantCollection[index];
 
           return {
             id,

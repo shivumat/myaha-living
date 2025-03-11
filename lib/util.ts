@@ -54,3 +54,18 @@ export const removeUndefinedValues = (obj: AnyObject): AnyObject => {
     return acc;
   }, {});
 };
+
+export type Variant = { name: string; values: string[] };
+export type Combination = { name: string; value: string }[];
+
+export const generateCombinations = (
+  variantsInfo: Variant[],
+): Combination[] => {
+  return variantsInfo.reduce<Combination[]>(
+    (acc, { name, values }) =>
+      acc.flatMap((existingCombination) =>
+        values.map((value) => [...existingCombination, { name, value }]),
+      ),
+    [[]] as Combination[],
+  );
+};

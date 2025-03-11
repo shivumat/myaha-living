@@ -8,6 +8,7 @@ export const POST = async (req: Request) => {
       'X-Shopify-Access-Token',
       process.env.SHOPIFY_ADMIN_ACCESS_TOKEN as string,
     );
+    myHeaders.append('Content-Type', 'application/json');
 
     const requestOptions = {
       method: 'GET',
@@ -19,15 +20,23 @@ export const POST = async (req: Request) => {
       `https://hvs7sw-ki.myshopify.com/admin/api/2025-01/orders.json?customer_email=${email}`,
       requestOptions,
     )
-      .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((response) => response.json())
+      .then((result) => result)
       .catch((error) => console.error(error));
+
+    const orders = data.orders.map((order: any) => {
+      const line_items = order.line_items.map((item: any) => {
+        const { id, title, quantity, price, product_id } = item;
+        return { id, title, quantity, price, productId: product_id };
+      });
+      return { totalPrice: order.total_price, lineItems: line_items };
+    });
 
     return NextResponse.json(
       {
         status: true,
         message: 'Products fetched',
-        data,
+        orders,
       },
       { status: 200 },
     );

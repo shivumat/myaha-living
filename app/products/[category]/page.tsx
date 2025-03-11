@@ -83,15 +83,12 @@ const ProductsCategory = () => {
   );
 
   useEffect(() => {
-    console.log('collection');
     if (!!collection) {
       setSelected(collection);
     }
   }, [collection]);
 
   useEffect(() => {
-    console.log('products');
-
     if (products.length && collection) {
       const productsToShow = products.filter((product) =>
         product.collections.some((item) => item.id === collection.id),

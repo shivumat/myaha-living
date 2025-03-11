@@ -4,7 +4,6 @@ import { getData, saveData } from '../../../../lib/db/firebaseUtil';
 export const POST = async (req: Request) => {
   try {
     const { uuid, email } = await req.json();
-    console.log('uuid:', uuid);
     let userDetails = await getData('user_details', uuid);
     if (!userDetails) {
       await saveData('user_details', { uuid, email }, uuid);

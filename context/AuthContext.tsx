@@ -82,7 +82,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   const saveUserDetails = async (userInfo: UserDetailsInterface) => {
     try {
-      console.log('userInfo:', userInfo);
       const response = await fetch('/api/user/saveUser', {
         method: 'POST',
         body: JSON.stringify(userInfo),

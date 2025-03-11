@@ -35,7 +35,7 @@ export interface Variant {
   material: string;
   finish: string;
   dimensions: string;
-  variantInfo: { name: string; value: string };
+  variantInfo: { name: string; value: string }[];
 }
 
 export type Collections = Collection[];
@@ -118,7 +118,6 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const openProduct = (product: Product) => {
-    console.log('openProduct', product);
     const id = product.id.replace('gid://shopify/Product/', '');
     router.push(`/product/${id}`);
   };

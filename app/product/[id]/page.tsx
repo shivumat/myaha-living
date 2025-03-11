@@ -1,6 +1,7 @@
 'use client';
 import { useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
+import { Combination } from '#/lib/util';
 import Carousel from '#/ui/components/Carousel';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import PincodeInput from '#/ui/components/Pincode';
@@ -108,15 +109,31 @@ const ProductWithId = () => {
   const isMobile = useIsMobile();
   const [variant, setVariant] = useState<number>(0);
   const [edd, setEdd] = useState<string>('');
-  const [] = useState<any>({ amount: 0, ordeId: '' });
+  const [currentVariantInfo, setVariantInfo] = useState<Combination>([]);
 
   const currentProduct = products.find(
     (product) => product.id === `gid://shopify/Product/${id}`,
   );
 
   useEffect(() => {
-    setVariant(0);
-  }, [id]);
+    const newVariantInfo =
+      currentProduct?.variantsInfo.map((info) => {
+        return {
+          name: info.name,
+          value: info.values[0],
+        };
+      }) ?? [];
+    setVariantInfo(newVariantInfo);
+    setVariant(
+      currentProduct?.variants.findIndex((variant) => {
+        return variant.variantInfo.every((info) =>
+          newVariantInfo.some(
+            (vInfo) => vInfo.name === info.name && vInfo.value === info.value,
+          ),
+        );
+      }) ?? 0,
+    );
+  }, [currentProduct]);
 
   const checkPincode = async (pincode: string, valid: boolean) => {
     if (!valid || !pincode.trim()) {
@@ -152,17 +169,14 @@ const ProductWithId = () => {
   if (!currentProduct) return null;
 
   const showVariants = currentProduct.variants.length > 1;
-  const variantKey = currentProduct.variants[variant].variantInfo.name;
-  const variantValue = currentProduct.variants[variant].variantInfo.value;
 
   const onVariantChange = (name: string, value: string) => {
-    setVariant(
-      currentProduct.variants.findIndex(
-        (variant) =>
-          variant.variantInfo.name === name &&
-          variant.variantInfo.value === value,
-      ),
-    );
+    setVariantInfo((prev) => {
+      const index = prev.findIndex((info) => info.name === name);
+      const newInfo = [...prev];
+      newInfo[index] = { name, value };
+      return newInfo;
+    });
   };
 
   const Manufacture = (
@@ -191,9 +205,9 @@ const ProductWithId = () => {
             <VariantContainer
               {...variantInfo}
               activeIndex={
-                variantInfo.name === variantKey
-                  ? variantInfo.values.indexOf(variantValue)
-                  : -1
+                variantInfo.values?.findIndex(
+                  (value) => value === currentVariantInfo?.[index]?.value,
+                ) ?? 0
               }
               onVariantChange={onVariantChange}
             />

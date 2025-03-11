@@ -6,12 +6,10 @@ import { navRoutes, NavRouteTypes } from '#/lib/constants/routes';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { Dropdown } from '../components/Dropdown';
 import Sidebar from '../components/Sidebar';
 import CartLogo from '../svg/cart-logo';
 import MyahaLogo from '../svg/myaha-logo';
 import SearchLogo from '../svg/search-logo';
-import SignInLogo from '../svg/sign-in-logo';
 import UserLogo from '../svg/user-logo';
 
 const NavContainer = newStyled.div<{ showTransparent?: boolean }>`
@@ -100,13 +98,6 @@ const StyledUserLogo = newStyled(UserLogo)`
   }
 `;
 
-const StyledSignInLogo = newStyled(SignInLogo)`
-  cursor: pointer;
-  @media (max-width: 800px) {
-    transform: scale(0.65);
-  }
-`;
-
 const StyledSearchLogo = newStyled(SearchLogo)`
   cursor: pointer;
   @media (max-width: 800px) {
@@ -142,7 +133,7 @@ const Navbar = () => {
     router.push(item.path);
   };
 
-  const { user, toggleLogin, logout } = useAuth();
+  const { user, toggleLogin } = useAuth();
 
   if (isMobile) {
     return (
@@ -215,14 +206,6 @@ const Navbar = () => {
 
   const showTransparent = !isOpen && isDesktopHomeOnTop;
 
-  const onDropdownSelect = (item: string) => {
-    if (item === 'My account') {
-      router.push('account');
-    } else {
-      logout();
-    }
-  };
-
   return (
     <>
       <NavContainer showTransparent={showTransparent}>
@@ -246,27 +229,7 @@ const Navbar = () => {
             (!user ? (
               <StyledUserLogo onClick={toggleLogin} />
             ) : (
-              <Dropdown
-                options={['My account', 'Log out']}
-                onSelect={onDropdownSelect}
-                renderTrigger={(toggle) => {
-                  return <StyledUserLogo onClick={(e) => toggle(e)} />;
-                }}
-                renderOption={(option) => {
-                  if (option === 'My account') {
-                    return (
-                      <div style={{ display: 'flex', gap: '10px' }}>
-                        <StyledUserLogo /> My account
-                      </div>
-                    );
-                  }
-                  return (
-                    <div style={{ display: 'flex', gap: '10px' }}>
-                      <StyledSignInLogo /> Log out
-                    </div>
-                  );
-                }}
-              />
+              <StyledUserLogo onClick={() => router.push('/account')} />
             ))}
           {!showTransparent && <StyledCartLogo />}
         </LogosContainer>
