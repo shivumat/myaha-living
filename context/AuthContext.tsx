@@ -143,6 +143,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     if (!firebaseAuth) return;
     await signOut(firebaseAuth);
+    showToast('You have been logged out.', 'success');
     setUser(null);
   };
 
@@ -206,6 +207,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
+    if (!userDetails) return;
     if (!!userDetails && hasSignUp) {
       const params = new URLSearchParams(searchParams.toString());
       params.set('welcome', 'true');
@@ -220,6 +222,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       params.delete('signUp');
       router.replace(`?${params.toString()}`, { scroll: false });
     }
+    showToast('You have logged in successfully.', 'success');
   }, [userDetails, hasSignUp]);
 
   const toggleLogin = () => {

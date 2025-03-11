@@ -25,8 +25,18 @@ export function Dropdown<T>({
   );
 
   const toggleDropdown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const x = e.pageX;
-    const y = e.pageY;
+    let x = e.pageX;
+    let y = e.pageY;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const threshold = 0.1; // 10% of the window width
+
+    if (x >= windowWidth * (1 - threshold)) {
+      x = windowWidth * (1 - threshold);
+    }
+    if (y >= windowHeight * (1 - threshold)) {
+      y = windowHeight * (1 - threshold);
+    }
     setCoords({ top: y, left: x });
     setOpen((prev) => !prev);
   };
@@ -100,7 +110,7 @@ const DropdownMenu = styled.div`
   border-radius: 6px;
   min-width: 160px;
   padding: 8px 0;
-  z-index: 999;
+  z-index: 1500;
 `;
 
 const DropdownItem = styled.div`

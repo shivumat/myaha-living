@@ -6,6 +6,7 @@ import { navRoutes, NavRouteTypes } from '#/lib/constants/routes';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { Dropdown } from '../components/Dropdown';
 import Sidebar from '../components/Sidebar';
 import CartLogo from '../svg/cart-logo';
 import MyahaLogo from '../svg/myaha-logo';
@@ -189,12 +190,24 @@ const Navbar = () => {
               </div>
             ) : (
               <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
+                }}
                 onClick={() => {
                   toggle();
-                  logout();
                 }}
               >
-                <StyledSignInLogo onClick={logout} /> Log out
+                <div
+                  style={{ display: 'flex', gap: '10px' }}
+                  onClick={() => router.push('account')}
+                >
+                  <StyledUserLogo /> My account
+                </div>
+                <div style={{ display: 'flex', gap: '10px' }} onClick={logout}>
+                  <StyledSignInLogo /> Log out
+                </div>
               </div>
             )}
           </LinksContainer>
@@ -204,6 +217,16 @@ const Navbar = () => {
   }
 
   const showTransparent = !isOpen && isDesktopHomeOnTop;
+
+  const onDropdownSelect = (item: string) => {
+    if (item === 'My account') {
+      router.push('account');
+    } else {
+      logout();
+    }
+  };
+
+  console.log(user);
 
   return (
     <>
@@ -225,10 +248,30 @@ const Navbar = () => {
         <LogosContainer showTransparent={showTransparent}>
           <StyledSearchLogo />
           {!showTransparent &&
-            (!!user ? (
-              <StyledSignInLogo onClick={logout} />
-            ) : (
+            (!user ? (
               <StyledUserLogo onClick={toggleLogin} />
+            ) : (
+              <Dropdown
+                options={['My account', 'Log out']}
+                onSelect={onDropdownSelect}
+                renderTrigger={(toggle) => {
+                  return <StyledUserLogo onClick={(e) => toggle(e)} />;
+                }}
+                renderOption={(option) => {
+                  if (option === 'My account') {
+                    return (
+                      <div style={{ display: 'flex', gap: '10px' }}>
+                        <StyledUserLogo /> My account
+                      </div>
+                    );
+                  }
+                  return (
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                      <StyledSignInLogo /> Log out
+                    </div>
+                  );
+                }}
+              />
             ))}
           {!showTransparent && <StyledCartLogo />}
         </LogosContainer>

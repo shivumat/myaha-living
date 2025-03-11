@@ -68,7 +68,11 @@ const Price = newStyled.div`
 
 const SubHeadings = newStyled.div`
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 300;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
 `;
 
 const AddtoCart = newStyled.button`
@@ -208,7 +212,10 @@ const ProductWithId = () => {
       }}
     >
       <Price>Product details</Price>
-      <SubHeadings>Materials and Specs</SubHeadings>
+      <SubHeadings>
+        <span>Materials and Specs</span>
+        <span>+</span>
+      </SubHeadings>
       {!!currentProduct.variants[variant].material && (
         <div style={{ display: 'flex', gap: '10px' }}>
           <Description>Material: </Description>
