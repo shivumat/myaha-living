@@ -1,3 +1,4 @@
+import { getCurrencySymbol } from '#/lib/util';
 import { NextResponse } from 'next/server';
 
 export const POST = async (req: Request) => {
@@ -25,11 +26,22 @@ export const POST = async (req: Request) => {
       .catch((error) => console.error(error));
 
     const orders = data.orders.map((order: any) => {
+      console.log(order);
       const line_items = order.line_items.map((item: any) => {
-        const { id, title, quantity, price, product_id } = item;
-        return { id, title, quantity, price, productId: product_id };
+        const { variant_id, title, quantity, price, product_id } = item;
+        return {
+          id: variant_id,
+          title,
+          quantity,
+          price,
+          productId: product_id,
+        };
       });
-      return { totalPrice: order.total_price, lineItems: line_items };
+      return {
+        totalPrice: order.total_price,
+        lineItems: line_items,
+        currencySymbol: getCurrencySymbol(order.currency),
+      };
     });
 
     return NextResponse.json(

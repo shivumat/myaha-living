@@ -5,6 +5,7 @@ import newStyled from '@emotion/styled';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import CartItem from '../components/CartItem';
 
 const FormContainer = newStyled.div`
   flex: 1;
@@ -22,6 +23,7 @@ const FormContainer = newStyled.div`
 
 interface Order {
   totalPrice: string;
+  currencySymbol: string;
   lineItems: {
     title: string;
     quantity: number;
@@ -55,7 +57,7 @@ const OrderList = () => {
   }, [userDetails]);
 
   const isMobile = useIsMobile();
-  useProduct();
+  const { products } = useProduct();
 
   const EmptyScreen = (
     <div
@@ -109,7 +111,9 @@ const OrderList = () => {
   }
 
   const getOrderComponent = (order: Order, index: number) => {
-    console.log(order);
+    const widthVar = isMobile ? '100%' : '30%';
+    const flexDirection = isMobile ? 'column' : 'row';
+
     return (
       <div
         key={`order_${index}`}
@@ -119,16 +123,120 @@ const OrderList = () => {
           backgroundColor: '#F1F1F1',
         }}
       >
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'space-between',
+            marginBottom: '20px',
+            flexDirection,
+            gap: '20px',
+          }}
+        >
+          <div
+            style={{
+              width: widthVar,
+              marginLeft: 'auto',
+              display: 'flex',
+              justifyContent: 'center',
+              fontSize: '20px',
+              fontWeight: '400',
+            }}
+          >
+            Amount
+          </div>
+        </div>
         {order.lineItems.map((item, i) => {
+          const productVariant = products.find(
+            (product) =>
+              !!item.productId && product.id.includes(item.productId),
+          );
+          if (!productVariant)
+            return (
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                  marginBottom: '20px',
+                  flexDirection,
+                  gap: '20px',
+                }}
+              >
+                <div
+                  style={{
+                    width: widthVar,
+                    marginLeft: 'auto',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    fontSize: '16px',
+                    fontWeight: '300',
+                  }}
+                >
+                  {item.title} = {order.currencySymbol} {item.price}
+                </div>
+              </div>
+            );
+          const productVariants =
+            productVariant?.variants.filter((variant) => {
+              console.log(variant.id, item.id);
+              return variant.id.includes(item.id);
+            }) ?? [];
+
+          const cartProduct = { ...productVariant, variants: productVariants };
           return (
-            <div key={i}>
-              {item.title}
-              {item.quantity}
-              {item.price}
+            <div
+              key={i}
+              style={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '20px',
+                flexDirection,
+                gap: '20px',
+              }}
+            >
+              {!!cartProduct && <CartItem product={cartProduct} />}
+              <div
+                style={{
+                  width: widthVar,
+                  marginLeft: 'auto',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  fontSize: '16px',
+                  fontWeight: '300',
+                }}
+              >
+                x {item.quantity} = {order.currencySymbol}{' '}
+                {item.quantity * item.price}
+              </div>
             </div>
           );
         })}
-        {order.totalPrice}
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'space-between',
+            marginBottom: '20px',
+            flexDirection,
+            gap: '20px',
+          }}
+        >
+          <div
+            style={{
+              width: widthVar,
+              marginLeft: 'auto',
+              display: 'flex',
+              justifyContent: 'center',
+              fontSize: '20px',
+              fontWeight: '400',
+            }}
+          >
+            Total : {order.currencySymbol} {order.totalPrice}
+          </div>
+        </div>
       </div>
     );
   };

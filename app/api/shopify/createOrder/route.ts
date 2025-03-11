@@ -59,8 +59,8 @@ export const POST = async (req: Request) => {
       'https://myahaliving.myshopify.com/admin/api/2025-01/orders.json',
       requestOptions,
     )
-      .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((response) => response.json())
+      .then((result) => result)
       .catch((error) => console.error(error));
 
     return NextResponse.json(

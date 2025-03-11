@@ -2,7 +2,7 @@ const VariantContainer = (props: {
   name: string;
   values: string[];
   activeIndex: number;
-  onVariantChange: (name: string, value: string) => void;
+  onVariantChange?: (name: string, value: string) => void;
 }) => {
   const isColourVariant = props.name === 'Colour';
   return (
@@ -12,7 +12,7 @@ const VariantContainer = (props: {
         <div style={{ display: 'flex', gap: '10px' }}>
           {props?.values?.map((color: string, index: number) => (
             <div
-              onClick={() => props.onVariantChange(props.name, color)}
+              onClick={() => props.onVariantChange?.(props.name, color)}
               key={index}
               style={{
                 height: '30px',
@@ -30,7 +30,7 @@ const VariantContainer = (props: {
         <div style={{ display: 'flex', gap: '10px' }}>
           {props?.values?.map((value: string, index: number) => (
             <div
-              onClick={() => props.onVariantChange(props.name, value)}
+              onClick={() => props.onVariantChange?.(props.name, value)}
               key={index}
               style={{
                 height: '30px',
