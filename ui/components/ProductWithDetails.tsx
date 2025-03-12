@@ -38,11 +38,14 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
     <div
       style={{
         display: 'flex',
-        flexDirection: !isEven ? 'row' : 'row-reverse',
+        flexDirection: isMobile
+          ? 'column-reverse'
+          : !isEven
+            ? 'row'
+            : 'row-reverse',
         gap: '20px',
         justifyContent: 'space-between',
         padding: '20px',
-        height: '300px',
         width: '100%',
       }}
     >
@@ -81,7 +84,7 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
       <img
         src={product.variants[0].images[0]}
         alt={product.title}
-        style={{ height: '100%', width: isMobile ? '150px' : '200px' }}
+        style={{ height: '100%', width: isMobile ? '100%' : '200px' }}
       />
     </div>
   );
