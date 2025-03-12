@@ -38,7 +38,11 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
     <div
       style={{
         display: 'flex',
-        flexDirection: isMobile ? 'column' : !isEven ? 'row' : 'row-reverse',
+        flexDirection: isMobile
+          ? 'column-reverse'
+          : !isEven
+            ? 'row'
+            : 'row-reverse',
         gap: '20px',
         justifyContent: 'space-between',
         padding: '20px',
