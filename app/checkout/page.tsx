@@ -132,20 +132,24 @@ const Checkout = () => {
       newOrderObj = { ...newOrderObj, codCharges: codCharges };
     }
     setOrderObj(newOrderObj);
+    const response = await fetch('/api/shopify/createOrder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newOrderObj),
+    });
+    const data = await response.json();
+    const shopifyOrderId = data.data.orderId;
+
     await fetch('/api/order/createOrder', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newOrderObj),
+      body: JSON.stringify({ ...newOrderObj, shopifyOrderId }),
     });
-    await fetch('/api/shopify/createOrder', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newOrderObj),
-    });
+
     clear();
     setOrderObj(null);
     window.location.href = `/?orderCreated=${newOrderObj.id}`;

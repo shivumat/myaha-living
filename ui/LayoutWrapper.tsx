@@ -48,7 +48,11 @@ export default function LayoutWrapper({
             {!hideFooter && <Footer />}
             <Cart />
           </CartProvider>
-          <OrderCreated isOpen={hasOrderCreated} onClose={toggleOrderCreated} />
+          <OrderCreated
+            isOpen={hasOrderCreated}
+            orderId={searchParams.get('orderCreated')}
+            onClose={toggleOrderCreated}
+          />
         </ProductProvider>
       </AuthProvider>
     </ToastProvider>

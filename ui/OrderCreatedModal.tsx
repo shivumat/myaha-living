@@ -1,31 +1,32 @@
 import { useAuth } from '#/context/AuthContext';
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 import Modal from './components/ModalComponent';
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #652821;
-  border-radius: 10px;
+  background-color: #fff;
+  border-radius: 12px;
   width: 50%;
-  height: 70%;
-  padding: 150px;
+  height: auto;
+  padding: 40px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
   @media (max-width: 1000px) {
-    padding: 50px;
     width: 80%;
-    height: 60%;
+    padding: 30px;
   }
   @media (max-width: 800px) {
-    padding: 50px;
     width: 90%;
+    padding: 20px;
   }
 `;
 
 const Card = styled.div`
   width: 100%;
-  text-align: center;
-  color: white;
+  color: #333;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,31 +34,75 @@ const Card = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 24px;
-  font-weight: 500;
-  margin-bottom: 10px;
-  @media (max-width: 800px) {
-    font-size: 16px;
-  }
+  font-size: 22px;
+  font-weight: 600;
+  color: #652821;
+  margin-bottom: 8px;
 `;
 
-const OrderCreated = (props: { isOpen: boolean; onClose: () => void }) => {
-  const { userDetails } = useAuth();
+const Message = styled.p`
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 12px;
+`;
 
-  const onClose = () => {
-    props.onClose();
+const ReferenceCode = styled.p`
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  background: #f3f3f3;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin: 10px 0;
+`;
+
+const OrderCreated = (props: {
+  isOpen: boolean;
+  onClose: () => void;
+  orderId: string | null;
+}) => {
+  const { userDetails } = useAuth();
+  const [referennceId, setReferenceId] = useState('');
+
+  const fetchOrderDetails = async (orderId: string) => {
+    // Fetch order details
+    const data = await fetch('/api/order/getOrder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: orderId }),
+    });
+    const { orderDetails } = await data.json();
+    setReferenceId(orderDetails.shopifyOrderId);
   };
+
+  useEffect(() => {
+    if (!props.orderId) return;
+    fetchOrderDetails(props.orderId);
+  }, [props.orderId]);
 
   if (!userDetails) {
     return null;
   }
 
   return (
-    <Modal isOpen={props.isOpen} onClose={onClose}>
+    <Modal isOpen={props.isOpen} onClose={props.onClose}>
       <Container onClick={(e) => e.stopPropagation()}>
         <Card>
-          <Title>Welcome, {userDetails.firstName ?? userDetails.email}</Title>
-          <Title>Your account has been created !</Title>
+          <Title>
+            Thank You {userDetails.firstName ?? userDetails.email ?? ''}!
+          </Title>
+          <Message>
+            Your order has been successfully created with <strong>Myaha</strong>
+            .
+          </Message>
+          <Message>
+            We’ll be reaching out to you soon with more details.
+          </Message>
+          {!!referennceId && (
+            <ReferenceCode>Order Ref: {referennceId}</ReferenceCode>
+          )}
         </Card>
       </Container>
     </Modal>

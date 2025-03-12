@@ -82,7 +82,7 @@ export const POST = async (req: Request) => {
       {
         status: true,
         message: 'Products fetched',
-        data,
+        data: { orderId: data.order.id },
       },
       { status: 200 },
     );
