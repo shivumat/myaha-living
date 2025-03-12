@@ -5,9 +5,10 @@ const VariantContainer = (props: {
   onVariantChange?: (name: string, value: string) => void;
 }) => {
   const isColourVariant = props.name === 'Colour';
+  const isTitleVariant = props.name === 'Title';
   return (
     <>
-      <div>{props.name}</div>
+      <div>{!isTitleVariant && props.name}</div>
       {isColourVariant ? (
         <div style={{ display: 'flex', gap: '10px' }}>
           {props?.values?.map((color: string, index: number) => (
@@ -26,7 +27,7 @@ const VariantContainer = (props: {
             />
           ))}
         </div>
-      ) : (
+      ) : isTitleVariant ? null : (
         <div style={{ display: 'flex', gap: '10px' }}>
           {props?.values?.map((value: string, index: number) => (
             <div
