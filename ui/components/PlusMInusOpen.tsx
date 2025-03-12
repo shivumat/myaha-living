@@ -3,7 +3,6 @@ import { ReactNode, useState } from 'react';
 
 const MobileContainer = newStyled.div`
   border-top: 0.5px solid white;
-  margin-bottom: 20px;
 `;
 const MobileHeaderContainer = newStyled.div`
   padding: 2px 0px;
@@ -33,7 +32,7 @@ const PlusMInusOpen = ({
   handleLinkClick?: (index: number) => void;
   label: string;
   items: string[];
-  children: ReactNode;
+  children?: ReactNode;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -42,13 +41,14 @@ const PlusMInusOpen = ({
         <div>{label}</div>
         <div>{isOpen ? '-' : '+'}</div>
       </MobileHeaderContainer>
-      {!!isOpen && children
-        ? children
-        : items.map((item, index) => (
-            <Links key={index} onClick={() => handleLinkClick?.(index)}>
-              {item}
-            </Links>
-          ))}
+      {!!isOpen &&
+        (children
+          ? children
+          : items.map((item, index) => (
+              <Links key={index} onClick={() => handleLinkClick?.(index)}>
+                {item}
+              </Links>
+            )))}
     </MobileContainer>
   );
 };

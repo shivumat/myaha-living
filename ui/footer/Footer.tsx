@@ -16,11 +16,23 @@ const FooterContainer = newStyled.div`
   }
 `;
 
+const TextContainer = newStyled.div`
+  text-align: center;
+  font-size: 14px;
+  font-weight: lighter;
+  grid-column: 1 / span 2;
+`;
+
 const Footer = () => {
   return (
     <FooterContainer>
       <FooterLinks />
       <TradeMark />
+      <TextContainer>
+        You can always reach out to us at
+        <strong style={{ display: 'block' }}>+91 6350533372</strong>
+        <strong style={{ display: 'block' }}>hello@myahaliving.com</strong>
+      </TextContainer>
     </FooterContainer>
   );
 };

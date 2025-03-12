@@ -60,7 +60,7 @@ const OurStory = () => {
   };
 
   return (
-    <Container onClick={playVideo}>
+    <Container id="our_story" onClick={playVideo}>
       <Thumbnail
         ref={thumbNailRef}
         id="thumbnail"

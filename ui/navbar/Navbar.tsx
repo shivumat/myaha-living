@@ -1,15 +1,16 @@
 import { useAuth } from '#/context/AuthContext';
+import { useProduct } from '#/context/ProductContext';
 import { useIsDesktopHomeOnTop } from '#/hooks/useIsDesktopHomeOnTop';
 import { useIsMobile } from '#/hooks/useMobile';
 import { useToggle } from '#/hooks/useToggle';
-import { navRoutes, NavRouteTypes } from '#/lib/constants/routes';
+import { navRoutes } from '#/lib/constants/routes';
 import newStyled from '@emotion/styled';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+import PlusMInusOpen from '../components/PlusMInusOpen';
 import Sidebar from '../components/Sidebar';
 import CartLogo from '../svg/cart-logo';
 import MyahaLogo from '../svg/myaha-logo';
-import SearchLogo from '../svg/search-logo';
 import UserLogo from '../svg/user-logo';
 
 const NavContainer = newStyled.div<{ showTransparent?: boolean }>`
@@ -123,8 +124,8 @@ const Navbar = () => {
     }
   }, [isMobile, isDesktopHomeOnTop]);
 
-  const handleLinkClick = (item: NavRouteTypes) => {
-    router.push(item.path);
+  const handleLinkClick = (path: string) => {
+    router.push(path);
   };
 
   const { user, toggleLogin } = useAuth();
@@ -134,6 +135,8 @@ const Navbar = () => {
     params.set('cart', 'true');
     router.replace(`?${params.toString()}`, { scroll: false });
   };
+
+  const { collections } = useProduct();
 
   if (isMobile) {
     return (
@@ -158,17 +161,32 @@ const Navbar = () => {
           onClose={() => toggle()}
         >
           <LinksContainer>
-            {navRoutes.map((route, index) => (
-              <div
-                onClick={() => {
-                  toggle();
-                  handleLinkClick(route);
-                }}
-                key={index}
-              >
-                {route.name}
-              </div>
-            ))}
+            {navRoutes.map((route, index) => {
+              if (route.path === '/products')
+                return (
+                  <PlusMInusOpen
+                    label="Shop by category"
+                    items={collections.map((c) => c.title)}
+                    handleLinkClick={(index) => {
+                      toggle();
+                      handleLinkClick(
+                        `/products/${collections[index]?.id.replace('gid://shopify/Collection/', '')}`,
+                      );
+                    }}
+                  />
+                );
+              return (
+                <div
+                  onClick={() => {
+                    toggle();
+                    handleLinkClick(route.path);
+                  }}
+                  key={index}
+                >
+                  {route.name}
+                </div>
+              );
+            })}
             {!user ? (
               <div
                 onClick={() => {
@@ -216,7 +234,7 @@ const Navbar = () => {
         {!showTransparent && (
           <LinksContainer>
             {navRoutes.map((route, index) => (
-              <div onClick={() => handleLinkClick(route)} key={index}>
+              <div onClick={() => handleLinkClick(route.path)} key={index}>
                 {route.name}
               </div>
             ))}
