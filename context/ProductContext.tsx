@@ -96,8 +96,16 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       body: JSON.stringify({ page: 1 }),
     });
     const collectionResponse = await collectionData.json();
-    const collectionsData: Collections = collectionResponse.data.map(
-      (collection: Collection) => {
+    const collectionsData: Collections = collectionResponse.data
+      .filter(
+        (collection: Collection) =>
+          !!productsData.find((product) => {
+            return product.collections.some(
+              (productCollection) => productCollection.id === collection.id,
+            );
+          }),
+      )
+      .map((collection: Collection) => {
         const collectionProduct = productsData.find((product) => {
           return product.collections.some(
             (productCollection) => productCollection.id === collection.id,
@@ -108,8 +116,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
           `/images/sample/sample${getRandomIntInclusive(6, 1)}.png`;
         const image = collection.image ?? '/images/sample/sample_banner1.png';
         return { ...collection, productImage, image };
-      },
-    );
+      });
     setCollections(collectionsData);
   };
 

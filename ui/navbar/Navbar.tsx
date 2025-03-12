@@ -6,26 +6,33 @@ import { useToggle } from '#/hooks/useToggle';
 import { navRoutes } from '#/lib/constants/routes';
 import newStyled from '@emotion/styled';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PlusMInusOpen from '../components/PlusMInusOpen';
 import Sidebar from '../components/Sidebar';
 import CartLogo from '../svg/cart-logo';
 import MyahaLogo from '../svg/myaha-logo';
 import UserLogo from '../svg/user-logo';
+import AboutUs from './AboutUs';
+import Collections from './Collections';
 
-const NavContainer = newStyled.div<{ showTransparent?: boolean }>`
+const NavContainer = newStyled.div<{
+  showTransparent?: boolean;
+  showAboutUs?: boolean;
+  showCollection?: boolean;
+}>`
   margin: 0;
   padding: 0;
   display: flex; 
   width: 100vw;
   height: 60px;
-  background-color: ${({ showTransparent }) => (showTransparent ? 'transparent' : 'white')};
+  background-color: ${({ showTransparent, showAboutUs }) => (showTransparent ? 'transparent' : showAboutUs ? '#733216' : 'white')};
+  color : ${({ showAboutUs }) => (showAboutUs ? 'white' : 'black')};
   transition: background-color 300ms linear;
   align-items: center;
   position: fixed;
   top: 0;
   z-index: 1000;
-  border-bottom: 0.2px solid ${({ showTransparent }) => (showTransparent ? 'transparent' : '#00000033')};
+  border-bottom: 0.2px solid ${({ showTransparent, showAboutUs, showCollection }) => (showTransparent || showAboutUs || showCollection ? 'transparent' : '#00000033')};
   @media (max-width: 800px) {
     height: 40px;
   }
@@ -106,8 +113,11 @@ const StyledCartLogo = newStyled(CartLogo)`
   }
 `;
 
-const StyledMyahaLogo = newStyled(MyahaLogo)<{ margin?: string }>`
-  filter: invert(1);
+const StyledMyahaLogo = newStyled(MyahaLogo)<{
+  margin?: string;
+  showAboutUs?: boolean;
+}>`
+  ${({ showAboutUs }) => (!showAboutUs ? 'filter: invert(1);' : '')}
   ${({ margin = '' }) => (!!margin ? `margin: ${margin};` : '')}
 `;
 
@@ -115,7 +125,11 @@ const Navbar = () => {
   const isMobile = useIsMobile();
   const { isOpen, toggle } = useToggle();
   const router = useRouter();
-  const isDesktopHomeOnTop = useIsDesktopHomeOnTop();
+  const [showCollection, setShowCollection] = useState(false);
+  const [showAboutUs, setShowAboutUs] = useState(false);
+  const isDesktopHomeOnTop = useIsDesktopHomeOnTop({
+    turnBackToTransparent: !(showCollection || showAboutUs),
+  });
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -222,33 +236,107 @@ const Navbar = () => {
   }
 
   const showTransparent = !isOpen && isDesktopHomeOnTop;
-
+  let timer: NodeJS.Timeout;
   return (
     <>
-      <NavContainer showTransparent={showTransparent}>
+      <NavContainer
+        showTransparent={showTransparent}
+        showAboutUs={showAboutUs}
+        showCollection={showCollection}
+      >
         {showTransparent && <Burger onClick={() => toggle()}>☰</Burger>}
         <StyledMyahaLogo
+          showAboutUs={showAboutUs}
           width={showTransparent ? '111' : '99'}
           height={showTransparent ? '30' : '27'}
         />
         {!showTransparent && (
           <LinksContainer>
-            {navRoutes.map((route, index) => (
-              <div onClick={() => handleLinkClick(route.path)} key={index}>
-                {route.name}
-              </div>
-            ))}
+            {navRoutes.map((route, index) => {
+              if (route.path === '/products') {
+                return (
+                  <div
+                    onMouseEnter={() => {
+                      setShowCollection(true);
+                      setShowAboutUs(false);
+                      clearTimeout(timer);
+                    }}
+                    onMouseLeave={() => {
+                      timer = setTimeout(() => setShowCollection(false), 500);
+                    }}
+                  >
+                    Shop
+                  </div>
+                );
+              }
+              if (route.path === '/about-us') {
+                return (
+                  <div
+                    onMouseEnter={() => {
+                      setShowAboutUs(true);
+                      setShowCollection(false);
+                      clearTimeout(timer);
+                    }}
+                    onMouseLeave={() => {
+                      timer = setTimeout(() => setShowAboutUs(false), 500);
+                    }}
+                  >
+                    About Us
+                  </div>
+                );
+              }
+              return (
+                <div onClick={() => handleLinkClick(route.path)} key={index}>
+                  {route.name}
+                </div>
+              );
+            })}
           </LinksContainer>
         )}
         <LogosContainer showTransparent={showTransparent}>
           {!showTransparent &&
             (!user ? (
-              <StyledUserLogo onClick={toggleLogin} />
+              <StyledUserLogo
+                color={showAboutUs ? 'white' : 'black'}
+                onClick={toggleLogin}
+              />
             ) : (
-              <StyledUserLogo onClick={() => router.push('/account')} />
+              <StyledUserLogo
+                color={showAboutUs ? 'white' : 'black'}
+                onClick={() => router.push('/account')}
+              />
             ))}
-          {!showTransparent && <StyledCartLogo onClick={toggleCart} />}
+          {!showTransparent && (
+            <StyledCartLogo
+              color={showAboutUs ? 'white' : 'black'}
+              onClick={toggleCart}
+            />
+          )}
         </LogosContainer>
+        {(showCollection || showAboutUs) && (
+          <div
+            onMouseLeave={() => {
+              if (showCollection) setShowCollection(false);
+              if (showAboutUs) setShowAboutUs(false);
+            }}
+            onMouseEnter={() => {
+              clearTimeout(timer);
+            }}
+            style={{
+              width: '100%',
+              height: '400px',
+              backgroundColor: showAboutUs ? '#733216' : 'white',
+              position: 'absolute',
+              top: '60px',
+            }}
+          >
+            {showCollection ? (
+              <Collections toggle={() => setShowCollection(false)} />
+            ) : (
+              <AboutUs toggle={() => setShowAboutUs(false)} />
+            )}
+          </div>
+        )}
       </NavContainer>
     </>
   );
