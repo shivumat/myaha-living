@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 // sessionUtil.js
 
@@ -61,7 +61,21 @@ const removeLineItem = (varient_id: string) => {
   localStorage.setItem(CART_KEY, JSON.stringify(updatedCart));
 };
 
-const useCart = () => {
+interface CartContextType {
+  cart: { variant_id: string; quantity: number }[];
+  addItem: (variant_id: string) => void;
+  removeItem: (variant_id: string) => void;
+  clear: () => void;
+  setVariantCount: (variant_id: string, count: number) => void;
+}
+
+const CartContext = createContext<CartContextType | undefined>(undefined);
+
+interface CartProviderProps {
+  children: React.ReactNode;
+}
+
+export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] =
     useState<{ variant_id: string; quantity: number }[]>(getCart());
 
@@ -97,13 +111,19 @@ const useCart = () => {
     setCart([]);
   };
 
-  return {
-    cart,
-    addItem,
-    removeItem,
-    clear,
-    setVariantCount,
-  };
+  return (
+    <CartContext.Provider
+      value={{ cart, addItem, removeItem, clear, setVariantCount }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 };
 
-export default useCart;
+export const useCart = (): CartContextType => {
+  const context = useContext(CartContext);
+  if (context === undefined) {
+    throw new Error('useCartContext must be used within a CartProvider');
+  }
+  return context;
+};

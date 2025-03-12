@@ -35,9 +35,10 @@ const VariantContainer = (props: {
               style={{
                 height: '30px',
                 minWidth: '70px',
+                maxWidth: '150px',
                 padding: '5px',
                 borderRadius: '5px',
-                backgroundColor: '#f5f5f5',
+                backgroundColor: '#f5f5f532',
                 border: !(props.activeIndex === index)
                   ? '0px solid black'
                   : '1px solid black',

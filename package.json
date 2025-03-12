@@ -42,6 +42,7 @@
     "shopify-api-node": "3.14.2",
     "styled-components": "6.1.8",
     "use-count-up": "3.0.1",
+    "uuid": "11.1.0",
     "vercel": "34.0.0"
   },
   "devDependencies": {

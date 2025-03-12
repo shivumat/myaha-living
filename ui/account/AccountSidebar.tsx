@@ -21,7 +21,7 @@ const SidebarContainer = newStyled.div`
     }
 `;
 
-const Sidebar = (props: {
+const AccountSidebar = (props: {
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
 }) => {
@@ -109,4 +109,4 @@ const Sidebar = (props: {
   );
 };
 
-export default Sidebar;
+export default AccountSidebar;

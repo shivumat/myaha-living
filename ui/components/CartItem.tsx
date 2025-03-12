@@ -3,10 +3,10 @@ import newStyled from '@emotion/styled';
 import AddToCart from './AddToCart';
 import VariantContainer from './VariantContainer';
 
-const Container = newStyled.div`
-    width: 60%;
+const Container = newStyled.div<{ width: string }>`
+    width: ${({ width }) => width ?? '60%'};
     border-radius: 10px;
-    background-color: #FFFFFF;
+    background-color: transparent;
     padding: 20px;
     display: flex;
     gap: 10px;
@@ -26,12 +26,16 @@ const StyledAddToCart = newStyled(AddToCart)`
   margin-top: auto;
 `;
 
-const CartItem = (props: { product: Product; showAddtoCart?: boolean }) => {
+const CartItem = (props: {
+  product: Product;
+  showAddtoCart?: boolean;
+  width?: string;
+}) => {
   const { product } = props;
   const imageSrc = props.product.variants[0].images[0];
 
   return (
-    <Container>
+    <Container width={props.width ?? '60%'}>
       <img
         width="175px"
         height={'350px'}
@@ -44,6 +48,7 @@ const CartItem = (props: { product: Product; showAddtoCart?: boolean }) => {
           flexDirection: 'column',
           gap: '10px',
           width: '100%',
+          margin: '10px 0px',
         }}
       >
         <div style={{ fontSize: '24px', fontWeight: '400' }}>

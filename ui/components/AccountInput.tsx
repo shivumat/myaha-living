@@ -20,37 +20,45 @@ const Label = newStyled.label`
   color: #333;
   @media (max-width: 800px) {
     font-size: 12px;
-}
+  }
 `;
 
-const StyledInput = newStyled.input<{ disabled?: boolean }>`
+const StyledInput = newStyled.input<{ disabled?: boolean; hasError?: boolean }>`
   width: 100%;
   padding: 12px;
   padding-top: 18px;
-  border: 2px solid #000;
+  border: 2px solid ${({ hasError }) => (hasError ? 'red' : '#000')};
   border-radius: 4px;
   font-size: 16px;
   outline: none;
   background: ${({ disabled }) => (disabled ? '#d1d1d1' : 'white')};
   @media (max-width: 800px) {
-        font-size: 14px;
-    }
+    font-size: 14px;
+  }
 
   &:focus {
-    border-color: #007bff;
+    border-color: ${({ hasError }) => (hasError ? 'red' : '#007bff')};
   }
+`;
+
+const ErrorMessage = newStyled.p`
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
 `;
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   value: string;
   setValue: (val: string) => void;
+  error?: string;
 }
 
 const AccountTextInput: React.FC<InputProps> = ({
   label,
   value,
   setValue,
+  error,
   ...props
 }) => {
   return (
@@ -59,8 +67,10 @@ const AccountTextInput: React.FC<InputProps> = ({
       <StyledInput
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        hasError={!!error}
         {...props}
       />
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </InputWrapper>
   );
 };

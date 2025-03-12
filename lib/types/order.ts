@@ -21,7 +21,8 @@ export interface OrderPayloadType {
     zip: string;
   };
   razor_pay_id?: string;
-  shipping_charge: number;
+  shippingCharges: number;
+  codCharges?: number;
   customerInfo: {
     first_name?: string;
     last_name?: string;

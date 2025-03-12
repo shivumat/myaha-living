@@ -4,6 +4,7 @@ const PaymentComponent = (props: {
   amount?: number;
   orderId?: string;
   onCompletion: (paymentId: string) => void;
+  email: string;
 }) => {
   useEffect(() => {
     const loadRazorpay = async () => {
@@ -16,20 +17,18 @@ const PaymentComponent = (props: {
           currency: 'INR',
           name: 'Your Store Name',
           description: 'Payment for your order',
-          order_id: props.orderId, // Retrieved from your server
           handler: (response: any) => {
             // Handle successful payment (e.g., verify with server, update order status)
             props.onCompletion(response.razorpay_payment_id);
-            paymentObject.close();
             //send the response to your api to verify it, and to update the order in your database.
           },
           prefill: {
-            name: 'Customer Name',
+            name: '',
             email: 'customer@example.com',
-            contact: '1234567890',
+            contact: '',
           },
         };
-        const paymentObject = new (window as any).Razorpay(options);
+        let paymentObject = new (window as any).Razorpay(options);
         paymentObject.open();
       };
       document.body.appendChild(script);

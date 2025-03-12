@@ -4,7 +4,8 @@ export const POST = async (req: Request) => {
   try {
     const {
       variants,
-      shipping_cahrge: shippingCharge,
+      shippingCharges,
+      codCharges,
       customerInfo,
       shippingAddress,
       billingAddress,
@@ -14,12 +15,26 @@ export const POST = async (req: Request) => {
 
     const udpatedVariants = [
       ...variants,
-      {
-        name: 'shipping_cost',
-        title: 'Shipping cost',
-        price: shippingCharge,
-        currency_code: 'INR',
-      },
+      ...(shippingCharges
+        ? [
+            {
+              name: 'shipping_cost',
+              title: 'Shipping cost',
+              price: shippingCharges,
+              currency_code: 'INR',
+            },
+          ]
+        : []),
+      ...(codCharges
+        ? [
+            {
+              name: 'cod_cost',
+              title: 'Cash on delivery cost',
+              price: codCharges,
+              currency_code: 'INR',
+            },
+          ]
+        : []),
     ];
 
     const myHeaders = new Headers();
@@ -56,7 +71,7 @@ export const POST = async (req: Request) => {
     };
 
     const data = await fetch(
-      'https://myahaliving.myshopify.com/admin/api/2025-01/orders.json',
+      'https://hvs7sw-ki.myshopify.com/admin/api/2025-01/orders.json',
       requestOptions,
     )
       .then((response) => response.json())

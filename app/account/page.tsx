@@ -1,7 +1,7 @@
 'use client';
 import { useAuth } from '#/context/AuthContext';
+import AccountSidebar from '#/ui/account/AccountSidebar';
 import OrderList from '#/ui/account/OrderList';
-import Sidebar from '#/ui/account/Sidebar';
 import Userform from '#/ui/account/Userform';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
@@ -30,7 +30,7 @@ const ProfileDetails = () => {
     <Container>
       {index === 0 && <OrderList />}
       {index === 1 && <Userform />}
-      <Sidebar index={index} setIndex={setIndex} />
+      <AccountSidebar index={index} setIndex={setIndex} />
     </Container>
   );
 };

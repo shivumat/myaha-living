@@ -1,7 +1,7 @@
 'use client';
+import { useCart } from '#/context/CartContext';
 import { useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
-import useCart from '#/hooks/useSession';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import CartItem from '../components/CartItem';
@@ -107,8 +107,8 @@ const Cart = () => {
           >
             {cart.map((item) => {
               const product = products.find((product) =>
-                product.variants.some(
-                  (variant) => variant.id === item.variant_id,
+                product.variants.some((variant) =>
+                  variant.id.includes(item.variant_id),
                 ),
               );
               if (!product) return null;

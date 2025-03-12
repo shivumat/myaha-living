@@ -1,4 +1,4 @@
-import useCart from '#/hooks/useSession';
+import { useCart } from '#/context/CartContext';
 import newStyled from '@emotion/styled';
 
 const AddtoCart = newStyled.button`
@@ -63,7 +63,9 @@ const ActiveInput = newStyled.input`
 
 const AddToCart = (props: { variantId: string; className?: string }) => {
   const { addItem, cart, removeItem, setVariantCount } = useCart();
-  const cartItem = cart.find((item) => item.variant_id === props.variantId);
+  const cartItem = cart.find((item) =>
+    props.variantId.includes(item.variant_id),
+  );
   const { variantId } = props;
   const id = variantId.replace('gid://shopify/ProductVariant/', '');
   if (cartItem) {
