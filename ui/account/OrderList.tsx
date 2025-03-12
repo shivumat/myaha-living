@@ -136,29 +136,31 @@ const OrderList = () => {
           backgroundColor: '#F1F1F1',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            width: '100%',
-            justifyContent: 'space-between',
-            marginBottom: '20px',
-            flexDirection,
-            gap: '20px',
-          }}
-        >
+        {!isMobile && (
           <div
             style={{
-              width: widthVar,
-              marginLeft: 'auto',
               display: 'flex',
-              justifyContent: 'center',
-              fontSize: '20px',
-              fontWeight: '400',
+              width: '100%',
+              justifyContent: 'space-between',
+              marginBottom: '20px',
+              flexDirection,
+              gap: '20px',
             }}
           >
-            Amount
+            <div
+              style={{
+                width: widthVar,
+                marginLeft: 'auto',
+                display: 'flex',
+                justifyContent: 'center',
+                fontSize: '20px',
+                fontWeight: '400',
+              }}
+            >
+              Amount
+            </div>
           </div>
-        </div>
+        )}
         {order.lineItems.map((item, i) => {
           const productVariant = products.find(
             (product) =>
