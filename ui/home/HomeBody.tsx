@@ -1,6 +1,9 @@
 'use client';
 import newStyled from '@emotion/styled';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import FooterCarousel from '../components/FooterCarousel';
+import OrderCreated from '../OrderCreatedModal';
 import Categories from './Categories';
 import CategoryProducts from './CategoryProducts';
 import OurStory from './OurStory';
@@ -47,6 +50,19 @@ const FetaureConstainer = newStyled.div`
 `;
 
 const HomeBody = () => {
+  const searchParams = useSearchParams();
+  const [hasOrderCreated, setOrderCreated] = useState(false);
+
+  useEffect(() => {
+    setOrderCreated(searchParams.has('orderCreated'));
+  }, [searchParams]);
+
+  const toggleOrderCreated = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('orderCreated');
+    window.location.href = '/';
+  };
+
   return (
     <Container>
       <Div1>
@@ -69,6 +85,11 @@ const HomeBody = () => {
       <FooterCarousel />
       <OurStory />
       <CategoryProducts />
+      <OrderCreated
+        isOpen={hasOrderCreated}
+        orderId={searchParams.get('orderCreated')}
+        onClose={toggleOrderCreated}
+      />
     </Container>
   );
 };

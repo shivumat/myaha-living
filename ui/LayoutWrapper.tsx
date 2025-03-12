@@ -5,12 +5,10 @@ import ProductProvider from '#/context/ProductContext';
 import { ToastProvider } from '#/context/ToastContext';
 import { useIsFirstMount } from '#/hooks/useIsFirstMount';
 import { hideFooterRoutes, hideNavbarRoutes } from '#/lib/constants/routes';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Cart from './cart/Cart';
 import Footer from './footer/Footer';
 import Navbar from './navbar/Navbar';
-import OrderCreated from './OrderCreatedModal';
 
 export default function LayoutWrapper({
   children,
@@ -20,21 +18,9 @@ export default function LayoutWrapper({
   const pathname = usePathname();
   const isFirstMount = useIsFirstMount();
 
-  const searchParams = useSearchParams();
-  const [hasOrderCreated, setOrderCreated] = useState(false);
-
-  useEffect(() => {
-    setOrderCreated(searchParams.has('orderCreated'));
-  }, [searchParams]);
-
   const hideNavbar = hideNavbarRoutes.includes(pathname ?? '');
   const hideFooter = hideFooterRoutes.includes(pathname ?? '');
 
-  const toggleOrderCreated = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete('orderCreated');
-    window.location.href = '/';
-  };
   if (isFirstMount) {
     return null;
   }
@@ -48,11 +34,6 @@ export default function LayoutWrapper({
             {!hideFooter && <Footer />}
             <Cart />
           </CartProvider>
-          <OrderCreated
-            isOpen={hasOrderCreated}
-            orderId={searchParams.get('orderCreated')}
-            onClose={toggleOrderCreated}
-          />
         </ProductProvider>
       </AuthProvider>
     </ToastProvider>
