@@ -108,7 +108,11 @@ const OrderList: React.FC<OrderListProps> = ({ note, setNote }) => {
           gap: '20px',
         }}
       >
-        <CartItem product={cartProduct} showAddtoCart />
+        <CartItem
+          product={cartProduct}
+          showAddtoCart
+          quantity={item.quantity}
+        />
         <div
           style={{
             width: widthVar,

@@ -212,7 +212,11 @@ const OrderList = () => {
               }}
             >
               {!!cartProduct && (
-                <CartItem background={'white'} product={cartProduct} />
+                <CartItem
+                  background={'white'}
+                  product={cartProduct}
+                  quantity={item.quantity}
+                />
               )}
               <div
                 style={{
@@ -222,11 +226,9 @@ const OrderList = () => {
                   justifyContent: 'center',
                   fontSize: '16px',
                   fontWeight: '300',
-                  borderBottom: '0.5px solid gray',
                 }}
               >
-                x {item.quantity} = {order.currencySymbol}{' '}
-                {item.quantity * item.price}
+                {order.currencySymbol} {item.quantity * item.price}
               </div>
             </div>
           );
