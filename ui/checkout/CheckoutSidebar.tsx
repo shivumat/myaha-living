@@ -45,6 +45,10 @@ const Row = newStyled.div`
   justify-content: space-between;
   font-size: 16px;
   margin-bottom: 10px;
+  gap: 20px;
+  @media (max-width: 800px) {
+    font-size: 12px;
+  }
 `;
 
 const CheckoutButton = newStyled.button`
@@ -91,7 +95,14 @@ const CheckoutSummary = (props: {
       }) ?? [];
 
     const cartProduct = { ...product, variants: productVariants };
-    return <CartItem width={'90%'} key={index} product={cartProduct} />;
+    return (
+      <CartItem
+        width={'90%'}
+        key={index}
+        product={cartProduct}
+        quantity={item.quantity}
+      />
+    );
   };
 
   const LastStepComp =
@@ -157,7 +168,7 @@ const CheckoutSummary = (props: {
               backgroundColor: 'transparent',
               gap: '20px',
               width: '100%',
-              maxHeight: '40vh',
+              maxHeight: isMobile ? '40vh' : '50vh',
               overflowY: 'auto',
             }}
           >

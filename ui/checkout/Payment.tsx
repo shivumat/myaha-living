@@ -43,7 +43,6 @@ const Container = newStyled.div`
   padding: 16px;
   width: 100%;
   @media (max-width: 800px) {
-    min-width: 500px;
   }
 `;
 
@@ -57,6 +56,11 @@ const Option = newStyled.label<{ selected: boolean }>`
   @media (max-width: 800px) {
     padding: 20px 12px;
     flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    min-height: 150px;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -104,6 +108,7 @@ const PaymentOptions = ({
   shippingCharges,
   email,
   orderId,
+  nextStep,
   onPaymentCompletion,
 }: {
   codCharges: number;
@@ -112,6 +117,7 @@ const PaymentOptions = ({
   amount: number;
   shippingCharges: number;
   email: string;
+  nextStep: Dispatch<SetStateAction<number>>;
   onPaymentCompletion: (paymentId: string) => Promise<void>;
 }) => {
   const [disabled, setDisabled] = useState(false);
@@ -149,7 +155,14 @@ const PaymentOptions = ({
       <Container>
         {/* Razorpay Option */}
         <Option selected={!codCharges} onClick={() => setCodCharges(0)}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              margin: 'auto 0px',
+            }}
+          >
             <HiddenRadio
               type="radio"
               name="payment"
@@ -199,6 +212,13 @@ const PaymentOptions = ({
       </Container>
       <Submit type="submit" onClick={onSubmit}>
         Checkout
+      </Submit>
+      <Submit
+        className="view"
+        type="submit"
+        onClick={() => nextStep((prev) => prev - 1)}
+      >
+        Go Back
       </Submit>
       {openRazorPay && (
         <PaymentComponent

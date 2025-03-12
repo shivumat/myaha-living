@@ -46,11 +46,12 @@ const Submit = newStyled.button`
     color: white;
     border-radius: 4px;
     cursor: pointer;
-    margin: 20px auto;
+    margin: 20px auto 10px;
     &.view{
         background-color: white;
         color: black;
         border: 1px solid black;
+        margin: 0px auto;
     }
     @media (max-width: 800px) {
         font-size: 18px;
@@ -303,7 +304,7 @@ const Userform = ({
             style={{
               fontSize: isMobile ? '16px' : '24px',
               fontWeight: '400',
-              marginBottom: isMobile ? '30px' : '60px',
+              marginBottom: '30px',
             }}
           >
             Billing Address
@@ -373,6 +374,13 @@ const Userform = ({
 
       <Submit type="submit" onClick={onSubmit} disabled={!isEmailValid}>
         Checkout
+      </Submit>
+      <Submit
+        className="view"
+        type="submit"
+        onClick={() => nextStep((prev) => prev - 1)}
+      >
+        Go Back
       </Submit>
     </FormContainer>
   );

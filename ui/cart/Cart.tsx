@@ -86,12 +86,11 @@ const Cart = () => {
       ) : (
         <div
           style={{
-            padding: '20px',
             display: 'flex',
             flexDirection: 'column',
             gap: '20px',
             maxHeight: '90vh',
-            margin: '30px 0px',
+            margin: '20px 0px',
             height: '100%',
           }}
         >

@@ -31,8 +31,9 @@ const CartItem = (props: {
   showAddtoCart?: boolean;
   width?: string;
   background?: string;
+  quantity?: number;
 }) => {
-  const { product } = props;
+  const { product, quantity } = props;
   const imageSrc = props.product.variants[0].images[0];
 
   return (
@@ -71,7 +72,8 @@ const CartItem = (props: {
           ))}
         </div>
         <Price>
-          {product.variants[0].currencyCode} {product.variants[0].price}
+          {product.variants[0].currencyCode} {product.variants[0].price}{' '}
+          {quantity && `x ${quantity}`}
         </Price>
         {props.showAddtoCart && (
           <StyledAddToCart variantId={product.variants[0].id} />

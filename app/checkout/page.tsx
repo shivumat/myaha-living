@@ -8,7 +8,6 @@ import CheckoutSidebar from '#/ui/checkout/CheckoutSidebar';
 import OrderList from '#/ui/checkout/OrderList';
 import Payment from '#/ui/checkout/Payment';
 import newStyled from '@emotion/styled';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -31,7 +30,6 @@ const Checkout = () => {
   const [index, setIndex] = useState(0);
   const [codCharges, setCodCharges] = useState(0);
   const { userDetails } = useAuth();
-  const router = useRouter();
 
   const [note, setNote] = useState('');
   const [email, setEmail] = useState('');
@@ -168,6 +166,7 @@ const Checkout = () => {
         )}
         {index === 2 && orderObj && (
           <Payment
+            nextStep={setIndex}
             onPaymentCompletion={onPaymentCompletion}
             email={orderObj.customerInfo.email}
             shippingCharges={shippingCharges}
@@ -186,22 +185,6 @@ const Checkout = () => {
           codCharges={codCharges}
         />
       </Container>
-      {index !== 0 && (
-        <div
-          onClick={() => setIndex((prev) => prev - 1)}
-          style={{
-            cursor: 'pointer',
-            color: 'blue',
-            textDecoration: 'underline',
-            marginBottom: '10px',
-            marginLeft: '20px',
-            position: 'absolute',
-            bottom: 20,
-          }}
-        >
-          {'<< Back'}
-        </div>
-      )}
     </>
   );
 };

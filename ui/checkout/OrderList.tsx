@@ -175,8 +175,6 @@ const OrderList: React.FC<OrderListProps> = ({ note, setNote }) => {
           flexDirection: 'column',
           gap: '20px',
           width: '100%',
-          maxHeight: isMobile ? '55vh' : '80vh',
-          overflowY: 'auto',
         }}
       >
         {cart.map((item, index) => getOrderComponent(item, index))}
