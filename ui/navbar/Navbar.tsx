@@ -98,13 +98,6 @@ const StyledUserLogo = newStyled(UserLogo)`
   }
 `;
 
-const StyledSearchLogo = newStyled(SearchLogo)`
-  cursor: pointer;
-  @media (max-width: 800px) {
-    transform: scale(0.65);
-  }
-`;
-
 const StyledCartLogo = newStyled(CartLogo)`
   cursor: pointer;
   @media (max-width: 800px) {
@@ -154,7 +147,6 @@ const Navbar = () => {
             height="30"
           />
           <LogosContainer showTransparent>
-            <StyledSearchLogo />
             <StyledCartLogo onClick={toggleCart} />
           </LogosContainer>
         </NavContainer>
@@ -231,7 +223,6 @@ const Navbar = () => {
           </LinksContainer>
         )}
         <LogosContainer showTransparent={showTransparent}>
-          <StyledSearchLogo />
           {!showTransparent &&
             (!user ? (
               <StyledUserLogo onClick={toggleLogin} />
