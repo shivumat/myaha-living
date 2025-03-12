@@ -44,9 +44,7 @@ const PincodeInput = (props: {
         <p style={{ color: 'red', fontSize: '12px' }}>Invalid pincode.</p>
       )}
       {!!props.edd && (
-        <p style={{ color: '#608B1A', fontSize: '12px' }}>
-          Estimated delivery date: {props.edd}
-        </p>
+        <p style={{ color: '#608B1A', fontSize: '12px' }}>{props.edd}</p>
       )}
     </div>
   );

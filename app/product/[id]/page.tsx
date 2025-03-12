@@ -6,6 +6,7 @@ import AddToCart from '#/ui/components/AddToCart';
 import Carousel from '#/ui/components/Carousel';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import PincodeInput from '#/ui/components/Pincode';
+import PlusMInusOpen from '#/ui/components/PlusMInusOpen';
 import VariantContainer from '#/ui/components/VariantContainer';
 import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
@@ -135,6 +136,8 @@ const ProductWithId = () => {
       setEdd('');
       return;
     }
+    let timeout;
+    clearTimeout(timeout);
     const response = await fetch('/api/delivery/checkPincode', {
       method: 'POST',
       headers: {
@@ -143,23 +146,11 @@ const ProductWithId = () => {
       body: JSON.stringify({ pincode }),
     });
     const data = await response.json();
-    setEdd(data.estimatedTime);
+    setEdd(data.isAvailable ? 'Delivery available' : 'Delivery not available');
+    timeout = setTimeout(() => {
+      setEdd('');
+    }, 5000);
   };
-
-  // const test = async () => {
-  //   const response = await fetch('/api/shopify/createOrder', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       amount: 100,
-  //       currency: 'INR',
-  //     }),
-  //   });
-  //   const data = await response.json();
-  //   console.log(data);
-  // };
 
   if (!currentProduct) return null;
 
@@ -223,30 +214,31 @@ const ProductWithId = () => {
       }}
     >
       <Price>Product details</Price>
-      <SubHeadings>
-        <span>Materials and Specs</span>
-        <span>+</span>
-      </SubHeadings>
-      {!!currentProduct.variants[variant].material && (
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <Description>Material: </Description>
-          <Description>{currentProduct.variants[variant].material}</Description>
-        </div>
-      )}
-      {!!currentProduct.variants[variant].finish && (
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <Description>Finish: </Description>
-          <Description>{currentProduct.variants[variant].finish}</Description>
-        </div>
-      )}
-      {!!currentProduct.variants[variant].dimensions && (
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <Description>Dimensions: </Description>
-          <Description>
-            {currentProduct.variants[variant].dimensions}
-          </Description>
-        </div>
-      )}
+      <PlusMInusOpen items={[]} label="Materials and Specs">
+        {!!currentProduct.variants[variant].material && (
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Description>Material: </Description>
+            <Description>
+              {currentProduct.variants[variant].material}
+            </Description>
+          </div>
+        )}
+        {!!currentProduct.variants[variant].finish && (
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Description>Finish: </Description>
+            <Description>{currentProduct.variants[variant].finish}</Description>
+          </div>
+        )}
+        {!!currentProduct.variants[variant].dimensions && (
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Description>Dimensions: </Description>
+            <Description>
+              {currentProduct.variants[variant].dimensions}
+            </Description>
+          </div>
+        )}
+      </PlusMInusOpen>
+
       <div style={{ width: '100%', borderBottom: '1px solid lightgray' }}></div>
       <SubHeadings>Get your product delivered by:</SubHeadings>
       <PincodeInputComp edd={edd} onPincodeChange={checkPincode} />
