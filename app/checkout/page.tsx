@@ -9,7 +9,7 @@ import OrderList from '#/ui/checkout/OrderList';
 import Payment from '#/ui/checkout/Payment';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 const Container = newStyled.div`
@@ -60,13 +60,6 @@ const Checkout = () => {
     country: '',
     zip: '',
   });
-
-  useEffect(() => {
-    if (!userDetails) {
-      router.push('/');
-      return;
-    }
-  }, [userDetails]);
 
   const { cart, clear } = useCart();
   const { products } = useProduct();
