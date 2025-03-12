@@ -15,8 +15,12 @@ const Container = styled.div`
   background-color: #652821;
   border-radius: 10px;
   width: 60%;
-  height: 80%;
+  height: 90%;
   padding: 150px;
+  @media (max-width: 1000px) {
+    padding: 50px;
+    width: 80%;
+  }
   @media (max-width: 800px) {
     padding: 50px;
     width: 90%;
@@ -33,6 +37,10 @@ const Title = styled.h2`
   font-size: 36px;
   font-weight: 500;
   margin-bottom: 40px;
+  @media (max-width: 800px) {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
 `;
 
 const Button = styled.button`
