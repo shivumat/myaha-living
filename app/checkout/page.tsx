@@ -103,19 +103,11 @@ const Checkout = () => {
       return;
     }
     setOrderObj(newOrderObj);
-    await fetch('/api/order/createOrder', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newOrderObj),
-    });
   };
 
   const onPaymentCompletion = async (paymentId: string) => {
-    console.log('paymentId', paymentId);
     let newOrderObj: DBOrderType;
-    const isCOD = !!paymentId;
+    const isCOD = !paymentId;
     if (!!orderObj) {
       newOrderObj = {
         ...orderObj,
@@ -136,6 +128,9 @@ const Checkout = () => {
       status: isCOD ? 'cod' : 'paid',
       razor_pay_id: paymentId ?? '',
     };
+    if (isCOD) {
+      newOrderObj = { ...newOrderObj, codCharges: codCharges };
+    }
     setOrderObj(newOrderObj);
     await fetch('/api/order/createOrder', {
       method: 'POST',
@@ -152,7 +147,8 @@ const Checkout = () => {
       body: JSON.stringify(newOrderObj),
     });
     clear();
-    window.location.href = '/?welcome=true';
+    setOrderObj(null);
+    window.location.href = `/?orderCreated=${newOrderObj.id}`;
   };
 
   return (
@@ -185,7 +181,13 @@ const Checkout = () => {
           />
         )}
 
-        <CheckoutSidebar total={total} index={index} setIndex={setIndex} />
+        <CheckoutSidebar
+          total={total}
+          index={index}
+          setIndex={setIndex}
+          shippingCharges={shippingCharges}
+          codCharges={codCharges}
+        />
       </Container>
       {index !== 0 && (
         <div

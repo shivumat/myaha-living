@@ -114,7 +114,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     if (!user) {
       setUserDetails(null);
     } else {
-      showToast('You have logged in successfully.', 'success');
       getUserDetails(user.uid, user?.email ?? '');
     }
   }, [user]);
@@ -133,6 +132,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         : browserSessionPersistence;
       await setPersistence(firebaseAuth, persistence);
       await signInWithEmailAndPassword(firebaseAuth, email, password);
+      showToast('You have logged in successfully.', 'success');
     } catch (err: any) {
       showToast('Please verify your credentials', 'error');
       console.error('Login failed. Try again.');

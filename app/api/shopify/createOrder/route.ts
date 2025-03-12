@@ -7,8 +7,8 @@ export const POST = async (req: Request) => {
       shippingCharges,
       codCharges,
       customerInfo,
-      shippingAddress,
-      billingAddress,
+      shipping_address,
+      billing_address,
       razor_pay_id,
       note,
     } = await req.json();
@@ -49,8 +49,8 @@ export const POST = async (req: Request) => {
       order: {
         line_items: udpatedVariants,
         customer: customerInfo,
-        shipping_address: shippingAddress,
-        billing_address: billingAddress,
+        shipping_address,
+        billing_address,
         confirmation_number: '1245',
         transaction: {
           currency_code: 'INR',

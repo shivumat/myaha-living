@@ -114,11 +114,25 @@ const PaymentOptions = ({
   email: string;
   onPaymentCompletion: (paymentId: string) => Promise<void>;
 }) => {
+  const [disabled, setDisabled] = useState(false);
   const [openRazorPay, setOpenRazorPay] = useState(false);
   const isMobile = useIsMobile();
 
   const onRazorPayCompletion = (razorPayKey: string) => {
     onPaymentCompletion(razorPayKey);
+  };
+
+  const onSubmit = () => {
+    if (disabled) return;
+    setDisabled(true);
+    setTimeout(() => {
+      setDisabled(false);
+    }, 5000); // 5 seconds
+    if (!codCharges) {
+      setOpenRazorPay(true);
+      return;
+    }
+    onPaymentCompletion('');
   };
 
   return (
@@ -183,16 +197,7 @@ const PaymentOptions = ({
           <Text>Cash on delivery (+ ₹100)</Text>
         </Option>
       </Container>
-      <Submit
-        type="submit"
-        onClick={() => {
-          if (!codCharges) {
-            setOpenRazorPay(true);
-            return;
-          }
-          onPaymentCompletion('');
-        }}
-      >
+      <Submit type="submit" onClick={onSubmit}>
         Checkout
       </Submit>
       {openRazorPay && (

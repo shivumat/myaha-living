@@ -209,7 +209,9 @@ const OrderList = () => {
                 gap: '20px',
               }}
             >
-              {!!cartProduct && <CartItem product={cartProduct} />}
+              {!!cartProduct && (
+                <CartItem background={'white'} product={cartProduct} />
+              )}
               <div
                 style={{
                   width: widthVar,

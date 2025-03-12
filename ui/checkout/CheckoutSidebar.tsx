@@ -68,6 +68,8 @@ const CheckoutSummary = (props: {
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
   total: number;
+  shippingCharges: number;
+  codCharges: number;
 }) => {
   const { index, setIndex } = props;
 
@@ -91,6 +93,27 @@ const CheckoutSummary = (props: {
     const cartProduct = { ...product, variants: productVariants };
     return <CartItem width={'90%'} key={index} product={cartProduct} />;
   };
+
+  const LastStepComp =
+    index === 2 ? (
+      <>
+        <Row>
+          <span>Shipping</span>
+          <span>₹ {props.shippingCharges}</span>
+        </Row>
+        {!!props.codCharges && (
+          <Row>
+            <span>COD charges</span>
+            <span>₹ {props.codCharges}</span>
+          </Row>
+        )}
+      </>
+    ) : null;
+
+  const total =
+    index === 2
+      ? props.total + props.shippingCharges + props.codCharges
+      : props.total;
 
   return (
     <SummaryContainer>
@@ -116,10 +139,11 @@ const CheckoutSummary = (props: {
           <span>Shipping charges</span>
           <span>Calculated on the next step</span>
         </Row>
+        {LastStepComp}
         <Divider />
         <Row>
           <span>Total</span>
-          <span>₹ {props.total}</span>
+          <span>₹ {total}</span>
         </Row>
         {index === 0 ? (
           <CheckoutButton onClick={() => setIndex((prev) => prev + 1)}>

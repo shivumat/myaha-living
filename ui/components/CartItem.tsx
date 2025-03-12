@@ -3,10 +3,10 @@ import newStyled from '@emotion/styled';
 import AddToCart from './AddToCart';
 import VariantContainer from './VariantContainer';
 
-const Container = newStyled.div<{ width: string }>`
+const Container = newStyled.div<{ width: string; background: string }>`
     width: ${({ width }) => width ?? '60%'};
     border-radius: 10px;
-    background-color: transparent;
+    background-color: ${({ background }) => background ?? 'transparent'};
     padding: 20px;
     display: flex;
     gap: 10px;
@@ -30,12 +30,16 @@ const CartItem = (props: {
   product: Product;
   showAddtoCart?: boolean;
   width?: string;
+  background?: string;
 }) => {
   const { product } = props;
   const imageSrc = props.product.variants[0].images[0];
 
   return (
-    <Container width={props.width ?? '60%'}>
+    <Container
+      width={props.width ?? '60%'}
+      background={props.background ?? 'transparent'}
+    >
       <img
         width="175px"
         height={'350px'}
