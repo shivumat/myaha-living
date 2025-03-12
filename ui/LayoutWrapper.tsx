@@ -5,6 +5,7 @@ import { ToastProvider } from '#/context/ToastContext';
 import { useIsFirstMount } from '#/hooks/useIsFirstMount';
 import { hideFooterRoutes, hideNavbarRoutes } from '#/lib/constants/routes';
 import { usePathname } from 'next/navigation';
+import Cart from './cart/Cart';
 import Footer from './footer/Footer';
 import Navbar from './navbar/Navbar';
 
@@ -30,6 +31,7 @@ export default function LayoutWrapper({
           {!hideNavbar && <Navbar />}
           {children}
           {!hideFooter && <Footer />}
+          <Cart />
         </ProductProvider>
       </AuthProvider>
     </ToastProvider>

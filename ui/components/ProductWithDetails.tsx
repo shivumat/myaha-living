@@ -1,6 +1,7 @@
 import { Product, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
+import AddToCart from './AddToCart';
 
 const Description = newStyled.div`
     text-overflow: ellipsis;
@@ -71,7 +72,7 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
             justifyContent: isEven ? 'flex-start' : 'flex-end',
           }}
         >
-          <AddtoCart>Add to cart</AddtoCart>
+          <AddToCart variantId={product.variants[0].id} />
           <AddtoCart className="view" onClick={() => openProduct(product)}>
             View
           </AddtoCart>

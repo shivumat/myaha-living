@@ -4,7 +4,7 @@ import { useIsMobile } from '#/hooks/useMobile';
 import { useToggle } from '#/hooks/useToggle';
 import { navRoutes, NavRouteTypes } from '#/lib/constants/routes';
 import newStyled from '@emotion/styled';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import CartLogo from '../svg/cart-logo';
@@ -122,6 +122,7 @@ const Navbar = () => {
   const { isOpen, toggle } = useToggle();
   const router = useRouter();
   const isDesktopHomeOnTop = useIsDesktopHomeOnTop();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (!isMobile && isDesktopHomeOnTop) {
@@ -134,6 +135,12 @@ const Navbar = () => {
   };
 
   const { user, toggleLogin } = useAuth();
+
+  const toggleCart = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('cart', 'true');
+    router.replace(`?${params.toString()}`, { scroll: false });
+  };
 
   if (isMobile) {
     return (
@@ -148,7 +155,7 @@ const Navbar = () => {
           />
           <LogosContainer showTransparent>
             <StyledSearchLogo />
-            <StyledCartLogo />
+            <StyledCartLogo onClick={toggleCart} />
           </LogosContainer>
         </NavContainer>
         ;
@@ -231,7 +238,7 @@ const Navbar = () => {
             ) : (
               <StyledUserLogo onClick={() => router.push('/account')} />
             ))}
-          {!showTransparent && <StyledCartLogo />}
+          {!showTransparent && <StyledCartLogo onClick={toggleCart} />}
         </LogosContainer>
       </NavContainer>
     </>

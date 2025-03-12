@@ -1,5 +1,6 @@
 import { Product } from '#/context/ProductContext';
 import newStyled from '@emotion/styled';
+import AddToCart from './AddToCart';
 import VariantContainer from './VariantContainer';
 
 const Container = newStyled.div`
@@ -21,7 +22,11 @@ const Price = newStyled.div`
     font-weight: 500;
 `;
 
-const CartItem = (props: { product: Product }) => {
+const StyledAddToCart = newStyled(AddToCart)`
+  margin-top: auto;
+`;
+
+const CartItem = (props: { product: Product; showAddtoCart?: boolean }) => {
   const { product } = props;
   const imageSrc = props.product.variants[0].images[0];
 
@@ -59,6 +64,9 @@ const CartItem = (props: { product: Product }) => {
         <Price>
           {product.variants[0].currencyCode} {product.variants[0].price}
         </Price>
+        {props.showAddtoCart && (
+          <StyledAddToCart variantId={product.variants[0].id} />
+        )}
       </div>
     </Container>
   );

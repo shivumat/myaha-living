@@ -88,13 +88,13 @@ const OrderList = () => {
       <button
         style={{
           marginTop: '10px',
-          backgroundColor: 'black',
-          color: '#white',
+          backgroundColor: 'transparent',
+          color: 'white',
           fontSize: '16px',
           fontWeight: '500',
           padding: '10px 20px',
           borderRadius: '8px',
-          border: 'none',
+          border: '1px solid white',
           cursor: 'pointer',
           transition: 'background 0.3s',
         }}

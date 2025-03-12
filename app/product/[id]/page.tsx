@@ -2,6 +2,7 @@
 import { useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import { Combination } from '#/lib/util';
+import AddToCart from '#/ui/components/AddToCart';
 import Carousel from '#/ui/components/Carousel';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import PincodeInput from '#/ui/components/Pincode';
@@ -74,25 +75,6 @@ const SubHeadings = newStyled.div`
     width: 100%;
     justify-content: space-between;
     align-items: center;
-`;
-
-const AddtoCart = newStyled.button`
-    height: 40px;
-    width: 150px;
-    background-color: black;
-    font-size: 18px;
-    color: white;
-    border-radius: 3px;
-    cursor: pointer;
-    &.view{
-        background-color: white;
-        color: black;
-        border: 1px solid black;
-    }
-    @media (max-width: 800px) {
-        font-size: 14px;
-        width: 100px;
-    }
 `;
 
 const PincodeInputComp = newStyled(PincodeInput)`
@@ -296,7 +278,7 @@ const ProductWithId = () => {
           {currentProduct.variants[variant].currencyCode}{' '}
           {currentProduct.variants[variant].price}
         </Price>
-        <AddtoCart>Add to cart</AddtoCart>
+        <AddToCart variantId={currentProduct.variants[variant].id} />
       </div>
       {Manufacture}
       {Material}
@@ -317,7 +299,7 @@ const ProductWithId = () => {
         {currentProduct.variants[variant].currencyCode}{' '}
         {currentProduct.variants[variant].price}
       </Price>
-      <AddtoCart>Add to cart</AddtoCart>
+      <AddToCart variantId={currentProduct.variants[variant].id} />
       {Manufacture}
       {Material}
     </MobileWrapper>
