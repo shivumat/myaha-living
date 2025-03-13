@@ -157,7 +157,10 @@ const CheckoutSummary = (props: {
           <span>₹ {total}</span>
         </Row>
         {index === 0 ? (
-          <CheckoutButton onClick={() => setIndex((prev) => prev + 1)}>
+          <CheckoutButton
+            disabled={!total}
+            onClick={() => setIndex((prev) => prev + 1)}
+          >
             Checkout
           </CheckoutButton>
         ) : (
