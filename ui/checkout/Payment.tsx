@@ -1,3 +1,4 @@
+import { useToast } from '#/context/ToastContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -123,6 +124,7 @@ const PaymentOptions = ({
   const [disabled, setDisabled] = useState(false);
   const [openRazorPay, setOpenRazorPay] = useState(false);
   const isMobile = useIsMobile();
+  const { startLoading } = useToast();
 
   const onRazorPayCompletion = (razorPayKey: string) => {
     onPaymentCompletion(razorPayKey);
@@ -138,6 +140,7 @@ const PaymentOptions = ({
       setOpenRazorPay(true);
       return;
     }
+    startLoading();
     onPaymentCompletion('');
   };
 

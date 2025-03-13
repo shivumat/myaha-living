@@ -2,6 +2,7 @@
 import { useAuth } from '#/context/AuthContext';
 import { useCart } from '#/context/CartContext';
 import { useProduct } from '#/context/ProductContext';
+import { useToast } from '#/context/ToastContext';
 import { OrderPayloadType } from '#/lib/types/order';
 import Userform from '#/ui/checkout/Address';
 import CheckoutSidebar from '#/ui/checkout/CheckoutSidebar';
@@ -60,6 +61,7 @@ const Checkout = () => {
   });
 
   const { cart, clear } = useCart();
+  const { stopLoading, showToast } = useToast();
   const { products } = useProduct();
 
   const total = cart.reduce((acc, item) => {
@@ -143,6 +145,8 @@ const Checkout = () => {
 
     clear();
     setOrderObj(null);
+    stopLoading();
+    showToast('Order Placed Successfully', 'success');
     window.location.href = `/?orderCreated=${newOrderObj.id}`;
   };
 
