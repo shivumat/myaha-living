@@ -22,6 +22,10 @@ const AddtoCart = newStyled.button`
     }
 `;
 
+const StyleCarousel = newStyled(Carousel)`
+    cursor: pointer;
+`;
+
 const ProductWithVariants = (props: { product: Product }) => {
   const { product } = props;
 
@@ -40,7 +44,11 @@ const ProductWithVariants = (props: { product: Product }) => {
         maxWidth: '450px',
       }}
     >
-      <Carousel height={'500px'} images={product.variants[0].images} />
+      <StyleCarousel
+        onClick={() => openProduct(product)}
+        height={'500px'}
+        images={product.variants[0].images}
+      />
       <div
         style={{
           display: 'flex',
@@ -73,6 +81,7 @@ const ProductWithVariants = (props: { product: Product }) => {
           <div style={{ display: 'flex', gap: '10px' }}>
             {colorVariants?.values?.map((color: string) => (
               <div
+                className="clickable"
                 style={{
                   height: '20px',
                   width: '20px',
@@ -84,7 +93,10 @@ const ProductWithVariants = (props: { product: Product }) => {
             ))}
           </div>
         </div>
-        <AddtoCart className="view" onClick={() => openProduct(product)}>
+        <AddtoCart
+          className="view clickable"
+          onClick={() => openProduct(product)}
+        >
           View
         </AddtoCart>
       </div>

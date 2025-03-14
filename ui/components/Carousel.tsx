@@ -47,6 +47,8 @@ const Carousel = (props: {
   images?: string[];
   height: string;
   children?: ReactNode;
+  onClick?: () => void;
+  className?: string;
 }) => {
   const { images = [], height, children } = props;
   const [index, setIndex] = useState<number>(0);
@@ -93,6 +95,8 @@ const Carousel = (props: {
 
   return (
     <CarouselContainer
+      className={props.className}
+      onClick={props.onClick}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >

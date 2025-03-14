@@ -57,7 +57,7 @@ const CategoryContainer = newStyled.div`
     border: 1px solid lightgray;
     @media (max-width: 800px) {
         padding: 20px 0px 30px;
-        width: 100%;
+        width: 99%;
         height: 400px;
     }
 `;
@@ -86,11 +86,12 @@ const Categories = () => {
       key={collection.id}
     >
       <img
+        className="clickable"
         src={collection.productImage}
         alt={collection.title}
         style={{ width: '80%', height: '300px', objectFit: 'cover' }}
       />
-      {collection.title}
+      <span className="clickable">{collection.title}</span>
     </CategoryContainer>
   );
 
@@ -113,7 +114,7 @@ const Categories = () => {
         <div>Product Category</div>
         {!isMobile && (
           <div style={{ display: 'flex', columnGap: '40px' }}>
-            <Arrow onClick={() => scroll()}>
+            <Arrow className="clickable" onClick={() => scroll()}>
               <img
                 src="/images/caret.png"
                 alt="sort"
@@ -124,7 +125,7 @@ const Categories = () => {
                 }}
               />
             </Arrow>
-            <Arrow onClick={() => scroll(true)}>
+            <Arrow className="clickable" onClick={() => scroll(true)}>
               <img
                 src="/images/caret.png"
                 alt="sort"

@@ -19,6 +19,7 @@ const Collections = ({ toggle }: { toggle?: () => void }) => {
     <Container>
       {collections.map((collection) => (
         <div
+          className="clickable"
           onClick={() => {
             toggle && toggle();
             router.push(

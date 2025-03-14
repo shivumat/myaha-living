@@ -71,7 +71,9 @@ const AddToCart = (props: { variantId: string; className?: string }) => {
   if (cartItem) {
     return (
       <div className={props.className} style={{ display: 'flex' }}>
-        <ActiveButtons onClick={() => removeItem(id)}>-</ActiveButtons>
+        <ActiveButtons className="clickable" onClick={() => removeItem(id)}>
+          -
+        </ActiveButtons>
         <ActiveInput
           style={{ margin: '0px 10px' }}
           type="number"
@@ -81,12 +83,17 @@ const AddToCart = (props: { variantId: string; className?: string }) => {
           }}
           inputMode="numeric"
         />
-        <ActiveButtons onClick={() => addItem(id)}>+</ActiveButtons>
+        <ActiveButtons className="clickable" onClick={() => addItem(id)}>
+          +
+        </ActiveButtons>
       </div>
     );
   }
   return (
-    <AddtoCart className={props.className} onClick={() => addItem(id)}>
+    <AddtoCart
+      className={`clickable ${props.className}`}
+      onClick={() => addItem(id)}
+    >
       Add to cart
     </AddtoCart>
   );

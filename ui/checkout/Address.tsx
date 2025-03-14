@@ -191,6 +191,8 @@ const Userform = ({
     setShowEmail(!userDetails?.email);
   }, [userDetails]);
 
+  const isDisabled = Object.keys(errors).length > 0 || !isEmailValid;
+
   return (
     <FormContainer>
       <h2
@@ -211,7 +213,7 @@ const Userform = ({
       >
         Shipping Address
       </h3>
-      <Form>
+      <Form onChange={() => validateForm()}>
         {showEmail ? (
           <>
             <AccountTextInput
@@ -252,7 +254,12 @@ const Userform = ({
         />
 
         <InputGroup>
-          <AccountTextInput label="City" value={city} setValue={setCity} />
+          <AccountTextInput
+            error={errors.city}
+            label="City"
+            value={city}
+            setValue={setCity}
+          />
           <AccountTextInput
             label="Pin-code"
             value={pinCode}
@@ -372,11 +379,16 @@ const Userform = ({
         </>
       )}
 
-      <Submit type="submit" onClick={onSubmit} disabled={!isEmailValid}>
+      <Submit
+        className={`clickable ${isDisabled ? 'disabled' : ''}`}
+        type="submit"
+        onClick={onSubmit}
+        disabled={isDisabled}
+      >
         Checkout
       </Submit>
       <Submit
-        className="view"
+        className="view clickable"
         type="submit"
         onClick={() => nextStep((prev) => prev - 1)}
       >

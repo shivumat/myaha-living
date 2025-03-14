@@ -240,7 +240,9 @@ const ProductWithId = () => {
       </PlusMInusOpen>
 
       <div style={{ width: '100%', borderBottom: '1px solid lightgray' }}></div>
-      <SubHeadings>Get your product delivered by:</SubHeadings>
+      <SubHeadings style={{ fontSize: '14px' }}>
+        Please enter PIN code to check availability:
+      </SubHeadings>
       <PincodeInputComp edd={edd} onPincodeChange={checkPincode} />
     </div>
   );

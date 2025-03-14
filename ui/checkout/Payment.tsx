@@ -213,11 +213,11 @@ const PaymentOptions = ({
           <Text>Cash on delivery (+ ₹100)</Text>
         </Option>
       </Container>
-      <Submit type="submit" onClick={onSubmit}>
+      <Submit className="clickable" type="submit" onClick={onSubmit}>
         Checkout
       </Submit>
       <Submit
-        className="view"
+        className="view clickable"
         type="submit"
         onClick={() => nextStep((prev) => prev - 1)}
       >

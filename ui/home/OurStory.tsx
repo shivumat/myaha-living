@@ -68,6 +68,7 @@ const OurStory = () => {
       >
         Our Story
         <img
+          className="clickable"
           src="/images/play.png"
           alt="play"
           style={{ height: '50px', width: '50px' }}

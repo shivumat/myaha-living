@@ -38,14 +38,18 @@ const PlusMInusOpen = ({
   return (
     <MobileContainer>
       <MobileHeaderContainer onClick={() => setIsOpen((prev) => !prev)}>
-        <div>{label}</div>
-        <div>{isOpen ? '-' : '+'}</div>
+        <div className="clickable">{label}</div>
+        <div className="clickable">{isOpen ? '-' : '+'}</div>
       </MobileHeaderContainer>
       {!!isOpen &&
         (children
           ? children
           : items.map((item, index) => (
-              <Links key={index} onClick={() => handleLinkClick?.(index)}>
+              <Links
+                className="clickable"
+                key={index}
+                onClick={() => handleLinkClick?.(index)}
+              >
                 {item}
               </Links>
             )))}

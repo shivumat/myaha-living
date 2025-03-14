@@ -158,6 +158,7 @@ const Navbar = () => {
         <NavContainer>
           <Burger onClick={() => toggle()}>☰</Burger>
           <StyledMyahaLogo
+            className="clickable"
             onClick={() => router.push('/')}
             margin="auto 0px auto auto"
             width="111"
@@ -169,7 +170,18 @@ const Navbar = () => {
         </NavContainer>
         ;
         <Sidebar
-          title={<StyledMyahaLogo margin="auto" width="111" height="30" />}
+          title={
+            <StyledMyahaLogo
+              className="clickable"
+              onClick={() => {
+                toggle();
+                router.push('/');
+              }}
+              margin="auto"
+              width="111"
+              height="30"
+            />
+          }
           side="left"
           isOpen={isOpen}
           onClose={() => toggle()}
@@ -179,7 +191,8 @@ const Navbar = () => {
               if (route.path === '/products')
                 return (
                   <PlusMInusOpen
-                    label="Shop by category"
+                    key={index}
+                    label="Shop"
                     items={collections.map((c) => c.title)}
                     handleLinkClick={(index) => {
                       toggle();
@@ -191,6 +204,7 @@ const Navbar = () => {
                 );
               return (
                 <div
+                  className="clickable"
                   onClick={() => {
                     toggle();
                     handleLinkClick(route.path);
@@ -212,6 +226,7 @@ const Navbar = () => {
               </div>
             ) : (
               <div
+                className="clickable"
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -246,6 +261,8 @@ const Navbar = () => {
       >
         {showTransparent && <Burger onClick={() => toggle()}>☰</Burger>}
         <StyledMyahaLogo
+          className="clickable"
+          onClick={() => router.push('/')}
           showAboutUs={showAboutUs}
           width={showTransparent ? '111' : '99'}
           height={showTransparent ? '30' : '27'}
@@ -256,6 +273,7 @@ const Navbar = () => {
               if (route.path === '/products') {
                 return (
                   <div
+                    className="clickable"
                     onMouseEnter={() => {
                       setShowCollection(true);
                       setShowAboutUs(false);
@@ -272,6 +290,7 @@ const Navbar = () => {
               if (route.path === '/about-us') {
                 return (
                   <div
+                    className="clickable"
                     onMouseEnter={() => {
                       setShowAboutUs(true);
                       setShowCollection(false);
@@ -286,7 +305,11 @@ const Navbar = () => {
                 );
               }
               return (
-                <div onClick={() => handleLinkClick(route.path)} key={index}>
+                <div
+                  className="clickable"
+                  onClick={() => handleLinkClick(route.path)}
+                  key={index}
+                >
                   {route.name}
                 </div>
               );
@@ -297,17 +320,20 @@ const Navbar = () => {
           {!showTransparent &&
             (!user ? (
               <StyledUserLogo
+                className="clickable"
                 color={showAboutUs ? 'white' : 'black'}
                 onClick={toggleLogin}
               />
             ) : (
               <StyledUserLogo
+                className="clickable"
                 color={showAboutUs ? 'white' : 'black'}
                 onClick={() => router.push('/account')}
               />
             ))}
           {!showTransparent && (
             <StyledCartLogo
+              className="clickable"
               color={showAboutUs ? 'white' : 'black'}
               onClick={toggleCart}
             />
@@ -324,7 +350,7 @@ const Navbar = () => {
             }}
             style={{
               width: '100%',
-              height: '400px',
+              height: '450px',
               backgroundColor: showAboutUs ? '#733216' : 'white',
               position: 'absolute',
               top: '60px',

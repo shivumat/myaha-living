@@ -55,7 +55,8 @@ const AboutUs = ({ toggle }: { toggle?: () => void }) => {
         <div
           style={{ fontWeight: 'bold', fontSize: '36px', color: '#FFFFFF45' }}
         >
-          Crafted like emotions Raw, Composed, Edgy,Wild.
+          <span style={{ display: 'block' }}>Crafted like emotions.</span>
+          <span>Raw, composed, edgy, wild.</span>
         </div>
         <div style={{ fontWeight: 'lighter', fontSize: '12px' }}>
           Myaha was born from a deep love for art and design, where raw beauty
@@ -75,7 +76,9 @@ const AboutUs = ({ toggle }: { toggle?: () => void }) => {
           their homes as reflections of their unique stories, where each piece
           tells a narrative and every space feels like a warm embrace.
         </div>
-        <Button onClick={gotoAboutUs}>View More</Button>
+        <Button className="clickable" onClick={gotoAboutUs}>
+          View More
+        </Button>
       </div>
     </Container>
   );

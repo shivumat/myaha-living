@@ -158,6 +158,7 @@ const CheckoutSummary = (props: {
         </Row>
         {index === 0 ? (
           <CheckoutButton
+            className="clickable"
             disabled={!total}
             onClick={() => setIndex((prev) => prev + 1)}
           >

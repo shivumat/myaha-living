@@ -77,12 +77,17 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
           }}
         >
           <AddToCart variantId={product.variants[0].id} />
-          <AddtoCart className="view" onClick={() => openProduct(product)}>
+          <AddtoCart
+            className="view clickable"
+            onClick={() => openProduct(product)}
+          >
             View
           </AddtoCart>
         </div>
       </div>
       <img
+        className="clickable"
+        onClick={() => openProduct(product)}
         src={product.variants[0].images[0]}
         alt={product.title}
         style={{ height: '100%', width: isMobile ? '100%' : '200px' }}

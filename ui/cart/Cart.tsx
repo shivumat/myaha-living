@@ -134,6 +134,7 @@ const Cart = () => {
               transition: 'background 0.3s',
             }}
             onClick={() => router.push('/checkout')}
+            className="clickable"
           >
             Checkout
           </button>
