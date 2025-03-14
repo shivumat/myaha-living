@@ -35,7 +35,6 @@ const ImageWrapper = newStyled.div`
   max-width: 420px;
   img {
     width: 100%;
-    height: 500px;
   }
 `;
 
@@ -283,7 +282,7 @@ const ProductWithId = () => {
     <MobileWrapper>
       <Carousel
         images={currentProduct?.variants[variant]?.images}
-        height="500px"
+        height="100%"
       />
       <Title>{currentProduct?.title}</Title>
       <Description

@@ -39,14 +39,13 @@ const ProductWithVariants = (props: { product: Product }) => {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        height: '600px',
         width: '100%',
         maxWidth: '450px',
       }}
     >
       <StyleCarousel
         onClick={() => openProduct(product)}
-        height={'500px'}
+        height={'100%'}
         images={product.variants[0].images}
       />
       <div

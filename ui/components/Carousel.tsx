@@ -96,11 +96,12 @@ const Carousel = (props: {
   return (
     <CarouselContainer
       className={props.className}
-      onClick={props.onClick}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >
-      <CarouselWrapper index={index}>{CarouselComponents}</CarouselWrapper>
+      <CarouselWrapper onClick={props.onClick} index={index}>
+        {CarouselComponents}
+      </CarouselWrapper>
       {dotMap.length > 1 && (
         <DotsContainer>
           {dotMap.map((_, idx) => (

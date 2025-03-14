@@ -57,8 +57,8 @@ const CategoryContainer = newStyled.div`
     border: 1px solid lightgray;
     @media (max-width: 800px) {
         padding: 20px 0px 30px;
-        width: 99%;
-        height: 400px;
+        width: calc(100% - 48px);
+        height: 440px;
     }
 `;
 
@@ -89,14 +89,14 @@ const Categories = () => {
         className="clickable"
         src={collection.productImage}
         alt={collection.title}
-        style={{ width: '80%', height: '300px', objectFit: 'cover' }}
+        style={{ width: '240px', height: '360px', objectFit: 'cover' }}
       />
       <span className="clickable">{collection.title}</span>
     </CategoryContainer>
   );
 
   const CollectionComponent = isMobile ? (
-    <Carousel height="300px">
+    <Carousel height="360px">
       {collections.map((collection: any) => {
         return getCategoryElement(collection);
       })}
