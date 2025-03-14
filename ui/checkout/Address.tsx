@@ -4,6 +4,7 @@ import { OrderPayloadType } from '#/lib/types/order';
 import newStyled from '@emotion/styled';
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import AccountTextInput from '../components/AccountInput';
+// import Dropdown from '../components/AddressCropdowns';
 
 const FormContainer = newStyled.div`
   flex: 1;
@@ -187,7 +188,14 @@ const Userform = ({
     ? true
     : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+  // const fetchStates = async () => {
+  //     const response = await fetch('https://api.teleport.org/api/countries/iso_alpha2:IN/admin1_divisions/');
+  //     const data = await response.json();
+  //     console.log(data); // List of Indian states
+  //   };
+
   useEffect(() => {
+    // fetchStates()
     setShowEmail(!userDetails?.email);
   }, [userDetails]);
 
@@ -220,7 +228,7 @@ const Userform = ({
               label="Email"
               value={email}
               setValue={setEmail}
-              error={isEmailValid ? 'Invalid email' : undefined}
+              error={!isEmailValid ? 'Invalid email' : undefined}
             />
           </>
         ) : (
@@ -282,6 +290,9 @@ const Userform = ({
             error={errors.phone}
           />
         </InputGroup>
+        {/* <Dropdown label="Country" options={[]} value={country} setValue={(val) => { setCountry(val); setState(''); setCity(''); }} error={errors.country}/>
+        <Dropdown label="State" options={[]} value={state} setValue={(val) => { setState(val); setCity(''); }} error={errors.state}/>
+        <Dropdown label="City" options={[]} value={city} setValue={setCity} error={errors.city}/> */}
 
         <AccountTextInput
           label="Country"
@@ -368,6 +379,10 @@ const Userform = ({
                 error={errors.phone1}
               />
             </InputGroup>
+            {/* 
+            <Dropdown label="Country" options={[]} value={country1} setValue={(val) => { setCountry1(val); setState1(''); setCity1(''); }} error={errors.country1}/>
+            <Dropdown label="State" options={[]} value={state1} setValue={(val) => { setState1(val); setCity1(''); }} error={errors.state1}/>
+            <Dropdown label="City" options={[]} value={city1} setValue={setCity1} error={errors.city1}/> */}
 
             <AccountTextInput
               label="Country"
