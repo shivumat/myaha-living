@@ -67,7 +67,9 @@ const Conatiner = newStyled.div`
 const ProductsCategory = () => {
   const [selected, setSelected] = useState<Collection | null>(null);
   const [sort, setSort] = useState<string>('Featured');
-  const [productsToShow, setProductsToShow] = useState<Products>([]);
+  const [productsToShow, setProductsToShow] = useState<Products | undefined>(
+    [],
+  );
   const { category } = useParams<{ category: string }>();
   const { collections, products } = useProduct();
   const route = useRouter();
@@ -208,7 +210,7 @@ const ProductsCategory = () => {
           />
         </div>
         <Conatiner>
-          {productsToShow.map((product) => (
+          {productsToShow?.map((product) => (
             <ProductWithVariants key={product.id} product={product} />
           ))}
         </Conatiner>
