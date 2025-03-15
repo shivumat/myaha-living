@@ -38,7 +38,7 @@ const Collections = ({ toggle }: { toggle?: () => void }) => {
           <img
             src={collection.productImage}
             alt={collection.title}
-            style={{ width: '100%', height: '300px', objectFit: 'cover' }}
+            style={{ width: '280px', height: '100%', objectFit: 'cover' }}
           />
           {collection.title}
         </div>
