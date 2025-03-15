@@ -67,9 +67,7 @@ const Conatiner = newStyled.div`
 const ProductsCategory = () => {
   const [selected, setSelected] = useState<Collection | null>(null);
   const [sort, setSort] = useState<string>('Featured');
-  const [productsToShow, setProductsToShow] = useState<Products | undefined>(
-    [],
-  );
+  const [productsToShow, setProductsToShow] = useState<Products>([]);
   const { category } = useParams<{ category: string }>();
   const { collections, products } = useProduct();
   const route = useRouter();
@@ -92,9 +90,14 @@ const ProductsCategory = () => {
 
   useEffect(() => {
     if (products.length && collection) {
-      const productsToShow = collection.products
-        .map((product) => products.find((item) => item.id === product.id))
-        .filter((item) => !!item);
+      let productsToShow: Products = [];
+
+      collection.products.forEach((product) => {
+        const productToShow = products.find((p) => p.id === product.id);
+        if (productToShow) {
+          productsToShow.push(productToShow);
+        }
+      });
 
       if (productsToShow.length === 0) {
         return;
@@ -210,7 +213,7 @@ const ProductsCategory = () => {
           />
         </div>
         <Conatiner>
-          {productsToShow?.map((product) => (
+          {productsToShow.map((product) => (
             <ProductWithVariants key={product.id} product={product} />
           ))}
         </Conatiner>
