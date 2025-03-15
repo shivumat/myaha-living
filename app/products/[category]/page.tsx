@@ -93,6 +93,10 @@ const ProductsCategory = () => {
       const productsToShow = collection.products
         .map((product) => products.find((item) => item.id === product.id))
         .filter((item) => !!item);
+      if (productsToShow.length < 2) {
+        setProductsToShow(productsToShow);
+        return;
+      }
       if (sort === 'Name') {
         productsToShow.sort((a, b) => a.title.localeCompare(b.title));
       } else if (sort === 'Price: Low to High') {
