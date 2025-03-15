@@ -47,6 +47,7 @@ export interface Collection {
   description?: string;
   image?: string;
   productImage?: string;
+  products: Product[];
 }
 
 interface ProductContextType {
@@ -97,19 +98,11 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     });
     const collectionResponse = await collectionData.json();
     const collectionsData: Collections = collectionResponse.data
-      .filter(
-        (collection: Collection) =>
-          !!productsData.find((product) => {
-            return product.collections.some(
-              (productCollection) => productCollection.id === collection.id,
-            );
-          }),
-      )
+      .filter((collection: Collection) => !!collection.products.length)
       .map((collection: Collection) => {
         const collectionProduct = productsData.find((product) => {
-          return product.collections.some(
-            (productCollection) => productCollection.id === collection.id,
-          );
+          const firstProduct = collection.products[0];
+          return product.id === firstProduct.id;
         });
         const productImage =
           collectionProduct?.variants[0].images[0] ??

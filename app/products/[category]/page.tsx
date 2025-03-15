@@ -66,7 +66,7 @@ const Conatiner = newStyled.div`
 
 const ProductsCategory = () => {
   const [selected, setSelected] = useState<Collection | null>(null);
-  const [sort, setSort] = useState<string>('Name');
+  const [sort, setSort] = useState<string>('Featured');
   const [productsToShow, setProductsToShow] = useState<Products>([]);
   const { category } = useParams<{ category: string }>();
   const { collections, products } = useProduct();
@@ -90,9 +90,9 @@ const ProductsCategory = () => {
 
   useEffect(() => {
     if (products.length && collection) {
-      const productsToShow = products.filter((product) =>
-        product.collections.some((item) => item.id === collection.id),
-      );
+      const productsToShow = collection.products
+        .map((product) => products.find((item) => item.id === product.id))
+        .filter((item) => !!item);
       if (sort === 'Name') {
         productsToShow.sort((a, b) => a.title.localeCompare(b.title));
       } else if (sort === 'Price: Low to High') {
@@ -159,7 +159,12 @@ const ProductsCategory = () => {
             />
           </div>
           <Dropdown
-            options={['Name', 'Price: Low to High', 'Price: High to Low']}
+            options={[
+              'Featured',
+              'Name',
+              'Price: Low to High',
+              'Price: High to Low',
+            ]}
             onSelect={setSort}
             renderTrigger={(toggle) => (
               <div

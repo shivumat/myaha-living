@@ -296,6 +296,7 @@ const Navbar = () => {
                       setShowCollection(false);
                       clearTimeout(timer);
                     }}
+                    onClick={() => handleLinkClick(route.path)}
                     onMouseLeave={() => {
                       timer = setTimeout(() => setShowAboutUs(false), 500);
                     }}
