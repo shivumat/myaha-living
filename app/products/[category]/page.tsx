@@ -93,6 +93,7 @@ const ProductsCategory = () => {
       const productsToShow = collection.products
         .map((product) => products.find((item) => item.id === product.id))
         .filter((item) => !!item);
+
       if (productsToShow.length === 0) {
         return;
       }
