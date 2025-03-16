@@ -1,5 +1,5 @@
 import { useAuth } from '#/context/AuthContext';
-import { useProduct } from '#/context/ProductContext';
+import { Product, Products, useProduct } from '#/context/ProductContext';
 import { useIsDesktopHomeOnTop } from '#/hooks/useIsDesktopHomeOnTop';
 import { useIsMobile } from '#/hooks/useMobile';
 import { useToggle } from '#/hooks/useToggle';
@@ -7,10 +7,14 @@ import { navRoutes } from '#/lib/constants/routes';
 import newStyled from '@emotion/styled';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Dropdown } from '../components/Dropdown';
 import PlusMInusOpen from '../components/PlusMInusOpen';
+import ProductDropdownItem from '../components/ProductDropDownItem';
+import SearchInput from '../components/SearchInput';
 import Sidebar from '../components/Sidebar';
 import CartLogo from '../svg/cart-logo';
 import MyahaLogo from '../svg/myaha-logo';
+import SearchLogo from '../svg/search-logo';
 import UserLogo from '../svg/user-logo';
 import AboutUs from './AboutUs';
 import Collections from './Collections';
@@ -113,6 +117,13 @@ const StyledCartLogo = newStyled(CartLogo)`
   }
 `;
 
+const StyledSearchLogo = newStyled(SearchLogo)`
+  cursor: pointer;
+  @media (max-width: 800px) {
+    transform: scale(0.65);
+  }
+`;
+
 const StyledMyahaLogo = newStyled(MyahaLogo)<{
   margin?: string;
   showAboutUs?: boolean;
@@ -127,6 +138,8 @@ const Navbar = () => {
   const router = useRouter();
   const [showCollection, setShowCollection] = useState(false);
   const [showAboutUs, setShowAboutUs] = useState(false);
+  const [searchedProducts, setSearchedProducts] = useState<Products>([]);
+  const [, setSearch] = useState('');
   const isDesktopHomeOnTop = useIsDesktopHomeOnTop({
     turnBackToTransparent: !(showCollection || showAboutUs),
   });
@@ -150,7 +163,7 @@ const Navbar = () => {
     router.replace(`?${params.toString()}`, { scroll: false });
   };
 
-  const { collections } = useProduct();
+  const { collections, onSearchProducts } = useProduct();
 
   if (isMobile) {
     return (
@@ -165,6 +178,36 @@ const Navbar = () => {
             height="30"
           />
           <LogosContainer showTransparent>
+            <Dropdown
+              maxHeight="400px"
+              onClose={() => {
+                setSearch('');
+                setSearchedProducts([]);
+              }}
+              options={searchedProducts}
+              onSelect={(item: Product) =>
+                router.push(
+                  `/product/${item.id.replace('gid://shopify/Product/', '')}`,
+                )
+              }
+              renderTrigger={(toggle: any) => (
+                <StyledSearchLogo
+                  className="clickable"
+                  color={showAboutUs ? 'white' : 'black'}
+                  onClick={toggle}
+                />
+              )}
+              renderOption={(option: Product) => (
+                <ProductDropdownItem product={option} />
+              )}
+            >
+              <SearchInput
+                onSearch={(searchValue) => {
+                  const productsonSearch = onSearchProducts(searchValue);
+                  setSearchedProducts(productsonSearch);
+                }}
+              />
+            </Dropdown>
             <StyledCartLogo onClick={toggleCart} />
           </LogosContainer>
         </NavContainer>
@@ -323,6 +366,39 @@ const Navbar = () => {
           </LinksContainer>
         )}
         <LogosContainer showTransparent={showTransparent}>
+          <Dropdown
+            maxHeight="400px"
+            onClose={() => {
+              setSearch('');
+              setSearchedProducts([]);
+            }}
+            options={searchedProducts}
+            onSelect={(item: Product) =>
+              router.push(
+                `/product/${item.id.replace('gid://shopify/Product/', '')}`,
+              )
+            }
+            renderTrigger={(toggle: any) => (
+              <StyledSearchLogo
+                className="clickable"
+                color={showAboutUs ? 'white' : 'black'}
+                onClick={(e: any) => {
+                  toggle(e);
+                }}
+              />
+            )}
+            renderOption={(option: Product) => (
+              <ProductDropdownItem product={option} />
+            )}
+          >
+            <SearchInput
+              onSearch={(searchValue) => {
+                const productsonSearch = onSearchProducts(searchValue);
+                setSearchedProducts(productsonSearch);
+              }}
+            />
+          </Dropdown>
+
           {!showTransparent &&
             (!user ? (
               <StyledUserLogo

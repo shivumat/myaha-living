@@ -1,4 +1,4 @@
-import { getRandomIntInclusive } from '#/lib/util';
+import { getRandomIntInclusive, searchProducts } from '#/lib/util';
 import { useRouter } from 'next/navigation';
 import {
   createContext,
@@ -54,6 +54,7 @@ interface ProductContextType {
   products: Products;
   collections: Collections;
   openProduct: (product: Product) => void;
+  onSearchProducts: (searchString: string) => Products;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -122,8 +123,16 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     router.push(`/product/${id}`);
   };
 
+  const onSearchProducts = (searchString: string): Products => {
+    if (!searchString.trim()) return [];
+    const result = searchProducts(products, searchString);
+    return result;
+  };
+
   return (
-    <ProductContext.Provider value={{ products, collections, openProduct }}>
+    <ProductContext.Provider
+      value={{ products, collections, openProduct, onSearchProducts }}
+    >
       {children}
     </ProductContext.Provider>
   );

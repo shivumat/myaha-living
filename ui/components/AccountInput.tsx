@@ -48,7 +48,7 @@ const ErrorMessage = newStyled.p`
 `;
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   value: string;
   setValue: (val: string) => void;
   error?: string;
@@ -63,7 +63,7 @@ const AccountTextInput: React.FC<InputProps> = ({
 }) => {
   return (
     <InputWrapper>
-      <Label>{label}</Label>
+      {!!label && <Label>{label}</Label>}
       <StyledInput
         value={value}
         onChange={(e) => setValue(e.target.value)}

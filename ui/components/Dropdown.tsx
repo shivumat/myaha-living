@@ -9,6 +9,9 @@ interface DropdownProps<T> {
     toggle: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
   ) => ReactNode;
   renderOption: (option: T) => ReactNode;
+  children?: ReactNode;
+  maxHeight?: string;
+  onClose?: () => void;
 }
 
 export function Dropdown<T>({
@@ -16,6 +19,9 @@ export function Dropdown<T>({
   onSelect,
   renderTrigger,
   renderOption,
+  children,
+  maxHeight,
+  onClose,
 }: DropdownProps<T>) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -29,10 +35,10 @@ export function Dropdown<T>({
     let y = e.pageY;
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
-    const threshold = 0.1; // 10% of the window width
+    const threshold = 0.15; // 15% of the window width
 
     if (x >= windowWidth * (1 - threshold)) {
-      x = windowWidth * (1 - threshold);
+      x = 1000000000;
     }
     if (y >= windowHeight * (1 - threshold)) {
       y = windowHeight * (1 - threshold);
@@ -60,6 +66,10 @@ export function Dropdown<T>({
       }, 100); // Delay adding listener to avoid conflict
     }
 
+    if (!open) {
+      onClose?.();
+    }
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -72,12 +82,17 @@ export function Dropdown<T>({
       {open &&
         createPortal(
           <DropdownMenu
+            noOptions={options.length === 0}
             ref={menuRef}
             style={{
               top: coords?.top ?? 0,
-              left: coords?.left ?? 0,
+              ...((coords?.left ?? 0) >= 1000000000
+                ? { right: 10 }
+                : { left: coords?.left }),
+              maxHeight: maxHeight ?? 'auto',
             }}
           >
+            <div style={{ position: 'sticky', top: 0 }}>{children}</div>
             {options.map((option, index) => (
               <DropdownItem
                 key={index}
@@ -103,14 +118,15 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const DropdownMenu = styled.div`
+const DropdownMenu = styled.div<{ noOptions?: boolean }>`
   position: absolute;
   background: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   border-radius: 6px;
   min-width: 160px;
-  padding: 8px 0;
+  padding: ${({ noOptions }) => (noOptions ? '0px' : '8px 0')};
   z-index: 1500;
+  overflow-y: auto;
 `;
 
 const DropdownItem = styled.div`

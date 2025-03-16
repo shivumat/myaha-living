@@ -1,3 +1,5 @@
+import { Products } from '#/context/ProductContext';
+
 export const getCurrentTimeStamp = () => {
   let date = new Date();
 
@@ -69,3 +71,79 @@ export const generateCombinations = (
     [[]] as Combination[],
   );
 };
+
+export const searchProducts = (
+  products: Products,
+  searchString: string,
+): Products => {
+  if (!searchString.trim()) return [];
+  console.log(searchString);
+  const searchTerm = searchString.toLowerCase();
+
+  return products
+    .map((product) => {
+      let score = 0;
+
+      // Match in Product Title (Highest Weight)
+      if (product.title.toLowerCase().includes(searchTerm)) score += 5;
+
+      // Match in Product Description
+      if (product.description.toLowerCase().includes(searchTerm)) score += 4;
+
+      // Match in Tags
+      if (
+        product.tags.some(
+          (tag) =>
+            typeof tag === 'string' && tag.toLowerCase().includes(searchTerm),
+        )
+      )
+        score += 3;
+
+      // Match in Variants (Material, Finish, Dimensions, Variant Info)
+      product.variants.forEach((variant) => {
+        if (
+          variant.material?.toLowerCase().includes(searchTerm) ||
+          variant.finish?.toLowerCase().includes(searchTerm) ||
+          variant.dimensions?.toLowerCase().includes(searchTerm)
+        ) {
+          score += 2;
+        }
+
+        if (
+          variant.variantInfo.some(
+            (info) =>
+              info.name.toLowerCase().includes(searchTerm) ||
+              info.value.toLowerCase().includes(searchTerm),
+          )
+        ) {
+          score += 2;
+        }
+      });
+
+      // Match in Collections
+      if (
+        product.collections.some((collection) =>
+          collection.title.toLowerCase().includes(searchTerm),
+        )
+      ) {
+        score += 1;
+      }
+
+      return { product, score };
+    })
+    .filter(({ score }) => score > 0) // Remove products with no match
+    .sort((a, b) => b.score - a.score) // Sort by highest score
+    .map(({ product }) => product);
+};
+
+export function debounce<T extends (...args: any[]) => void>(
+  func: T,
+  delay: number,
+): (...args: Parameters<T>) => void {
+  let timer: ReturnType<typeof setTimeout>;
+
+  return (...args: Parameters<T>) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => func(...args), delay);
+  };
+}
