@@ -3,7 +3,8 @@ import { useRouter } from 'next/navigation';
 
 const Container = newStyled.div`
     padding: 0px 60px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 7fr;
     color: white;
     gap: 20px;
 `;
@@ -48,7 +49,7 @@ const AboutUs = ({ toggle }: { toggle?: () => void }) => {
           display: 'flex',
           flexDirection: 'column',
           gap: '10px',
-          width: '70%',
+          width: '100%',
           justifyContent: 'center',
         }}
       >
