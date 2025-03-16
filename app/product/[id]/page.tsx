@@ -23,7 +23,7 @@ const Container = newStyled.div`
 const Gallery = newStyled.div`
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   width: 100%;
   gap: 10px;
   margin: auto auto 20px; 
@@ -215,22 +215,40 @@ const ProductWithId = () => {
       <Price>Product details</Price>
       <PlusMInusOpen items={[]} label="Materials and Specs">
         {!!currentProduct.variants[variant].material && (
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <Description>Material: </Description>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '10px',
+            }}
+          >
+            <Description style={{ fontWeight: 300 }}>Material: </Description>
             <Description>
               {currentProduct.variants[variant].material}
             </Description>
           </div>
         )}
         {!!currentProduct.variants[variant].finish && (
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <Description>Finish: </Description>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '10px',
+            }}
+          >
+            <Description style={{ fontWeight: 300 }}>Finish: </Description>
             <Description>{currentProduct.variants[variant].finish}</Description>
           </div>
         )}
         {!!currentProduct.variants[variant].dimensions && (
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <Description>Dimensions: </Description>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '10px',
+            }}
+          >
+            <Description style={{ fontWeight: 300 }}>Dimensions: </Description>
             <Description>
               {currentProduct.variants[variant].dimensions}
             </Description>
@@ -246,36 +264,49 @@ const ProductWithId = () => {
     </div>
   );
 
+  const remaininiglImages = currentProduct?.variants[variant]?.images.slice(
+    0,
+    3,
+  );
+  const carouselImages = currentProduct?.variants[variant]?.images.slice(3);
+
   const ImageGrid: React.FC = () => (
-    <Gallery>
-      {currentProduct?.variants[variant]?.images.map((src, index) => (
-        <ImageWrapper key={index}>
-          <img src={src} alt={`Image ${index + 1}`} />
-        </ImageWrapper>
-      ))}
-      <div
-        style={{
-          gridColumn: 'span 2',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '20px',
-        }}
-      >
-        <Title>{currentProduct?.title}</Title>
-        <Description
-          dangerouslySetInnerHTML={{
-            __html: currentProduct?.description ?? '',
+    <>
+      <Gallery>
+        {!!carouselImages.length && (
+          <Carousel images={carouselImages} height="100%" />
+        )}
+        {remaininiglImages?.map((src, index) => (
+          <ImageWrapper key={index}>
+            <img src={src} alt={`Image ${index + 1}`} />
+          </ImageWrapper>
+        ))}
+      </Gallery>
+      <Gallery>
+        <div
+          style={{
+            gridColumn: 'span 2',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
           }}
-        />
-        <Price>
-          {currentProduct.variants[variant].currencyCode}{' '}
-          {currentProduct.variants[variant].price}
-        </Price>
-        <AddToCart variantId={currentProduct.variants[variant].id} />
-      </div>
-      {Manufacture}
-      {Material}
-    </Gallery>
+        >
+          <Title>{currentProduct?.title}</Title>
+          <Description
+            dangerouslySetInnerHTML={{
+              __html: currentProduct?.description ?? '',
+            }}
+          />
+          <Price>
+            {currentProduct.variants[variant].currencyCode}{' '}
+            {currentProduct.variants[variant].price}
+          </Price>
+          <AddToCart variantId={currentProduct.variants[variant].id} />
+        </div>
+        {Manufacture}
+        {Material}
+      </Gallery>
+    </>
   );
 
   const Images = isMobile ? (
