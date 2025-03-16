@@ -355,6 +355,7 @@ const Navbar = () => {
               backgroundColor: showAboutUs ? '#733216' : 'white',
               position: 'absolute',
               top: '60px',
+              boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
             }}
           >
             {showCollection ? (
