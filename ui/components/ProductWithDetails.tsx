@@ -45,6 +45,7 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
             : 'row-reverse',
         gap: '20px',
         justifyContent: 'space-between',
+        alignItems: 'center',
         padding: '20px',
         height: isMobile ? 'auto' : '350px',
         width: '100%',
@@ -90,7 +91,10 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
         onClick={() => openProduct(product)}
         src={product.variants[0].images[0]}
         alt={product.title}
-        style={{ height: '100%', width: isMobile ? '100%' : '200px' }}
+        style={{
+          height: isMobile ? '70%' : '100%',
+          width: isMobile ? '70%' : '200px',
+        }}
       />
     </div>
   );

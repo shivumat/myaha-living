@@ -11,7 +11,7 @@ const Conatiner = newStyled.div`
     margin-bottom: 20px; 
     padding-bottom: 20px; 
     border-bottom: 1px solid lightgray;
-    @media (max-width: 800px) {
+    @media (max-width: 1200px) {
         grid-template-columns: 1fr;
     }
 `;

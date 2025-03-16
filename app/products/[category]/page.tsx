@@ -59,6 +59,9 @@ const Conatiner = newStyled.div`
     width: 100%;
     margin: 20px 0px 0px 0px; 
     padding-bottom: 20px; 
+    @media (max-width: 1400px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
     @media (max-width: 800px) {
         grid-template-columns: 1fr;
     }
