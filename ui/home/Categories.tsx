@@ -89,7 +89,7 @@ const Categories = () => {
         className="clickable"
         src={collection.productImage}
         alt={collection.title}
-        style={{ width: '240px', height: '360px', objectFit: 'cover' }}
+        style={{ width: '200px', height: '300px', objectFit: 'cover' }}
       />
       <span className="clickable">{collection.title}</span>
     </CategoryContainer>
