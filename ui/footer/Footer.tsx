@@ -32,6 +32,9 @@ const Footer = () => {
         You can always reach out to us at
         <strong style={{ display: 'block' }}>+91 6350533372</strong>
         <strong style={{ display: 'block' }}>hello@myahaliving.com</strong>
+        <strong style={{ display: 'block' }}>MYAHA INDIA</strong>
+        <strong style={{ display: 'block' }}>Plot No. B-26, Mathurawala,</strong>
+        <strong style={{ display: 'block' }}>Jagatpura, Jaipur 303903, Rajasthan, India.</strong>
       </TextContainer>
     </FooterContainer>
   );
