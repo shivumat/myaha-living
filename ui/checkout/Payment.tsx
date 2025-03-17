@@ -102,6 +102,8 @@ const Icon = newStyled.img`
   height: 20px;
 `;
 
+export const CONST_COD_CHARGES = 40;
+
 const PaymentOptions = ({
   codCharges,
   setCodCharges,
@@ -199,7 +201,10 @@ const PaymentOptions = ({
         </Option>
 
         {/* Cash on Delivery Option */}
-        <Option selected={!!codCharges} onClick={() => setCodCharges(100)}>
+        <Option
+          selected={!!codCharges}
+          onClick={() => setCodCharges(CONST_COD_CHARGES)}
+        >
           <HiddenRadio
             type="radio"
             name="payment"
@@ -210,7 +215,7 @@ const PaymentOptions = ({
           <RadioCircle>
             <InnerCircle selected={!!codCharges} />
           </RadioCircle>
-          <Text>Cash on delivery (+ ₹100)</Text>
+          <Text>Cash on delivery (+ ₹{CONST_COD_CHARGES})</Text>
         </Option>
       </Container>
       <Submit className="clickable" type="submit" onClick={onSubmit}>

@@ -108,10 +108,6 @@ const CheckoutSummary = (props: {
   const LastStepComp =
     index === 2 ? (
       <>
-        <Row>
-          <span>Shipping</span>
-          <span>₹ {props.shippingCharges}</span>
-        </Row>
         {!!props.codCharges && (
           <Row>
             <span>COD charges</span>
@@ -148,7 +144,7 @@ const CheckoutSummary = (props: {
         </Row>
         <Row>
           <span>Shipping charges</span>
-          <span>Calculated on the next step</span>
+          <span>Free shipping</span>
         </Row>
         {LastStepComp}
         <Divider />
