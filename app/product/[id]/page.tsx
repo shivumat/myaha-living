@@ -56,7 +56,7 @@ const Description = newStyled.div`
     overflow: hidden;
     display: -webkit-box;
     font-weight: lighter;
-    -webkit-line-clamp: 10;
+    -webkit-line-clamp: 30;
     -webkit-box-orient: vertical;
     @media (max-width: 800px) {
         -webkit-line-clamp: 45;
