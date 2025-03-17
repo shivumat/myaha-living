@@ -39,7 +39,7 @@ const HomeTopBanner: React.FC = () => {
   const isMobile = useIsMobile();
   return isMobile ? (
     <MobileWrapper>
-      <Carousel isCircle autoScroll images={mobileImages} height="720px" />
+      <Carousel isCircle autoScroll images={mobileImages} height="600px" />
     </MobileWrapper>
   ) : (
     <ImageGrid />
