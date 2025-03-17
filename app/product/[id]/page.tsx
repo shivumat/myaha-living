@@ -256,6 +256,17 @@ const ProductWithId = () => {
         )}
       </PlusMInusOpen>
 
+      <PlusMInusOpen items={[]} label="Please Note:">
+        <Description>
+          1.⁠ ⁠Please expect slight variations in similar products, as each
+          piece is meticulously handcrafted, making every product unique.
+        </Description>
+        <Description>
+          2.⁠ ⁠While we strive for accurate representation, slight color
+          variations may occur due to studio lighting and screen settings.
+        </Description>
+      </PlusMInusOpen>
+
       <div style={{ width: '100%', borderBottom: '1px solid lightgray' }}></div>
       <SubHeadings style={{ fontSize: '14px' }}>
         Please enter PIN code to check availability:
