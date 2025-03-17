@@ -84,7 +84,7 @@ const Carousel = (props: {
     if (!autoScroll || dotMap.length <= 1) return;
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % dotMap.length);
-    }, 6000);
+    }, 4500);
     return () => clearInterval(interval);
   }, [autoScroll, dotMap.length]);
 
