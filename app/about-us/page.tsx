@@ -143,6 +143,7 @@ const Div4 = newStyled.div`
     >img {
         width: 100%;
         object-fit: cover;
+        object-position: 0% 100%;
         height: 700px;
     }
     >div {
@@ -170,7 +171,7 @@ const Div4 = newStyled.div`
         >img {
             width: 100%;
             object-fit: cover;
-            height: auto;
+            height: 300px;
         }
     }
 `;
