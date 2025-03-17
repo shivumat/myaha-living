@@ -172,6 +172,8 @@ const ProductWithId = () => {
     <div
       style={{
         marginTop: '10px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',

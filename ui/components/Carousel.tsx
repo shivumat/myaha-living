@@ -22,7 +22,7 @@ const CarouselImageDiv = newStyled.div`
 const CarouselImage = newStyled.img<{ height: string }>`
   width: 100%;
   height: ${({ height }) => height};
-  object-fit: fill;
+  object-fit: cover;
 `;
 
 const DotsContainer = newStyled.div<{ isCircle: boolean }>`
