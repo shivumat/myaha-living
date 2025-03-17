@@ -30,7 +30,7 @@ const NavContainer = newStyled.div<{
   display: flex; 
   width: 100vw;
   height: 60px;
-  background-color: ${({ showTransparent, showAboutUs }) => (showTransparent ? 'transparent' : showAboutUs ? '#733216' : 'white')};
+  background-color: ${({ showTransparent, showAboutUs }) => (showTransparent ? 'transparent' : showAboutUs ? '#5F1E1E' : 'white')};
   color : ${({ showAboutUs }) => (showAboutUs ? 'white' : 'black')};
   transition: background-color 300ms linear;
   align-items: center;
@@ -183,7 +183,7 @@ const Navbar = () => {
             fontSize: isMobile ? '5px' : '8px',
             padding: '2px',
             borderRadius: '50%',
-            backgroundColor: showAboutUs ? '#733216' : 'white',
+            backgroundColor: showAboutUs ? '#5F1E1E' : 'white',
             zIndex: 20,
             right: isMobile ? '2px' : '-3px',
             ...(isMobile ? {} : { top: '-3px' }),
@@ -461,7 +461,7 @@ const Navbar = () => {
             style={{
               width: '100%',
               height: '450px',
-              backgroundColor: showAboutUs ? '#733216' : 'white',
+              backgroundColor: showAboutUs ? '#5F1E1E' : 'white',
               position: 'absolute',
               top: '60px',
               boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',

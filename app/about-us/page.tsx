@@ -14,7 +14,13 @@ const Div1 = newStyled.div`
     justify-content: center;
     align-items: center;
     >img{
-      height: 750px;
+      border-radius: 10px;
+      min-width: 800px;
+      max-width: 800px;
+      min-height: 800px;
+      max-height: 800px;
+      object-fit: cover;
+      object-position: 40% 100%;
     }
     >div {
         display: flex;
@@ -35,15 +41,23 @@ const Div1 = newStyled.div`
       >div {
         padding: 250px 70px 250px 50px;
       }
-      >img{
-        height: 450px;
+       >img{
+        min-width: 600px;
+        max-width: 600px;
+        min-height: 600px;
+        max-height: 600px;
+        object-fit: cover;
+        object-position: 0% 50%;
       }
+         >div { 
+            width: 500px;
+            padding: 10px 30px;
+            height: 400px;
+            font-size: 10px;
+        }   
     }
 
     @media (max-width: 1150px) {
-      >img {
-          width: 550px;
-      }
         >div { 
             width: 400px;
             padding: 10px 30px;
@@ -54,6 +68,10 @@ const Div1 = newStyled.div`
     @media (max-width: 800px) {
         flex-direction: column; 
         >img{
+          min-width: auto;
+          max-width: auto;
+          min-height: auto;
+          max-height: auto;
           width: 100%;
         }
         >div {
@@ -77,7 +95,7 @@ const Div2 = newStyled.div`
     >img{
       height: 450px;
       object-fit: cover;
-      object-position: 0% 100%;
+      object-position: 0% 50%;
     }
     >div{
         padding:40px;
@@ -143,7 +161,7 @@ const Div4 = newStyled.div`
     >img {
         width: 100%;
         object-fit: cover;
-        object-position: 0% 100%;
+        object-position: 0% 85%;
         height: 700px;
     }
     >div {
@@ -151,7 +169,7 @@ const Div4 = newStyled.div`
         top: 120px;
         max-width: 90%;
         font-weight: lighter;
-        font-size: 36px;
+        font-size: 32px;
         position: absolute;
         text-align: center;
         justify-content: center;
@@ -207,7 +225,12 @@ const AboutUs = () => {
   return (
     <Container>
       <Div1>
-        <img src="/images/about-us/about-us1.png" alt="about-us" />
+        <img
+          height={500}
+          width={500}
+          src="/images/about-us/about-us1.png"
+          alt="about-us"
+        />
         <div>
           Myaha was crafted as a movement where we believe that home decor
           should be as versatile and expressive as our own personality. We have

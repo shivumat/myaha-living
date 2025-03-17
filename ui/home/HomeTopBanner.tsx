@@ -30,7 +30,7 @@ const MobileWrapper = styled.div`
 // Desktop Grid Layout Component
 const ImageGrid: React.FC = () => (
   <Gallery>
-    <Carousel images={desktopImages} height="85vh" />
+    <Carousel isCircle autoScroll images={desktopImages} height="85vh" />
   </Gallery>
 );
 

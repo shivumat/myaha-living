@@ -1,5 +1,5 @@
 import newStyled from '@emotion/styled';
-import React, { ReactNode, TouchEvent, useState } from 'react';
+import React, { ReactNode, TouchEvent, useEffect, useState } from 'react';
 
 const CarouselContainer = newStyled.div`
   display: flex;
@@ -25,19 +25,19 @@ const CarouselImage = newStyled.img<{ height: string }>`
   object-fit: fill;
 `;
 
-const DotsContainer = newStyled.div`
+const DotsContainer = newStyled.div<{ isCircle: boolean }>`
   position: absolute;
   bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: ${({ isCircle }) => (isCircle ? '90%' : '50%')};
+  transform: translateX(-${({ isCircle }) => (isCircle ? '90%' : '50%')});
   display: flex;
   gap: 5px;
 `;
 
-const Dot = newStyled.div<{ active: boolean }>`
-  width: 40px;
-  height: 5px;
-  border-radius: 12px;
+const Dot = newStyled.div<{ active: boolean; isCircle: boolean }>`
+  width: ${(props) => (props.isCircle ? '10px' : '40px')};
+  height: ${(props) => (props.isCircle ? '10px' : '5px')};
+  border-radius: ${(props) => (props.isCircle ? '50%' : '12px')};
   border: 1px solid black;
   background: ${(props) => (props.active ? 'black' : 'transparent')};
   cursor: pointer;
@@ -49,11 +49,18 @@ const Carousel = (props: {
   children?: ReactNode;
   onClick?: () => void;
   className?: string;
+  isCircle?: boolean;
+  autoScroll?: boolean;
 }) => {
-  const { images = [], height, children } = props;
+  const {
+    images = [],
+    height,
+    children,
+    isCircle = false,
+    autoScroll = false,
+  } = props;
   const [index, setIndex] = useState<number>(0);
   const [startX, setStartX] = useState<number | null>(null);
-
   const dotMap = !!images.length ? images : React.Children.toArray(children);
 
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
@@ -72,6 +79,14 @@ const Carousel = (props: {
       setStartX(null);
     }
   };
+
+  useEffect(() => {
+    if (!autoScroll || dotMap.length <= 1) return;
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % dotMap.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [autoScroll, dotMap.length]);
 
   const CarouselChildren = (
     <>
@@ -103,11 +118,12 @@ const Carousel = (props: {
         {CarouselComponents}
       </CarouselWrapper>
       {dotMap.length > 1 && (
-        <DotsContainer>
+        <DotsContainer isCircle={isCircle}>
           {dotMap.map((_, idx) => (
             <Dot
               key={idx}
               active={index === idx}
+              isCircle={isCircle}
               onClick={() => setIndex(idx)}
             />
           ))}
