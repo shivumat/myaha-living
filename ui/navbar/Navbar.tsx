@@ -1,4 +1,5 @@
 import { useAuth } from '#/context/AuthContext';
+import { useCart } from '#/context/CartContext';
 import { Product, Products, useProduct } from '#/context/ProductContext';
 import { useIsDesktopHomeOnTop } from '#/hooks/useIsDesktopHomeOnTop';
 import { useIsMobile } from '#/hooks/useMobile';
@@ -139,7 +140,6 @@ const Navbar = () => {
   const [showCollection, setShowCollection] = useState(false);
   const [showAboutUs, setShowAboutUs] = useState(false);
   const [searchedProducts, setSearchedProducts] = useState<Products>([]);
-  const [, setSearch] = useState('');
   const isDesktopHomeOnTop = useIsDesktopHomeOnTop({
     turnBackToTransparent: !(showCollection || showAboutUs),
   });
@@ -163,7 +163,43 @@ const Navbar = () => {
     router.replace(`?${params.toString()}`, { scroll: false });
   };
 
+  const { cart } = useCart();
+
+  const totalCartItem = cart.reduce((acc, item) => acc + item.quantity, 0);
+
   const { collections, onSearchProducts } = useProduct();
+
+  const Cart = (
+    <div style={{ position: 'relative' }}>
+      {totalCartItem > 0 ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: isMobile ? '10px' : '16px',
+            height: isMobile ? '10px' : '16px',
+            border: `1px solid ${showAboutUs ? 'white' : 'black'}`,
+            fontSize: isMobile ? '5px' : '8px',
+            padding: '2px',
+            borderRadius: '50%',
+            backgroundColor: showAboutUs ? '#733216' : 'white',
+            zIndex: 20,
+            right: isMobile ? '2px' : '-3px',
+            ...(isMobile ? {} : { top: '-3px' }),
+            position: 'absolute',
+          }}
+        >
+          {totalCartItem}
+        </div>
+      ) : null}
+      <StyledCartLogo
+        className="clickable"
+        color={showAboutUs ? 'white' : 'black'}
+        onClick={toggleCart}
+      />
+    </div>
+  );
 
   if (isMobile) {
     return (
@@ -181,7 +217,6 @@ const Navbar = () => {
             <Dropdown
               maxHeight="400px"
               onClose={() => {
-                setSearch('');
                 setSearchedProducts([]);
               }}
               options={searchedProducts}
@@ -208,7 +243,7 @@ const Navbar = () => {
                 }}
               />
             </Dropdown>
-            <StyledCartLogo onClick={toggleCart} />
+            {Cart}
           </LogosContainer>
         </NavContainer>
         ;
@@ -369,7 +404,6 @@ const Navbar = () => {
           <Dropdown
             maxHeight="400px"
             onClose={() => {
-              setSearch('');
               setSearchedProducts([]);
             }}
             options={searchedProducts}
@@ -413,13 +447,7 @@ const Navbar = () => {
                 onClick={() => router.push('/account')}
               />
             ))}
-          {!showTransparent && (
-            <StyledCartLogo
-              className="clickable"
-              color={showAboutUs ? 'white' : 'black'}
-              onClick={toggleCart}
-            />
-          )}
+          {!showTransparent && Cart}
         </LogosContainer>
         {(showCollection || showAboutUs) && (
           <div

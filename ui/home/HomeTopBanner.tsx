@@ -5,15 +5,15 @@ import Carousel from '../components/Carousel';
 
 // List of images in the public folder
 const desktopImages: string[] = [
+  '/images/home/desktop_home_banner3.png',
   '/images/home/desktop_home_banner1.png',
   '/images/home/desktop_home_banner2.png',
-  '/images/home/desktop_home_banner3.png',
 ];
 
 const mobileImages: string[] = [
+  '/images/home/protrait_banner3.png',
   '/images/home/protrait_banner1.png',
   '/images/home/protrait_banner2.png',
-  '/images/home/protrait_banner3.png',
 ];
 
 // Styled Components
