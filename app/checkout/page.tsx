@@ -26,7 +26,7 @@ interface DBOrderType extends OrderPayloadType {
 }
 
 const Checkout = () => {
-  const shippingCharges = 80;
+  const shippingCharges = 0;
   const [orderObj, setOrderObj] = useState<DBOrderType | null>(null);
   const [index, setIndex] = useState(0);
   const [codCharges, setCodCharges] = useState(0);
