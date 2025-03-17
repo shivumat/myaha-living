@@ -111,10 +111,13 @@ const Cart = () => {
                 ),
               );
               if (!product) return null;
+              const variants = product.variants.filter((variant) =>
+                variant.id.includes(item.variant_id),
+              );
               return (
                 <CartItem
                   key={item.variant_id}
-                  product={product}
+                  product={{ ...product, variants }}
                   showAddtoCart
                 />
               );

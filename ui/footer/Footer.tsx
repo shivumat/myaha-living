@@ -1,4 +1,5 @@
 'use client';
+import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import FooterLinks from './FooterLinks';
 import TradeMark from './TradeMark';
@@ -20,21 +21,29 @@ const TextContainer = newStyled.div`
   text-align: center;
   font-size: 14px;
   font-weight: lighter;
-  grid-column: 1 / span 2;
+  @media (max-width: 800px) {
+    grid-column: 1 / span 2;
+  }
 `;
 
 const Footer = () => {
+  const isMobile = useIsMobile();
   return (
     <FooterContainer>
       <FooterLinks />
       <TradeMark />
-      <TextContainer>
-        You can always reach out to us at
+      <TextContainer style={{ textAlign: isMobile ? 'center' : 'left' }}>
         <strong style={{ display: 'block' }}>+91 6350533372</strong>
         <strong style={{ display: 'block' }}>hello@myahaliving.com </strong>
+      </TextContainer>
+      <TextContainer style={{ textAlign: isMobile ? 'center' : 'right' }}>
         <strong style={{ display: 'block' }}>MYAHA INDIA</strong>
-        <strong style={{ display: 'block' }}>Plot No. B-26, Mathurawala,</strong>
-        <strong style={{ display: 'block' }}>Jagatpura, Jaipur 303903, Rajasthan, India.</strong>
+        <strong style={{ display: 'block' }}>
+          Plot No. B-26, Mathurawala,
+        </strong>
+        <strong style={{ display: 'block' }}>
+          Jagatpura, Jaipur 303903, Rajasthan, India.
+        </strong>
       </TextContainer>
     </FooterContainer>
   );

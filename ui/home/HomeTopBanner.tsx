@@ -18,26 +18,9 @@ const mobileImages: string[] = [
 
 // Styled Components
 const Gallery = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  grid-template-rows: 1fr 1fr;
   width: 100%;
   margin: auto;
   height: 90%;
-`;
-
-const ImageWrapper = styled.div`
-  position: relative;
-  overflow: hidden;
-
-  &:nth-of-type(1) {
-    grid-row: span 2;
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
 `;
 
 const MobileWrapper = styled.div`
@@ -47,11 +30,7 @@ const MobileWrapper = styled.div`
 // Desktop Grid Layout Component
 const ImageGrid: React.FC = () => (
   <Gallery>
-    {desktopImages.map((src, index) => (
-      <ImageWrapper key={index}>
-        <img src={src} alt={`Image ${index + 1}`} />
-      </ImageWrapper>
-    ))}
+    <Carousel images={desktopImages} height="85vh" />
   </Gallery>
 );
 

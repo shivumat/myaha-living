@@ -97,6 +97,8 @@ const ProductWithId = () => {
     (product) => product.id === `gid://shopify/Product/${id}`,
   );
 
+  console.log(currentProduct);
+
   useEffect(() => {
     const newVariantInfo =
       currentProduct?.variantsInfo.map((info) => {

@@ -26,6 +26,15 @@ export const POST = async () => {
             }
           }
         }
+        images(first: 8, sortKey: POSITION) {
+          edges {
+              node {
+                id
+                url
+                
+              }
+          }
+        }
         variants(first: 5) {
           edges {
             node {
@@ -40,15 +49,6 @@ export const POST = async () => {
                 dimensions: metafield(namespace: "custom", key: "dimensions") {
                     value
                 }
-                product{
-                    images(first: 8) {
-                    edges {
-                        node {
-                            url
-                        }
-                    }
-                    }
-                }
                 price {
                     amount
                     currencyCode
@@ -62,6 +62,7 @@ export const POST = async () => {
 }`;
 
     const data = await shopifyFetch({ query });
+
     const products = data.data.data.products.edges.map((product: any) => {
       const { id, handle, title, descriptionHtml, options, tags } =
         product.node;
@@ -70,6 +71,10 @@ export const POST = async () => {
           return { name: option.name, values: option.values };
         },
       );
+
+      const images = product.node.images.edges.map((image: any) => {
+        return image.node.url;
+      });
 
       const variantCollection = generateCombinations(variantsInfo);
 
@@ -83,9 +88,6 @@ export const POST = async () => {
         (variant: any, index: number) => {
           const { id, availableForSale, material, finish, dimensions, price } =
             variant.node;
-          const images = variant.node.product.images.edges.map(
-            (image: any) => image.node.url,
-          );
 
           const variantInfo = variantCollection[index];
 
@@ -112,6 +114,7 @@ export const POST = async () => {
         tags,
         variants,
         collections,
+        images,
       };
     });
 
