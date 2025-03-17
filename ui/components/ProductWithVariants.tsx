@@ -75,7 +75,9 @@ const ProductWithVariants = (props: { product: Product }) => {
             }}
           >
             {`${product.title}`}{' '}
-            <strong>{`${product.variants[0].currencyCode} ${product.variants[0].price}`}</strong>
+            <strong
+              style={{ minWidth: '100px', textAlign: 'right' }}
+            >{`${product.variants[0].currencyCode} ${product.variants[0].price}`}</strong>
           </div>
           <div style={{ display: 'flex', gap: '10px' }}>
             {colorVariants?.values?.map((color: string) => (
