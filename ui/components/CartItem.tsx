@@ -1,5 +1,6 @@
 import { Product } from '#/context/ProductContext';
 import newStyled from '@emotion/styled';
+import { useRouter } from 'next/navigation';
 import AddToCart from './AddToCart';
 import VariantContainer from './VariantContainer';
 
@@ -35,6 +36,7 @@ const CartItem = (props: {
 }) => {
   const { product, quantity } = props;
   const imageSrc = props.product.variants[0].images[0];
+  const router = useRouter();
 
   return (
     <Container
@@ -42,6 +44,12 @@ const CartItem = (props: {
       background={props.background ?? 'transparent'}
     >
       <img
+        onClick={() =>
+          router.push(
+            `/product/${product.id.replace('gid://shopify/Product/', '')}`,
+          )
+        }
+        className="clickable"
         width="175px"
         height={'350px'}
         src={imageSrc}
@@ -56,7 +64,15 @@ const CartItem = (props: {
           margin: '10px 0px',
         }}
       >
-        <div style={{ fontSize: '24px', fontWeight: '400' }}>
+        <div
+          onClick={() =>
+            router.push(
+              `/product/${product.id.replace('gid://shopify/Product/', '')}`,
+            )
+          }
+          className="clickable"
+          style={{ fontSize: '24px', fontWeight: '400' }}
+        >
           {props.product.title}
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
