@@ -80,6 +80,7 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
           <AddToCart
             variantId={product.variants[0].id}
             inventoryId={product.variants[0].inventoryId}
+            quantityAvailable={product.variants[0].quantityAvailable}
           />
           <AddtoCart
             className="view clickable"

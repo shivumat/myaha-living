@@ -95,6 +95,7 @@ const CartItem = (props: {
           <StyledAddToCart
             variantId={product.variants[0].id}
             inventoryId={product.variants[0].inventoryId}
+            quantityAvailable={product.variants[0].quantityAvailable}
           />
         )}
       </div>

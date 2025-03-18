@@ -1,5 +1,6 @@
 import { useCart } from '#/context/CartContext';
 import newStyled from '@emotion/styled';
+import { useState } from 'react';
 
 const AddtoCart = newStyled.button`
     height: 30px;
@@ -13,6 +14,10 @@ const AddtoCart = newStyled.button`
         background-color: white;
         color: black;
         border: 1px solid black;
+    }
+    &.disabled{
+        background-color: grey;
+        cursor: not-allowed;
     }
     @media (max-width: 800px) {
         font-size: 14px;
@@ -61,52 +66,115 @@ const ActiveInput = newStyled.input`
     }
 `;
 
+const ErrorMessage = newStyled.div`
+    color: red;
+    font-size: 14px;
+    @media (max-width: 800px) {
+        font-size: 12px;
+    }
+`;
+
+const WarningMessage = newStyled.div`
+    color: orange;
+    font-size: 14px;
+    @media (max-width: 800px) {
+        font-size: 12px;
+    }
+`;
+
 const AddToCart = (props: {
   variantId: string;
   inventoryId: string;
+  quantityAvailable: number;
   className?: string;
 }) => {
   const { addItem, cart, removeItem, setVariantCount } = useCart();
+  const [error, setError] = useState('');
   const cartItem = cart.find((item) =>
     props.variantId.includes(item.variant_id),
   );
-  const { variantId, inventoryId } = props;
+  const { variantId, inventoryId, quantityAvailable } = props;
   const id = variantId.replace('gid://shopify/ProductVariant/', '');
+
   if (cartItem) {
     return (
-      <div className={props.className} style={{ display: 'flex' }}>
-        <ActiveButtons className="clickable" onClick={() => removeItem(id)}>
-          -
-        </ActiveButtons>
-        <ActiveInput
-          style={{ margin: '0px 10px' }}
-          type="number"
-          value={cartItem.quantity}
-          onChange={(e) => {
-            setVariantCount({
-              variant_id: id,
-              count: Number(e.target.value),
-              inventoryId,
-            });
-          }}
-          inputMode="numeric"
-        />
-        <ActiveButtons
-          className="clickable"
-          onClick={() => addItem({ variant_id: id, inventoryId })}
+      <>
+        <div
+          className={props.className}
+          style={{ display: 'flex', flexDirection: 'column' }}
         >
-          +
-        </ActiveButtons>
-      </div>
+          <div style={{ display: 'flex' }}>
+            <ActiveButtons
+              className="clickable"
+              onClick={() => {
+                setError('');
+                removeItem(id);
+              }}
+            >
+              -
+            </ActiveButtons>
+            <ActiveInput
+              style={{ margin: '0px 10px' }}
+              type="number"
+              value={cartItem.quantity}
+              onChange={(e) => {
+                const newQuantity = Number(e.target.value);
+                if (newQuantity <= quantityAvailable) {
+                  setVariantCount({
+                    variant_id: id,
+                    count: newQuantity,
+                    inventoryId,
+                  });
+                  setError('');
+                } else {
+                  setError('Cannot add more than available quantity');
+                }
+              }}
+              inputMode="numeric"
+            />
+            <ActiveButtons
+              className="clickable"
+              onClick={() => {
+                if (cartItem.quantity < quantityAvailable) {
+                  addItem({ variant_id: id, inventoryId });
+                  setError('');
+                } else {
+                  setError('Cannot add more than available quantity');
+                }
+              }}
+            >
+              +
+            </ActiveButtons>
+          </div>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+        </div>
+        {quantityAvailable === 0 && <ErrorMessage>Out of Stock</ErrorMessage>}
+        {quantityAvailable > 0 && quantityAvailable <= 3 && (
+          <WarningMessage>
+            Only {quantityAvailable} left in stock!
+          </WarningMessage>
+        )}
+      </>
     );
   }
+
   return (
-    <AddtoCart
-      className={`clickable ${props.className}`}
-      onClick={() => addItem({ variant_id: id, inventoryId })}
-    >
-      Add to cart
-    </AddtoCart>
+    <div>
+      <AddtoCart
+        className={`clickable ${props.className} ${quantityAvailable === 0 ? 'disabled' : ''}`}
+        onClick={() => {
+          if (quantityAvailable > 0) {
+            addItem({ variant_id: id, inventoryId });
+          }
+        }}
+      >
+        Add to cart
+      </AddtoCart>
+      {quantityAvailable === 0 && <ErrorMessage>Out of Stock</ErrorMessage>}
+      {quantityAvailable > 0 && quantityAvailable <= 3 && (
+        <WarningMessage>Only {quantityAvailable} left in stock!</WarningMessage>
+      )}
+    </div>
   );
 };
 

@@ -58,6 +58,7 @@ interface ProductContextType {
   collections: Collections;
   openProduct: (product: Product) => void;
   onSearchProducts: (searchString: string) => Products;
+  fetchData: () => Promise<void>;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -154,7 +155,13 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ProductContext.Provider
-      value={{ products, collections, openProduct, onSearchProducts }}
+      value={{
+        products,
+        collections,
+        openProduct,
+        onSearchProducts,
+        fetchData,
+      }}
     >
       {children}
     </ProductContext.Provider>

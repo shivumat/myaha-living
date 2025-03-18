@@ -86,18 +86,20 @@ export const POST = async (req: Request) => {
       .then((result) => result)
       .catch((error) => console.error(error));
 
-    inventoryIdsAndQuantity.forEach(async (item: any) => {
-      const updateInventoryRaw = JSON.stringify({
-        location_id: 97974976759,
-        inventory_item_id: item.id,
-        available_adjustment: -item.quantity,
-      });
+    await Promise.all(
+      inventoryIdsAndQuantity.map(async (item: any) => {
+        const updateInventoryRaw = JSON.stringify({
+          location_id: 97974976759,
+          inventory_item_id: item.id,
+          available_adjustment: -item.quantity,
+        });
 
-      await fetch(
-        'https://hvs7sw-ki.myshopify.com/admin/api/2024-04/inventory_levels/adjust.json',
-        { ...requestOptions, body: updateInventoryRaw },
-      );
-    });
+        return fetch(
+          'https://hvs7sw-ki.myshopify.com/admin/api/2024-04/inventory_levels/adjust.json',
+          { ...requestOptions, body: updateInventoryRaw },
+        );
+      }),
+    );
 
     return NextResponse.json(
       {

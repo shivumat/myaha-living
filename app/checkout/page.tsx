@@ -65,7 +65,7 @@ const Checkout = () => {
   });
 
   const { cart, clear } = useCart();
-  const { stopLoading, showToast } = useToast();
+  const { showToast } = useToast();
   const { products } = useProduct();
 
   const total = cart.reduce((acc, item) => {
@@ -162,12 +162,13 @@ const Checkout = () => {
       body: JSON.stringify({ ...newOrderObj, shopifyOrderId }),
     });
 
-    clear();
     setOrderObj(null);
     setDiscountObject(null);
-    stopLoading();
     showToast('Order Placed Successfully', 'success');
-    window.location.href = `/?orderCreated=${newOrderObj.id}`;
+    setTimeout(() => {
+      window.location.href = `/?orderCreated=${newOrderObj.id}`;
+      clear();
+    }, 2000);
   };
 
   const fetchDiscoutDetails = async (code: string) => {

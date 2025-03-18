@@ -1,4 +1,6 @@
 import { useAuth } from '#/context/AuthContext';
+import { useProduct } from '#/context/ProductContext';
+import { useToast } from '#/context/ToastContext';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import Modal from './components/ModalComponent';
@@ -77,10 +79,18 @@ const OrderCreated = (props: {
     setReferenceId(orderDetails.shopifyOrderId);
   };
 
+  const { stopLoading } = useToast();
+  const { fetchData } = useProduct();
+
   useEffect(() => {
     if (!props.orderId) return;
     fetchOrderDetails(props.orderId);
   }, [props.orderId]);
+
+  useEffect(() => {
+    fetchData();
+    stopLoading();
+  }, []);
 
   if (!userDetails) {
     return null;

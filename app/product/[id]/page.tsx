@@ -172,8 +172,7 @@ const ProductWithId = () => {
     <div
       style={{
         marginTop: '10px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        ...(!isMobile && { marginLeft: 'auto', marginRight: 'auto' }),
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
@@ -319,6 +318,9 @@ const ProductWithId = () => {
           <AddToCart
             variantId={currentProduct.variants[variant].id}
             inventoryId={currentProduct.variants[variant].inventoryId}
+            quantityAvailable={
+              currentProduct.variants[variant].quantityAvailable
+            }
           />
         </div>
         {Manufacture}
@@ -344,6 +346,7 @@ const ProductWithId = () => {
       <AddToCart
         variantId={currentProduct.variants[variant].id}
         inventoryId={currentProduct.variants[variant].inventoryId}
+        quantityAvailable={currentProduct.variants[variant].quantityAvailable}
       />
       {Manufacture}
       {Material}
