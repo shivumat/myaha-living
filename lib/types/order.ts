@@ -30,4 +30,9 @@ export interface OrderPayloadType {
     phone?: string;
   };
   note?: string;
+  discount_codes?: {
+    code: string;
+    amount: string;
+    type: string;
+  }[];
 }

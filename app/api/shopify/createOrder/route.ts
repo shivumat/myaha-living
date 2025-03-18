@@ -11,27 +11,25 @@ export const POST = async (req: Request) => {
       billing_address,
       razor_pay_id,
       note,
+      discount_codes,
     } = await req.json();
 
     const udpatedVariants = [
-      ...variants,
       ...(shippingCharges
         ? [
             {
-              name: 'shipping_cost',
-              title: 'Shipping cost',
-              price: shippingCharges,
-              currency_code: 'INR',
+              title: 'Shipping',
+              price: shippingCharges || '0',
+              code: 'SHIPPING',
             },
           ]
         : []),
       ...(codCharges
         ? [
             {
-              name: 'cod_cost',
-              title: 'Cash on delivery cost',
-              price: codCharges,
-              currency_code: 'INR',
+              title: 'COD Charges',
+              price: codCharges || '0',
+              code: 'COD',
             },
           ]
         : []),
@@ -47,7 +45,8 @@ export const POST = async (req: Request) => {
 
     const raw = JSON.stringify({
       order: {
-        line_items: udpatedVariants,
+        line_items: variants,
+        shipping_lines: udpatedVariants,
         customer: customerInfo,
         shipping_address,
         billing_address,
@@ -55,11 +54,11 @@ export const POST = async (req: Request) => {
         transaction: {
           currency_code: 'INR',
           type: !!razor_pay_id ? 'bank_deposit' : 'cash_on_delivery',
-          amount: '1900',
           status: !!razor_pay_id ? 'success' : 'pending',
         },
         financial_status: !!razor_pay_id ? 'paid' : 'pending',
         note: note,
+        discount_codes,
       },
     });
 

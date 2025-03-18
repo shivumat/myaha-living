@@ -203,14 +203,20 @@ const PaymentOptions = ({
         {/* Cash on Delivery Option */}
         <Option
           selected={!!codCharges}
-          onClick={() => setCodCharges(CONST_COD_CHARGES)}
+          onClick={() => {
+            setOpenRazorPay(false);
+            setCodCharges(CONST_COD_CHARGES);
+          }}
         >
           <HiddenRadio
             type="radio"
             name="payment"
             value="cod"
             checked={!!codCharges}
-            onChange={() => setCodCharges(100)}
+            onChange={() => {
+              setOpenRazorPay(false);
+              setCodCharges(CONST_COD_CHARGES);
+            }}
           />
           <RadioCircle>
             <InnerCircle selected={!!codCharges} />

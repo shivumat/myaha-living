@@ -5,7 +5,9 @@ import { useProduct } from '#/context/ProductContext';
 import { useToast } from '#/context/ToastContext';
 import { OrderPayloadType } from '#/lib/types/order';
 import Userform from '#/ui/checkout/Address';
-import CheckoutSidebar from '#/ui/checkout/CheckoutSidebar';
+import CheckoutSidebar, {
+  DiscountObjectType,
+} from '#/ui/checkout/CheckoutSidebar';
 import OrderList from '#/ui/checkout/OrderList';
 import Payment from '#/ui/checkout/Payment';
 import newStyled from '@emotion/styled';
@@ -30,6 +32,8 @@ const Checkout = () => {
   const [orderObj, setOrderObj] = useState<DBOrderType | null>(null);
   const [index, setIndex] = useState(0);
   const [codCharges, setCodCharges] = useState(0);
+  const [discountObject, setDiscountObject] =
+    useState<DiscountObjectType | null>(null);
   const { userDetails } = useAuth();
 
   const [note, setNote] = useState('');
@@ -120,6 +124,13 @@ const Checkout = () => {
       id: `order_${uuidv4().replace(/-/g, '')}`,
       status: isCOD ? 'cod' : 'paid',
       razor_pay_id: paymentId ?? '',
+      discount_codes: [
+        {
+          code: 'HCG4JVBCCAZS',
+          amount: '10.00',
+          type: 'percentage',
+        },
+      ],
     };
     if (isCOD) {
       newOrderObj = { ...newOrderObj, codCharges: codCharges };
@@ -145,9 +156,29 @@ const Checkout = () => {
 
     clear();
     setOrderObj(null);
+    setDiscountObject(null);
     stopLoading();
     showToast('Order Placed Successfully', 'success');
     window.location.href = `/?orderCreated=${newOrderObj.id}`;
+  };
+
+  const fetchDiscoutDetails = async (code: string) => {
+    const response = await fetch('/api/shopify/getDiscountDetails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ code }),
+    });
+    const { data } = await response.json();
+    if (data.amount) {
+      setDiscountObject(data);
+      return data as DiscountObjectType;
+    }
+    if (data.message) {
+      return data.message;
+    }
+    return null;
   };
 
   return (
@@ -187,6 +218,8 @@ const Checkout = () => {
           setIndex={setIndex}
           shippingCharges={shippingCharges}
           codCharges={codCharges}
+          discountObject={discountObject}
+          fetchDiscoutDetails={fetchDiscoutDetails}
         />
       </Container>
     </>

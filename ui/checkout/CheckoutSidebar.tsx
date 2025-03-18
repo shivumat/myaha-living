@@ -68,12 +68,20 @@ const CheckoutButton = newStyled.button`
   }
 `;
 
+export interface DiscountObjectType {
+  title: string;
+  value: number;
+  valueType: string;
+}
+
 const CheckoutSummary = (props: {
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
   total: number;
   shippingCharges: number;
   codCharges: number;
+  discountObject: DiscountObjectType | null;
+  fetchDiscoutDetails: (code: string) => Promise<DiscountObjectType | null>;
 }) => {
   const { index, setIndex } = props;
 
