@@ -148,7 +148,7 @@ const AddToCart = (props: {
           </div>
           {error && <ErrorMessage>{error}</ErrorMessage>}
         </div>
-        {quantityAvailable === 0 && <ErrorMessage>Out of Stock</ErrorMessage>}
+        {quantityAvailable <= 0 && <ErrorMessage>Out of Stock</ErrorMessage>}
         {quantityAvailable > 0 && quantityAvailable <= 3 && (
           <WarningMessage>
             Only {quantityAvailable} left in stock!
@@ -161,7 +161,7 @@ const AddToCart = (props: {
   return (
     <div>
       <AddtoCart
-        className={`clickable ${props.className} ${quantityAvailable === 0 ? 'disabled' : ''}`}
+        className={`clickable ${props.className} ${quantityAvailable <= 0 ? 'disabled' : ''}`}
         onClick={() => {
           if (quantityAvailable > 0) {
             addItem({ variant_id: id, inventoryId });
@@ -170,7 +170,7 @@ const AddToCart = (props: {
       >
         Add to cart
       </AddtoCart>
-      {quantityAvailable === 0 && <ErrorMessage>Out of Stock</ErrorMessage>}
+      {quantityAvailable <= 0 && <ErrorMessage>Out of Stock</ErrorMessage>}
       {quantityAvailable > 0 && quantityAvailable <= 3 && (
         <WarningMessage>Only {quantityAvailable} left in stock!</WarningMessage>
       )}
