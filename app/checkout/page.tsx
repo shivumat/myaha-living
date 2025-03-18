@@ -81,6 +81,16 @@ const Checkout = () => {
     return acc + (Number(variant.price) ?? 0) * item.quantity;
   }, 0);
 
+  let discount = 0;
+
+  if (!!discountObject) {
+    if (discountObject?.type === 'percentage') {
+      discount = (total * Number(discountObject.amount)) / 100;
+    } else {
+      discount = Number(discountObject.amount);
+    }
+  }
+
   const createDBOrder = async () => {
     let newOrderObj: DBOrderType = {
       variants: cart,
@@ -124,13 +134,11 @@ const Checkout = () => {
       id: `order_${uuidv4().replace(/-/g, '')}`,
       status: isCOD ? 'cod' : 'paid',
       razor_pay_id: paymentId ?? '',
-      discount_codes: [
-        {
-          code: 'HCG4JVBCCAZS',
-          amount: '10.00',
-          type: 'percentage',
-        },
-      ],
+      ...(discountObject && {
+        discount_codes: [
+          { ...discountObject, amount: '' + discountObject.amount },
+        ],
+      }),
     };
     if (isCOD) {
       newOrderObj = { ...newOrderObj, codCharges: codCharges };
@@ -170,13 +178,14 @@ const Checkout = () => {
       },
       body: JSON.stringify({ code }),
     });
-    const { data } = await response.json();
-    if (data.amount) {
+    const result = await response.json();
+    const data = result?.data;
+    if (data?.amount) {
       setDiscountObject(data);
       return data as DiscountObjectType;
     }
-    if (data.message) {
-      return data.message;
+    if (result?.message) {
+      return result.message as string;
     }
     return null;
   };
@@ -208,6 +217,7 @@ const Checkout = () => {
             amount={total}
             orderId={orderObj.id}
             codCharges={codCharges}
+            discount={discount}
             setCodCharges={setCodCharges}
           />
         )}
@@ -220,6 +230,8 @@ const Checkout = () => {
           codCharges={codCharges}
           discountObject={discountObject}
           fetchDiscoutDetails={fetchDiscoutDetails}
+          discount={discount}
+          setDiscountObject={setDiscountObject}
         />
       </Container>
     </>

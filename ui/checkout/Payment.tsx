@@ -113,6 +113,7 @@ const PaymentOptions = ({
   orderId,
   nextStep,
   onPaymentCompletion,
+  discount,
 }: {
   codCharges: number;
   setCodCharges: Dispatch<SetStateAction<number>>;
@@ -122,6 +123,7 @@ const PaymentOptions = ({
   email: string;
   nextStep: Dispatch<SetStateAction<number>>;
   onPaymentCompletion: (paymentId: string) => Promise<void>;
+  discount: number;
 }) => {
   const [disabled, setDisabled] = useState(false);
   const [openRazorPay, setOpenRazorPay] = useState(false);
@@ -238,7 +240,7 @@ const PaymentOptions = ({
         <PaymentComponent
           orderId={orderId}
           email={email}
-          amount={amount + shippingCharges + codCharges}
+          amount={amount + shippingCharges + codCharges - discount}
           onCompletion={onRazorPayCompletion}
         />
       )}
