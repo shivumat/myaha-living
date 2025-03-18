@@ -19,7 +19,8 @@ const Links = newStyled.div`
   @media (max-width: 800px) {
     font-size: 12px;
     height: 24px;
-    margin-top: 10px
+    margin-top: 10px;
+    font-weight: 400;
   }
 `;
 

@@ -65,6 +65,16 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [collections, setCollections] = useState<Collections>([]);
   const router = useRouter();
 
+  const collectionOrder = [
+    'vases',
+    'planters',
+    'wall decor',
+    'side tables',
+    'dinnerware',
+    'lighting',
+    'drinkware',
+  ];
+
   const fetchData = async () => {
     const productData = await fetch('/api/shopify/products', {
       method: 'POST',
@@ -99,7 +109,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       body: JSON.stringify({ page: 1 }),
     });
     const collectionResponse = await collectionData.json();
-    const collectionsData: Collections = collectionResponse.data
+    let collectionsData: Collections = collectionResponse.data
       .filter((collection: Collection) => !!collection.products.length)
       .map((collection: Collection) => {
         const collectionProduct = productsData.find((product) => {
@@ -112,6 +122,16 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
         const image = collection.image ?? '/images/sample/sample_banner1.png';
         return { ...collection, productImage, image };
       });
+
+    collectionsData = collectionsData.sort((a, b) => {
+      const aIndex = collectionOrder.findIndex((item: string) =>
+        a.title.toLowerCase().includes(item.toLowerCase()),
+      );
+      const bIndex = collectionOrder.findIndex((item: string) =>
+        b.title.toLowerCase().includes(item.toLowerCase()),
+      );
+      return aIndex - bIndex;
+    });
     setCollections(collectionsData);
   };
 

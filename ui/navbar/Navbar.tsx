@@ -73,7 +73,7 @@ const LinksContainer = newStyled.div`
     margin-top: 20px;
     >div {
       font-size: 14px;
-      font-weight: lighter;
+      font-weight: 400;
       cursor: pointer;
       border-bottom: 1px solid #00000033;
     }
@@ -256,7 +256,7 @@ const Navbar = () => {
                 router.push('/');
               }}
               margin="auto"
-              width="111"
+              width="96.75"
               height="30"
             />
           }

@@ -33,8 +33,9 @@ const CollectionDetails = newStyled.div`
         font-weight: lighter;
     }
     @media (max-width: 800px) {
-        background-color: transparent;
-        backdrop-filter: none;
+        background-color: #FFFFFF1A;
+        backdrop-filter: blur(50px);
+        border-radius: 10px;
         top: 10%;
         left: 10%;
         padding: 10px;

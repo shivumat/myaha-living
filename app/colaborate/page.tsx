@@ -101,7 +101,7 @@ const Div3 = styled.div`
     margin-bottom: 20px;
   }
   .left-container-subheader {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: lighter;
     margin-bottom: 20px;
   }
@@ -113,6 +113,9 @@ const Div3 = styled.div`
     text-align: center;
     .right-form {
       width: 100%;
+    }
+    .left-container-subheader {
+      font-size: 14px;
     }
   }
 `;

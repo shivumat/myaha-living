@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import FooterCarousel from '../components/FooterCarousel';
 import OrderCreated from '../OrderCreatedModal';
 import Categories from './Categories';
-import CategoryProducts from './CategoryProducts';
 import OurStory from './OurStory';
 import FeaturedProducts from './ProductsFeatured';
 
@@ -84,7 +83,7 @@ const HomeBody = () => {
       </FetaureConstainer>
       <FooterCarousel />
       <OurStory />
-      <CategoryProducts />
+      {/* <CategoryProducts /> */}
       <OrderCreated
         isOpen={hasOrderCreated}
         orderId={searchParams.get('orderCreated')}
