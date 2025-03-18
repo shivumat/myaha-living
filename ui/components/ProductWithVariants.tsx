@@ -64,6 +64,8 @@ const ProductWithVariants = (props: { product: Product }) => {
           justifyContent: 'space-between',
           alignItems: 'basline',
           height: '60px',
+          width: '80%',
+          margin: '10px auto',
         }}
       >
         <div
@@ -80,11 +82,12 @@ const ProductWithVariants = (props: { product: Product }) => {
               gap: '10px',
               justifyContent: 'space-between',
               width: '100%',
+              fontSize: '14px',
             }}
           >
             {`${product.title}`}{' '}
             <strong
-              style={{ minWidth: '100px', textAlign: 'right' }}
+              style={{ minWidth: '80px', textAlign: 'right' }}
             >{`${product.variants[0].currencyCode} ${product.variants[0].price}`}</strong>
           </div>
           <div style={{ display: 'flex', gap: '10px' }}>
