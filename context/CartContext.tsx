@@ -6,7 +6,11 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const CART_KEY = 'cart';
 
 // Function to retrieve the cart from session storage
-const getCart = (): { variant_id: string; quantity: number }[] => {
+const getCart = (): {
+  variant_id: string;
+  quantity: number;
+  inventoryId: string;
+}[] => {
   const cart = localStorage.getItem(CART_KEY);
   return cart ? JSON.parse(cart) : [];
 };
@@ -17,30 +21,50 @@ const clearCart = () => {
 };
 
 // Function to update the cart in session storage
-const addLineItem = (varient_id: string) => {
+const addLineItem = ({
+  variant_id,
+  inventoryId,
+}: {
+  variant_id: string;
+  inventoryId: string;
+}) => {
   const cartItems = getCart();
   let updatedCart = cartItems.map((item) => {
-    if (item.variant_id === varient_id) {
+    if (item.variant_id === variant_id) {
       return { ...item, quantity: item.quantity + 1 };
     }
     return item;
   });
-  if (!updatedCart.some((item) => item.variant_id === varient_id)) {
-    updatedCart = [...updatedCart, { variant_id: varient_id, quantity: 1 }];
+  if (!updatedCart.some((item) => item.variant_id === variant_id)) {
+    updatedCart = [
+      ...updatedCart,
+      { variant_id: variant_id, quantity: 1, inventoryId },
+    ];
   }
   localStorage.setItem(CART_KEY, JSON.stringify(updatedCart));
 };
 
-const addLineItemWIthCount = (varient_id: string, count: number) => {
+const addLineItemWIthCount = ({
+  variant_id,
+  inventoryId,
+  count,
+}: {
+  variant_id: string;
+  count: number;
+  inventoryId: string;
+}) => {
   const cartItems = getCart();
   let updatedCart = cartItems.map((item) => {
-    if (item.variant_id === varient_id) {
+    if (item.variant_id === variant_id) {
       return { ...item, quantity: count };
     }
     return item;
   });
-  if (!updatedCart.some((item) => item.variant_id === varient_id)) {
-    updatedCart = [...updatedCart, { variant_id: varient_id, quantity: count }];
+  if (!updatedCart.some((item) => item.variant_id === variant_id)) {
+    updatedCart = [
+      ...updatedCart,
+      { variant_id: variant_id, quantity: count, inventoryId },
+    ];
   }
   localStorage.setItem(
     CART_KEY,
@@ -48,11 +72,11 @@ const addLineItemWIthCount = (varient_id: string, count: number) => {
   );
 };
 
-const removeLineItem = (varient_id: string) => {
+const removeLineItem = (variant_id: string) => {
   const cartItems = getCart();
   const updatedCart = cartItems
     .map((item) => {
-      if (item.variant_id === varient_id) {
+      if (item.variant_id === variant_id) {
         return { ...item, quantity: item.quantity - 1 };
       }
       return item;
@@ -62,11 +86,15 @@ const removeLineItem = (varient_id: string) => {
 };
 
 interface CartContextType {
-  cart: { variant_id: string; quantity: number }[];
-  addItem: (variant_id: string) => void;
+  cart: { variant_id: string; quantity: number; inventoryId: string }[];
+  addItem: (params: { variant_id: string; inventoryId: string }) => void;
   removeItem: (variant_id: string) => void;
   clear: () => void;
-  setVariantCount: (variant_id: string, count: number) => void;
+  setVariantCount: (params: {
+    variant_id: string;
+    inventoryId: string;
+    count: number;
+  }) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -77,7 +105,9 @@ interface CartProviderProps {
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] =
-    useState<{ variant_id: string; quantity: number }[]>(getCart());
+    useState<{ variant_id: string; quantity: number; inventoryId: string }[]>(
+      getCart(),
+    );
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -91,8 +121,14 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     };
   }, []);
 
-  const addItem = (variant_id: string) => {
-    addLineItem(variant_id);
+  const addItem = ({
+    variant_id,
+    inventoryId,
+  }: {
+    variant_id: string;
+    inventoryId: string;
+  }) => {
+    addLineItem({ variant_id, inventoryId });
     setCart(getCart());
   };
 
@@ -101,8 +137,16 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setCart(getCart());
   };
 
-  const setVariantCount = (variant_id: string, count: number) => {
-    addLineItemWIthCount(variant_id, count);
+  const setVariantCount = ({
+    variant_id,
+    count,
+    inventoryId,
+  }: {
+    variant_id: string;
+    inventoryId: string;
+    count: number;
+  }) => {
+    addLineItemWIthCount({ variant_id, count, inventoryId });
     setCart(getCart());
   };
 

@@ -35,6 +35,8 @@ export interface Variant {
   material: string;
   finish: string;
   dimensions: string;
+  inventoryId: string;
+  quantityAvailable: number;
   variantInfo: { name: string; value: string }[];
 }
 

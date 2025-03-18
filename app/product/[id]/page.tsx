@@ -316,7 +316,10 @@ const ProductWithId = () => {
             {currentProduct.variants[variant].currencyCode}{' '}
             {currentProduct.variants[variant].price}
           </Price>
-          <AddToCart variantId={currentProduct.variants[variant].id} />
+          <AddToCart
+            variantId={currentProduct.variants[variant].id}
+            inventoryId={currentProduct.variants[variant].inventoryId}
+          />
         </div>
         {Manufacture}
         {Material}
@@ -338,7 +341,10 @@ const ProductWithId = () => {
         {currentProduct.variants[variant].currencyCode}{' '}
         {currentProduct.variants[variant].price}
       </Price>
-      <AddToCart variantId={currentProduct.variants[variant].id} />
+      <AddToCart
+        variantId={currentProduct.variants[variant].id}
+        inventoryId={currentProduct.variants[variant].inventoryId}
+      />
       {Manufacture}
       {Material}
     </MobileWrapper>

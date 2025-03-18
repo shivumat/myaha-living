@@ -170,7 +170,7 @@ const Navbar = () => {
   const { collections, onSearchProducts } = useProduct();
 
   const Cart = (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative' }} onClick={toggleCart}>
       {totalCartItem > 0 ? (
         <div
           style={{
@@ -196,7 +196,6 @@ const Navbar = () => {
       <StyledCartLogo
         className="clickable"
         color={showAboutUs ? 'white' : 'black'}
-        onClick={toggleCart}
       />
     </div>
   );

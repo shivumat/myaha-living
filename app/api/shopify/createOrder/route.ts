@@ -14,6 +14,16 @@ export const POST = async (req: Request) => {
       discount_codes,
     } = await req.json();
 
+    const variantsWithLocation = variants.map((item: any) => ({
+      variant_id: item.variant_id,
+      quantity: item.quantity,
+      location_id: 97974976759,
+    }));
+    const inventoryIdsAndQuantity = variants.map((item: any) => ({
+      id: item.inventoryId,
+      quantity: item.quantity,
+    }));
+
     const udpatedVariants = [
       ...(shippingCharges
         ? [
@@ -45,7 +55,7 @@ export const POST = async (req: Request) => {
 
     const raw = JSON.stringify({
       order: {
-        line_items: variants,
+        line_items: variantsWithLocation,
         shipping_lines: udpatedVariants,
         customer: customerInfo,
         shipping_address,
@@ -65,17 +75,29 @@ export const POST = async (req: Request) => {
     const requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: raw,
       redirect: 'follow' as RequestRedirect,
     };
 
     const data = await fetch(
       'https://hvs7sw-ki.myshopify.com/admin/api/2025-01/orders.json',
-      requestOptions,
+      { ...requestOptions, body: raw },
     )
       .then((response) => response.json())
       .then((result) => result)
       .catch((error) => console.error(error));
+
+    inventoryIdsAndQuantity.forEach(async (item: any) => {
+      const updateInventoryRaw = JSON.stringify({
+        location_id: 97974976759,
+        inventory_item_id: item.id,
+        available_adjustment: -item.quantity,
+      });
+
+      await fetch(
+        'https://hvs7sw-ki.myshopify.com/admin/api/2024-04/inventory_levels/adjust.json',
+        { ...requestOptions, body: updateInventoryRaw },
+      );
+    });
 
     return NextResponse.json(
       {

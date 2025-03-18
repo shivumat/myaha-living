@@ -92,7 +92,10 @@ const CartItem = (props: {
           {quantity && `x ${quantity}`}
         </Price>
         {props.showAddtoCart && (
-          <StyledAddToCart variantId={product.variants[0].id} />
+          <StyledAddToCart
+            variantId={product.variants[0].id}
+            inventoryId={product.variants[0].inventoryId}
+          />
         )}
       </div>
     </Container>

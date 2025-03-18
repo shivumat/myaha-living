@@ -61,12 +61,16 @@ const ActiveInput = newStyled.input`
     }
 `;
 
-const AddToCart = (props: { variantId: string; className?: string }) => {
+const AddToCart = (props: {
+  variantId: string;
+  inventoryId: string;
+  className?: string;
+}) => {
   const { addItem, cart, removeItem, setVariantCount } = useCart();
   const cartItem = cart.find((item) =>
     props.variantId.includes(item.variant_id),
   );
-  const { variantId } = props;
+  const { variantId, inventoryId } = props;
   const id = variantId.replace('gid://shopify/ProductVariant/', '');
   if (cartItem) {
     return (
@@ -79,11 +83,18 @@ const AddToCart = (props: { variantId: string; className?: string }) => {
           type="number"
           value={cartItem.quantity}
           onChange={(e) => {
-            setVariantCount(id, Number(e.target.value));
+            setVariantCount({
+              variant_id: id,
+              count: Number(e.target.value),
+              inventoryId,
+            });
           }}
           inputMode="numeric"
         />
-        <ActiveButtons className="clickable" onClick={() => addItem(id)}>
+        <ActiveButtons
+          className="clickable"
+          onClick={() => addItem({ variant_id: id, inventoryId })}
+        >
           +
         </ActiveButtons>
       </div>
@@ -92,7 +103,7 @@ const AddToCart = (props: { variantId: string; className?: string }) => {
   return (
     <AddtoCart
       className={`clickable ${props.className}`}
-      onClick={() => addItem(id)}
+      onClick={() => addItem({ variant_id: id, inventoryId })}
     >
       Add to cart
     </AddtoCart>

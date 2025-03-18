@@ -1,4 +1,4 @@
-import { shopifyFetch } from '#/lib/shopify/util';
+import { shopifyAdminFetch, shopifyFetch } from '#/lib/shopify/util';
 import { generateCombinations, getCurrencySymbol } from '#/lib/util';
 import { notFound } from 'next/navigation';
 
@@ -53,6 +53,8 @@ export const POST = async () => {
                     amount
                     currencyCode
                 }
+                quantityAvailable
+
             }
           } 
         }
@@ -61,7 +63,26 @@ export const POST = async () => {
   }
 }`;
 
+    const inventoryQuery = `{
+      inventoryItems(first: 200) {
+        edges {
+          node {
+            id
+            variant{
+              id
+            }
+          }
+        }
+      }
+    }`;
+
     const data = await shopifyFetch({ query });
+    const inventoryData = await shopifyAdminFetch({ query: inventoryQuery });
+    const inventoryItems = inventoryData.data.data.inventoryItems.edges.map(
+      (item: any) => {
+        return { id: item.node.id, variantId: item.node.variant.id };
+      },
+    );
 
     const products = data.data.data.products.edges.map((product: any) => {
       const { id, handle, title, descriptionHtml, options, tags } =
@@ -86,10 +107,21 @@ export const POST = async () => {
       );
       const variants = product.node.variants.edges.map(
         (variant: any, index: number) => {
-          const { id, availableForSale, material, finish, dimensions, price } =
-            variant.node;
+          const {
+            id,
+            availableForSale,
+            material,
+            finish,
+            dimensions,
+            price,
+            quantityAvailable,
+          } = variant.node;
 
           const variantInfo = variantCollection[index];
+
+          const inventoryItem = inventoryItems.find(
+            (item: any) => item.variantId === id,
+          );
 
           return {
             id,
@@ -101,6 +133,11 @@ export const POST = async () => {
             currencyCode: getCurrencySymbol(price.currencyCode),
             images,
             variantInfo,
+            inventoryId: inventoryItem?.id?.replace(
+              'gid://shopify/InventoryItem/',
+              '',
+            ),
+            quantityAvailable,
           };
         },
       );

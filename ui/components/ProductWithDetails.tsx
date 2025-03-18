@@ -77,7 +77,10 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
             justifyContent: isEven ? 'flex-start' : 'flex-end',
           }}
         >
-          <AddToCart variantId={product.variants[0].id} />
+          <AddToCart
+            variantId={product.variants[0].id}
+            inventoryId={product.variants[0].inventoryId}
+          />
           <AddtoCart
             className="view clickable"
             onClick={() => openProduct(product)}
