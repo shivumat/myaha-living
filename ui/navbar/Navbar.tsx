@@ -44,11 +44,12 @@ const NavContainer = newStyled.div<{
 `;
 
 const Burger = newStyled.span`
-  font-size: 36px;
+  font-size: 46px;
   cursor: pointer;
   margin-bottom: 10px;
-  margin-right: 20px;
+  margin-right: 40px;
   margin-left: 20px;
+  
   @media (max-width: 800px) {
     font-size: 20px;
     margin-bottom: 5px;
@@ -89,7 +90,7 @@ const LinksContainer = newStyled.div`
 `;
 
 const LogosContainer = newStyled.div<{ showTransparent?: boolean }>`
-  display: flex;
+  display: ${({ showTransparent }) => (showTransparent ? 'none' : 'flex')};
   justify-content: flex-end;
   width: 100px;
   align-items: center;
@@ -118,7 +119,7 @@ const StyledCartLogo = newStyled(CartLogo)`
   }
 `;
 
-const StyledSearchLogo = newStyled(SearchLogo)`
+const StyledSearchLogo = newStyled(SearchLogo)<{ showTransparent?: boolean }>`
   cursor: pointer;
   @media (max-width: 800px) {
     transform: scale(0.65);
@@ -128,9 +129,16 @@ const StyledSearchLogo = newStyled(SearchLogo)`
 const StyledMyahaLogo = newStyled(MyahaLogo)<{
   margin?: string;
   showAboutUs?: boolean;
+  showTransparent?: boolean;
 }>`
-  ${({ showAboutUs }) => (!showAboutUs ? 'filter: invert(1);' : '')}
+  ${({ showAboutUs, showTransparent }) => (!(showAboutUs || showTransparent) ? 'filter: invert(1);' : '')}
   ${({ margin = '' }) => (!!margin ? `margin: ${margin};` : '')}
+  ${({ showTransparent }) =>
+    showTransparent
+      ? `transform: scale(2); &.clickable:hover {
+                                              transform: scale(2.03);
+                                            }`
+      : ''}
 `;
 
 const Navbar = () => {
@@ -336,13 +344,18 @@ const Navbar = () => {
         showAboutUs={showAboutUs}
         showCollection={showCollection}
       >
-        {showTransparent && <Burger onClick={() => toggle()}>☰</Burger>}
+        {showTransparent && (
+          <Burger style={{ filter: 'invert(1)' }} onClick={() => toggle()}>
+            ☰
+          </Burger>
+        )}
         <StyledMyahaLogo
           className="clickable"
           onClick={() => router.push('/')}
           showAboutUs={showAboutUs}
           width={showTransparent ? '111' : '99'}
           height={showTransparent ? '30' : '27'}
+          showTransparent={showTransparent}
         />
         {!showTransparent && (
           <LinksContainer>
@@ -359,8 +372,11 @@ const Navbar = () => {
                     onMouseLeave={() => {
                       timer = setTimeout(() => setShowCollection(false), 500);
                     }}
+                    onClick={() => {
+                      handleLinkClick(route.path);
+                    }}
                   >
-                    Shop
+                    {showCollection ? 'Shop all' : 'Shop'}
                   </div>
                 );
               }
@@ -464,6 +480,7 @@ const Navbar = () => {
               position: 'absolute',
               top: '60px',
               boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+              overflowX: 'auto',
             }}
           >
             {showCollection ? (
