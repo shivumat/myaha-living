@@ -221,7 +221,7 @@ const Navbar = () => {
             width="111"
             height="30"
           />
-          <LogosContainer showTransparent>
+          <LogosContainer>
             <Dropdown
               maxHeight="400px"
               onClose={() => {
