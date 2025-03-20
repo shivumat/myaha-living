@@ -101,6 +101,7 @@ const LogosContainer = newStyled.div<{ showTransparent?: boolean }>`
     cursor: pointer;
   }
   @media (max-width: 800px) {
+    display: flex
     column-gap: 1px;
   }
 `;
