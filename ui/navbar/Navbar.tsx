@@ -44,10 +44,9 @@ const NavContainer = newStyled.div<{
 `;
 
 const Burger = newStyled.span`
-  font-size: 46px;
+  font-size: 36px;
   cursor: pointer;
   margin-bottom: 10px;
-  margin-right: 40px;
   margin-left: 20px;
   
   @media (max-width: 800px) {
@@ -136,8 +135,8 @@ const StyledMyahaLogo = newStyled(MyahaLogo)<{
   ${({ margin = '' }) => (!!margin ? `margin: ${margin};` : '')}
   ${({ showTransparent }) =>
     showTransparent
-      ? `transform: scale(2); &.clickable:hover {
-                                              transform: scale(2.03);
+      ? `transform: scale(1.2); &.clickable:hover {
+                                              transform: scale(1.3);
                                             }`
       : ''}
 `;
@@ -279,11 +278,13 @@ const Navbar = () => {
                   <PlusMInusOpen
                     key={index}
                     label="Shop"
-                    items={collections.map((c) => c.title)}
+                    items={['Shop all', ...collections.map((c) => c.title)]}
                     handleLinkClick={(index) => {
                       toggle();
                       handleLinkClick(
-                        `/products/${collections[index]?.id.replace('gid://shopify/Collection/', '')}`,
+                        index === 0
+                          ? '/products'
+                          : `/products/${collections[index + 1]?.id.replace('gid://shopify/Collection/', '')}`,
                       );
                     }}
                   />

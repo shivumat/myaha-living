@@ -94,7 +94,7 @@ const MobileFooterCarousel = ({ rounded = true }: { rounded?: boolean }) => {
         <CarouselDiv>
           <CarousleIcon>
             <img src="/images/low-banner/low-banner1.svg" />
-            Sustainable centric production
+            Sustainability centric production
           </CarousleIcon>
         </CarouselDiv>
         <CarouselDiv>
@@ -129,7 +129,7 @@ const FooterCarousel = ({ rounded = true }: { rounded?: boolean }) => {
       <CarouselDiv>
         <CarousleIcon>
           <img src="/images/low-banner/low-banner1.svg" />
-          Sustainable centric production
+          Sustainability centric production
         </CarousleIcon>
       </CarouselDiv>
       <CarouselDiv>

@@ -1,4 +1,4 @@
-import { getRandomIntInclusive, searchProducts } from '#/lib/util';
+import { formatPrice, getRandomIntInclusive, searchProducts } from '#/lib/util';
 import { useRouter } from 'next/navigation';
 import {
   createContext,
@@ -88,7 +88,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     const productsData: Products = productResponse.data.products.map(
       (product: Product) => {
         const variants = product.variants.map((variant) => {
-          let images = variant.images;
+          let { images, price } = variant;
           if (images.length === 0) {
             const sampleImages = [];
             const totalRandomImgaes = getRandomIntInclusive(5, 3);
@@ -99,7 +99,8 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
             }
             images = sampleImages;
           }
-          return { ...variant, images };
+          price = formatPrice(Number(price));
+          return { ...variant, images, price };
         });
         return { ...product, variants };
       },

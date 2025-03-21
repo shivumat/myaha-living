@@ -76,7 +76,7 @@ const HomeLowBanner: React.FC = () => {
           padding: '0px 20px',
         }}
       >
-        Stories You Can Feel, Designs You Can Cherish.
+        Stories you can feel, designs you can cherish.
       </div>
       <div
         style={{

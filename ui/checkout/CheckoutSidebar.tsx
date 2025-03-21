@@ -1,5 +1,6 @@
 import { useCart } from '#/context/CartContext';
 import { useProduct } from '#/context/ProductContext';
+import { useToast } from '#/context/ToastContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -151,6 +152,7 @@ const CheckoutSummary = (props: {
 
   const { cart } = useCart();
   const { products } = useProduct();
+  const { startLoading, stopLoading } = useToast();
   const isMobile = useIsMobile();
 
   const getOrderComponent = (
@@ -196,7 +198,9 @@ const CheckoutSummary = (props: {
 
   const onApplyPromo = async () => {
     if (!promoCode.trim()) return;
+    startLoading();
     const discount = await props.fetchDiscoutDetails(promoCode);
+    stopLoading();
     if (typeof discount === 'string' || discount === null) {
       setPromoError(discount ?? 'Invalid promo code');
       setPromoCode('');

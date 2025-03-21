@@ -86,8 +86,10 @@ const ProductsPage = () => {
         setProductsToShow(productsToShow);
         return;
       }
-      if (sort === 'Name') {
+      if (sort === 'Name: (A-Z)') {
         productsToShow.sort((a, b) => a.title.localeCompare(b.title));
+      } else if (sort === 'Name: (Z-A)') {
+        productsToShow.sort((a, b) => b.title.localeCompare(a.title));
       } else if (sort === 'Price: Low to High') {
         productsToShow.sort(
           (a, b) => Number(a.variants[0].price) - Number(b.variants[0].price),
@@ -159,7 +161,8 @@ const ProductsPage = () => {
           <Dropdown
             options={[
               'Featured',
-              'Name',
+              'Name: (A-Z)',
+              'Name: (Z-A)',
               'Price: Low to High',
               'Price: High to Low',
             ]}

@@ -4,7 +4,6 @@ import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import CartItem from '../components/CartItem';
-import Note from './Note';
 
 const FormContainer = newStyled.div`
   flex: 1;
@@ -183,7 +182,7 @@ const OrderList: React.FC<OrderListProps> = ({ note, setNote }) => {
       >
         {cart.map((item, index) => getOrderComponent(item, index))}
       </div>
-      <div
+      {/* <div
         style={{
           width: '100%',
           display: 'flex',
@@ -192,7 +191,7 @@ const OrderList: React.FC<OrderListProps> = ({ note, setNote }) => {
         }}
       >
         <Note note={note} setNote={setNote} />
-      </div>
+      </div> */}
     </FormContainer>
   );
 };

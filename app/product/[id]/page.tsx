@@ -11,6 +11,7 @@ import VariantContainer from '#/ui/components/VariantContainer';
 import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { FiHeart, FiTruck } from 'react-icons/fi';
 
 const Container = newStyled.div`
   padding: 50px 0px 0px;
@@ -85,19 +86,27 @@ const PincodeInputComp = newStyled(PincodeInput)`
 
 `;
 
+const StyledDiv = newStyled.div`
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #000;
+  padding: 5px 10px;
+`;
+
 const ProductWithId = () => {
   const { id } = useParams<{ id: string }>();
   const { products } = useProduct();
   const isMobile = useIsMobile();
   const [variant, setVariant] = useState<number>(0);
-  const [edd, setEdd] = useState<string>('');
   const [currentVariantInfo, setVariantInfo] = useState<Combination>([]);
 
   const currentProduct = products.find(
     (product) => product.id === `gid://shopify/Product/${id}`,
   );
-
-  console.log(currentProduct);
 
   useEffect(() => {
     const newVariantInfo =
@@ -132,27 +141,6 @@ const ProductWithId = () => {
     );
   }, [currentProduct, currentVariantInfo]);
 
-  const checkPincode = async (pincode: string, valid: boolean) => {
-    if (!valid || !pincode.trim()) {
-      setEdd('');
-      return;
-    }
-    let timeout;
-    clearTimeout(timeout);
-    const response = await fetch('/api/delivery/checkPincode', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ pincode }),
-    });
-    const data = await response.json();
-    setEdd(data.isAvailable ? 'Delivery available' : 'Delivery not available');
-    timeout = setTimeout(() => {
-      setEdd('');
-    }, 5000);
-  };
-
   if (!currentProduct) return null;
 
   const showVariants = currentProduct.variants.length > 1;
@@ -178,8 +166,14 @@ const ProductWithId = () => {
         gap: '10px',
       }}
     >
-      <SubHeadings>Manufacture</SubHeadings>
-      <Description>Hand Made in India</Description>
+      <Description>
+        <StyledDiv>
+          <FiHeart style={{ marginRight: '5px' }} /> Handcrafted with Love
+        </StyledDiv>
+        <StyledDiv>
+          <FiTruck style={{ marginRight: '5px' }} /> Free Shipping on All Orders
+        </StyledDiv>
+      </Description>
       {!!showVariants &&
         currentProduct.variantsInfo.map((variantInfo, index) => (
           <div
@@ -274,7 +268,7 @@ const ProductWithId = () => {
       <SubHeadings style={{ fontSize: '14px' }}>
         Please enter PIN code to check availability:
       </SubHeadings>
-      <PincodeInputComp edd={edd} onPincodeChange={checkPincode} />
+      <PincodeInputComp />
     </div>
   );
 

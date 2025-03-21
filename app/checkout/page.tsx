@@ -185,7 +185,7 @@ const Checkout = () => {
       setDiscountObject(data);
       return data as DiscountObjectType;
     }
-    if (result?.message) {
+    if (result?.message !== 'Error') {
       return result.message as string;
     }
     return null;
