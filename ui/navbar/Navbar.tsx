@@ -6,6 +6,7 @@ import { useIsMobile } from '#/hooks/useMobile';
 import { useToggle } from '#/hooks/useToggle';
 import { navRoutes } from '#/lib/constants/routes';
 import newStyled from '@emotion/styled';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Dropdown } from '../components/Dropdown';
@@ -179,28 +180,36 @@ const Navbar = () => {
 
   const Cart = (
     <div style={{ position: 'relative' }} onClick={toggleCart}>
-      {totalCartItem > 0 ? (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: isMobile ? '10px' : '16px',
-            height: isMobile ? '10px' : '16px',
-            border: `1px solid ${showAboutUs ? 'white' : 'black'}`,
-            fontSize: isMobile ? '5px' : '8px',
-            padding: '2px',
-            borderRadius: '50%',
-            backgroundColor: showAboutUs ? '#5F1E1E' : 'white',
-            zIndex: 20,
-            right: isMobile ? '2px' : '-3px',
-            ...(isMobile ? {} : { top: '-3px' }),
-            position: 'absolute',
-          }}
-        >
-          {totalCartItem}
-        </div>
-      ) : null}
+      <AnimatePresence>
+        {totalCartItem > 0 && (
+          <motion.div
+            key={totalCartItem} // Re-animates on count change
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+            transition={{ type: 'spring', stiffness: 500, damping: 8 }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: isMobile ? '10px' : '16px',
+              height: isMobile ? '10px' : '16px',
+              border: `1px solid ${showAboutUs ? 'white' : 'black'}`,
+              fontSize: isMobile ? '5px' : '8px',
+              padding: '2px',
+              borderRadius: '50%',
+              backgroundColor: showAboutUs ? '#5F1E1E' : 'white',
+              zIndex: 20,
+              right: isMobile ? '2px' : '-3px',
+              ...(isMobile ? {} : { top: '-3px' }),
+              position: 'absolute',
+            }}
+          >
+            {totalCartItem}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <StyledCartLogo
         className="clickable"
         color={showAboutUs ? 'white' : 'black'}
