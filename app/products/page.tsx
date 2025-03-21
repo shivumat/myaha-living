@@ -65,7 +65,7 @@ const Conatiner = newStyled.div`
         grid-template-columns: 1fr 1fr 1fr;
     }
     @media (max-width: 800px) {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 `;
 
@@ -107,7 +107,7 @@ const ProductsPage = () => {
     <>
       <div style={{ padding: isMobile ? '0 20px' : '0px' }}>
         <BannerImg
-          src={'/images/about-us/about-us1.png'}
+          src={'https://i.postimg.cc/2SG8536P/DSCF4911.jpg'}
           alt={'Myaha products'}
           width={'100%'}
         />

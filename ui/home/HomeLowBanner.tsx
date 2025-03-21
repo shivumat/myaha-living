@@ -4,9 +4,9 @@ import styled from '@emotion/styled';
 import Carousel from '../components/Carousel';
 
 const mobileImages: string[] = [
-  '/images/home/protrait_banner4.png',
-  '/images/home/protrait_banner5.png',
-  '/images/home/protrait_banner6.png',
+  'https://i.postimg.cc/YCsfT27w/1.jpg',
+  'https://i.postimg.cc/sD3ch0mb/2-1.png',
+  'https://i.postimg.cc/MGfbwkZf/3.jpg',
 ];
 
 // Styled Components

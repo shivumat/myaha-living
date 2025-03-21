@@ -1,4 +1,5 @@
 import { Product, useProduct } from '#/context/ProductContext';
+import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import Carousel from './Carousel';
 
@@ -28,9 +29,10 @@ const StyleCarousel = newStyled(Carousel)`
 
 const ProductWithVariants = (props: { product: Product }) => {
   const { product } = props;
+  const isMobile = useIsMobile();
 
   const colorVariants = product.variantsInfo.find(
-    (variant) => variant.name === 'Colour',
+    (variant) => variant.name === 'Color',
   );
   const { openProduct } = useProduct();
 
@@ -41,12 +43,12 @@ const ProductWithVariants = (props: { product: Product }) => {
         flexDirection: 'column',
         width: '100%',
         maxWidth: '450px',
-        margin: 'auto',
+        margin: '0px auto 20px',
       }}
     >
       <div
         style={{
-          width: '75%',
+          width: isMobile ? '100%' : '75%',
           margin: '10px auto',
         }}
       >
@@ -64,8 +66,9 @@ const ProductWithVariants = (props: { product: Product }) => {
           justifyContent: 'space-between',
           alignItems: 'basline',
           height: '60px',
-          width: '80%',
+          width: isMobile ? '100%' : '80%',
           margin: '10px auto',
+          flexDirection: isMobile ? 'column' : 'row',
         }}
       >
         <div
@@ -90,6 +93,16 @@ const ProductWithVariants = (props: { product: Product }) => {
               style={{ minWidth: '80px', textAlign: 'right' }}
             >{`${product.variants[0].currencyCode} ${product.variants[0].price}`}</strong>
           </div>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            gap: '10px',
+            justifyContent: 'space-between',
+            width: '100%',
+            fontSize: '14px',
+          }}
+        >
           <div style={{ display: 'flex', gap: '10px' }}>
             {colorVariants?.values?.map((color: string) => (
               <div
@@ -104,13 +117,13 @@ const ProductWithVariants = (props: { product: Product }) => {
               />
             ))}
           </div>
+          <AddtoCart
+            className="view clickable"
+            onClick={() => openProduct(product)}
+          >
+            View
+          </AddtoCart>
         </div>
-        <AddtoCart
-          className="view clickable"
-          onClick={() => openProduct(product)}
-        >
-          View
-        </AddtoCart>
       </div>
     </div>
   );

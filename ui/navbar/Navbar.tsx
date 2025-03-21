@@ -7,7 +7,7 @@ import { useToggle } from '#/hooks/useToggle';
 import { navRoutes } from '#/lib/constants/routes';
 import newStyled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Dropdown } from '../components/Dropdown';
 import PlusMInusOpen from '../components/PlusMInusOpen';
@@ -152,8 +152,6 @@ const Navbar = () => {
   const isDesktopHomeOnTop = useIsDesktopHomeOnTop({
     turnBackToTransparent: !(showCollection || showAboutUs),
   });
-  const searchParams = useSearchParams();
-
   useEffect(() => {
     if (!isMobile && isDesktopHomeOnTop) {
       toggle(false);
@@ -166,13 +164,7 @@ const Navbar = () => {
 
   const { user, toggleLogin } = useAuth();
 
-  const toggleCart = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('cart', 'true');
-    router.replace(`?${params.toString()}`, { scroll: false });
-  };
-
-  const { cart } = useCart();
+  const { cart, toggleCart } = useCart();
 
   const totalCartItem = cart.reduce((acc, item) => acc + item.quantity, 0);
 

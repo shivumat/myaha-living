@@ -228,7 +228,7 @@ const AboutUs = () => {
         <img
           height={500}
           width={500}
-          src="/images/about-us/about-us1.png"
+          src="https://i.postimg.cc/2SG8536P/DSCF4911.jpg"
           alt="about-us"
         />
         <div>
@@ -238,7 +238,10 @@ const AboutUs = () => {
         </div>
       </Div1>
       <Div2>
-        <img src="/images/about-us/about-us3.png" alt="about-us-2" />
+        <img
+          src="https://i.postimg.cc/FKnrjq0p/DSCF5605.jpg"
+          alt="about-us-2"
+        />
         <div>
           From bold, expressive, and unconventional designs to elegant,
           details-rich compositions- Myaha creates on all fronts. Why follow the
@@ -263,10 +266,16 @@ const AboutUs = () => {
         <div className="colored">
           Let your individuality find its Myaha & let your space tell your story
         </div>
-        <img src="/images/about-us/about-us4.png" alt="about-us-3" />
+        <img
+          src="https://i.postimg.cc/JnD1KqqL/DSCF5640.jpg"
+          alt="about-us-3"
+        />
       </Div3>
       <Div4>
-        <img src="/images/about-us/about-us2.png" alt="about-us-4" />
+        <img
+          src="https://i.postimg.cc/QMMNKsKV/DSCF4991.jpg"
+          alt="about-us-4"
+        />
         <div>
           <div>At Myaha, we don't just create decor,</div>
           <div className="italize">

@@ -88,7 +88,7 @@ const AddToCart = (props: {
   quantityAvailable: number;
   className?: string;
 }) => {
-  const { addItem, cart, removeItem, setVariantCount } = useCart();
+  const { addItem, cart, removeItem, setVariantCount, toggleCart } = useCart();
   const [error, setError] = useState('');
   const cartItem = cart.find((item) =>
     props.variantId.includes(item.variant_id),
@@ -165,6 +165,7 @@ const AddToCart = (props: {
         onClick={() => {
           if (quantityAvailable > 0) {
             addItem({ variant_id: id, inventoryId });
+            toggleCart();
           }
         }}
       >

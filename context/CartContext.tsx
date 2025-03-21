@@ -1,4 +1,5 @@
 'use client';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 // sessionUtil.js
@@ -95,6 +96,7 @@ interface CartContextType {
     inventoryId: string;
     count: number;
   }) => void;
+  toggleCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -155,9 +157,18 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setCart([]);
   };
 
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const toggleCart = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('cart', 'true');
+    router.replace(`?${params.toString()}`, { scroll: false });
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, addItem, removeItem, clear, setVariantCount }}
+      value={{ cart, addItem, removeItem, clear, setVariantCount, toggleCart }}
     >
       {children}
     </CartContext.Provider>

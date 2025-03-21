@@ -39,7 +39,7 @@ const AboutUs = ({ toggle }: { toggle?: () => void }) => {
     <Container>
       <div>
         <img
-          src="/images/about-us/about-us1.png"
+          src="https://i.postimg.cc/2SG8536P/DSCF4911.jpg"
           alt="about-us"
           style={{ width: '100%', height: '350px', objectFit: 'cover' }}
         />

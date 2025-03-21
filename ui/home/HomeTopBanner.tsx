@@ -5,17 +5,16 @@ import Carousel from '../components/Carousel';
 
 // List of images in the public folder
 const desktopImages: string[] = [
-  '/images/home/desktop_home_banner1.png',
-  '/images/home/desktop_home_banner2.png',
-  '/images/home/desktop_home_banner3.png',
+  'https://i.postimg.cc/XJ0F0pDt/1.png',
+  'https://i.postimg.cc/JhXJgbKb/2.png',
+  'https://i.postimg.cc/Qdw106g8/3.png',
 ];
 
 const mobileImages: string[] = [
-  '/images/home/protrait_banner3.png',
-  '/images/home/protrait_banner1.png',
-  '/images/home/protrait_banner2.png',
+  'https://i.postimg.cc/2SZV8CvY/1.png',
+  'https://i.postimg.cc/FsqY4YYG/2.png',
+  'https://i.postimg.cc/4NnYq6xm/3.png',
 ];
-
 // Styled Components
 const Gallery = styled.div`
   width: 100%;
@@ -24,7 +23,15 @@ const Gallery = styled.div`
 `;
 
 const MobileWrapper = styled.div`
-  padding: 0px 20px;
+  padding: 0px;
+`;
+
+const StyledCarousel = styled(Carousel)`
+  div:nth-child(3) {
+    > img {
+      object-position: 0% 0%;
+    }
+  }
 `;
 
 // Desktop Grid Layout Component
@@ -39,7 +46,12 @@ const HomeTopBanner: React.FC = () => {
   const isMobile = useIsMobile();
   return isMobile ? (
     <MobileWrapper>
-      <Carousel isCircle autoScroll images={mobileImages} height="600px" />
+      <StyledCarousel
+        isCircle
+        autoScroll
+        images={mobileImages}
+        height="400px"
+      />
     </MobileWrapper>
   ) : (
     <ImageGrid />

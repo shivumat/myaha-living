@@ -132,14 +132,32 @@ const Cart = () => {
               fontWeight: '500',
               padding: '10px 20px',
               borderRadius: '8px',
-              border: 'none',
               cursor: 'pointer',
               transition: 'background 0.3s',
+              border: '1px solid black',
             }}
             onClick={() => router.push('/checkout')}
             className="clickable"
           >
             Checkout
+          </button>
+          <button
+            style={{
+              marginTop: '0px',
+              backgroundColor: 'transparent',
+              color: 'black',
+              fontSize: '16px',
+              fontWeight: '500',
+              padding: '10px 20px',
+              borderRadius: '8px',
+              border: '1px solid black',
+              cursor: 'pointer',
+              transition: 'background 0.3s',
+            }}
+            onClick={toggle}
+            className="clickable"
+          >
+            Continue shopping
           </button>
         </div>
       )}

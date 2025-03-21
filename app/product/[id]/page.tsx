@@ -253,7 +253,7 @@ const ProductWithId = () => {
         )}
       </PlusMInusOpen>
 
-      <PlusMInusOpen items={[]} label="Please Note:">
+      <PlusMInusOpen items={[]} label="Please Note">
         <Description>
           1.⁠ ⁠Please expect slight variations in similar products, as each
           piece is meticulously handcrafted, making every product unique.

@@ -1,4 +1,5 @@
 'use client';
+import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -12,16 +13,17 @@ const Container = newStyled.div`
   padding: 20px;
 `;
 
-const Div1 = newStyled.div`
+const Div1 = newStyled.div<{ isMobile: boolean }>`
   padding: 40px;
-  border-radius: 10px;
+  border-radius: ${({ isMobile }) => (isMobile ? '0px' : '10px')};
+  margin: ${({ isMobile }) => (isMobile ? '0px' : '0px 20px')};
   color: white;
   background-color: #5B1D1D;
   margin-bottom: 20px;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: lighter;
   .title{
-    font-size: 36px;
+    font-size: 24px;
     margin-bottom: 5px;
   }
   @media (max-width: 800px) {
@@ -62,9 +64,11 @@ const HomeBody = () => {
     window.location.href = '/';
   };
 
+  const isMobile = useIsMobile();
+
   return (
-    <Container>
-      <Div1>
+    <>
+      <Div1 isMobile={isMobile}>
         <div className="title">
           Crafting emotions, not just essentials – where every design tells your
           story
@@ -76,20 +80,22 @@ const HomeBody = () => {
           styles.
         </div>
       </Div1>
-      <Categories />
-      <FetaureConstainer>
-        <div className="title">Featured products</div>
-        <FeaturedProducts />
-      </FetaureConstainer>
-      <FooterCarousel />
-      <OurStory />
-      {/* <CategoryProducts /> */}
-      <OrderCreated
-        isOpen={hasOrderCreated}
-        orderId={searchParams.get('orderCreated')}
-        onClose={toggleOrderCreated}
-      />
-    </Container>
+      <Container>
+        <Categories />
+        <FetaureConstainer>
+          <div className="title">Featured products</div>
+          <FeaturedProducts />
+        </FetaureConstainer>
+        <FooterCarousel />
+        <OurStory />
+        {/* <CategoryProducts /> */}
+        <OrderCreated
+          isOpen={hasOrderCreated}
+          orderId={searchParams.get('orderCreated')}
+          onClose={toggleOrderCreated}
+        />
+      </Container>
+    </>
   );
 };
 
