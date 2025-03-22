@@ -27,18 +27,7 @@ const MobileWrapper = styled.div`
   padding: 0px;
 `;
 
-const StyledCarousel = styled(Carousel)`
-  div {
-    > img {
-      object-position: 0% 20%;
-    }
-  }
-  div:nth-child(3) {
-    > img {
-      object-position: 0% -10%;
-    }
-  }
-`;
+const StyledCarousel = styled(Carousel)``;
 
 // Desktop Grid Layout Component
 const ImageGrid: React.FC<{ onClick: () => void }> = (props) => (
