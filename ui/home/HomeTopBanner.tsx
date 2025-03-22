@@ -1,6 +1,7 @@
 'use client';
 import { useIsMobile } from '#/hooks/useMobile';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/navigation';
 import Carousel from '../components/Carousel';
 
 // List of images in the public folder
@@ -40,18 +41,32 @@ const StyledCarousel = styled(Carousel)`
 `;
 
 // Desktop Grid Layout Component
-const ImageGrid: React.FC = () => (
+const ImageGrid: React.FC<{ onClick: () => void }> = (props) => (
   <Gallery>
-    <Carousel isCircle autoScroll images={desktopImages} height="85vh" />
+    <Carousel
+      clickableImages={[0]}
+      onClick={props.onClick}
+      isCircle
+      autoScroll
+      images={desktopImages}
+      height="85vh"
+    />
   </Gallery>
 );
 
 // Main Component
 const HomeTopBanner: React.FC = () => {
   const isMobile = useIsMobile();
+  const router = useRouter();
+  const onClick = () => {
+    router.push('/products');
+  };
+
   return isMobile ? (
     <MobileWrapper>
       <StyledCarousel
+        clickableImages={[0]}
+        onClick={onClick}
         isCircle
         autoScroll
         images={mobileImages}
@@ -59,7 +74,7 @@ const HomeTopBanner: React.FC = () => {
       />
     </MobileWrapper>
   ) : (
-    <ImageGrid />
+    <ImageGrid onClick={onClick} />
   );
 };
 

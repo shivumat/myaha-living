@@ -51,6 +51,7 @@ const Carousel = (props: {
   className?: string;
   isCircle?: boolean;
   autoScroll?: boolean;
+  clickableImages?: number[];
 }) => {
   const {
     images = [],
@@ -99,7 +100,19 @@ const Carousel = (props: {
   const CarouselComponents = !!images?.length ? (
     <>
       {images.map((src, idx) => (
-        <CarouselImageDiv key={idx}>
+        <CarouselImageDiv
+          key={idx}
+          style={{
+            cursor: props.clickableImages?.includes(idx)
+              ? 'pointer'
+              : 'default',
+          }}
+          onClick={() =>
+            props.clickableImages?.includes(idx) &&
+            props.onClick &&
+            props.onClick()
+          }
+        >
           <CarouselImage src={src} alt={`Image ${idx + 1}`} height={height} />
         </CarouselImageDiv>
       ))}
@@ -114,7 +127,13 @@ const Carousel = (props: {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >
-      <CarouselWrapper onClick={props.onClick} index={index}>
+      <CarouselWrapper
+        onClick={() => {
+          if (props.clickableImages?.length) return;
+          props.onClick?.();
+        }}
+        index={index}
+      >
         {CarouselComponents}
       </CarouselWrapper>
       {dotMap.length > 1 && (
