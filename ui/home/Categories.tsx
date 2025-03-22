@@ -3,7 +3,6 @@ import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import Carousel from '../components/Carousel';
 
 const Container = newStyled.div`
   display: grid;
@@ -57,7 +56,7 @@ const CategoryContainer = newStyled.div`
     border: 1px solid black;
     @media (max-width: 800px) {
         padding: 20px 0px 30px;
-        width: calc(100% - 48px);
+        width: calc(100% - 100px);
         height: 440px;
     }
 `;
@@ -95,13 +94,7 @@ const Categories = () => {
     </CategoryContainer>
   );
 
-  const CollectionComponent = isMobile ? (
-    <Carousel height="360px">
-      {collections.map((collection: any) => {
-        return getCategoryElement(collection);
-      })}
-    </Carousel>
-  ) : (
+  const CollectionComponent = (
     <CollectionContainer ref={ref}>
       {collections.map((collection: any) => {
         return getCategoryElement(collection);
@@ -140,6 +133,32 @@ const Categories = () => {
         )}
       </div>
       {CollectionComponent}
+      {isMobile && (
+        <div style={{ display: 'flex', columnGap: '40px' }}>
+          <Arrow className="clickable" onClick={() => scroll()}>
+            <img
+              src="/images/caret.png"
+              alt="sort"
+              style={{
+                width: '10px',
+                height: '10px',
+                transform: 'rotate(90deg)',
+              }}
+            />
+          </Arrow>
+          <Arrow className="clickable" onClick={() => scroll(true)}>
+            <img
+              src="/images/caret.png"
+              alt="sort"
+              style={{
+                width: '10px',
+                height: '10px',
+                transform: 'rotate(-90deg)',
+              }}
+            />
+          </Arrow>
+        </div>
+      )}
     </Container>
   );
 };
