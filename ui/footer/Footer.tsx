@@ -12,7 +12,7 @@ const FooterContainer = newStyled.div`
   padding: 40px;
   @media (max-width: 800px) {
     flex-direction: column;
-    padding: 40px 20px 10px 20px;
+    padding: 10px 20px 10px 20px;
   }
 `;
 
@@ -28,9 +28,9 @@ const TextContainer = newStyled.div`
 const StyleLogo = newStyled(MyahaLogo)`
   opacity: 0.3;
   position: relative;
-  right: 20px;
+  right: 30px;
   @media (max-width: 800px) {
-    right: 10px;
+    right: 20px;
   }
 `;
 
@@ -41,25 +41,44 @@ const Footer = () => {
   if (isMobile) {
     return (
       <FooterContainer>
-        <div style={{ display: 'flex', width: '100%', gap: '20px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <StyleLogo height={'30'} width={'87.5'} />
+        <div style={{ display: 'flex', width: '100%', gap: '15px' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '5px',
+              width: '150px',
+            }}
+          >
+            <StyleLogo height={'60'} width={'175'} />
             <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Arcticons-white_instagram.svg"
-                alt="Instagaram"
-                style={{ width: '15px', height: '15p' }}
-              />
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/7/71/Facebook_white_icon_svg.svg"
-                alt="Facebook"
-                style={{ width: '15px', height: '15px' }}
-              />
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
-                alt="Pinterest"
-                style={{ width: '15px', height: '15px' }}
-              />
+              <a style={{ padding: '2px', borderRadius: '2px' }}>
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Instagram-Gradient-Logo-PNG.png"
+                  alt="Instagaram"
+                  style={{ width: '15px', height: '15px' }}
+                />
+              </a>
+              <a
+                style={{
+                  backgroundColor: 'white',
+                  padding: '2px',
+                  borderRadius: '2px',
+                }}
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Twitter_X.png"
+                  alt="Twitter"
+                  style={{ width: '15px', height: '15px' }}
+                />
+              </a>
+              <a style={{ padding: '2px', borderRadius: '2px' }}>
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
+                  alt="Pinterest"
+                  style={{ width: '15px', height: '15px' }}
+                />
+              </a>
             </div>
             <TextContainer
               style={{
@@ -88,7 +107,6 @@ const Footer = () => {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              marginLeft: 'auto',
             }}
           >
             <TextContainer
@@ -118,12 +136,15 @@ const Footer = () => {
                 hello@myahaliving.com{' '}
               </div>
             </TextContainer>
+          </div>
+          <div style={{ display: 'flex', gap: '30px' }}>
             <TextContainer
               style={{
                 textAlign: 'left',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '2px',
+                margin: '20px 0px',
               }}
             >
               <div
@@ -156,32 +177,6 @@ const Footer = () => {
               </div>
             </TextContainer>
           </div>
-          <div style={{ display: 'flex', gap: '30px' }}>
-            <TextContainer
-              style={{
-                textAlign: 'left',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '2px',
-                margin: '20px 0px',
-              }}
-            >
-              <div
-                className="clickable"
-                onClick={() => route.push('/about-us')}
-                style={{ display: 'block', fontSize: '0.8em' }}
-              >
-                About us
-              </div>
-              <div
-                className="clickable"
-                onClick={() => route.push('/collaborate')}
-                style={{ display: 'block', fontSize: '0.8em' }}
-              >
-                Collaborate with us
-              </div>
-            </TextContainer>
-          </div>
         </div>
         <div
           style={{
@@ -191,7 +186,7 @@ const Footer = () => {
             margin: '10px 0px',
           }}
         >
-          ® Myaha, 2025. All rights reserved
+          ® Myaha, 2023. All rights reserved
         </div>
       </FooterContainer>
     );
@@ -209,26 +204,48 @@ const Footer = () => {
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <StyleLogo
-            height={isMobile ? '120' : '60'}
-            width={isMobile ? '350' : '175'}
-          />
+          <StyleLogo height={'120'} width={'350'} />
           <div style={{ display: 'flex', gap: '20px' }}>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Arcticons-white_instagram.svg"
-              alt="Instagaram"
-              style={{ width: '30px', height: '30px' }}
-            />
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/7/71/Facebook_white_icon_svg.svg"
-              alt="Facebook"
-              style={{ width: '30px', height: '30px' }}
-            />
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
-              alt="Pinterest"
-              style={{ width: '30px', height: '30px' }}
-            />
+            <a
+              href={`https://www.instagram.com/myaha.co?igsh=MXVneTY0cnl3a2ZwNQ==`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ padding: '5px', borderRadius: '5px' }}
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Instagram-Gradient-Logo-PNG.png"
+                alt="Instagaram"
+                style={{ width: '30px', height: '30px' }}
+              />
+            </a>
+            <a
+              href={`https://x.com/MyahaIndia`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                backgroundColor: 'white',
+                padding: '5px',
+                borderRadius: '5px',
+              }}
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Twitter_X.png"
+                alt="Twitter"
+                style={{ width: '30px', height: '30px' }}
+              />
+            </a>
+            <a
+              href={`https://in.pinterest.com/06espov87v6s4p8p49qexdj4fnqr6h/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ padding: '5px', borderRadius: '5px' }}
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
+                alt="Pinterest"
+                style={{ width: '30px', height: '30px' }}
+              />
+            </a>
           </div>
           <TextContainer
             style={{
@@ -247,7 +264,7 @@ const Footer = () => {
           <div
             style={{ fontSize: '12px', textAlign: 'center', opacity: '0.5' }}
           >
-            ® Myaha, 2025. All rights reserved
+            ® Myaha, 2023. All rights reserved
           </div>
         </div>
         <div style={{ display: 'flex', gap: '30px', marginLeft: 'auto' }}>

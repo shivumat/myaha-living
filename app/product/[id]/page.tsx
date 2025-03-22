@@ -48,7 +48,7 @@ const MobileWrapper = newStyled.div`
 `;
 
 const Title = newStyled.h1`
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 600;
 `;
 
@@ -57,6 +57,7 @@ const Description = newStyled.div`
     overflow: hidden;
     display: -webkit-box;
     font-weight: lighter;
+    font-size: 14px;
     -webkit-line-clamp: 30;
     -webkit-box-orient: vertical;
     @media (max-width: 800px) {

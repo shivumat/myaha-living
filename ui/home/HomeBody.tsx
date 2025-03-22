@@ -73,12 +73,6 @@ const HomeBody = () => {
           Crafting emotions, not just essentials – where every design tells your
           story
         </div>
-        <div>
-          Elevate your indoor or outdoor greenery with our Sage Green Ceramic
-          Planter. Its soft, soothing hue and clean lines add a touch of
-          elegance to any space, blending seamlessly with a variety of decor
-          styles.
-        </div>
       </Div1>
       <Container>
         <Categories />

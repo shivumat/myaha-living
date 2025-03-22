@@ -12,9 +12,9 @@ const desktopImages: string[] = [
 ];
 
 const mobileImages: string[] = [
-  'https://i.postimg.cc/QNFCm18S/1.png',
-  'https://i.postimg.cc/HncqMpC4/2.png',
-  'https://i.postimg.cc/wMCScSqK/3.png',
+  'https://i.postimg.cc/PqJvfkTQ/1-min.png',
+  'https://i.postimg.cc/7LR443QL/2.png',
+  'https://i.postimg.cc/j5JbSDG4/3.png',
 ];
 // Styled Components
 const Gallery = styled.div`
@@ -70,7 +70,7 @@ const HomeTopBanner: React.FC = () => {
         isCircle
         autoScroll
         images={mobileImages}
-        height="400px"
+        height="485px"
       />
     </MobileWrapper>
   ) : (

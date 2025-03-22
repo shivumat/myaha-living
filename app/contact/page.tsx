@@ -48,12 +48,14 @@ const ContactForm = () => {
     showToast('Form submitted successfully!', 'success');
   };
   const phoneNumber = '916350533372';
+  const mailId = 'hello@myahaliving.com';
 
   return (
     <>
       <img src="/images/contact-us/contact-us1.png" />
       <Container>
         <Title>Contact Us</Title>
+        <ContactFormComponent onSubmit={onSubmit} />
         <InfoText>
           Feel free to contact us through your preferred channel of
           communication.
@@ -65,16 +67,28 @@ const ContactForm = () => {
               justifyContent: 'center',
             }}
           >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Arcticons-white_instagram.svg"
-              alt="Instagaram"
-              style={{ width: '30px', height: '30px' }}
-            />
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/7/71/Facebook_white_icon_svg.svg"
-              alt="Facebook"
-              style={{ width: '30px', height: '30px' }}
-            />
+            <a
+              href={`https://www.instagram.com/myaha.co?igsh=MXVneTY0cnl3a2ZwNQ==`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Instagram-Gradient-Logo-PNG.png"
+                alt="Instagaram"
+                style={{ width: '30px', height: '30px' }}
+              />
+            </a>
+            <a
+              href={`mailto:${mailId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg"
+                alt="Mail"
+                style={{ width: '30px', height: '30px' }}
+              />
+            </a>
             <a
               href={`https://wa.me/${phoneNumber}`}
               target="_blank"
@@ -92,7 +106,6 @@ const ContactForm = () => {
             assistance, please call us at +91 6350533372.
           </div>
         </InfoText>
-        <ContactFormComponent onSubmit={onSubmit} />
       </Container>
       <FooterCarousel rounded={false} />
     </>

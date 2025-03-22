@@ -70,11 +70,11 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
 
   const collectionOrder = [
     'vases',
-    'planters',
-    'wall decor',
-    'side tables',
     'dinnerware',
+    'side tables',
+    'wall decor',
     'lighting',
+    'planters',
     'drinkware',
   ];
 

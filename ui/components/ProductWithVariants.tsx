@@ -3,26 +3,6 @@ import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import Carousel from './Carousel';
 
-const AddtoCart = newStyled.button`
-    height: 30px;
-    width: 100px;
-    background-color: black;
-    font-size: 14px;
-    color: white;
-    border-radius: 3px;
-    cursor: pointer;
-    margin-left: auto;
-    &.view{
-        background-color: white;
-        color: black;
-        border: 1px solid black;
-    }
-    @media (max-width: 800px) {
-        font-size: 12px;
-        width: 70px;
-    }
-`;
-
 const StyleCarousel = newStyled(Carousel)`
     cursor: pointer;
 `;
@@ -82,8 +62,10 @@ const ProductWithVariants = (props: { product: Product }) => {
               gap: '10px',
               justifyContent: 'space-between',
               width: '100%',
-              fontSize: '14px',
+              fontSize: isMobile ? '12px' : '14px',
             }}
+            className="clickable"
+            onClick={() => openProduct(product)}
           >
             {`${product.title}`}{' '}
           </div>
@@ -95,18 +77,12 @@ const ProductWithVariants = (props: { product: Product }) => {
               justifyContent: 'space-between',
               alignItems: 'center',
               width: '100%',
-              fontSize: '14px',
+              fontSize: isMobile ? '12px' : '14px',
             }}
           >
-            <strong
-              style={{ minWidth: '80px', textAlign: 'left' }}
-            >{`${product.variants[0].currencyCode} ${product.variants[0].price}`}</strong>
-            <AddtoCart
-              className="view clickable"
-              onClick={() => openProduct(product)}
-            >
-              View
-            </AddtoCart>
+            <div style={{ minWidth: '80px', textAlign: 'left' }}>
+              {`${product.variants[0].currencyCode} ${product.variants[0].price}`}
+            </div>
           </div>
         </div>
       </div>
