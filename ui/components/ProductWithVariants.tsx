@@ -31,9 +31,6 @@ const ProductWithVariants = (props: { product: Product }) => {
   const { product } = props;
   const isMobile = useIsMobile();
 
-  const colorVariants = product.variantsInfo.find(
-    (variant) => variant.name === 'Color',
-  );
   const { openProduct } = useProduct();
 
   return (
@@ -89,40 +86,28 @@ const ProductWithVariants = (props: { product: Product }) => {
             }}
           >
             {`${product.title}`}{' '}
-            <strong
-              style={{ minWidth: '80px', textAlign: 'right' }}
-            >{`${product.variants[0].currencyCode} ${product.variants[0].price}`}</strong>
           </div>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            gap: '10px',
-            justifyContent: 'space-between',
-            width: '100%',
-            fontSize: '14px',
-          }}
-        >
-          <div style={{ display: 'flex', gap: '10px' }}>
-            {colorVariants?.values?.map((color: string) => (
-              <div
-                className="clickable"
-                style={{
-                  height: '20px',
-                  width: '20px',
-                  borderRadius: '50%',
-                  backgroundColor: color,
-                  border: '1px solid black',
-                }}
-              />
-            ))}
-          </div>
-          <AddtoCart
-            className="view clickable"
-            onClick={() => openProduct(product)}
+
+          <div
+            style={{
+              display: 'flex',
+              gap: '10px',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
+              fontSize: '14px',
+            }}
           >
-            View
-          </AddtoCart>
+            <strong
+              style={{ minWidth: '80px', textAlign: 'left' }}
+            >{`${product.variants[0].currencyCode} ${product.variants[0].price}`}</strong>
+            <AddtoCart
+              className="view clickable"
+              onClick={() => openProduct(product)}
+            >
+              View
+            </AddtoCart>
+          </div>
         </div>
       </div>
     </div>
