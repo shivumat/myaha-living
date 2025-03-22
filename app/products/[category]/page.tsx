@@ -3,6 +3,7 @@ import { Collection, Products, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
+import Pagination from '#/ui/components/PaginationComponent';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
 import newStyled from '@emotion/styled';
 import { useParams, useRouter } from 'next/navigation';
@@ -68,14 +69,22 @@ const Conatiner = newStyled.div`
     }
 `;
 
+const StyledPagination = newStyled(Pagination)`
+  margin-bottom: 16px;
+`;
+
 const ProductsCategory = () => {
   const [selected, setSelected] = useState<Collection | null>(null);
   const [sort, setSort] = useState<string>('Featured');
   const [productsToShow, setProductsToShow] = useState<Products>([]);
+  const [collectionProducts, setColletionProducts] = useState<Products>([]);
   const { category } = useParams<{ category: string }>();
   const { collections, products } = useProduct();
   const route = useRouter();
   const isMobile = useIsMobile();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const productsCount = isMobile ? 6 : 12;
 
   const collection = useMemo(
     () =>
@@ -89,19 +98,20 @@ const ProductsCategory = () => {
   useEffect(() => {
     if (!!collection) {
       setSelected(collection);
-    }
-  }, [collection]);
-
-  useEffect(() => {
-    if (products.length && collection) {
       let productsToShow: Products = [];
-
       collection.products.forEach((product) => {
         const productToShow = products.find((p) => p.id === product.id);
         if (productToShow) {
           productsToShow.push(productToShow);
         }
       });
+      setColletionProducts(productsToShow);
+    }
+  }, [collection, products]);
+
+  useEffect(() => {
+    if (products.length && collection) {
+      let productsToShow: Products = collectionProducts;
 
       if (productsToShow.length === 0) {
         return;
@@ -110,8 +120,10 @@ const ProductsCategory = () => {
         setProductsToShow(productsToShow);
         return;
       }
-      if (sort === 'Name') {
+      if (sort === 'Name: (A-Z)') {
         productsToShow.sort((a, b) => a.title.localeCompare(b.title));
+      } else if (sort === 'Name: (Z-A)') {
+        productsToShow.sort((a, b) => b.title.localeCompare(a.title));
       } else if (sort === 'Price: Low to High') {
         productsToShow.sort(
           (a, b) => Number(a.variants[0].price) - Number(b.variants[0].price),
@@ -121,9 +133,14 @@ const ProductsCategory = () => {
           (a, b) => Number(b.variants[0].price) - Number(a.variants[0].price),
         );
       }
-      setProductsToShow(productsToShow);
+      setProductsToShow(
+        productsToShow.slice(
+          (currentPage - 1) * productsCount,
+          Math.min(collectionProducts.length, productsCount * currentPage),
+        ),
+      );
     }
-  }, [sort, products, collection]);
+  }, [sort, collectionProducts, collection, currentPage]);
 
   return (
     <>
@@ -178,11 +195,15 @@ const ProductsCategory = () => {
           <Dropdown
             options={[
               'Featured',
-              'Name',
+              'Name: (A-Z)',
+              'Name: (Z-A)',
               'Price: Low to High',
               'Price: High to Low',
             ]}
-            onSelect={setSort}
+            onSelect={(option) => {
+              setCurrentPage(1);
+              setSort(option);
+            }}
             renderTrigger={(toggle) => (
               <div
                 onClick={toggle}
@@ -222,6 +243,14 @@ const ProductsCategory = () => {
           ))}
         </Conatiner>
       </ListBody>
+      <StyledPagination
+        currentPage={currentPage}
+        onPageChange={(number) => {
+          setCurrentPage(number);
+        }}
+        itemsPerPage={productsCount}
+        totalItems={collectionProducts.length}
+      />
       <FooterCarousel rounded={false} />
     </>
   );

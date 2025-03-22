@@ -3,6 +3,7 @@ import { Collection, Products, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
+import Pagination from '#/ui/components/PaginationComponent';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
@@ -69,12 +70,19 @@ const Conatiner = newStyled.div`
     }
 `;
 
+const StyledPagination = newStyled(Pagination)`
+  margin-bottom: 16px;
+`;
+
 const ProductsPage = () => {
   const [sort, setSort] = useState<string>('Featured');
   const [productsToShow, setProductsToShow] = useState<Products>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const { products, collections } = useProduct();
   const isMobile = useIsMobile();
   const route = useRouter();
+
+  const productsCount = isMobile ? 6 : 12;
 
   useEffect(() => {
     if (products.length) {
@@ -99,9 +107,14 @@ const ProductsPage = () => {
           (a, b) => Number(b.variants[0].price) - Number(a.variants[0].price),
         );
       }
-      setProductsToShow(productsToShow);
+      setProductsToShow(
+        productsToShow.slice(
+          (currentPage - 1) * productsCount,
+          Math.min(products.length, productsCount * currentPage),
+        ),
+      );
     }
-  }, [sort, products]);
+  }, [sort, products, currentPage]);
 
   return (
     <>
@@ -166,7 +179,10 @@ const ProductsPage = () => {
               'Price: Low to High',
               'Price: High to Low',
             ]}
-            onSelect={setSort}
+            onSelect={(option) => {
+              setCurrentPage(1);
+              setSort(option);
+            }}
             renderTrigger={(toggle) => (
               <div
                 onClick={toggle}
@@ -206,6 +222,14 @@ const ProductsPage = () => {
           ))}
         </Conatiner>
       </ListBody>
+      <StyledPagination
+        currentPage={currentPage}
+        onPageChange={(number) => {
+          setCurrentPage(number);
+        }}
+        itemsPerPage={productsCount}
+        totalItems={products.length}
+      />
       <FooterCarousel rounded={false} />
     </>
   );
