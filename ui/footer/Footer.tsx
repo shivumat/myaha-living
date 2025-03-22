@@ -52,12 +52,12 @@ const Footer = () => {
               />
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/7/71/Facebook_white_icon_svg.svg"
-                alt="Instagaram"
+                alt="Facebook"
                 style={{ width: '15px', height: '15px' }}
               />
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
-                alt="Instagaram"
+                alt="Pinterest"
                 style={{ width: '15px', height: '15px' }}
               />
             </div>
@@ -221,12 +221,12 @@ const Footer = () => {
             />
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/7/71/Facebook_white_icon_svg.svg"
-              alt="Instagaram"
+              alt="Facebook"
               style={{ width: '30px', height: '30px' }}
             />
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
-              alt="Instagaram"
+              alt="Pinterest"
               style={{ width: '30px', height: '30px' }}
             />
           </div>

@@ -20,6 +20,9 @@ const Title = styled.h1`
 
 const InfoText = styled.div`
   background-color: #4e2c2c;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   color: white;
   font-size: 18px;
   padding: 30px;
@@ -44,6 +47,7 @@ const ContactForm = () => {
     });
     showToast('Form submitted successfully!', 'success');
   };
+  const phoneNumber = '916350533372';
 
   return (
     <>
@@ -53,6 +57,40 @@ const ContactForm = () => {
         <InfoText>
           Feel free to contact us through your preferred channel of
           communication.
+          <div
+            style={{
+              display: 'flex',
+              gap: '20px',
+              width: '100%',
+              justifyContent: 'center',
+            }}
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Arcticons-white_instagram.svg"
+              alt="Instagaram"
+              style={{ width: '30px', height: '30px' }}
+            />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/7/71/Facebook_white_icon_svg.svg"
+              alt="Facebook"
+              style={{ width: '30px', height: '30px' }}
+            />
+            <a
+              href={`https://wa.me/${phoneNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                alt="Whatsapp"
+                style={{ width: '30px', height: '30px' }}
+              />
+            </a>
+          </div>
+          <div>
+            We'll get back to you in upto 3 business days. For immediate
+            assistance, please call us at +91 6350533372.
+          </div>
         </InfoText>
         <ContactFormComponent onSubmit={onSubmit} />
       </Container>
