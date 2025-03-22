@@ -285,7 +285,7 @@ const Navbar = () => {
                       handleLinkClick(
                         index === 0
                           ? '/products'
-                          : `/products/${collections[index + 1]?.id.replace('gid://shopify/Collection/', '')}`,
+                          : `/products/${collections[index - 1]?.id.replace('gid://shopify/Collection/', '')}`,
                       );
                     }}
                   />
@@ -379,7 +379,7 @@ const Navbar = () => {
                       handleLinkClick(route.path);
                     }}
                   >
-                    {showCollection ? 'Shop all' : 'Shop'}
+                    Shop
                   </div>
                 );
               }
