@@ -5,6 +5,7 @@ import {
   ReactNode,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 
@@ -67,6 +68,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Products>([]);
   const [collections, setCollections] = useState<Collections>([]);
   const router = useRouter();
+  const fetched = useRef(false);
 
   const collectionOrder = [
     'vases',
@@ -79,6 +81,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   ];
 
   const fetchData = async () => {
+    fetched.current = true;
     const productData = await fetch('/api/shopify/products', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -140,6 +143,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
+    if (fetched.current) return;
     fetchData();
   }, []);
 

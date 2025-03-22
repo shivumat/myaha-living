@@ -1,4 +1,5 @@
 import newStyled from '@emotion/styled';
+import Image from 'next/image';
 import React, { ReactNode, TouchEvent, useEffect, useState } from 'react';
 
 const CarouselContainer = newStyled.div`
@@ -6,6 +7,7 @@ const CarouselContainer = newStyled.div`
   overflow: hidden;
   width: 100%;
   position: relative;
+  background: #f5f5f5;
 `;
 
 const CarouselWrapper = newStyled.div<{ index: number }>`
@@ -23,6 +25,17 @@ const CarouselImage = newStyled.img<{ height: string }>`
   width: 100%;
   height: ${({ height }) => height};
   object-fit: cover;
+  background: #e0e0e0;
+`;
+
+const Placeholder = newStyled.div<{ height: string }>`
+  width: 100%;
+  height: ${({ height }) => height};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #999;
 `;
 
 const DotsContainer = newStyled.div<{ isCircle: boolean }>`
@@ -62,7 +75,11 @@ const Carousel = (props: {
   } = props;
   const [index, setIndex] = useState<number>(0);
   const [startX, setStartX] = useState<number | null>(null);
-  const dotMap = !!images.length ? images : React.Children.toArray(children);
+  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({
+    0: true,
+  });
+
+  const dotMap = images.length ? images : React.Children.toArray(children);
 
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     setStartX(e.touches[0].clientX);
@@ -89,36 +106,49 @@ const Carousel = (props: {
     return () => clearInterval(interval);
   }, [autoScroll, dotMap.length]);
 
-  const CarouselChildren = (
-    <>
-      {React.Children.map(children, (child) => (
-        <CarouselImageDiv>{child}</CarouselImageDiv>
-      ))}
-    </>
-  );
+  const handleImageLoad = (idx: number) => {
+    setLoadedImages((prev) => ({ ...prev, [idx]: true }));
+  };
 
-  const CarouselComponents = !!images?.length ? (
+  const CarouselComponents = images.length ? (
     <>
-      {images.map((src, idx) => (
-        <CarouselImageDiv
-          key={idx}
-          style={{
-            cursor: props.clickableImages?.includes(idx)
-              ? 'pointer'
-              : 'default',
-          }}
-          onClick={() =>
-            props.clickableImages?.includes(idx) &&
-            props.onClick &&
-            props.onClick()
-          }
-        >
-          <CarouselImage src={src} alt={`Image ${idx + 1}`} height={height} />
-        </CarouselImageDiv>
-      ))}
+      {loadedImages[index] ? (
+        images.map((src, idx) => (
+          <CarouselImageDiv
+            key={idx}
+            style={{
+              cursor: props.clickableImages?.includes(idx)
+                ? 'pointer'
+                : 'default',
+            }}
+            onClick={() =>
+              props.clickableImages?.includes(idx) && props.onClick?.()
+            }
+          >
+            <CarouselImage
+              src={src}
+              alt={`Image ${idx + 1}`}
+              height={height}
+              onLoad={() => handleImageLoad(idx)}
+            />
+          </CarouselImageDiv>
+        ))
+      ) : (
+        <Placeholder height={height}>
+          <Image
+            style={{ margin: 'auto' }}
+            src={'/images/loading-buffering.gif'}
+            alt="loading"
+            width={50}
+            height={50}
+          />
+        </Placeholder>
+      )}
     </>
   ) : (
-    CarouselChildren
+    React.Children.map(children, (child) => (
+      <CarouselImageDiv>{child}</CarouselImageDiv>
+    ))
   );
 
   return (
@@ -128,11 +158,8 @@ const Carousel = (props: {
       onTouchMove={handleTouchMove}
     >
       <CarouselWrapper
-        onClick={() => {
-          if (props.clickableImages?.length) return;
-          props.onClick?.();
-        }}
         index={index}
+        onClick={() => !props.clickableImages?.length && props.onClick?.()}
       >
         {CarouselComponents}
       </CarouselWrapper>

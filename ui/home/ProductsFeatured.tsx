@@ -1,7 +1,7 @@
-import { useProduct } from '#/context/ProductContext';
+import { Products, useProduct } from '#/context/ProductContext';
 import { getRandomSubArray } from '#/lib/util';
 import newStyled from '@emotion/styled';
-import { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductWithVariants from '../components/ProductWithVariants';
 
 const Conatiner = newStyled.div`
@@ -22,10 +22,14 @@ const Conatiner = newStyled.div`
 
 const FeaturedProducts = () => {
   const { products } = useProduct();
-  const featuredProducts = useMemo(
-    () => getRandomSubArray(products, 4),
-    [products],
-  );
+  const [featuredProducts, setFeaturedProducts] = useState<Products>([]);
+
+  useEffect(() => {
+    if (featuredProducts.length === 0)
+      setFeaturedProducts(getRandomSubArray(products, 4));
+  }, [products]);
+
+  console.log('featuredProducts', featuredProducts);
 
   return (
     <Conatiner>
@@ -36,4 +40,4 @@ const FeaturedProducts = () => {
   );
 };
 
-export default FeaturedProducts;
+export default React.memo(FeaturedProducts);
