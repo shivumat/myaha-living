@@ -120,7 +120,7 @@ const Div3 = styled.div`
   }
 `;
 
-const Colaborate = () => {
+const Collaborate = () => {
   const { showToast } = useToast();
 
   const onSubmit = async (data: any) => {
@@ -136,7 +136,7 @@ const Colaborate = () => {
     <>
       <Container>
         <Div1>
-          <img src="/images/colaborate/colaborate2.png" />
+          <img src="/images/collaborate/collaborate2.png" />
           <div className="colored">
             Each product is designed to tell a unique narrative, allowing
             customers to express their individuality and create a home that
@@ -179,4 +179,4 @@ const Colaborate = () => {
   );
 };
 
-export default Colaborate;
+export default Collaborate;

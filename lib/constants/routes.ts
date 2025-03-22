@@ -47,7 +47,7 @@ export const footerRoutes: FooterRouteTypes[] = [
   },
   {
     name: 'Collaborate With Us',
-    path: '/colaborate',
+    path: '/collaborate',
     state: '',
     section: 'Collaborate With Us',
   },

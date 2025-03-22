@@ -234,7 +234,7 @@ const SignUp = (props: { isOpen: boolean; onClose: () => void }) => {
               height={30}
               width={30}
               style={{ marginRight: '10px' }}
-              src="/images/google.png"
+              src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Google-g-icon.png"
             />
             Sign up with Google
           </GoogleButton>

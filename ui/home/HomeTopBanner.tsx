@@ -5,15 +5,15 @@ import Carousel from '../components/Carousel';
 
 // List of images in the public folder
 const desktopImages: string[] = [
-  'https://i.postimg.cc/XJ0F0pDt/1.png',
-  'https://i.postimg.cc/JhXJgbKb/2.png',
-  'https://i.postimg.cc/Qdw106g8/3.png',
+  'https://i.postimg.cc/ZRMk0WX5/1.png',
+  'https://i.postimg.cc/JnnV1N6F/2.png',
+  'https://i.postimg.cc/Xvx6SH8F/3.png',
 ];
 
 const mobileImages: string[] = [
-  'https://i.postimg.cc/2SZV8CvY/1.png',
-  'https://i.postimg.cc/FsqY4YYG/2.png',
-  'https://i.postimg.cc/4NnYq6xm/3.png',
+  'https://i.postimg.cc/QNFCm18S/1.png',
+  'https://i.postimg.cc/HncqMpC4/2.png',
+  'https://i.postimg.cc/wMCScSqK/3.png',
 ];
 // Styled Components
 const Gallery = styled.div`
@@ -27,9 +27,14 @@ const MobileWrapper = styled.div`
 `;
 
 const StyledCarousel = styled(Carousel)`
+  div {
+    > img {
+      object-position: 0% 20%;
+    }
+  }
   div:nth-child(3) {
     > img {
-      object-position: 0% 0%;
+      object-position: 0% -10%;
     }
   }
 `;
