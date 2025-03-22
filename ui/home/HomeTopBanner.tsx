@@ -59,7 +59,7 @@ const HomeTopBanner: React.FC = () => {
         isCircle
         autoScroll
         images={mobileImages}
-        height="485px"
+        height="450px"
       />
     </MobileWrapper>
   ) : (
