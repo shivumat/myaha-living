@@ -24,7 +24,7 @@ const PaymentComponent = (props: {
           },
           prefill: {
             name: '',
-            email: 'customer@example.com',
+            email: props.email,
             contact: '',
           },
         };
