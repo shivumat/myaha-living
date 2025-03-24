@@ -2,6 +2,7 @@ import { useCart } from '#/context/CartContext';
 import { useProduct } from '#/context/ProductContext';
 import { useToast } from '#/context/ToastContext';
 import { useIsMobile } from '#/hooks/useMobile';
+import { formatPrice } from '#/lib/util';
 import newStyled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
 import CartItem from '../components/CartItem';
@@ -258,7 +259,7 @@ const CheckoutSummary = (props: {
         <Divider />
         <Row>
           <span>Subtotal</span>
-          <span>₹ {props.total}</span>
+          <span>₹ {formatPrice(props.total)}</span>
         </Row>
         {props.discountObject && (
           <Row>
@@ -268,7 +269,7 @@ const CheckoutSummary = (props: {
                 ? `(-${props.discountObject.amount})%`
                 : ''}
             </span>
-            <span>- ₹ {props.discount}</span>
+            <span>- ₹ {formatPrice(props.discount)}</span>
           </Row>
         )}
         <Row>
@@ -279,7 +280,7 @@ const CheckoutSummary = (props: {
         <Divider />
         <Row>
           <span>Total</span>
-          <span>₹ {total - props.discount}</span>
+          <span>₹ {formatPrice(total - props.discount)}</span>
         </Row>
         {index === 0 ? (
           <CheckoutButton

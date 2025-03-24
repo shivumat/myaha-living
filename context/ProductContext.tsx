@@ -1,4 +1,5 @@
 import { formatPrice, getRandomIntInclusive, searchProducts } from '#/lib/util';
+import MyahaLogo from '#/ui/svg/myaha-logo';
 import { useRouter } from 'next/navigation';
 import {
   createContext,
@@ -69,6 +70,7 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Products>([]);
   const [collections, setCollections] = useState<Collections>([]);
+  const [fetching, setFetching] = useState(false);
   const router = useRouter();
   const { startLoading, stopLoading } = useToast();
   const fetched = useRef(false);
@@ -84,6 +86,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   ];
 
   const fetchData = async () => {
+    setFetching(true);
     startLoading();
     fetched.current = true;
     const productData = await fetch('/api/shopify/products', {
@@ -144,6 +147,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       return aIndex - bIndex;
     });
     setCollections(collectionsData);
+    setFetching(false);
     stopLoading();
   };
 
@@ -162,6 +166,22 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     const result = searchProducts(products, searchString);
     return result;
   };
+
+  if (fetching)
+    return (
+      <div
+        style={{
+          display: 'flex',
+          backgroundColor: 'black',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          width: '100vw',
+        }}
+      >
+        <MyahaLogo />
+      </div>
+    );
 
   return (
     <ProductContext.Provider

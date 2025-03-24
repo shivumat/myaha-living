@@ -84,13 +84,10 @@ const OrderCreated = (props: {
 
   useEffect(() => {
     if (!props.orderId) return;
-    fetchOrderDetails(props.orderId);
-  }, [props.orderId]);
-
-  useEffect(() => {
     fetchData();
     stopLoading();
-  }, []);
+    fetchOrderDetails(props.orderId);
+  }, [props.orderId]);
 
   if (!userDetails) {
     return null;

@@ -77,8 +77,7 @@ const Checkout = () => {
       v.id.includes(item.variant_id),
     );
     if (!variant) return acc;
-
-    return acc + (Number(variant.price) ?? 0) * item.quantity;
+    return acc + (Number(variant.price.replace(/,/g, '')) ?? 0) * item.quantity;
   }, 0);
 
   let discount = 0;

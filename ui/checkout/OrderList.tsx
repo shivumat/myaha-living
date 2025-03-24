@@ -1,6 +1,7 @@
 import { useCart } from '#/context/CartContext';
 import { useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
+import { formatPrice } from '#/lib/util';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import CartItem from '../components/CartItem';
@@ -124,7 +125,9 @@ const OrderList: React.FC<OrderListProps> = ({ note, setNote }) => {
           }}
         >
           {productVariants[0].currencyCode}{' '}
-          {Number(productVariants[0].price) * item.quantity}
+          {formatPrice(
+            Number(productVariants[0].price.replace(/,/g, '')) * item.quantity,
+          )}
         </div>
       </div>
     );
