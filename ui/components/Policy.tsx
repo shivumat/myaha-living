@@ -14,6 +14,9 @@ const Container = styled.div`
   }
   > img {
     width: 100%;
+    object-fit: cover;
+    height: 600px;
+    object-position: 0% 70%;
   }
 `;
 
