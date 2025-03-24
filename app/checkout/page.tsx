@@ -213,6 +213,8 @@ const Checkout = () => {
             nextStep={setIndex}
             onPaymentCompletion={onPaymentCompletion}
             email={orderObj.customerInfo.email}
+            customerName={`${orderObj.customerInfo.first_name ?? ''} ${orderObj.customerInfo.last_name ?? ''}`}
+            customerNumber={orderObj.customerInfo.phone ?? ''}
             shippingCharges={shippingCharges}
             amount={total}
             orderId={orderObj.id}
