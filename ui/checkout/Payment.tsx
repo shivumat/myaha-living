@@ -136,6 +136,7 @@ const PaymentOptions = ({
 
   const onRazorPayCompletion = (razorPayKey: string) => {
     setOpenRazorPay(false);
+    startLoading();
     onPaymentCompletion(razorPayKey);
   };
 
