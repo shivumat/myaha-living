@@ -136,7 +136,7 @@ const Collaborate = () => {
     <>
       <Container>
         <Div1>
-          <img src="/images/collaborate/collaborate2.png" />
+          <img src="https://i.postimg.cc/2SG8536P/DSCF4911.jpg" />
           <div className="colored">
             Each product is designed to tell a unique narrative, allowing
             customers to express their individuality and create a home that

@@ -57,24 +57,6 @@ const AboutUs = ({ toggle }: { toggle?: () => void }) => {
           <span style={{ display: 'block' }}>Crafted like emotions.</span>
           <span>Raw, composed, edgy, wild.</span>
         </div>
-        <div style={{ fontWeight: 'lighter', fontSize: '12px' }}>
-          Myaha was born from a deep love for art and design, where raw beauty
-          meets modern creativity. Founded by Saumya, Myaha is a reflection of
-          her passion for crafting unique, character-filled home decor that
-          tells a story. Our pieces blend traditional craftsmanship with a
-          contemporary twist, offering a hint of playful pop. Each item is
-          thoughtfully designed to bring warmth, vibrancy, and originality into
-          your home. From Jaipur to the world, Myaha is about more than just
-          decor—it’s about creating spaces that feel personal and alive. Welcome
-          to Myaha, where every piece is crafted with care and meant to be
-          cherished. At Myaha, our vision is to transform the way people
-          experience home decor by creating pieces that are not only beautiful
-          but deeply personal. We aim to blend timeless craftsmanship with
-          modern creativity, offering products that resonate with individuality
-          and evoke a sense of belonging. Our goal is to inspire people to see
-          their homes as reflections of their unique stories, where each piece
-          tells a narrative and every space feels like a warm embrace.
-        </div>
         <Button className="clickable" onClick={gotoAboutUs}>
           View More
         </Button>

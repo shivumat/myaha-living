@@ -98,7 +98,7 @@ const PolicyComponent = (props: {
   return (
     <>
       <Container>
-        <img src="/images/policy/policy1.png" />
+        <img src="https://i.postimg.cc/ZnGy0S12/AMJ-6.jpg" />
         <TabContainer>
           {/* Tab Header */}
           <TabHeader>

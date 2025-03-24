@@ -52,7 +52,7 @@ const ContactForm = () => {
 
   return (
     <>
-      <img src="/images/contact-us/contact-us1.png" />
+      <img src="https://i.postimg.cc/2SG8536P/DSCF4911.jpg" />
       <Container>
         <Title>Contact Us</Title>
         <ContactFormComponent onSubmit={onSubmit} />

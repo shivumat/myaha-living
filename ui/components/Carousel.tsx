@@ -106,6 +106,10 @@ const Carousel = (props: {
     return () => clearInterval(interval);
   }, [autoScroll, dotMap.length]);
 
+  useEffect(() => {
+    setIndex(0);
+  }, [images]);
+
   const handleImageLoad = (idx: number) => {
     setLoadedImages((prev) => ({ ...prev, [idx]: true }));
   };

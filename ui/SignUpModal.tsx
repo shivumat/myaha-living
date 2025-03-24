@@ -53,16 +53,6 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const GoogleButton = styled(Button)`
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: black;
-  padding: 20px;
-  margin-bottom: 20px;
-`;
-
 const InputDiv = styled.div`
   display: flex;
   width: 100%;
@@ -98,7 +88,7 @@ const InputField = styled.input`
   }
 
   @media (max-width: 800px) {
-    padding: 0px 0px 0px 20px;
+    padding: 0px 0px 0px 10px;
     font-size: 12px;
   }
 `;
@@ -106,6 +96,10 @@ const InputField = styled.input`
 const InputLabel = styled.div`
   padding-left: 20px;
   opacity: 0.5;
+  @media (max-width: 800px) {
+    padding: 0px 0px 0px 10px;
+    font-size: 12px;
+  }
 `;
 
 const ErrorText = styled.p`
@@ -131,23 +125,10 @@ const LoginButton = styled(Button)`
   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
 `;
 
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const Ordiv = styled.div`
-  flex: 1;
-  height: 0.5px;
-  background-color: white;
-`;
-
 const SignUp = (props: { isOpen: boolean; onClose: () => void }) => {
   const { isOpen: showPassword, toggle: togglePassword } = useToggle();
 
-  const { handleGoogleSignup, userDetails, handleEmailSignup } = useAuth();
+  const { userDetails, handleEmailSignup } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -229,20 +210,6 @@ const SignUp = (props: { isOpen: boolean; onClose: () => void }) => {
       <Container onClick={(e) => e.stopPropagation()}>
         <Card>
           <Title>Sign In</Title>
-          <GoogleButton onClick={handleGoogleSignup}>
-            <img
-              height={30}
-              width={30}
-              style={{ marginRight: '10px' }}
-              src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Google-g-icon.png"
-            />
-            Sign up with Google
-          </GoogleButton>
-          <FlexContainer>
-            <Ordiv></Ordiv>
-            <p style={{ margin: '0 10px' }}>OR</p>
-            <Ordiv></Ordiv>
-          </FlexContainer>
           <div
             style={{
               display: 'grid',
