@@ -89,16 +89,12 @@ const OrderCreated = (props: {
     fetchOrderDetails(props.orderId);
   }, [props.orderId]);
 
-  if (!userDetails) {
-    return null;
-  }
-
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose}>
       <Container onClick={(e) => e.stopPropagation()}>
         <Card>
           <Title>
-            Thank You {userDetails.firstName ?? userDetails.email ?? ''}!
+            Thank You {userDetails?.firstName ?? userDetails?.email ?? ''}!
           </Title>
           <Message>
             Your order has been successfully created with <strong>Myaha</strong>
