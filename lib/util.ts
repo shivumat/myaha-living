@@ -77,7 +77,6 @@ export const searchProducts = (
   searchString: string,
 ): Products => {
   if (!searchString.trim()) return [];
-  console.log(searchString);
   const searchTerm = searchString.toLowerCase();
 
   return products

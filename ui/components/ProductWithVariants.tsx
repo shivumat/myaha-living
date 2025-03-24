@@ -33,6 +33,7 @@ const ProductWithVariants = (props: { product: Product }) => {
           onClick={() => openProduct(product)}
           height={'100%'}
           images={product.variants[0].images}
+          isCircle
         />
       </div>
       <div

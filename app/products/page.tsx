@@ -20,34 +20,16 @@ const BannerImg = newStyled.img`
 
 const CollectionDetails = newStyled.div`
     position: absolute;
-    top: 30%;
+    top: 425px;
     left: 50%;
-    background-color: #FFFFFF1A;
-    backdrop-filter: blur(18px);
-    border-radius: 10px;
-    padding: 40px;
-    .header{
-        font-size: 28px;
-        font-weight: 600;
-    }
-    .subHeader{
-        font-size: 18px;
-        font-weight: lighter;
-    }
+    font-size: 32px;
+    transform: translate(-50%, 0%);
+    padding: 10px;
+    color: #ffffff;
+    border-bottom: 1px solid #ffffff;
     @media (max-width: 800px) {
-        background-color: #FFFFFF1A;
-        backdrop-filter: blur(50px);
-        border-radius: 10px;
-        top: 10%;
-        left: 10%;
-        padding: 10px;
-        width: 60%;
-        .header{
-            font-size: 24px;
-        }
-        .subHeader{
-            font-size: 14px;
-        }
+      top: 300px;
+      font-size: 24px;
     }
 `;
 
@@ -126,15 +108,6 @@ const ProductsPage = () => {
         />
         <CollectionDetails>
           <div className="header">{'All Prodcuts'}</div>
-          <div className="subHeader">
-            At Myaha, our vision is to transform the way people experience home
-            decor by creating pieces that are not only beautiful but deeply
-            personal. We aim to blend timeless craftsmanship with modern
-            creativity, offering products that resonate with individuality and
-            evoke a sense of belonging. Our goal is to inspire people to see
-            their homes as reflections of their unique stories, where each piece
-            tells a narrative and every space feels like a warm embrace.
-          </div>
         </CollectionDetails>
       </div>
       <ListBody>

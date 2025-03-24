@@ -26,7 +26,7 @@ export const POST = async () => {
             }
           }
         }
-        images(first: 8, sortKey: POSITION) {
+        images(first: 20, sortKey: POSITION) {
           edges {
               node {
                 id
@@ -34,6 +34,9 @@ export const POST = async () => {
                 
               }
           }
+        }
+        careGuide: metafield(namespace: "custom", key: "care_guide") {
+          value
         }
         variants(first: 5) {
           edges {
@@ -52,6 +55,9 @@ export const POST = async () => {
                 price {
                     amount
                     currencyCode
+                }
+                image {
+                  url
                 }
                 quantityAvailable
 
@@ -85,7 +91,7 @@ export const POST = async () => {
     );
 
     const products = data.data.data.products.edges.map((product: any) => {
-      const { id, handle, title, descriptionHtml, options, tags } =
+      const { id, handle, title, descriptionHtml, options, tags, careGuide } =
         product.node;
       const variantsInfo: { name: string; values: string[] }[] = options.map(
         (option: any) => {
@@ -115,7 +121,12 @@ export const POST = async () => {
             dimensions,
             price,
             quantityAvailable,
+            image,
           } = variant.node;
+
+          const variantImages: string[] = image
+            ? [image.url, ...images]
+            : images;
 
           const variantInfo = variantCollection[index];
 
@@ -131,7 +142,9 @@ export const POST = async () => {
             dimensions: dimensions?.value,
             price: price.amount,
             currencyCode: getCurrencySymbol(price.currencyCode),
-            images,
+            images: variantImages.filter(
+              (item, index, arr) => arr.indexOf(item) === index,
+            ),
             variantInfo,
             inventoryId: inventoryItem?.id?.replace(
               'gid://shopify/InventoryItem/',
@@ -148,6 +161,7 @@ export const POST = async () => {
         title,
         description: descriptionHtml,
         variantsInfo,
+        careGuide: careGuide?.value,
         tags,
         variants,
         collections,

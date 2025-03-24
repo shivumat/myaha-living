@@ -12,9 +12,9 @@ const desktopImages: string[] = [
 ];
 
 const mobileImages: string[] = [
-  'https://i.postimg.cc/PqJvfkTQ/1-min.png',
-  'https://i.postimg.cc/7LR443QL/2.png',
-  'https://i.postimg.cc/j5JbSDG4/3.png',
+  'https://i.postimg.cc/tgnQNGf2/1-1.png',
+  'https://i.postimg.cc/K4hyRqQJ/2.png',
+  'https://i.postimg.cc/WzkvpLmd/3.png',
 ];
 // Styled Components
 const Gallery = styled.div`

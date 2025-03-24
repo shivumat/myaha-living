@@ -29,8 +29,6 @@ const FeaturedProducts = () => {
       setFeaturedProducts(getRandomSubArray(products, 4));
   }, [products]);
 
-  console.log('featuredProducts', featuredProducts);
-
   return (
     <Conatiner>
       {featuredProducts.map((product) => (

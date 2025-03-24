@@ -10,7 +10,7 @@ import PlusMInusOpen from '#/ui/components/PlusMInusOpen';
 import VariantContainer from '#/ui/components/VariantContainer';
 import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiHeart, FiTruck } from 'react-icons/fi';
 
 const Container = newStyled.div`
@@ -265,6 +265,19 @@ const ProductWithId = () => {
         </Description>
       </PlusMInusOpen>
 
+      {!!currentProduct.careGuide && (
+        <PlusMInusOpen items={[]} label="Care guide">
+          <Description>
+            {currentProduct.careGuide.split('\n').map((line, index) => (
+              <React.Fragment key={index}>
+                {line}
+                <br />
+              </React.Fragment>
+            ))}
+          </Description>
+        </PlusMInusOpen>
+      )}
+
       <div style={{ width: '100%', borderBottom: '1px solid lightgray' }}></div>
       <SubHeadings style={{ fontSize: '14px' }}>
         Please enter PIN code to check availability:
@@ -329,6 +342,7 @@ const ProductWithId = () => {
       <Carousel
         images={currentProduct?.variants[variant]?.images}
         height="100%"
+        isCircle={isMobile}
       />
       <Title>{currentProduct?.title}</Title>
       <Description

@@ -41,101 +41,111 @@ const Footer = () => {
   if (isMobile) {
     return (
       <FooterContainer>
-        <div style={{ display: 'flex', width: '100%', gap: '15px' }}>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '5px',
-              width: '150px',
-            }}
-          >
-            <StyleLogo height={'60'} width={'175'} />
-            <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-              <a style={{ padding: '2px', borderRadius: '2px' }}>
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Instagram-Gradient-Logo-PNG.png"
-                  alt="Instagaram"
-                  style={{ width: '15px', height: '15px' }}
-                />
-              </a>
-              <a
-                style={{
-                  backgroundColor: 'white',
-                  padding: '2px',
-                  borderRadius: '2px',
-                }}
-              >
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Twitter_X.png"
-                  alt="Twitter"
-                  style={{ width: '15px', height: '15px' }}
-                />
-              </a>
-              <a style={{ padding: '2px', borderRadius: '2px' }}>
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
-                  alt="Pinterest"
-                  style={{ width: '15px', height: '15px' }}
-                />
-              </a>
-            </div>
-            <TextContainer
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            gap: '15px',
+            flexDirection: 'column',
+          }}
+        >
+          <StyleLogo height={'60'} width={'175'} />
+          <div style={{ display: 'flex', width: '100%', gap: '15px' }}>
+            <div
               style={{
-                textAlign: 'left',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '2px',
-                margin: '10px 0px',
-              }}
-            >
-              <div style={{ display: 'block', fontSize: '0.8em' }}>
-                MYAHA INDIA
-              </div>
-              <div style={{ display: 'block', fontSize: '0.8em' }}>
-                Plot No. B-26, Mathurawala,
-              </div>
-              <div style={{ display: 'block', fontSize: '0.8em' }}>
-                Jagatpura, Jaipur 303903,
-              </div>
-              <div style={{ display: 'block', fontSize: '0.8em' }}>
-                Rajasthan, India.
-              </div>
-            </TextContainer>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <TextContainer
-              style={{
-                textAlign: 'left',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '2px',
-                margin: '20px 0px',
+                gap: '5px',
+                width: '150px',
               }}
             >
               <div
-                className="clickable"
-                onClick={() => route.push('/contact')}
+                style={{ display: 'flex', gap: '20px', alignItems: 'center' }}
+              >
+                <a style={{ padding: '2px', borderRadius: '2px' }}>
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Instagram-Gradient-Logo-PNG.png"
+                    alt="Instagaram"
+                    style={{ width: '15px', height: '15px' }}
+                  />
+                </a>
+                <a
+                  style={{
+                    backgroundColor: 'white',
+                    padding: '2px',
+                    borderRadius: '2px',
+                  }}
+                >
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Twitter_X.png"
+                    alt="Twitter"
+                    style={{ width: '15px', height: '15px' }}
+                  />
+                </a>
+                <a style={{ padding: '2px', borderRadius: '2px' }}>
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
+                    alt="Pinterest"
+                    style={{ width: '15px', height: '15px' }}
+                  />
+                </a>
+              </div>
+              <TextContainer
                 style={{
-                  display: 'block',
-                  fontSize: '0.8em',
-                  margin: '0px 0px 10px',
+                  textAlign: 'left',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '2px',
+                  margin: '10px 0px',
                 }}
               >
-                CONTACT US
-              </div>
-              <div style={{ display: 'block', fontSize: '0.8em' }}>
-                +91 6350533372
-              </div>
-              <div style={{ display: 'block', fontSize: '0.8em' }}>
-                hello@myahaliving.com{' '}
-              </div>
-            </TextContainer>
+                <div style={{ display: 'block', fontSize: '0.8em' }}>
+                  MYAHA INDIA
+                </div>
+                <div style={{ display: 'block', fontSize: '0.8em' }}>
+                  Plot No. B-26, Mathurawala,
+                </div>
+                <div style={{ display: 'block', fontSize: '0.8em' }}>
+                  Jagatpura, Jaipur 303903,
+                </div>
+                <div style={{ display: 'block', fontSize: '0.8em' }}>
+                  Rajasthan, India.
+                </div>
+              </TextContainer>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <TextContainer
+                style={{
+                  textAlign: 'left',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '2px',
+                }}
+              >
+                <div
+                  className="clickable"
+                  onClick={() => route.push('/contact')}
+                  style={{
+                    display: 'block',
+                    fontSize: '0.8em',
+                    margin: '0px 0px 10px',
+                  }}
+                >
+                  CONTACT US
+                </div>
+                <div style={{ display: 'block', fontSize: '0.8em' }}>
+                  +91 6350533372
+                </div>
+                <div style={{ display: 'block', fontSize: '0.8em' }}>
+                  hello@myahaliving.com{' '}
+                </div>
+              </TextContainer>
+            </div>
           </div>
           <div style={{ display: 'flex', gap: '30px' }}>
             <TextContainer

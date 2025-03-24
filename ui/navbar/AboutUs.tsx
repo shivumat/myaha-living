@@ -27,8 +27,6 @@ const Button = newStyled.button`
 `;
 
 const AboutUs = ({ toggle }: { toggle?: () => void }) => {
-  console.log(toggle);
-
   const router = useRouter();
 
   const gotoAboutUs = () => {

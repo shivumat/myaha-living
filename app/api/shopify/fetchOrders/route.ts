@@ -26,7 +26,6 @@ export const POST = async (req: Request) => {
       .catch((error) => console.error(error));
 
     const orders = data.orders.map((order: any) => {
-      console.log(order);
       const line_items = order.line_items.map((item: any) => {
         const { variant_id, title, quantity, price, product_id } = item;
         return {

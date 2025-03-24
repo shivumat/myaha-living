@@ -18,6 +18,7 @@ interface ToastContextType {
   showToast: (message: string, type: ToastType) => void;
   startLoading: () => void;
   stopLoading: () => void;
+  isloading: boolean;
 }
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
@@ -125,7 +126,9 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
   const isMobile = useIsMobile();
 
   return (
-    <ToastContext.Provider value={{ showToast, startLoading, stopLoading }}>
+    <ToastContext.Provider
+      value={{ showToast, startLoading, stopLoading, isloading }}
+    >
       {children}
       <ToastContainer
         mounted={mounted.current}

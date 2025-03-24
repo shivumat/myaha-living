@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useToast } from './ToastContext';
 
 export type Products = Product[];
 
@@ -20,6 +21,7 @@ export interface Product {
   tags: any[];
   variants: Variant[];
   collections: Collections;
+  careGuide: string;
 }
 
 export interface VariantInfo {
@@ -68,6 +70,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Products>([]);
   const [collections, setCollections] = useState<Collections>([]);
   const router = useRouter();
+  const { startLoading, stopLoading } = useToast();
   const fetched = useRef(false);
 
   const collectionOrder = [
@@ -81,6 +84,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   ];
 
   const fetchData = async () => {
+    startLoading();
     fetched.current = true;
     const productData = await fetch('/api/shopify/products', {
       method: 'POST',
@@ -140,6 +144,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       return aIndex - bIndex;
     });
     setCollections(collectionsData);
+    stopLoading();
   };
 
   useEffect(() => {
