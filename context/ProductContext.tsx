@@ -86,8 +86,6 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   ];
 
   const fetchData = async () => {
-    setFetching(true);
-    startLoading();
     fetched.current = true;
     const productData = await fetch('/api/shopify/products', {
       method: 'POST',
@@ -147,13 +145,19 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       return aIndex - bIndex;
     });
     setCollections(collectionsData);
+  };
+
+  const fetchInitialData = async () => {
+    setFetching(true);
+    startLoading();
+    fetchData();
     setFetching(false);
     stopLoading();
   };
 
   useEffect(() => {
     if (fetched.current) return;
-    fetchData();
+    fetchInitialData();
   }, []);
 
   const openProduct = (product: Product) => {
