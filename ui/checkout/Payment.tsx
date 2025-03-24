@@ -135,6 +135,7 @@ const PaymentOptions = ({
   const { startLoading } = useToast();
 
   const onRazorPayCompletion = (razorPayKey: string) => {
+    setOpenRazorPay(false);
     onPaymentCompletion(razorPayKey);
   };
 
