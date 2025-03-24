@@ -19,16 +19,17 @@ const Div1 = styled.div`
   row-gap: 20px;
   > img {
     border-radius: 10px;
-    height: 318px;
+    height: 400px;
     flex: 1;
     min-width: 318px;
     object-fit: cover;
+    object-position: 0% 80%;
   }
   > div {
     padding: 40px;
     display: flex;
     align-self: stretch;
-    height: 318px;
+    height: 400px;
     width: 318px;
     min-width: 318px;
     justify-content: center;
@@ -153,7 +154,6 @@ const Collaborate = () => {
             The brand merges timeless craftsmanship with modern design, ensuring
             products that are both high-quality and innovative.
           </div>
-          <img src="/images/about-us/about-us5.png" alt="about-us-3" />
         </Div2>
         <Div3>
           <div className="left-container">

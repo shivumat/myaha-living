@@ -33,6 +33,9 @@ const TabHeader = styled.div`
   display: flex;
   justify-content: center;
   border-bottom: 1px solid #ccc;
+  @media (max-width: 800px) {
+    font-size: 14px;
+  }
 `;
 
 const TabButton = styled.div`
@@ -72,6 +75,9 @@ const SectionTitle = styled.h2`
   font-size: 20px;
   text-decoration: underline;
   margin: 20px 0px 10px 0px;
+  @media (max-width: 800px) {
+    font-size: 14px;
+  }
 `;
 
 const SectionDescription = styled.ul<{ noBottomBorder?: boolean }>`
@@ -85,6 +91,9 @@ const SectionDescription = styled.ul<{ noBottomBorder?: boolean }>`
       : 'border-bottom: 1px solid #ccc; padding-bottom: 20px;'}
   >li {
     display: list-item;
+  }
+  @media (max-width: 800px) {
+    font-size: 14px;
   }
 `;
 

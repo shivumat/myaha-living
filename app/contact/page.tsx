@@ -36,6 +36,13 @@ const InfoText = styled.div`
   }
 `;
 
+const StyledImg = styled.img`
+  width: 100%;
+  object-fit: cover;
+  object-position: 0% 80%;
+  height: 700px;
+`;
+
 const ContactForm = () => {
   const { showToast } = useToast();
 
@@ -52,7 +59,7 @@ const ContactForm = () => {
 
   return (
     <>
-      <img src="https://i.postimg.cc/2SG8536P/DSCF4911.jpg" />
+      <StyledImg src="https://i.postimg.cc/2SG8536P/DSCF4911.jpg" />
       <Container>
         <Title>Contact Us</Title>
         <ContactFormComponent onSubmit={onSubmit} />
