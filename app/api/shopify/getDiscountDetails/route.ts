@@ -34,7 +34,6 @@ export const POST = async (req: Request) => {
     const data = await response.json();
 
     const {
-      title,
       value_type: valueType,
       value,
       usage_limit: usageLimit,
@@ -55,7 +54,7 @@ export const POST = async (req: Request) => {
         status: true,
         message: 'Discount fetched',
         // data comes as negative for discount
-        data: { code: title, amount: +value * -1, type: valueType },
+        data: { code, amount: +value * -1, type: valueType },
       },
       { status: 200 },
     );

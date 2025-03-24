@@ -22,14 +22,13 @@ const CollectionDetails = newStyled.div`
     position: absolute;
     top: 425px;
     left: 50%;
-    font-size: 32px;
+    font-size: 48px;
     transform: translate(-50%, 0%);
     padding: 10px;
     color: #ffffff;
-    border-bottom: 1px solid #ffffff;
     @media (max-width: 800px) {
       top: 300px;
-      font-size: 24px;
+      font-size: 36px;
     }
 `;
 
@@ -107,7 +106,7 @@ const ProductsPage = () => {
           width={'100%'}
         />
         <CollectionDetails>
-          <div className="header">{'All Prodcuts'}</div>
+          <div className="header">{'All Products'}</div>
         </CollectionDetails>
       </div>
       <ListBody>
