@@ -1,6 +1,6 @@
 import { useAuth } from '#/context/AuthContext';
 import { useCart } from '#/context/CartContext';
-import { Product, Products, useProduct } from '#/context/ProductContext';
+import { useProduct } from '#/context/ProductContext';
 import { useIsDesktopHomeOnTop } from '#/hooks/useIsDesktopHomeOnTop';
 import { useIsMobile } from '#/hooks/useMobile';
 import { useToggle } from '#/hooks/useToggle';
@@ -9,10 +9,8 @@ import newStyled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Dropdown } from '../components/Dropdown';
+import CommandBar from '../components/Commandbar';
 import PlusMInusOpen from '../components/PlusMInusOpen';
-import ProductDropdownItem from '../components/ProductDropDownItem';
-import SearchInput from '../components/SearchInput';
 import Sidebar from '../components/Sidebar';
 import CartLogo from '../svg/cart-logo';
 import MyahaLogo from '../svg/myaha-logo';
@@ -146,9 +144,9 @@ const Navbar = () => {
   const isMobile = useIsMobile();
   const { isOpen, toggle } = useToggle();
   const router = useRouter();
+  const [showSearch, setShowSearch] = useState(false);
   const [showCollection, setShowCollection] = useState(false);
   const [showAboutUs, setShowAboutUs] = useState(false);
-  const [searchedProducts, setSearchedProducts] = useState<Products>([]);
   const isDesktopHomeOnTop = useIsDesktopHomeOnTop({
     turnBackToTransparent: !(showCollection || showAboutUs),
   });
@@ -222,35 +220,11 @@ const Navbar = () => {
             height="30"
           />
           <LogosContainer>
-            <Dropdown
-              maxHeight="400px"
-              onClose={() => {
-                setSearchedProducts([]);
-              }}
-              options={searchedProducts}
-              onSelect={(item: Product) =>
-                router.push(
-                  `/product/${item.id.replace('gid://shopify/Product/', '')}`,
-                )
-              }
-              renderTrigger={(toggle: any) => (
-                <StyledSearchLogo
-                  className="clickable"
-                  color={showAboutUs ? 'white' : 'black'}
-                  onClick={toggle}
-                />
-              )}
-              renderOption={(option: Product) => (
-                <ProductDropdownItem product={option} />
-              )}
-            >
-              <SearchInput
-                onSearch={(searchValue) => {
-                  const productsonSearch = onSearchProducts(searchValue);
-                  setSearchedProducts(productsonSearch);
-                }}
-              />
-            </Dropdown>
+            <StyledSearchLogo
+              className="clickable"
+              color={showAboutUs ? 'white' : 'black'}
+              onClick={() => setShowSearch(true)}
+            />
             {Cart}
           </LogosContainer>
         </NavContainer>
@@ -334,6 +308,11 @@ const Navbar = () => {
             )}
           </LinksContainer>
         </Sidebar>
+        <CommandBar
+          isOpen={showSearch}
+          onClose={() => setShowSearch(false)}
+          onSearch={onSearchProducts}
+        />
       </>
     );
   }
@@ -419,37 +398,11 @@ const Navbar = () => {
           </LinksContainer>
         )}
         <LogosContainer showTransparent={showTransparent}>
-          <Dropdown
-            maxHeight="400px"
-            onClose={() => {
-              setSearchedProducts([]);
-            }}
-            options={searchedProducts}
-            onSelect={(item: Product) =>
-              router.push(
-                `/product/${item.id.replace('gid://shopify/Product/', '')}`,
-              )
-            }
-            renderTrigger={(toggle: any) => (
-              <StyledSearchLogo
-                className="clickable"
-                color={showAboutUs ? 'white' : 'black'}
-                onClick={(e: any) => {
-                  toggle(e);
-                }}
-              />
-            )}
-            renderOption={(option: Product) => (
-              <ProductDropdownItem product={option} />
-            )}
-          >
-            <SearchInput
-              onSearch={(searchValue) => {
-                const productsonSearch = onSearchProducts(searchValue);
-                setSearchedProducts(productsonSearch);
-              }}
-            />
-          </Dropdown>
+          <StyledSearchLogo
+            className="clickable"
+            color={showAboutUs ? 'white' : 'black'}
+            onClick={() => setShowSearch(true)}
+          />
 
           {!showTransparent &&
             (!user ? (
@@ -493,6 +446,11 @@ const Navbar = () => {
             )}
           </div>
         )}
+        <CommandBar
+          isOpen={showSearch}
+          onClose={() => setShowSearch(false)}
+          onSearch={onSearchProducts}
+        />
       </NavContainer>
     </>
   );
