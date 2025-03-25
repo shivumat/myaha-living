@@ -29,6 +29,7 @@ const CollectionDetails = newStyled.div`
     @media (max-width: 800px) {
       top: 300px;
       font-size: 40px;
+      width: max-content;
     }
 `;
 
