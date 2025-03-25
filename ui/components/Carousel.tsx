@@ -111,8 +111,12 @@ const Carousel = (props: {
   }, [images]);
 
   const handleImageLoad = (idx: number) => {
-    setLoadedImages((prev) => ({ ...prev, [idx]: true }));
+    setLoadedImages({ [idx]: true });
   };
+
+  useEffect(() => {
+    handleImageLoad(index);
+  }, [index]);
 
   const CarouselComponents = images.length ? (
     <>
@@ -129,12 +133,7 @@ const Carousel = (props: {
               props.clickableImages?.includes(idx) && props.onClick?.()
             }
           >
-            <CarouselImage
-              src={src}
-              alt={`Image ${idx + 1}`}
-              height={height}
-              onLoad={() => handleImageLoad(idx)}
-            />
+            <CarouselImage src={src} alt={`Image ${idx + 1}`} height={height} />
           </CarouselImageDiv>
         ))
       ) : (

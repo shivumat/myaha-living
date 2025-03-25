@@ -1,3 +1,4 @@
+import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { useState } from 'react';
 
@@ -48,6 +49,7 @@ const IframeContainer = newStyled.div`
 
 const OurStory = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const isMobile = useIsMobile();
 
   const playVideo = () => {
     setIsPlaying(true);
@@ -58,7 +60,11 @@ const OurStory = () => {
       {!isPlaying ? (
         <Thumbnail
           onClick={playVideo}
-          style={{ backgroundImage: `url('/images/thumbnail.png')` }}
+          style={{
+            backgroundImage: isMobile
+              ? 'url( https://i.postimg.cc/0NyKsH2h/DSC09291.jpg)'
+              : 'url(https://i.postimg.cc/jSXnBrKz/DSC09273.jpg)',
+          }}
         >
           Our Story
           <img
