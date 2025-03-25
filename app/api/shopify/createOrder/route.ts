@@ -12,7 +12,10 @@ export const POST = async (req: Request) => {
       razor_pay_id,
       note,
       discount_codes,
+      total_price,
     } = await req.json();
+
+    const { email } = customerInfo;
 
     const variantsWithLocation = variants.map((item: any) => ({
       variant_id: item.variant_id,
@@ -55,20 +58,26 @@ export const POST = async (req: Request) => {
 
     const raw = JSON.stringify({
       order: {
+        email,
+        send_receipt: true,
+        send_fulfillment_receipt: true,
         line_items: variantsWithLocation,
         shipping_lines: udpatedVariants,
         customer: customerInfo,
         shipping_address,
         billing_address,
-        confirmation_number: '1245',
-        transaction: {
-          currency_code: 'INR',
-          type: !!razor_pay_id ? 'bank_deposit' : 'cash_on_delivery',
-          status: !!razor_pay_id ? 'success' : 'pending',
-        },
         financial_status: !!razor_pay_id ? 'paid' : 'pending',
         note: note,
         discount_codes,
+        transactions: [
+          {
+            amount: total_price, // Ensure this is defined
+            currency: 'INR',
+            kind: 'sale',
+            status: !!razor_pay_id ? 'success' : 'pending',
+            gateway: !!razor_pay_id ? 'razorpay' : 'manual',
+          },
+        ],
       },
     });
 

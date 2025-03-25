@@ -35,4 +35,5 @@ export interface OrderPayloadType {
     amount: string;
     type: string;
   }[];
+  total_price: number;
 }

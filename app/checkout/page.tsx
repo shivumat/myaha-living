@@ -102,6 +102,7 @@ const Checkout = () => {
       shippingCharges: shippingCharges,
       status: 'pending',
       id: `order_${uuidv4().replace(/-/g, '')}`,
+      total_price: total - discount + shippingCharges + codCharges,
     };
     if (!!orderObj) {
       newOrderObj = { ...newOrderObj, id: orderObj.id };
@@ -112,16 +113,8 @@ const Checkout = () => {
   };
 
   const onPaymentCompletion = async (paymentId: string) => {
-    let newOrderObj: DBOrderType;
     const isCOD = !paymentId;
-    if (!!orderObj) {
-      newOrderObj = {
-        ...orderObj,
-        status: isCOD ? 'cod' : 'paid',
-        razor_pay_id: paymentId ?? '',
-      };
-    }
-    newOrderObj = {
+    let newOrderObj: DBOrderType = {
       variants: cart,
       shipping_address: shippingAddress,
       billing_address: sameAsShipping ? shippingAddress : billingAddress,
@@ -138,7 +131,32 @@ const Checkout = () => {
           { ...discountObject, amount: '' + discountObject.amount },
         ],
       }),
+      total_price: total - discount + shippingCharges + codCharges,
     };
+
+    if (!!orderObj) {
+      newOrderObj = {
+        ...orderObj,
+        variants: cart,
+        shipping_address: shippingAddress,
+        billing_address: sameAsShipping ? shippingAddress : billingAddress,
+        customerInfo: {
+          email: userDetails?.email ?? email,
+        },
+        note,
+        shippingCharges: shippingCharges,
+        id: `order_${uuidv4().replace(/-/g, '')}`,
+        status: isCOD ? 'cod' : 'paid',
+        razor_pay_id: paymentId ?? '',
+        ...(discountObject && {
+          discount_codes: [
+            { ...discountObject, amount: '' + discountObject.amount },
+          ],
+        }),
+        total_price: total - discount + shippingCharges + codCharges,
+      };
+    }
+
     if (isCOD) {
       newOrderObj = { ...newOrderObj, codCharges: codCharges };
     }

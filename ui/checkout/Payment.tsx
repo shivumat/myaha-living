@@ -250,6 +250,9 @@ const PaymentOptions = ({
           customerNumber={customerNumber}
           amount={amount + shippingCharges + codCharges - discount}
           onCompletion={onRazorPayCompletion}
+          onExit={() => {
+            setOpenRazorPay(false);
+          }}
         />
       )}
     </FormContainer>
