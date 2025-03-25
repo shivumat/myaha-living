@@ -111,42 +111,46 @@ const Carousel = (props: {
   }, [images]);
 
   const handleImageLoad = (idx: number) => {
-    setLoadedImages({ [idx]: true });
+    setLoadedImages((prev) => ({ ...prev, [idx + 1]: true }));
   };
-
-  useEffect(() => {
-    handleImageLoad(index);
-  }, [index]);
 
   const CarouselComponents = images.length ? (
     <>
-      {loadedImages[index] ? (
-        images.map((src, idx) => (
-          <CarouselImageDiv
-            key={idx}
-            style={{
-              cursor: props.clickableImages?.includes(idx)
-                ? 'pointer'
-                : 'default',
-            }}
-            onClick={() =>
-              props.clickableImages?.includes(idx) && props.onClick?.()
-            }
-          >
-            <CarouselImage src={src} alt={`Image ${idx + 1}`} height={height} />
-          </CarouselImageDiv>
-        ))
-      ) : (
-        <Placeholder height={height}>
-          <Image
-            style={{ margin: 'auto' }}
-            src={'/images/loading-buffering.gif'}
-            alt="loading"
-            width={50}
-            height={50}
-          />
-        </Placeholder>
-      )}
+      {images.map((src, idx) => {
+        if (loadedImages[idx]) {
+          return (
+            <CarouselImageDiv
+              key={idx}
+              style={{
+                cursor: props.clickableImages?.includes(idx)
+                  ? 'pointer'
+                  : 'default',
+              }}
+              onClick={() =>
+                props.clickableImages?.includes(idx) && props.onClick?.()
+              }
+            >
+              <CarouselImage
+                src={src}
+                alt={`Image ${idx + 1}`}
+                height={height}
+                onLoad={() => handleImageLoad(idx)}
+              />
+            </CarouselImageDiv>
+          );
+        }
+        return (
+          <Placeholder height={height}>
+            <Image
+              style={{ margin: 'auto' }}
+              src={'/images/loading-buffering.gif'}
+              alt="loading"
+              width={50}
+              height={50}
+            />
+          </Placeholder>
+        );
+      })}
     </>
   ) : (
     React.Children.map(children, (child) => (
