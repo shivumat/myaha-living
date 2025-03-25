@@ -52,10 +52,11 @@ const CategoryContainer = newStyled.div`
     align-items: center;
     justify-content: center;
     gap: 20px;
-    width: calc(33.33% - 20px);
+    border: 1px solid lightgray;
+    width: calc(33.33% - 75px);
     @media (max-width: 800px) {
-        padding: 20px 0px 30px;
-        width: calc(100% - 100px);
+        padding: 20px 0px;
+        width: calc(100% - 140px);
         height: 440px;
     }
 `;

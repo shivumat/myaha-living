@@ -15,8 +15,7 @@ const Container = newStyled.div`
 
 const Div1 = newStyled.div<{ isMobile: boolean }>`
   padding: 40px;
-  border-radius: ${({ isMobile }) => (isMobile ? '0px' : '10px')};
-  margin: ${({ isMobile }) => (isMobile ? '0px' : '0px 20px')};
+  margin: '0px;
   color: white;
   background-color: #5B1D1D;
   margin-bottom: 20px;

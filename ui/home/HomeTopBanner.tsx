@@ -20,7 +20,7 @@ const mobileImages: string[] = [
 const Gallery = styled.div`
   width: 100%;
   margin: auto;
-  height: 90%;
+  height: 85%;
 `;
 
 const MobileWrapper = styled.div`
