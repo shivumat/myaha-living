@@ -9,12 +9,13 @@ import newStyled from '@emotion/styled';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
-const BannerImg = newStyled.img`
+const BannerImg = newStyled.img<{ collectionStylingChanges?: string }>`
     height: 850px;
     object-fit: cover;
     @media (max-width: 800px) {
         height: 600px;
     }
+    ${({ collectionStylingChanges }) => collectionStylingChanges ?? ''}
 `;
 
 const CollectionDetails = newStyled.div`
@@ -142,13 +143,20 @@ const ProductsCategory = () => {
     }
   }, [sort, collectionProducts, collection, currentPage]);
 
+  console.log(category);
+
+  const customStyling: Record<string, string> = {
+    '479846400247': '@media (max-width: 800px) { object-position: 65% 0%; }',
+  };
+
   return (
     <>
-      <div style={{ padding: isMobile ? '0 20px' : '0px' }}>
+      <div>
         <BannerImg
           src={collection?.image}
           alt={collection?.title}
           width={'100%'}
+          collectionStylingChanges={customStyling[category]}
         />
         <CollectionDetails>
           <div className="header">{collection?.title}</div>
