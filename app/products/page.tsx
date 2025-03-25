@@ -115,7 +115,7 @@ const ProductsPage = () => {
 
   return (
     <>
-      <div style={{ padding: isMobile ? '0 20px' : '0px' }}>
+      <div>
         <BannerImg
           src={
             collection?.image ?? 'https://i.postimg.cc/2SG8536P/DSCF4911.jpg'
