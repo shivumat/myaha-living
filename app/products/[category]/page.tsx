@@ -127,6 +127,7 @@ const ProductsCategory = () => {
 
   const customStyling: Record<string, string> = {
     '479846400247': '@media (max-width: 800px) { object-position: 65% 0%; }',
+    '479846596855': '@media (max-width: 800px) { object-position: 35% 0%; }',
   };
 
   return (
