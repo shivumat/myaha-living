@@ -20,34 +20,15 @@ const BannerImg = newStyled.img<{ collectionStylingChanges?: string }>`
 
 const CollectionDetails = newStyled.div`
     position: absolute;
-    top: 30%;
+    top: 425px;
     left: 50%;
-    background-color: #FFFFFF1A;
-    backdrop-filter: blur(18px);
-    border-radius: 10px;
-    padding: 40px;
-    .header{
-        font-size: 28px;
-        font-weight: 600;
-    }
-    .subHeader{
-        font-size: 18px;
-        font-weight: lighter;
-    }
+    font-size: 50px;
+    transform: translate(-50%, 0%);
+    padding: 10px;
+    color: #ffffff;
     @media (max-width: 800px) {
-        background-color: #FFFFFF1A;
-        backdrop-filter: blur(50px);
-        border-radius: 10px;
-        top: 10%;
-        left: 10%;
-        padding: 10px;
-        width: 60%;
-        .header{
-            font-size: 24px;
-        }
-        .subHeader{
-            font-size: 14px;
-        }
+      top: 300px;
+      font-size: 40px;
     }
 `;
 
@@ -143,8 +124,6 @@ const ProductsCategory = () => {
     }
   }, [sort, collectionProducts, collection, currentPage]);
 
-  console.log(category);
-
   const customStyling: Record<string, string> = {
     '479846400247': '@media (max-width: 800px) { object-position: 65% 0%; }',
   };
@@ -160,10 +139,6 @@ const ProductsCategory = () => {
         />
         <CollectionDetails>
           <div className="header">{collection?.title}</div>
-          <div
-            className="subHeader"
-            dangerouslySetInnerHTML={{ __html: collection?.description ?? '' }}
-          />
         </CollectionDetails>
       </div>
       <ListBody>

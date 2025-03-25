@@ -22,13 +22,13 @@ const CollectionDetails = newStyled.div`
     position: absolute;
     top: 425px;
     left: 50%;
-    font-size: 48px;
+    font-size: 50px;
     transform: translate(-50%, 0%);
     padding: 10px;
     color: #ffffff;
     @media (max-width: 800px) {
       top: 300px;
-      font-size: 36px;
+      font-size: 40px;
     }
 `;
 
@@ -124,10 +124,6 @@ const ProductsPage = () => {
         />
         <CollectionDetails>
           <div className="header">{collection?.title ?? 'Shop All'}</div>
-          <div
-            className="subHeader"
-            dangerouslySetInnerHTML={{ __html: collection?.description ?? '' }}
-          />
         </CollectionDetails>
       </div>
       <ListBody>

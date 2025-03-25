@@ -253,7 +253,7 @@ const Navbar = () => {
                   <PlusMInusOpen
                     key={index}
                     label="Shop"
-                    items={['Shop all', ...collections.map((c) => c.title)]}
+                    items={['Shop All', ...collections.map((c) => c.title)]}
                     handleLinkClick={(index) => {
                       toggle();
                       handleLinkClick(
