@@ -6,7 +6,7 @@ const nextConfig = {
       'cdn.shopify.com',
       'https://www.myahaliving.com/',
       'https://myaha-living.vercel.app/',
-      'https://i.postimg.cc',
+      'i.postimg.cc',
     ], // Add your production domain if deploying
   },
 };

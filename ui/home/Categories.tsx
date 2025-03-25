@@ -52,11 +52,11 @@ const CategoryContainer = newStyled.div`
     align-items: center;
     justify-content: center;
     gap: 20px;
-    border: 1px solid lightgray;
-    width: calc(33.33% - 75px);
+    width: calc(33.33% - 20px);
+    border: 1px solid black;
     @media (max-width: 800px) {
-        padding: 20px 0px;
-        width: calc(100% - 140px);
+        padding: 20px 0px 30px;
+        width: calc(100% - 100px);
         height: 440px;
     }
 `;
@@ -88,7 +88,7 @@ const Categories = () => {
         className="clickable"
         src={collection.categoryImage}
         alt={collection.title}
-        style={{ width: '250px', height: '375px', objectFit: 'cover' }}
+        style={{ width: '200px', height: '300px', objectFit: 'cover' }}
       />
       <span className="clickable">{collection.title}</span>
     </CategoryContainer>

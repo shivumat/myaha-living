@@ -100,7 +100,7 @@ export const POST = async () => {
       );
 
       const images = product.node.images.edges.map((image: any) => {
-        return image.node.url;
+        return `${image.node.url}.webp`;
       });
 
       const variantCollection = generateCombinations(variantsInfo);
@@ -125,7 +125,7 @@ export const POST = async () => {
           } = variant.node;
 
           const variantImages: string[] = image
-            ? [image.url, ...images]
+            ? [`${image.url}.webp`, ...images]
             : images;
 
           const variantInfo = variantCollection[index];

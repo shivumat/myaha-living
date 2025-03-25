@@ -7,7 +7,7 @@ import Pagination from '#/ui/components/PaginationComponent';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const BannerImg = newStyled.img`
     height: 850px;
@@ -64,6 +64,8 @@ const ProductsPage = () => {
   const { products, collections, allCollections: collection } = useProduct();
   const isMobile = useIsMobile();
   const route = useRouter();
+
+  const topRef = useRef<HTMLDivElement>(null);
 
   const productsCount = isMobile ? 6 : 12;
 
@@ -215,6 +217,9 @@ const ProductsPage = () => {
       <StyledPagination
         currentPage={currentPage}
         onPageChange={(number) => {
+          if (topRef.current) {
+            topRef.current.scrollIntoView({ behavior: 'smooth' });
+          }
           setCurrentPage(number);
         }}
         itemsPerPage={productsCount}
