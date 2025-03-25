@@ -40,6 +40,8 @@ export const POST = async (req: Request) => {
         totalPrice: order.total_price,
         lineItems: line_items,
         currencySymbol: getCurrencySymbol(order.currency),
+        shippingLines: order.shipping_lines,
+        discountApplication: order.discount_applications[0],
       };
     });
 

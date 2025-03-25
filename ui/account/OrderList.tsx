@@ -31,6 +31,14 @@ interface Order {
     id: string;
     productId?: string;
   }[];
+  shippingLines: {
+    price: string;
+    title: string;
+  }[];
+  discountApplication?: {
+    value: string;
+    value_type: string;
+  };
 }
 
 const OrderList = () => {
@@ -126,7 +134,6 @@ const OrderList = () => {
   const getOrderComponent = (order: Order, index: number) => {
     const widthVar = isMobile ? '100%' : '30%';
     const flexDirection = isMobile ? 'column' : 'row';
-
     return (
       <div
         key={`order_${index}`}
@@ -229,6 +236,62 @@ const OrderList = () => {
                 }}
               >
                 {order.currencySymbol} {item.quantity * item.price}
+              </div>
+            </div>
+          );
+        })}
+        {!!order.discountApplication && (
+          <div
+            style={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'space-between',
+              marginBottom: '20px',
+              flexDirection,
+              gap: '20px',
+            }}
+          >
+            <div
+              style={{
+                width: widthVar,
+                marginLeft: 'auto',
+                display: 'flex',
+                justifyContent: 'center',
+                fontSize: '16px',
+                fontWeight: '300',
+              }}
+            >
+              Discount = -{' '}
+              {order.discountApplication?.value_type !== 'percentage' &&
+                order.currencySymbol}{' '}
+              {order.discountApplication.value}{' '}
+              {order.discountApplication?.value_type === 'percentage' && '%'}
+            </div>
+          </div>
+        )}
+        {order.shippingLines.map((item) => {
+          return (
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'space-between',
+                marginBottom: '20px',
+                flexDirection,
+                gap: '20px',
+              }}
+            >
+              <div
+                style={{
+                  width: widthVar,
+                  marginLeft: 'auto',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  fontSize: '16px',
+                  fontWeight: '300',
+                }}
+              >
+                {item.title} = {order.currencySymbol} {item.price}
               </div>
             </div>
           );
