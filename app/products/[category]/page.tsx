@@ -13,7 +13,7 @@ const BannerImg = newStyled.img<{ collectionStylingChanges?: string }>`
     height: 850px;
     object-fit: cover;
     @media (max-width: 800px) {
-        height: 600px;
+        height: 500px;
     }
     ${({ collectionStylingChanges }) => collectionStylingChanges ?? ''}
 `;
@@ -23,11 +23,12 @@ const CollectionDetails = newStyled.div`
     top: 425px;
     left: 50%;
     font-size: 50px;
+    font-weight: 900;
     transform: translate(-50%, 0%);
     padding: 10px;
     color: #ffffff;
     @media (max-width: 800px) {
-      top: 300px;
+      top: 250px;
       font-size: 40px;
       width: max-content;
     }

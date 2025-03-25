@@ -14,7 +14,7 @@ const BannerImg = newStyled.img`
     object-fit: cover;
     object-position: 0% 80%;
     @media (max-width: 800px) {
-        height: 600px;
+        height: 500px;
     }
 `;
 
@@ -26,8 +26,9 @@ const CollectionDetails = newStyled.div`
     transform: translate(-50%, 0%);
     padding: 10px;
     color: #ffffff;
+    font-weight: 900;
     @media (max-width: 800px) {
-      top: 300px;
+      top: 250px;
       font-size: 40px;
       width: max-content;
     }
@@ -126,7 +127,7 @@ const ProductsPage = () => {
           width={'100%'}
         />
         <CollectionDetails>
-          <div className="header">{collection?.title ?? 'Shop All'}</div>
+          <div className="header">{collection?.title ?? 'All Products'}</div>
         </CollectionDetails>
       </div>
       <ListBody>
@@ -139,6 +140,7 @@ const ProductsPage = () => {
           }}
         >
           <div
+            ref={topRef}
             style={{
               fontWeight: 'lighter',
               fontSize: isMobile ? '12px' : '16px',
@@ -154,10 +156,10 @@ const ProductsPage = () => {
               }
               renderTrigger={(toggle) => (
                 <div
-                  style={{ cursor: 'pointer', fontWeight: '500' }}
+                  style={{ cursor: 'pointer', fontWeight: '900' }}
                   onClick={(e) => toggle(e)}
                 >
-                  Shop all
+                  All Products
                 </div>
               )}
               renderOption={(option) => <span> {option.title}</span>}
