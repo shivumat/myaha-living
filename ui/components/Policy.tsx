@@ -5,12 +5,6 @@ import { ReactNode } from 'react';
 
 const Container = styled.div`
   padding: 45px 0px;
-  @media (max-width: 800px) {
-    padding: 15px 0px;
-    > img {
-      object-position: 50% 70%;
-    }
-  }
   .subHeader {
     text-align: center;
     margin-top: 20px;
@@ -20,6 +14,12 @@ const Container = styled.div`
     object-fit: cover;
     height: 600px;
     object-position: 0% 70%;
+  }
+  @media (max-width: 800px) {
+    padding: 15px 0px;
+    > img {
+      object-position: 50% 70%;
+    }
   }
 `;
 
