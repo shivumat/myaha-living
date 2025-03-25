@@ -1,7 +1,7 @@
 'use client';
 import { useToast } from '#/context/ToastContext';
+import { useIsMobile } from '#/hooks/useMobile';
 import ContactFormComponent from '#/ui/components/ContactForm';
-import FooterCarousel from '#/ui/components/FooterCarousel';
 import styled from '@emotion/styled';
 
 const Container = styled.div`
@@ -10,6 +10,16 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px;
+  > .subHeader {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  @media (max-width: 800px) {
+    > .subHeader {
+      text-align: center;
+      font-size: 0.89rem;
+    }
+  }
 `;
 
 const Title = styled.h1`
@@ -27,7 +37,6 @@ const InfoText = styled.div`
   font-size: 18px;
   padding: 30px;
   font-weight: lighter;
-  border-radius: 8px;
   width: 100%;
   text-align: center;
   @media (max-width: 800px) {
@@ -45,6 +54,7 @@ const StyledImg = styled.img`
 
 const ContactForm = () => {
   const { showToast } = useToast();
+  const isMobile = useIsMobile();
 
   const onSubmit = async (data: any) => {
     await fetch('/api/contact/contactUs', {
@@ -54,17 +64,20 @@ const ContactForm = () => {
     });
     showToast('Form submitted successfully!', 'success');
   };
-  const phoneNumber = '916350533372';
-  const mailId = 'hello@myahaliving.com';
 
   return (
     <>
       <StyledImg src="https://i.postimg.cc/2SG8536P/DSCF4911.jpg" />
       <Container>
         <Title>Contact Us</Title>
+        <div className="subHeader">
+          We’d love to hear from you, whether it's a question, feedback, or just
+          a thought—feel free to share your queries.
+        </div>
         <ContactFormComponent onSubmit={onSubmit} />
-        <InfoText>
-          Feel free to contact us through your preferred channel of
+      </Container>
+      <InfoText>
+        {/* Feel free to contact us through your preferred channel of
           communication.
           <div
             style={{
@@ -107,14 +120,38 @@ const ContactForm = () => {
                 style={{ width: '30px', height: '30px' }}
               />
             </a>
-          </div>
-          <div>
-            We'll get back to you in upto 3 business days. For immediate
-            assistance, please call us at +91 6350533372.
-          </div>
-        </InfoText>
-      </Container>
-      <FooterCarousel rounded={false} />
+          </div> */}
+        <div>
+          We'll get back to you in upto 3 business days. For immediate
+          assistance, please reach out to us at hello@myahaliving.com or +91
+          6350533372.
+        </div>
+      </InfoText>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          padding: '20px',
+          fontSize: '18px',
+          textAlign: 'center',
+        }}
+      >
+        <div style={{ display: 'block' }}>MYAHA INDIA</div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: !isMobile ? 'row' : 'column',
+            fontSize: '0.7em',
+            textAlign: 'center',
+          }}
+        >
+          <div style={{ display: 'block' }}>Plot No. B-26, Mathurawala,</div>
+          <div style={{ display: 'block' }}>Jagatpura, Jaipur 303903,</div>
+          <div style={{ display: 'block' }}>Rajasthan, India.</div>
+        </div>
+      </div>
     </>
   );
 };

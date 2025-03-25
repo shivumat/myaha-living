@@ -12,7 +12,7 @@ const FooterContainer = newStyled.div`
   padding: 40px;
   @media (max-width: 800px) {
     flex-direction: column;
-    padding: 10px 20px 10px 20px;
+    padding: 10px;
   }
 `;
 
@@ -30,7 +30,7 @@ const StyleLogo = newStyled(MyahaLogo)`
   position: relative;
   right: 30px;
   @media (max-width: 800px) {
-    right: 20px;
+    right: 0px;
   }
 `;
 
@@ -45,108 +45,13 @@ const Footer = () => {
           style={{
             display: 'flex',
             width: '100%',
-            gap: '15px',
             flexDirection: 'column',
+            alignItems: 'center',
+            gap: '4px',
+            marginBottom: '15px',
           }}
         >
           <StyleLogo height={'60'} width={'175'} />
-          <div style={{ display: 'flex', width: '100%', gap: '15px' }}>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '5px',
-                width: '150px',
-              }}
-            >
-              <div
-                style={{ display: 'flex', gap: '20px', alignItems: 'center' }}
-              >
-                <a style={{ padding: '2px', borderRadius: '2px' }}>
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Instagram-Gradient-Logo-PNG.png"
-                    alt="Instagaram"
-                    style={{ width: '15px', height: '15px' }}
-                  />
-                </a>
-                <a
-                  style={{
-                    backgroundColor: 'white',
-                    padding: '2px',
-                    borderRadius: '2px',
-                  }}
-                >
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Twitter_X.png"
-                    alt="Twitter"
-                    style={{ width: '15px', height: '15px' }}
-                  />
-                </a>
-                <a style={{ padding: '2px', borderRadius: '2px' }}>
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
-                    alt="Pinterest"
-                    style={{ width: '15px', height: '15px' }}
-                  />
-                </a>
-              </div>
-              <TextContainer
-                style={{
-                  textAlign: 'left',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '2px',
-                  margin: '10px 0px',
-                }}
-              >
-                <div style={{ display: 'block', fontSize: '0.8em' }}>
-                  MYAHA INDIA
-                </div>
-                <div style={{ display: 'block', fontSize: '0.8em' }}>
-                  Plot No. B-26, Mathurawala,
-                </div>
-                <div style={{ display: 'block', fontSize: '0.8em' }}>
-                  Jagatpura, Jaipur 303903,
-                </div>
-                <div style={{ display: 'block', fontSize: '0.8em' }}>
-                  Rajasthan, India.
-                </div>
-              </TextContainer>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <TextContainer
-                style={{
-                  textAlign: 'left',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '2px',
-                }}
-              >
-                <div
-                  className="clickable"
-                  onClick={() => route.push('/contact')}
-                  style={{
-                    display: 'block',
-                    fontSize: '0.8em',
-                    margin: '0px 0px 10px',
-                  }}
-                >
-                  CONTACT US
-                </div>
-                <div style={{ display: 'block', fontSize: '0.8em' }}>
-                  +91 6350533372
-                </div>
-                <div style={{ display: 'block', fontSize: '0.8em' }}>
-                  hello@myahaliving.com{' '}
-                </div>
-              </TextContainer>
-            </div>
-          </div>
           <div style={{ display: 'flex', gap: '30px' }}>
             <TextContainer
               style={{
@@ -155,37 +60,120 @@ const Footer = () => {
                 flexDirection: 'column',
                 gap: '2px',
                 margin: '20px 0px',
+                fontSize: '18px',
               }}
             >
               <div
                 className="clickable"
-                onClick={() => route.push('/terms')}
-                style={{ display: 'block', fontSize: '0.8em' }}
+                onClick={() => route.push('/contact')}
+                style={{
+                  display: 'block',
+                  fontSize: '0.8em',
+                  textAlign: 'center',
+                }}
               >
-                Terms and Conditions
+                CONTACT
+              </div>
+              <div
+                className="clickable"
+                onClick={() => route.push('/terms')}
+                style={{
+                  display: 'block',
+                  fontSize: '0.8em',
+                  textAlign: 'center',
+                }}
+              >
+                T&C
               </div>
               <div
                 className="clickable"
                 onClick={() => route.push('/privacy')}
-                style={{ display: 'block', fontSize: '0.8em' }}
+                style={{
+                  display: 'block',
+                  fontSize: '0.8em',
+                  textAlign: 'center',
+                }}
               >
-                Privacy Policy
-              </div>
-              <div
-                className="clickable"
-                onClick={() => route.push('cancellation')}
-                style={{ display: 'block', fontSize: '0.8em' }}
-              >
-                Cancellation and Refund
+                PRIVACY
               </div>
               <div
                 className="clickable"
                 onClick={() => route.push('/shipping')}
-                style={{ display: 'block', fontSize: '0.8em' }}
+                style={{
+                  display: 'block',
+                  fontSize: '0.8em',
+                  textAlign: 'center',
+                }}
               >
-                Shipping and Delivery
+                SHIPPING
+              </div>
+              <div
+                className="clickable"
+                onClick={() => route.push('cancellation')}
+                style={{
+                  display: 'block',
+                  fontSize: '0.8em',
+                  textAlign: 'center',
+                }}
+              >
+                RETURN
               </div>
             </TextContainer>
+          </div>
+
+          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            <a
+              href={`https://www.instagram.com/myaha.co?igsh=MXVneTY0cnl3a2ZwNQ==`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ padding: '2px', borderRadius: '2px' }}
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Instagram-Gradient-Logo-PNG.png"
+                alt="Instagaram"
+                style={{ width: '15px', height: '15px' }}
+              />
+            </a>
+            <a
+              href={`https://x.com/MyahaIndia`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                backgroundColor: 'white',
+                padding: '2px',
+                borderRadius: '2px',
+              }}
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Twitter_X.png"
+                alt="Twitter"
+                style={{ width: '15px', height: '15px' }}
+              />
+            </a>
+            <a
+              href={`https://in.pinterest.com/06espov87v6s4p8p49qexdj4fnqr6h/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ padding: '2px', borderRadius: '2px' }}
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
+                alt="Pinterest"
+                style={{ width: '15px', height: '15px' }}
+              />
+            </a>
+            <a
+              href={`https://www.linkedin.com/company/myaha-home/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ padding: '2px', borderRadius: '2px' }}
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Linkedin-logo-blue-In-square-40px.png"
+                alt="Linkedin"
+                style={{ width: '15px', height: '15px' }}
+              />
+            </a>
           </div>
         </div>
         <div
@@ -253,6 +241,18 @@ const Footer = () => {
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
                 alt="Pinterest"
+                style={{ width: '30px', height: '30px' }}
+              />
+            </a>
+            <a
+              href={`https://www.linkedin.com/company/myaha-home/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ padding: '5px', borderRadius: '5px' }}
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Linkedin-logo-blue-In-square-40px.png"
+                alt="Linkedin"
                 style={{ width: '30px', height: '30px' }}
               />
             </a>
