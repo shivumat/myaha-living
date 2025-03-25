@@ -1,4 +1,4 @@
-import { getCurrentTimeStamp } from '#/lib/dateUtil';
+import { getCurrentTimeStamp } from '#/lib/util';
 import { notFound } from 'next/navigation';
 import { saveData } from '../../../../lib/db/firebaseUtil';
 

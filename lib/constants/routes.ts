@@ -24,9 +24,8 @@ export interface FooterRouteTypes {
 }
 
 export const footerRoutes: FooterRouteTypes[] = [
-  // { name: 'Our Story', path: '/', state: 'our_story', section: 'About Us' },
+  { name: 'Our Story', path: '/', state: 'our_story', section: 'About Us' },
   { name: 'About Us', path: '/about-us', state: '', section: 'About Us' },
-  { name: 'Contact Us', path: '/contact', state: '', section: 'About Us' },
   { name: 'Privacy Policy', path: '/privacy', state: '', section: 'Policies' },
   {
     name: 'Cancellation and Refund',
@@ -48,10 +47,11 @@ export const footerRoutes: FooterRouteTypes[] = [
   },
   {
     name: 'Collaborate With Us',
-    path: '/colaborate',
+    path: '/collaborate',
     state: '',
     section: 'Collaborate With Us',
   },
+  { name: 'Contact Us', path: '/contact', state: '', section: 'About Us' },
 ];
 
 export interface NavRouteTypes {
@@ -64,4 +64,18 @@ export const navRoutes: NavRouteTypes[] = [
   { name: 'Shop', path: '/products' },
   { name: 'About Us', path: '/about-us' },
   { name: 'Contact Us', path: '/contact' },
+];
+
+export const hideNavbarRoutes: string[] = [];
+export const hideFooterRoutes: string[] = [
+  '/login',
+  '/signup',
+  '/forgot-password',
+  '/reset-password',
+  '/cart',
+  '/checkout',
+  '/orders',
+  '/orders/:id',
+  '/account',
+  '/error',
 ];

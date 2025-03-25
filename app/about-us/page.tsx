@@ -14,7 +14,13 @@ const Div1 = newStyled.div`
     justify-content: center;
     align-items: center;
     >img{
-      width: 805px;
+      border-radius: 10px;
+      min-width: 800px;
+      max-width: 800px;
+      min-height: 800px;
+      max-height: 800px;
+      object-fit: cover;
+      object-position: 40% 100%;
     }
     >div {
         display: flex;
@@ -35,12 +41,23 @@ const Div1 = newStyled.div`
       >div {
         padding: 250px 70px 250px 50px;
       }
+       >img{
+        min-width: 600px;
+        max-width: 600px;
+        min-height: 600px;
+        max-height: 600px;
+        object-fit: cover;
+        object-position: 0% 50%;
+      }
+         >div { 
+            width: 500px;
+            padding: 10px 30px;
+            height: 400px;
+            font-size: 10px;
+        }   
     }
 
     @media (max-width: 1150px) {
-      >img {
-          width: 550px;
-      }
         >div { 
             width: 400px;
             padding: 10px 30px;
@@ -51,6 +68,10 @@ const Div1 = newStyled.div`
     @media (max-width: 800px) {
         flex-direction: column; 
         >img{
+          min-width: auto;
+          max-width: auto;
+          min-height: auto;
+          max-height: auto;
           width: 100%;
         }
         >div {
@@ -71,6 +92,11 @@ const Div2 = newStyled.div`
     grid-template-columns: 1fr 2fr 1fr;
     grid-gap: 10px;
     place-items: stretch;
+    >img{
+      height: 450px;
+      object-fit: cover;
+      object-position: 0% 50%;
+    }
     >div{
         padding:40px;
         display: flex;
@@ -97,6 +123,9 @@ const Div3 = newStyled.div`
     grid-template-columns: 1fr 1fr auto;
     grid-gap: 10px;
     place-items: stretch;
+    >img{
+      height: 500px;
+    }
     >div{
         padding:40px;
         display: flex;
@@ -116,10 +145,14 @@ const Div3 = newStyled.div`
     @media (max-width: 800px) {
         display: flex;
         flex-direction: column;
+        >img{
+          height: auto;
+        }
     }
 `;
 
 const Div4 = newStyled.div`
+    position: relative;
     display: flex;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -128,11 +161,15 @@ const Div4 = newStyled.div`
     >img {
         width: 100%;
         object-fit: cover;
+        object-position: 0% 85%;
+        height: 700px;
     }
     >div {
+        position: absolute;
+        top: 120px;
         max-width: 90%;
         font-weight: lighter;
-        font-size: 36px;
+        font-size: 32px;
         position: absolute;
         text-align: center;
         justify-content: center;
@@ -145,8 +182,14 @@ const Div4 = newStyled.div`
     }
     @media (max-width: 800px) {
         >div {
+            top: 20px;
             padding: 20px;
             font-size: 10px;
+        }
+        >img {
+            width: 100%;
+            object-fit: cover;
+            height: 300px;
         }
     }
 `;
@@ -182,47 +225,57 @@ const AboutUs = () => {
   return (
     <Container>
       <Div1>
-        <img src="/images/about-us/about-us1.png" alt="about-us" />
+        <img
+          height={500}
+          width={500}
+          src="https://i.postimg.cc/2SG8536P/DSCF4911.jpg"
+          alt="about-us"
+        />
         <div>
-          Myaha was born from a deep love for art and design, where raw beauty
-          meets modern creativity. Founded by Saumya, Myaha is a reflection of
-          her passion for crafting unique, character-filled home decor that
-          tells a story. Our pieces blend traditional craftsmanship with a
-          contemporary twist, offering a hint of playful pop. Each item is
-          thoughtfully designed to bring warmth, vibrancy, and originality into
-          your home. From Jaipur to the world, Myaha is about more than just
-          decor—it’s about creating spaces that feel personal and alive. Welcome
-          to Myaha, where every piece is crafted with care and meant to be
-          cherished.
+          Myaha was crafted as a movement where we believe that home decor
+          should be as versatile and expressive as our own personality. We have
+          our own individualities & our spaces should reflect that.
         </div>
       </Div1>
       <Div2>
-        <img src="/images/about-us/about-us2.png" alt="about-us-2" />
+        <img
+          src="https://i.postimg.cc/FKnrjq0p/DSCF5605.jpg"
+          alt="about-us-2"
+        />
         <div>
-          Myaha inspires customers to see their homes as reflections of their
-          personal journeys warm, inviting spaces that evoke a sense of
-          belonging.
+          From bold, expressive, and unconventional designs to elegant,
+          details-rich compositions- Myaha creates on all fronts. Why follow the
+          rules when you can mold them to be your own? Our collection blends
+          high-end craftsmanship with playful elegance, breaking away from the
+          ordinary to bring you designs that spark curiosity, conversation, and
+          joy.
         </div>
         <div className="colored">
-          Each product is designed to tell a unique narrative, allowing
-          customers to express their individuality and create a home that feels
-          truly their own.
+          From sculptural vases to avant-garde lighting, our pieces have a
+          playful take on traditional aesthetics as well, inviting you to
+          experiment, mix, and redefine your space. Whether you’re drawn to the
+          daring or the delightfully unexpected, we offer decor that transforms
+          homes into reflections of individual personalities.
         </div>
       </Div2>
       <Div3>
         <div>
-          Myaha inspires customers to see their homes as reflections of their
-          personal journeys warm, inviting spaces that evoke a sense of
-          belonging.
+          With a focus on promoting sustainable choices and homegrown art, Myaha
+          features collections that are thoughtfully crafted and curated.
         </div>
         <div className="colored">
-          The brand merges timeless craftsmanship with modern design, ensuring
-          products that are both high-quality and innovative.
+          Let your individuality find its Myaha & let your space tell your story
         </div>
-        <img src="/images/about-us/about-us5.png" alt="about-us-3" />
+        <img
+          src="https://i.postimg.cc/JnD1KqqL/DSCF5640.jpg"
+          alt="about-us-3"
+        />
       </Div3>
       <Div4>
-        <img src="/images/about-us/about-us4.png" alt="about-us-4" />
+        <img
+          src="https://i.postimg.cc/QMMNKsKV/DSCF4991.jpg"
+          alt="about-us-4"
+        />
         <div>
           <div>At Myaha, we don't just create decor,</div>
           <div className="italize">

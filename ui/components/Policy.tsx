@@ -5,15 +5,21 @@ import { ReactNode } from 'react';
 
 const Container = styled.div`
   padding: 45px 0px;
-  @media (max-width: 800px) {
-    padding: 15px 0px;
-  }
   .subHeader {
     text-align: center;
     margin-top: 20px;
   }
   > img {
     width: 100%;
+    object-fit: cover;
+    height: 600px;
+    object-position: 0% 70%;
+  }
+  @media (max-width: 800px) {
+    padding: 15px 0px;
+    > img {
+      object-position: 50% 70%;
+    }
   }
 `;
 
@@ -33,6 +39,9 @@ const TabHeader = styled.div`
   display: flex;
   justify-content: center;
   border-bottom: 1px solid #ccc;
+  @media (max-width: 800px) {
+    font-size: 14px;
+  }
 `;
 
 const TabButton = styled.div`
@@ -72,6 +81,9 @@ const SectionTitle = styled.h2`
   font-size: 20px;
   text-decoration: underline;
   margin: 20px 0px 10px 0px;
+  @media (max-width: 800px) {
+    font-size: 14px;
+  }
 `;
 
 const SectionDescription = styled.ul<{ noBottomBorder?: boolean }>`
@@ -86,6 +98,9 @@ const SectionDescription = styled.ul<{ noBottomBorder?: boolean }>`
   >li {
     display: list-item;
   }
+  @media (max-width: 800px) {
+    font-size: 14px;
+  }
 `;
 
 const PolicyComponent = (props: {
@@ -98,7 +113,7 @@ const PolicyComponent = (props: {
   return (
     <>
       <Container>
-        <img src="/images/policy/policy1.png" />
+        <img src="https://i.postimg.cc/ZnGy0S12/AMJ-6.jpg" />
         <TabContainer>
           {/* Tab Header */}
           <TabHeader>

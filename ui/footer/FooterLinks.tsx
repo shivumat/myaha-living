@@ -12,7 +12,6 @@ const Container = newStyled.div`
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-template-rows: auto;
   height: max-content;
-  margin-left: auto;
   @media (max-width: 800px) {
     width: 100%;
     display: flex;

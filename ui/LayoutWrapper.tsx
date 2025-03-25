@@ -1,7 +1,13 @@
 'use client';
+import AuthProvider from '#/context/AuthContext';
+import { CartProvider } from '#/context/CartContext';
+import ProductProvider from '#/context/ProductContext';
 import { ToastProvider } from '#/context/ToastContext';
 import { useIsFirstMount } from '#/hooks/useIsFirstMount';
+import { hideFooterRoutes, hideNavbarRoutes } from '#/lib/constants/routes';
 import { usePathname } from 'next/navigation';
+import Cart from './cart/Cart';
+import WhatsAppButton from './components/WhatsappIcon';
 import Footer from './footer/Footer';
 import Navbar from './navbar/Navbar';
 
@@ -13,17 +19,25 @@ export default function LayoutWrapper({
   const pathname = usePathname();
   const isFirstMount = useIsFirstMount();
 
+  const hideNavbar = hideNavbarRoutes.includes(pathname ?? '');
+  const hideFooter = hideFooterRoutes.includes(pathname ?? '');
+
   if (isFirstMount) {
     return null;
   }
-
-  const hide = ['/test', '/test1'].includes(pathname ?? '');
-
   return (
     <ToastProvider>
-      {!hide && <Navbar />}
-      {children}
-      {!hide && <Footer />}
+      <AuthProvider>
+        <ProductProvider>
+          <CartProvider>
+            {!hideNavbar && <Navbar />}
+            {children}
+            {!hideFooter && <Footer />}
+            <WhatsAppButton />
+            <Cart />
+          </CartProvider>
+        </ProductProvider>
+      </AuthProvider>
     </ToastProvider>
   );
 }

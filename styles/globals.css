@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.clickable {
+  cursor: pointer;
+  user-select: none;
+  transition:
+    transform 0.2s ease,
+    background-color 0.3s ease;
+}
+
+.clickable:hover {
+  transform: scale(1.03); /* Slightly enlarge on hover */
+}
+
+.clickable:active {
+  transform: scale(0.99); /* Shrinks when clicked */
+}
+
+.clickable.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none; /* No scaling for disabled */
+  pointer-events: none; /* Prevents click events */
+}

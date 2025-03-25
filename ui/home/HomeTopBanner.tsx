@@ -1,69 +1,69 @@
 'use client';
 import { useIsMobile } from '#/hooks/useMobile';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/navigation';
 import Carousel from '../components/Carousel';
 
 // List of images in the public folder
 const desktopImages: string[] = [
-  '/images/home/desktop_home_banner1.png',
-  '/images/home/desktop_home_banner2.png',
-  '/images/home/desktop_home_banner3.png',
+  'https://i.postimg.cc/ZRMk0WX5/1.png',
+  'https://i.postimg.cc/JnnV1N6F/2.png',
+  'https://i.postimg.cc/Xvx6SH8F/3.png',
 ];
 
 const mobileImages: string[] = [
-  '/images/home/protrait_banner1.png',
-  '/images/home/protrait_banner2.png',
-  '/images/home/protrait_banner3.png',
+  'https://i.postimg.cc/tgnQNGf2/1-1.png',
+  'https://i.postimg.cc/K4hyRqQJ/2.png',
+  'https://i.postimg.cc/WzkvpLmd/3.png',
 ];
-
 // Styled Components
 const Gallery = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  grid-template-rows: 1fr 1fr;
   width: 100%;
   margin: auto;
-  height: 90%;
-`;
-
-const ImageWrapper = styled.div`
-  position: relative;
-  overflow: hidden;
-
-  &:nth-of-type(1) {
-    grid-row: span 2;
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
+  height: 85%;
 `;
 
 const MobileWrapper = styled.div`
-  padding: 0px 20px;
+  padding: 0px;
 `;
 
+const StyledCarousel = styled(Carousel)``;
+
 // Desktop Grid Layout Component
-const ImageGrid: React.FC = () => (
+const ImageGrid: React.FC<{ onClick: () => void }> = (props) => (
   <Gallery>
-    {desktopImages.map((src, index) => (
-      <ImageWrapper key={index}>
-        <img src={src} alt={`Image ${index + 1}`} />
-      </ImageWrapper>
-    ))}
+    <Carousel
+      clickableImages={[0]}
+      onClick={props.onClick}
+      isCircle
+      autoScroll
+      images={desktopImages}
+      height="85vh"
+    />
   </Gallery>
 );
 
 // Main Component
 const HomeTopBanner: React.FC = () => {
   const isMobile = useIsMobile();
+  const router = useRouter();
+  const onClick = () => {
+    router.push('/products');
+  };
+
   return isMobile ? (
     <MobileWrapper>
-      <Carousel images={mobileImages} height="720px" />
+      <StyledCarousel
+        clickableImages={[0]}
+        onClick={onClick}
+        isCircle
+        autoScroll
+        images={mobileImages}
+        height="450px"
+      />
     </MobileWrapper>
   ) : (
-    <ImageGrid />
+    <ImageGrid onClick={onClick} />
   );
 };
 

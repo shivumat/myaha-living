@@ -3,7 +3,7 @@ const UserLogo = (props: {
   height?: string;
   color?: string;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
 }) => {
   const {
     width = '20',

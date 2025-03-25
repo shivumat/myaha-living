@@ -36,6 +36,9 @@ const CarouselDiv = newStyled.div`
 
 const CarousleIcon = newStyled.div`
     display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: white;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -90,17 +93,20 @@ const MobileFooterCarousel = ({ rounded = true }: { rounded?: boolean }) => {
       <CarouselWrapper index={index}>
         <CarouselDiv>
           <CarousleIcon>
-            <img src="/images/low-banner/low-banner1.png" />
+            <img src="/images/low-banner/low-banner1.svg" />
+            Sustainability centric production
           </CarousleIcon>
         </CarouselDiv>
         <CarouselDiv>
           <CarousleIcon>
-            <img src="/images/low-banner/low-banner2.png" />
+            <img src="/images/low-banner/low-banner2.svg" />
+            Luxury in detail
           </CarousleIcon>
         </CarouselDiv>
         <CarouselDiv>
           <CarousleIcon>
-            <img src="/images/low-banner/low-banner3.png" />
+            <img src="/images/low-banner/low-banner3.svg" />
+            Thoughtfully handmade
           </CarousleIcon>
         </CarouselDiv>
       </CarouselWrapper>
@@ -122,17 +128,20 @@ const FooterCarousel = ({ rounded = true }: { rounded?: boolean }) => {
     <Container rounded={rounded}>
       <CarouselDiv>
         <CarousleIcon>
-          <img src="/images/low-banner/low-banner1.png" />
+          <img src="/images/low-banner/low-banner1.svg" />
+          Sustainability centric production
         </CarousleIcon>
       </CarouselDiv>
       <CarouselDiv>
         <CarousleIcon>
-          <img src="/images/low-banner/low-banner2.png" />
+          <img src="/images/low-banner/low-banner2.svg" />
+          Luxury in detail
         </CarousleIcon>
       </CarouselDiv>
       <CarouselDiv>
         <CarousleIcon>
-          <img src="/images/low-banner/low-banner3.png" />
+          <img src="/images/low-banner/low-banner3.svg" />
+          Thoughtfully handmade
         </CarousleIcon>
       </CarouselDiv>
     </Container>

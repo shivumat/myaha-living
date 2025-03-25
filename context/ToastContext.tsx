@@ -1,4 +1,5 @@
 import { useIsMobile } from '#/hooks/useMobile';
+import Laoding from '#/ui/LaodingLayover';
 import CheckLogo from '#/ui/svg/check-logo';
 import CrossLogo from '#/ui/svg/cross-logo';
 import { keyframes } from '@emotion/react';
@@ -15,6 +16,9 @@ type ToastType = 'success' | 'error' | null;
 
 interface ToastContextType {
   showToast: (message: string, type: ToastType) => void;
+  startLoading: () => void;
+  stopLoading: () => void;
+  isloading: boolean;
 }
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
@@ -49,6 +53,7 @@ const ToastContainer = styled.div<{
   visible: boolean;
   mounted: boolean;
 }>`
+  z-index: 1200;
   position: fixed;
   bottom: 40px;
   left: ${(props) => (props.visible ? '20px' : '-500px')};
@@ -87,6 +92,15 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
     type: null,
   });
   const [visible, setVisible] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
+
+  const startLoading = () => {
+    setIsLoading(true);
+  };
+
+  const stopLoading = () => {
+    setIsLoading(false);
+  };
 
   const mounted = React.useRef(false);
 
@@ -110,9 +124,11 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const isMobile = useIsMobile();
-  console.log(visible, mounted);
+
   return (
-    <ToastContext.Provider value={{ showToast }}>
+    <ToastContext.Provider
+      value={{ showToast, startLoading, stopLoading, isloading }}
+    >
       {children}
       <ToastContainer
         mounted={mounted.current}
@@ -144,7 +160,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
           </div>
           <div
             style={{
-              fontSize: isMobile ? '12px' : '16x',
+              fontSize: isMobile ? '16px' : '20x',
               fontWeight: 'lighter',
             }}
           >
@@ -152,6 +168,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
           </div>
         </div>
       </ToastContainer>
+      <Laoding isOpen={isloading} onClose={() => {}} />
     </ToastContext.Provider>
   );
 };

@@ -1,7 +1,7 @@
 'use client';
 import { useToast } from '#/context/ToastContext';
+import { useIsMobile } from '#/hooks/useMobile';
 import ContactFormComponent from '#/ui/components/ContactForm';
-import FooterCarousel from '#/ui/components/FooterCarousel';
 import styled from '@emotion/styled';
 
 const Container = styled.div`
@@ -10,6 +10,16 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px;
+  > .subHeader {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  @media (max-width: 800px) {
+    > .subHeader {
+      text-align: center;
+      font-size: 0.89rem;
+    }
+  }
 `;
 
 const Title = styled.h1`
@@ -20,11 +30,13 @@ const Title = styled.h1`
 
 const InfoText = styled.div`
   background-color: #4e2c2c;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   color: white;
   font-size: 18px;
   padding: 30px;
   font-weight: lighter;
-  border-radius: 8px;
   width: 100%;
   text-align: center;
   @media (max-width: 800px) {
@@ -33,11 +45,18 @@ const InfoText = styled.div`
   }
 `;
 
+const StyledImg = styled.img`
+  width: 100%;
+  object-fit: cover;
+  object-position: 0% 80%;
+  height: 700px;
+`;
+
 const ContactForm = () => {
   const { showToast } = useToast();
+  const isMobile = useIsMobile();
 
   const onSubmit = async (data: any) => {
-    console.log('Form submitted:', data);
     await fetch('/api/contact/contactUs', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -48,16 +67,91 @@ const ContactForm = () => {
 
   return (
     <>
-      <img src="/images/contact-us/contact-us1.png" />
+      <StyledImg src="https://i.postimg.cc/2SG8536P/DSCF4911.jpg" />
       <Container>
         <Title>Contact Us</Title>
-        <InfoText>
-          Feel free to contact us through your preferred channel of
-          communication.
-        </InfoText>
+        <div className="subHeader">
+          We’d love to hear from you, whether it's a question, feedback, or just
+          a thought—feel free to share your queries.
+        </div>
         <ContactFormComponent onSubmit={onSubmit} />
       </Container>
-      <FooterCarousel rounded={false} />
+      <InfoText>
+        {/* Feel free to contact us through your preferred channel of
+          communication.
+          <div
+            style={{
+              display: 'flex',
+              gap: '20px',
+              width: '100%',
+              justifyContent: 'center',
+            }}
+          >
+            <a
+              href={`https://www.instagram.com/myaha.co?igsh=MXVneTY0cnl3a2ZwNQ==`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Instagram-Gradient-Logo-PNG.png"
+                alt="Instagaram"
+                style={{ width: '30px', height: '30px' }}
+              />
+            </a>
+            <a
+              href={`mailto:${mailId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg"
+                alt="Mail"
+                style={{ width: '30px', height: '30px' }}
+              />
+            </a>
+            <a
+              href={`https://wa.me/${phoneNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                alt="Whatsapp"
+                style={{ width: '30px', height: '30px' }}
+              />
+            </a>
+          </div> */}
+        <div>
+          We'll get back to you in upto 3 business days. For immediate
+          assistance, please reach out to us at hello@myahaliving.com or +91
+          6350533372.
+        </div>
+      </InfoText>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          padding: '20px',
+          fontSize: '18px',
+          textAlign: 'center',
+        }}
+      >
+        <div style={{ display: 'block' }}>MYAHA INDIA</div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: !isMobile ? 'row' : 'column',
+            fontSize: '0.7em',
+            textAlign: 'center',
+          }}
+        >
+          <div style={{ display: 'block' }}>Plot No. B-26, Mathurawala,</div>
+          <div style={{ display: 'block' }}>Jagatpura, Jaipur 303903,</div>
+          <div style={{ display: 'block' }}>Rajasthan, India.</div>
+        </div>
+      </div>
     </>
   );
 };

@@ -1,0 +1,182 @@
+import { useCart } from '#/context/CartContext';
+import newStyled from '@emotion/styled';
+import { useState } from 'react';
+
+const AddtoCart = newStyled.button`
+    height: 30px;
+    width: 130px;
+    background-color: black;
+    font-size: 18px;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    &.view{
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+    }
+    &.disabled{
+        background-color: grey;
+        cursor: not-allowed;
+    }
+    @media (max-width: 800px) {
+        font-size: 14px;
+        width: 100px;
+    }
+`;
+
+const ActiveButtons = newStyled.div`
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    font-size: 18px;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media (max-width: 800px) {
+        font-size: 14px;
+    }
+`;
+
+const ActiveInput = newStyled.input`
+    height: 30px;
+    background-color: white;
+    width: min-content;
+    color: black;
+    border: 1px solid black;
+    font-size: 18px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    padding: 0px;
+    justify-content: center;
+    align-items: center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    max-width: 100px;
+    margin: 0;
+    @media (max-width: 800px) {
+        font-size: 14px;
+    }
+`;
+
+const ErrorMessage = newStyled.div`
+    color: red;
+    font-size: 14px;
+    @media (max-width: 800px) {
+        font-size: 12px;
+    }
+`;
+
+const WarningMessage = newStyled.div`
+    color: orange;
+    font-size: 14px;
+    @media (max-width: 800px) {
+        font-size: 12px;
+    }
+`;
+
+const AddToCart = (props: {
+  variantId: string;
+  inventoryId: string;
+  quantityAvailable: number;
+  className?: string;
+}) => {
+  const { addItem, cart, removeItem, setVariantCount, toggleCart } = useCart();
+  const [error, setError] = useState('');
+  const cartItem = cart.find((item) =>
+    props.variantId.includes(item.variant_id),
+  );
+  const { variantId, inventoryId, quantityAvailable } = props;
+  const id = variantId.replace('gid://shopify/ProductVariant/', '');
+
+  if (cartItem) {
+    return (
+      <>
+        <div
+          className={props.className}
+          style={{ display: 'flex', flexDirection: 'column' }}
+        >
+          <div style={{ display: 'flex' }}>
+            <ActiveButtons
+              className="clickable"
+              onClick={() => {
+                setError('');
+                removeItem(id);
+              }}
+            >
+              -
+            </ActiveButtons>
+            <ActiveInput
+              style={{ margin: '0px 10px' }}
+              type="number"
+              value={cartItem.quantity}
+              onChange={(e) => {
+                const newQuantity = Number(e.target.value);
+                if (newQuantity <= quantityAvailable) {
+                  setVariantCount({
+                    variant_id: id,
+                    count: newQuantity,
+                    inventoryId,
+                  });
+                  setError('');
+                } else {
+                  setError('Cannot add more than available quantity');
+                }
+              }}
+              inputMode="numeric"
+            />
+            <ActiveButtons
+              className="clickable"
+              onClick={() => {
+                if (cartItem.quantity < quantityAvailable) {
+                  addItem({ variant_id: id, inventoryId });
+                  setError('');
+                } else {
+                  setError('Cannot add more than available quantity');
+                }
+              }}
+            >
+              +
+            </ActiveButtons>
+          </div>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+        </div>
+        {quantityAvailable <= 0 && <ErrorMessage>Out of Stock</ErrorMessage>}
+        {quantityAvailable > 0 && quantityAvailable <= 3 && (
+          <WarningMessage>
+            Only {quantityAvailable} left in stock!
+          </WarningMessage>
+        )}
+      </>
+    );
+  }
+
+  return (
+    <div>
+      <AddtoCart
+        className={`clickable ${props.className} ${quantityAvailable <= 0 ? 'disabled' : ''}`}
+        onClick={() => {
+          if (quantityAvailable > 0) {
+            addItem({ variant_id: id, inventoryId });
+            toggleCart();
+          }
+        }}
+      >
+        Add to cart
+      </AddtoCart>
+      {quantityAvailable <= 0 && <ErrorMessage>Out of Stock</ErrorMessage>}
+      {quantityAvailable > 0 && quantityAvailable <= 3 && (
+        <WarningMessage>Only {quantityAvailable} left in stock!</WarningMessage>
+      )}
+    </div>
+  );
+};
+
+export default AddToCart;

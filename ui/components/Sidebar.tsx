@@ -82,6 +82,10 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
+const StyledCrossLogo = styled(CrossLogo)`
+  cursor: pointer;
+`;
+
 const Sidebar: React.FC<SidebarProps> = ({
   isOpen,
   onClose,
@@ -108,7 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         <CloseButton>
           <Title>{title ?? ' '}</Title>
           <Close onClick={onClose}>
-            <CrossLogo />
+            <StyledCrossLogo />
           </Close>
         </CloseButton>
         {children}

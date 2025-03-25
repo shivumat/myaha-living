@@ -1,3 +1,14 @@
+'use client';
+import HomeBody from '#/ui/home/HomeBody';
+import HomeLowBanner from '#/ui/home/HomeLowBanner';
+import HomeTopBanner from '#/ui/home/HomeTopBanner';
+
 export default function Page() {
-  return <div className="space-y-8"></div>;
+  return (
+    <>
+      <HomeTopBanner />
+      <HomeBody />
+      <HomeLowBanner />
+    </>
+  );
 }
