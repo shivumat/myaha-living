@@ -58,16 +58,31 @@ const StyledPagination = newStyled(Pagination)`
 const ProductsPage = () => {
   const [sort, setSort] = useState<string>('Featured');
   const [productsToShow, setProductsToShow] = useState<Products>([]);
+  const [collectionProducts, setColletionProducts] = useState<Products>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { products, collections } = useProduct();
+  const { products, collections, allCollections: collection } = useProduct();
   const isMobile = useIsMobile();
   const route = useRouter();
 
   const productsCount = isMobile ? 6 : 12;
 
   useEffect(() => {
-    if (products.length) {
-      let productsToShow: Products = products;
+    if (!!collection) {
+      let productsToShow: Products = [];
+      collection.products.forEach((product) => {
+        const productToShow = products.find((p) => p.id === product.id);
+        if (productToShow) {
+          productsToShow.push(productToShow);
+        }
+      });
+      setColletionProducts(productsToShow);
+    }
+  }, [collection, products]);
+
+  useEffect(() => {
+    if (products.length && collection) {
+      let productsToShow: Products = collectionProducts;
+
       if (productsToShow.length === 0) {
         return;
       }
@@ -91,22 +106,28 @@ const ProductsPage = () => {
       setProductsToShow(
         productsToShow.slice(
           (currentPage - 1) * productsCount,
-          Math.min(products.length, productsCount * currentPage),
+          Math.min(collectionProducts.length, productsCount * currentPage),
         ),
       );
     }
-  }, [sort, products, currentPage]);
+  }, [sort, collectionProducts, collection, currentPage]);
 
   return (
     <>
       <div style={{ padding: isMobile ? '0 20px' : '0px' }}>
         <BannerImg
-          src={'https://i.postimg.cc/2SG8536P/DSCF4911.jpg'}
-          alt={'Myaha products'}
+          src={
+            collection?.image ?? 'https://i.postimg.cc/2SG8536P/DSCF4911.jpg'
+          }
+          alt={collection?.title ?? 'Myaha products'}
           width={'100%'}
         />
         <CollectionDetails>
-          <div className="header">{'All Products'}</div>
+          <div className="header">{collection?.title ?? 'Shop All'}</div>
+          <div
+            className="subHeader"
+            dangerouslySetInnerHTML={{ __html: collection?.description ?? '' }}
+          />
         </CollectionDetails>
       </div>
       <ListBody>
@@ -124,7 +145,7 @@ const ProductsPage = () => {
               fontSize: isMobile ? '12px' : '16px',
             }}
           >
-            Home / &nbsp;
+            Home / Collections /&nbsp;
             <Dropdown
               options={collections}
               onSelect={(item: Collection) =>
@@ -137,7 +158,7 @@ const ProductsPage = () => {
                   style={{ cursor: 'pointer', fontWeight: '500' }}
                   onClick={(e) => toggle(e)}
                 >
-                  All products
+                  Shop all
                 </div>
               )}
               renderOption={(option) => <span> {option.title}</span>}
@@ -200,7 +221,7 @@ const ProductsPage = () => {
           setCurrentPage(number);
         }}
         itemsPerPage={productsCount}
-        totalItems={products.length}
+        totalItems={collectionProducts.length}
       />
       <FooterCarousel rounded={false} />
     </>

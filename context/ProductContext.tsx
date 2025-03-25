@@ -63,6 +63,7 @@ interface ProductContextType {
   openProduct: (product: Product) => void;
   onSearchProducts: (searchString: string) => Products;
   fetchData: () => Promise<void>;
+  allCollections: Collection | undefined;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -70,6 +71,9 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Products>([]);
   const [collections, setCollections] = useState<Collections>([]);
+  const [allCollections, setAllCollections] = useState<Collection | undefined>(
+    undefined,
+  );
   const [fetching, setFetching] = useState(false);
   const router = useRouter();
   const { startLoading, stopLoading } = useToast();
@@ -85,6 +89,8 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     'drinkware',
   ];
 
+  const allCollectionId = '480886358263';
+
   const fetchData = async () => {
     fetched.current = true;
     const productData = await fetch('/api/shopify/products', {
@@ -97,16 +103,6 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       (product: Product) => {
         const variants = product.variants.map((variant) => {
           let { images, price } = variant;
-          if (images.length === 0) {
-            const sampleImages = [];
-            const totalRandomImgaes = getRandomIntInclusive(5, 3);
-            for (let i = 0; i < totalRandomImgaes; i++) {
-              sampleImages.push(
-                `/images/sample/sample${getRandomIntInclusive(6, 1)}.png`,
-              );
-            }
-            images = sampleImages;
-          }
           price = formatPrice(Number(price));
           return { ...variant, images, price };
         });
@@ -131,7 +127,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
         const productImage =
           collectionProduct?.variants[0].images[0] ??
           `/images/sample/sample${getRandomIntInclusive(6, 1)}.png`;
-        const image = collection.image ?? '/images/sample/sample_banner1.png';
+        const image = collection.image;
         return { ...collection, productImage, image };
       });
 
@@ -144,7 +140,15 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       );
       return aIndex - bIndex;
     });
-    setCollections(collectionsData);
+    const allCollectionData = collectionsData.find((collection) =>
+      collection.id.includes(allCollectionId),
+    );
+    setAllCollections(allCollectionData);
+    setCollections(
+      collectionsData.filter(
+        (collection) => !collection.id.includes(allCollectionId),
+      ),
+    );
   };
 
   const fetchInitialData = async () => {
@@ -195,6 +199,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
         openProduct,
         onSearchProducts,
         fetchData,
+        allCollections,
       }}
     >
       {children}
