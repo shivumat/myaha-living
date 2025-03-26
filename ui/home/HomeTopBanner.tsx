@@ -20,11 +20,12 @@ const mobileImages: string[] = [
 const Gallery = styled.div`
   width: 100%;
   margin: auto;
-  height: 85%;
+  height: 85vh;
 `;
 
 const MobileWrapper = styled.div`
   padding: 0px;
+  height: 450px;
 `;
 
 const StyledCarousel = styled(Carousel)``;
@@ -38,7 +39,7 @@ const ImageGrid: React.FC<{ onClick: () => void }> = (props) => (
       isCircle
       autoScroll
       images={desktopImages}
-      height="85vh"
+      height="100%"
     />
   </Gallery>
 );

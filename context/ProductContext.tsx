@@ -149,14 +149,14 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
         (collection) => !collection.id.includes(allCollectionId),
       ),
     );
+    setFetching(false);
+    stopLoading();
   };
 
   const fetchInitialData = async () => {
     setFetching(true);
     startLoading();
     fetchData();
-    setFetching(false);
-    stopLoading();
   };
 
   useEffect(() => {
@@ -174,7 +174,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     const result = searchProducts(products, searchString);
     return result;
   };
-
+  console.log('fetching', fetching);
   if (fetching)
     return (
       <div

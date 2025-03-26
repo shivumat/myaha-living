@@ -20,11 +20,13 @@ const ProductWithVariants = (props: { product: Product }) => {
         flexDirection: 'column',
         width: '100%',
         maxWidth: '450px',
+        height: !isMobile ? '600px' : '400px',
         margin: '0px auto 20px',
       }}
     >
       <div
         style={{
+          height: '100%',
           width: isMobile ? '100%' : '75%',
           margin: '10px auto',
         }}

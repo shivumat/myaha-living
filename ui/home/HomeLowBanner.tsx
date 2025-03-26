@@ -36,6 +36,7 @@ const ImageWrapper = styled.div`
 
 const MobileWrapper = styled.div`
   padding: 20px;
+  height: 720px;
 `;
 
 // Desktop Grid Layout Component

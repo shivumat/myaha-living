@@ -6,12 +6,15 @@ const CarouselContainer = newStyled.div`
   display: flex;
   overflow: hidden;
   width: 100%;
+  height: 100%;
   position: relative;
   background: #f5f5f5;
 `;
 
 const CarouselWrapper = newStyled.div<{ index: number }>`
   display: flex;
+  width: 100%;
+  height: 100%;
   transition: transform 0.5s ease-in-out;
   transform: translateX(${(props) => props.index * -100}%);
 `;
@@ -19,23 +22,6 @@ const CarouselWrapper = newStyled.div<{ index: number }>`
 const CarouselImageDiv = newStyled.div`
   min-width: 100%;
   position: relative;
-`;
-
-const CarouselImage = newStyled.img<{ height: string }>`
-  width: 100%;
-  height: ${({ height }) => height};
-  object-fit: cover;
-  background: #e0e0e0;
-`;
-
-const Placeholder = newStyled.div<{ height: string }>`
-  width: 100%;
-  height: ${({ height }) => height};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  color: #999;
 `;
 
 const DotsContainer = newStyled.div<{ isCircle: boolean }>`
@@ -66,18 +52,9 @@ const Carousel = (props: {
   autoScroll?: boolean;
   clickableImages?: number[];
 }) => {
-  const {
-    images = [],
-    height,
-    children,
-    isCircle = false,
-    autoScroll = false,
-  } = props;
+  const { images = [], children, isCircle = false, autoScroll = false } = props;
   const [index, setIndex] = useState<number>(0);
   const [startX, setStartX] = useState<number | null>(null);
-  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({
-    0: true,
-  });
 
   const dotMap = images.length ? images : React.Children.toArray(children);
 
@@ -110,45 +87,29 @@ const Carousel = (props: {
     setIndex(0);
   }, [images]);
 
-  const handleImageLoad = (idx: number) => {
-    setLoadedImages((prev) => ({ ...prev, [idx + 1]: true }));
-  };
-
   const CarouselComponents = images.length ? (
     <>
       {images.map((src, idx) => {
-        if (loadedImages[idx]) {
-          return (
-            <CarouselImageDiv
-              key={idx}
-              style={{
-                cursor: props.clickableImages?.includes(idx)
-                  ? 'pointer'
-                  : 'default',
-              }}
-              onClick={() =>
-                props.clickableImages?.includes(idx) && props.onClick?.()
-              }
-            >
-              <CarouselImage
-                src={src}
-                alt={`Image ${idx + 1}`}
-                height={height}
-                onLoad={() => handleImageLoad(idx)}
-              />
-            </CarouselImageDiv>
-          );
-        }
         return (
-          <Placeholder height={height}>
+          <CarouselImageDiv
+            key={idx}
+            style={{
+              cursor: props.clickableImages?.includes(idx)
+                ? 'pointer'
+                : 'default',
+            }}
+            onClick={() =>
+              props.clickableImages?.includes(idx) && props.onClick?.()
+            }
+          >
             <Image
-              style={{ margin: 'auto' }}
-              src={'/images/loading-buffering.gif'}
-              alt="loading"
-              width={50}
-              height={50}
+              src={src}
+              alt={`Image ${idx + 1}`}
+              layout="fill"
+              objectFit="cover"
+              priority={idx === index} // ✅ Prioritize loading the first image
             />
-          </Placeholder>
+          </CarouselImageDiv>
         );
       })}
     </>

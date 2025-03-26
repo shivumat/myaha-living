@@ -26,6 +26,7 @@ const Gallery = newStyled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   width: 100%;
+  height: 100%;
   gap: 10px;
   margin: auto auto 20px; 
 `;
@@ -339,11 +340,13 @@ const ProductWithId = () => {
 
   const Images = isMobile ? (
     <MobileWrapper>
-      <Carousel
-        images={currentProduct?.variants[variant]?.images}
-        height="100%"
-        isCircle={isMobile}
-      />
+      <div style={{ height: '600px' }}>
+        <Carousel
+          images={currentProduct?.variants[variant]?.images}
+          height="100%"
+          isCircle={isMobile}
+        />
+      </div>
       <Title>{currentProduct?.title}</Title>
       <Description
         dangerouslySetInnerHTML={{ __html: currentProduct?.description ?? '' }}
