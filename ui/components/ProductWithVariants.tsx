@@ -20,7 +20,7 @@ const ProductWithVariants = (props: { product: Product }) => {
         flexDirection: 'column',
         width: '100%',
         maxWidth: '450px',
-        height: !isMobile ? '600px' : '400px',
+        height: !isMobile ? '470px' : '350px',
         margin: '0px auto 20px',
       }}
     >

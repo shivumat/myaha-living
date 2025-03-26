@@ -53,7 +53,7 @@ const Div1 = newStyled.div`
             width: 500px;
             padding: 10px 30px;
             height: 400px;
-            font-size: 10px;
+            font-size: 14px;
         }   
     }
 
@@ -62,7 +62,7 @@ const Div1 = newStyled.div`
             width: 400px;
             padding: 10px 30px;
             height: 400px;
-            font-size: 10px;
+            font-size: 14px;
         }   
     }
     @media (max-width: 800px) {
@@ -102,12 +102,12 @@ const Div2 = newStyled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: lighter;
         border-radius: 10px;
     }
     .colored{
-        font-size: 12px;
+        font-size: 16px;
         background-color: black;
         color: white;
     }
@@ -131,14 +131,14 @@ const Div3 = newStyled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: lighter;
         border-radius: 10px;
         border: 1px solid black;
     }
     .colored{
         border: 1px solid transparent;
-        font-size: 12px;
+        font-size: 16px;
         background-color: #213017;
         color: white;
     }
@@ -184,7 +184,7 @@ const Div4 = newStyled.div`
         >div {
             top: 20px;
             padding: 20px;
-            font-size: 10px;
+            font-size: 14px;
         }
         >img {
             width: 100%;
@@ -232,9 +232,15 @@ const AboutUs = () => {
           alt="about-us"
         />
         <div>
-          Myaha was crafted as a movement where we believe that home decor
-          should be as versatile and expressive as our own personality. We have
-          our own individualities & our spaces should reflect that.
+          A commune where we bend limits, break rules and come up with designs
+          that inspire. Our spaces become an integral part of our identity over
+          time, and they must reflect our individualities unapologetically.
+          Myaha welcomes this idea with experimentation in concepts, designs &
+          curations.
+          <br />
+          With a larger focus on promoting local and sustainable, our work
+          leaves a mark on every home it accentuates. Explore the ranges of
+          variation in decor and experiment until you find your Myaha.
         </div>
       </Div1>
       <Div2>
