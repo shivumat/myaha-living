@@ -129,7 +129,9 @@ const StyledMyahaLogo = newStyled(MyahaLogo)<{
   showAboutUs?: boolean;
   showTransparent?: boolean;
 }>`
-  width: inherit;
+  @media (max-width: 800px) {
+    width: inherit;
+  }
   ${({ showAboutUs, showTransparent }) => (!(showAboutUs || showTransparent) ? 'filter: invert(1);' : '')}
   ${({ margin = '' }) => (!!margin ? `margin: ${margin};` : '')}
   ${({ showTransparent }) =>
@@ -215,7 +217,7 @@ const Navbar = () => {
           <StyledMyahaLogo
             className="clickable"
             onClick={() => router.push('/')}
-            margin="auto auto auto 30px"
+            margin="auto"
             width="111"
             height="30"
           />
