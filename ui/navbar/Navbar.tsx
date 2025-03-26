@@ -51,7 +51,6 @@ const Burger = newStyled.span`
   @media (max-width: 800px) {
     font-size: 20px;
     margin-bottom: 5px;
-    margin-right: auto;
   }
 `;
 
@@ -99,7 +98,7 @@ const LogosContainer = newStyled.div<{ showTransparent?: boolean }>`
     cursor: pointer;
   }
   @media (max-width: 800px) {
-    display: flex
+    display: flex;
     column-gap: 1px;
   }
 `;
@@ -130,6 +129,7 @@ const StyledMyahaLogo = newStyled(MyahaLogo)<{
   showAboutUs?: boolean;
   showTransparent?: boolean;
 }>`
+  width: inherit;
   ${({ showAboutUs, showTransparent }) => (!(showAboutUs || showTransparent) ? 'filter: invert(1);' : '')}
   ${({ margin = '' }) => (!!margin ? `margin: ${margin};` : '')}
   ${({ showTransparent }) =>
@@ -215,7 +215,7 @@ const Navbar = () => {
           <StyledMyahaLogo
             className="clickable"
             onClick={() => router.push('/')}
-            margin="auto 0px auto auto"
+            margin="auto auto auto 30px"
             width="111"
             height="30"
           />

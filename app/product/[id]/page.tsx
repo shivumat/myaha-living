@@ -105,6 +105,7 @@ const ProductWithId = () => {
   const isMobile = useIsMobile();
   const [variant, setVariant] = useState<number>(0);
   const [currentVariantInfo, setVariantInfo] = useState<Combination>([]);
+  const topRef = React.useRef<HTMLDivElement>(null);
 
   const currentProduct = products.find(
     (product) => product.id === `gid://shopify/Product/${id}`,
@@ -154,6 +155,9 @@ const ProductWithId = () => {
       newInfo[index] = { name, value };
       return newInfo;
     });
+    if (topRef.current) {
+      topRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   if (variant < 0) return null;
@@ -295,7 +299,7 @@ const ProductWithId = () => {
 
   const ImageGrid: React.FC = () => (
     <>
-      <Gallery>
+      <Gallery ref={topRef}>
         {!!carouselImages.length && (
           <Carousel images={carouselImages} height="100%" />
         )}
@@ -340,7 +344,7 @@ const ProductWithId = () => {
 
   const Images = isMobile ? (
     <MobileWrapper>
-      <div style={{ height: '600px' }}>
+      <div style={{ height: '600px' }} ref={topRef}>
         <Carousel
           images={currentProduct?.variants[variant]?.images}
           height="100%"

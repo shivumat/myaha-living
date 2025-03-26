@@ -150,3 +150,50 @@ export function debounce<T extends (...args: any[]) => void>(
 export function formatPrice(amount: number): string {
   return `${amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
+
+export const mergeHexColorsWithWeights = (
+  colors: { hex: string; weight: number }[],
+): string => {
+  if (colors.length === 0) return '#000000'; // Default to black if no colors provided
+
+  // Convert hex to RGB
+  const hexToRgb = (hex: string) => {
+    hex = hex.replace(/^#/, ''); // Remove #
+    if (hex.length === 3)
+      hex = hex
+        .split('')
+        .map((h) => h + h)
+        .join(''); // Convert 3-char hex to 6-char
+    const bigint = parseInt(hex, 16);
+    return {
+      r: (bigint >> 16) & 255,
+      g: (bigint >> 8) & 255,
+      b: bigint & 255,
+    };
+  };
+
+  // Convert RGB to hex
+  const rgbToHex = (r: number, g: number, b: number) =>
+    `#${[r, g, b].map((x) => x.toString(16).padStart(2, '0')).join('')}`;
+
+  let totalWeight = 0;
+  let totalRgb = { r: 0, g: 0, b: 0 };
+
+  // Apply weights to RGB values
+  colors.forEach(({ hex, weight }) => {
+    const rgb = hexToRgb(hex);
+    totalRgb.r += rgb.r * weight;
+    totalRgb.g += rgb.g * weight;
+    totalRgb.b += rgb.b * weight;
+    totalWeight += weight;
+  });
+
+  // Normalize RGB values
+  const avgRgb = {
+    r: Math.round(totalRgb.r / totalWeight),
+    g: Math.round(totalRgb.g / totalWeight),
+    b: Math.round(totalRgb.b / totalWeight),
+  };
+
+  return rgbToHex(avgRgb.r, avgRgb.g, avgRgb.b);
+};

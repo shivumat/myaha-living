@@ -174,7 +174,6 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     const result = searchProducts(products, searchString);
     return result;
   };
-  console.log('fetching', fetching);
   if (fetching)
     return (
       <div

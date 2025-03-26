@@ -1,11 +1,12 @@
+import { mergeHexColorsWithWeights } from '#/lib/util';
 import { useState } from 'react';
 
 const basicColors: { name: string; hex: string }[] = [
   { name: 'red', hex: '#FF0000' },
   { name: 'blue', hex: '#0000FF' },
   { name: 'green', hex: '#008000' },
-  { name: 'yellow', hex: '#FFFF00' },
   { name: 'pink', hex: '#FFC0CB' },
+  { name: 'yellow', hex: '#FFFF00' },
   { name: 'purple', hex: '#800080' },
   { name: 'orange', hex: '#FFA500' },
   { name: 'brown', hex: '#A52A2A' },
@@ -26,10 +27,18 @@ const basicColors: { name: string; hex: string }[] = [
 // Function to find the best matching color
 const getColorFromName = (colorName: string): string => {
   const lowerCaseColor = colorName.toLowerCase();
-  const matchedColor = basicColors.find((color) =>
+  const matchedColors = basicColors.filter((color) =>
     lowerCaseColor.includes(color.name),
   );
-  return matchedColor ? matchedColor.hex : '#ccc'; // Default gray if no match
+  console.log('matchedColors', matchedColors);
+  const matchedColor = mergeHexColorsWithWeights(
+    matchedColors.map((c, index) => ({
+      hex: c.hex,
+      weight: matchedColors.length - index,
+    })),
+  );
+  console.log('matchedColor', matchedColor);
+  return matchedColor ? matchedColor : '#ccc'; // Default gray if no match
 };
 
 const VariantContainer = (props: {
