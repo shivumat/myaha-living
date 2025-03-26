@@ -217,7 +217,7 @@ const Navbar = () => {
           <StyledMyahaLogo
             className="clickable"
             onClick={() => router.push('/')}
-            margin="auto"
+            margin="auto auto auto 30px"
             width="111"
             height="30"
           />
