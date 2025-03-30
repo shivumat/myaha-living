@@ -11,13 +11,22 @@ const PaymentComponent = (props: {
 }) => {
   const paymentRef = useRef<any>(null);
 
-  const initRazorpay = () => {
+  const initRazorpay = async () => {
+    const res = await fetch('/api/razorpay/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: props.amount }),
+    });
+    const data = await res.json();
+    const orderId = data.id;
+
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Your key_id, should be public.
       amount: (props?.amount ?? 0) * 100, // Amount in the smallest currency unit
       currency: 'INR',
-      name: 'Your Store Name',
+      name: 'MYAHA LIVING',
       description: 'Payment for your order',
+      order_id: orderId,
       handler: (response: any) => {
         props.onCompletion(response.razorpay_payment_id);
       },
@@ -51,7 +60,7 @@ const PaymentComponent = (props: {
           'script[src="https://checkout.razorpay.com/v1/checkout.js"]',
         )
       ) {
-        initRazorpay();
+        await initRazorpay();
         return;
       }
       const script = document.createElement('script');

@@ -33,6 +33,7 @@
     "ms": "3.0.0-canary.1",
     "next": "15.0.0-canary.193",
     "nodemailer": "6.10.0",
+    "razorpay": "2.9.6",
     "react": "19.0.0-rc-cd22717c-20241013",
     "react-dom": "19.0.0-rc-cd22717c-20241013",
     "react-hook-form": "7.54.2",
