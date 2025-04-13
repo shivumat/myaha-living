@@ -9,7 +9,8 @@
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
     "start": "next start",
-    "test": "pnpm prettier:check && pnpm lint"
+    "test": "pnpm prettier:check && pnpm lint",
+    "postbuild": "next-sitemap"
   },
   "git": {
     "pre-commit": "lint-staged"
@@ -32,6 +33,7 @@
     "framer-motion": "12.5.0",
     "ms": "3.0.0-canary.1",
     "next": "15.0.0-canary.193",
+    "next-sitemap": "4.2.3",
     "nodemailer": "6.10.0",
     "razorpay": "2.9.6",
     "react": "19.0.0-rc-cd22717c-20241013",
