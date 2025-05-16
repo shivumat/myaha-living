@@ -55,9 +55,9 @@ export const POST = async () => {
           handle,
           title,
           description: descriptionHtml,
-          image: `${image.url}.webp`,
+          image: `${image?.url}.webp` ?? '',
           products: products.edges.map((product: any) => product.node),
-          categoryImage: `${categoryImage?.reference.image.url}.webp`,
+          categoryImage: `${categoryImage?.reference?.image?.url}.webp` ?? '',
         };
       },
     );
