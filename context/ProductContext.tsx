@@ -54,6 +54,7 @@ export interface Collection {
   image?: string;
   productImage?: string;
   categoryImage?: string;
+  type?: string;
   products: Product[];
 }
 
@@ -119,6 +120,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     const collectionResponse = await collectionData.json();
     let collectionsData: Collections = collectionResponse.data
       .filter((collection: Collection) => !!collection.products.length)
+      .filter((collection: Collection) => !collection.type)
       .map((collection: Collection) => {
         const collectionProduct = productsData.find((product) => {
           const firstProduct = collection.products[0];

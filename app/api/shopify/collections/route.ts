@@ -7,6 +7,9 @@ export const POST = async () => {
     collections(first: 100) {
       edges {
         node {
+          type: metafield(namespace: "custom", key: "type") {
+              value
+          }
           categoryImage: metafield(namespace: "custom", key: "category_images") {
           reference {
             ... on MediaImage {
@@ -46,6 +49,7 @@ export const POST = async () => {
           handle,
           title,
           descriptionHtml,
+          type,
           image,
           products,
           categoryImage,
@@ -54,10 +58,13 @@ export const POST = async () => {
           id,
           handle,
           title,
+          type,
           description: descriptionHtml,
-          image: `${image?.url}.webp` ?? '',
+          image: image?.url ? `${image?.url}.webp` : '',
           products: products.edges.map((product: any) => product.node),
-          categoryImage: `${categoryImage?.reference?.image?.url}.webp` ?? '',
+          categoryImage: categoryImage?.reference?.image?.url
+            ? `${categoryImage?.reference?.image?.url}.webp`
+            : '',
         };
       },
     );
