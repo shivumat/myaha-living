@@ -3,13 +3,14 @@ import { useProduct } from '#/context/ProductContext';
 import { useToast } from '#/context/ToastContext';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+import Colors from './colors/colors';
 import Modal from './components/ModalComponent';
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
+  background-color: ${Colors.white};
   border-radius: 12px;
   width: 50%;
   height: auto;

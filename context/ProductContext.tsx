@@ -1,4 +1,5 @@
 import { formatPrice, getRandomIntInclusive, searchProducts } from '#/lib/util';
+import Colors from '#/ui/colors/colors';
 import FlowerLoader from '#/ui/InitLoader';
 import { useRouter } from 'next/navigation';
 import {
@@ -179,7 +180,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       <div
         style={{
           display: 'flex',
-          backgroundColor: '#F1F1F1',
+          backgroundColor: Colors.white,
           justifyContent: 'center',
           alignItems: 'center',
           height: '100vh',

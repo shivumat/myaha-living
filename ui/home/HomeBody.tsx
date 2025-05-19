@@ -3,6 +3,7 @@ import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Colors from '../colors/colors';
 import FooterCarousel from '../components/FooterCarousel';
 import OrderCreated from '../OrderCreatedModal';
 import Categories from './Categories';
@@ -15,7 +16,7 @@ const Container = newStyled.div`
 
 const Div1 = newStyled.div<{ isMobile: boolean }>`
   padding: 40px;
-  color: white;
+  color: ${Colors.white};
   background-color: #5B1D1D;
   margin-bottom: 20px;
   font-size: 14px;
@@ -23,7 +24,7 @@ const Div1 = newStyled.div<{ isMobile: boolean }>`
   .title{
     font-size: 24px;
     margin-bottom: 5px;
-    color: white;
+    color: ${Colors.white};
   }
   @media (max-width: 800px) {
     padding: 20px;

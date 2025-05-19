@@ -5,6 +5,7 @@ import newStyled from '@emotion/styled';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Colors from '../colors/colors';
 import CartItem from '../components/CartItem';
 
 const FormContainer = newStyled.div`
@@ -78,7 +79,7 @@ const OrderList = () => {
         alignItems: 'center',
         gap: '12px',
         padding: '40px 20px',
-        color: '#fff',
+        color: Colors.white,
         backgroundColor: '#5B1D1D',
         borderRadius: '12px',
         boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
@@ -97,12 +98,12 @@ const OrderList = () => {
         style={{
           marginTop: '10px',
           backgroundColor: 'transparent',
-          color: 'white',
+          color: Colors.white,
           fontSize: '16px',
           fontWeight: '500',
           padding: '10px 20px',
           borderRadius: '8px',
-          border: '1px solid white',
+          border: `1px solid ${Colors.white}`,
           cursor: 'pointer',
           transition: 'background 0.3s',
         }}
@@ -140,7 +141,7 @@ const OrderList = () => {
         style={{
           padding: '30px',
           borderRadius: '12px',
-          backgroundColor: '#F1F1F1',
+          backgroundColor: Colors.white,
         }}
       >
         {!isMobile && (
@@ -220,7 +221,7 @@ const OrderList = () => {
             >
               {!!cartProduct && (
                 <CartItem
-                  background={'white'}
+                  background={Colors.white}
                   product={cartProduct}
                   quantity={item.quantity}
                 />
@@ -314,7 +315,7 @@ const OrderList = () => {
               justifyContent: 'center',
               fontSize: '20px',
               fontWeight: '400',
-              borderTop: '1px solid black',
+              borderTop: `1px solid ${Colors.white}`,
             }}
           >
             Total : {order.currencySymbol} {order.totalPrice}

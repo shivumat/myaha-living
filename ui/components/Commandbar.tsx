@@ -2,6 +2,7 @@ import { Products } from '#/context/ProductContext';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Colors from '../colors/colors';
 import Modal from './ModalComponent';
 import ProductDropdownItem from './ProductDropDownItem';
 
@@ -82,7 +83,7 @@ export default function CommandBar({
 
 // Styled components
 const Container = styled.div`
-  background: white;
+  background: ${Colors.white};
   padding: 16px;
   width: 50%;
   border-radius: 8px;

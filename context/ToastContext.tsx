@@ -1,4 +1,5 @@
 import { useIsMobile } from '#/hooks/useMobile';
+import Colors from '#/ui/colors/colors';
 import Laoding from '#/ui/LaodingLayover';
 import CheckLogo from '#/ui/svg/check-logo';
 import CrossLogo from '#/ui/svg/cross-logo';
@@ -60,7 +61,7 @@ const ToastContainer = styled.div<{
   animation: ${(props) =>
       props.mounted ? (props.visible ? slideIn : slideOut) : 'none'}
     0.5s ease-in-out;
-  background-color: white;
+  background-color: ${Colors.white};
   max-width: 450px;
   border: 1px solid
     ${(props) => (props.type === 'success' ? '#4D6624' : '#D9534F')};
@@ -147,9 +148,9 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
           }}
         >
           {toast.type === 'success' ? (
-            <CheckLogo width="24" height="24" color="white" />
+            <CheckLogo width="24" height="24" color={Colors.white} />
           ) : (
-            <StyledCross width="24" height="24" color="white" />
+            <StyledCross width="24" height="24" color={Colors.white} />
           )}
         </div>
         <div>

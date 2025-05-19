@@ -1,6 +1,7 @@
 import newStyled from '@emotion/styled';
 import Image from 'next/image';
 import React, { ReactNode, TouchEvent, useEffect, useState } from 'react';
+import Colors from '../colors/colors';
 
 const CarouselContainer = newStyled.div`
   display: flex;
@@ -37,7 +38,7 @@ const Dot = newStyled.div<{ active: boolean; isCircle: boolean }>`
   width: ${(props) => (props.isCircle ? '10px' : '40px')};
   height: ${(props) => (props.isCircle ? '10px' : '5px')};
   border-radius: ${(props) => (props.isCircle ? '50%' : '12px')};
-  border: 1px solid black;
+  border: 1px solid ${Colors.white};
   background: ${(props) => (props.active ? 'black' : 'transparent')};
   cursor: pointer;
 `;

@@ -1,4 +1,5 @@
 'use client';
+import Colors from '#/ui/colors/colors';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import newStyled from '@emotion/styled';
 
@@ -26,7 +27,7 @@ const Div1 = newStyled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        color: white;
+        color: ${Colors.white};
         background-color: #5F1E1E;
         margin: 40px 0px;
         height: 680px;
@@ -108,8 +109,8 @@ const Div2 = newStyled.div`
     }
     .colored{
         font-size: 16px;
-        background-color: black;
-        color: white;
+        background-color: ${Colors.black};
+        color: ${Colors.white};
     }
     @media (max-width: 800px) {
         display: flex;
@@ -134,13 +135,13 @@ const Div3 = newStyled.div`
         font-size: 16px;
         font-weight: lighter;
         border-radius: 10px;
-        border: 1px solid black;
+        border: 1px solid ${Colors.white};
     }
     .colored{
         border: 1px solid transparent;
         font-size: 16px;
         background-color: #213017;
-        color: white;
+        color: ${Colors.white};
     }
     @media (max-width: 800px) {
         display: flex;
@@ -174,7 +175,7 @@ const Div4 = newStyled.div`
         text-align: center;
         justify-content: center;
         align-items: center;
-        color: white;
+        color: ${Colors.white};
     }
     .italize {
         font-style: italic;

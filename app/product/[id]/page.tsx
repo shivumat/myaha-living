@@ -2,6 +2,7 @@
 import { useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import { Combination } from '#/lib/util';
+import Colors from '#/ui/colors/colors';
 import AddToCart from '#/ui/components/AddToCart';
 import Carousel from '#/ui/components/Carousel';
 import FooterCarousel from '#/ui/components/FooterCarousel';
@@ -92,7 +93,7 @@ const StyledDiv = newStyled.div`
   display: flex;
   gap: 20px;
   align-items: center;
-  background-color: #fff;
+  background-color: ${Colors.white};
   border-radius: 10px;
   margin-bottom: 10px;
   border: 1px solid #000;

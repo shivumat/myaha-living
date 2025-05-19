@@ -2,6 +2,7 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import Colors from '../colors/colors';
 
 const fadeIn = keyframes`
   from {
@@ -16,7 +17,7 @@ const fadeIn = keyframes`
 
 const Label = styled.label`
   display: block;
-  color: white;
+  color: ${Colors.white};
   font-size: 14px;
   margin-bottom: 5px;
   text-align: left;
@@ -31,14 +32,14 @@ const Input = styled.input`
   width: 100%;
   padding: 10px;
   border: none;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid ${Colors.white};
   background: transparent;
-  color: white;
+  color: ${Colors.white};
   font-size: 16px;
   outline: none;
 
   :focus {
-    border-color: white;
+    border-color: ${Colors.white};
     border-radius: 5px;
     box-shadow: 0 0 1px rgba(255, 255, 255);
   }
@@ -57,8 +58,8 @@ const Button = styled.button<{ submitted: boolean }>`
   border: none;
   border-radius: 5px;
   cursor: ${(props) => (props.submitted ? 'default' : 'pointer')};
-  background: ${(props) => (props.submitted ? '#4CAF50' : 'white')};
-  color: ${(props) => (props.submitted ? 'white' : 'black')};
+  background: ${(props) => (props.submitted ? '#4CAF50' : Colors.white)};
+  color: ${(props) => (props.submitted ? Colors.white : 'black')};
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;

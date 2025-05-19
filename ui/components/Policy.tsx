@@ -2,6 +2,7 @@
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import styled from '@emotion/styled';
 import { ReactNode } from 'react';
+import Colors from '../colors/colors';
 
 const Container = styled.div`
   padding: 45px 0px;
@@ -52,7 +53,7 @@ const TabButton = styled.div`
   font-size: 26px;
   font-weight: 600;
   background: '#888';
-  color: '#fff';
+  color: ${Colors.white};
   border: none;
   outline: none;
   transition: 0.3s;
@@ -67,7 +68,7 @@ const TabButton = styled.div`
 
 const ContentContainer = styled.div`
   padding: 20px;
-  background: #fff;
+  background: ${Colors.white};
   line-height: 1.6;
   color: #333;
 

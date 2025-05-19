@@ -1,6 +1,7 @@
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { useState } from 'react';
+import Colors from '../colors/colors';
 
 const Container = newStyled.div`
     position: relative;
@@ -27,7 +28,7 @@ const Thumbnail = newStyled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: ${Colors.white};
     font-size: 36px;
     @media (max-width: 800px) {
         font-size: 28px;

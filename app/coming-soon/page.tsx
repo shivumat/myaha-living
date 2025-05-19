@@ -1,6 +1,7 @@
 'use client';
 
 import { useIsMobile } from '#/hooks/useMobile';
+import Colors from '#/ui/colors/colors';
 import MyahaLogo from '#/ui/svg/myaha-logo';
 import WaitlistForm from '#/ui/waitlist/waitlist-form';
 import { keyframes } from '@emotion/react';
@@ -43,7 +44,7 @@ const fadeSlide = keyframes`
 const JoinCTA = newStyled.div`
 
   max-width: 450px;
-  color: white;
+  color: ${Colors.white};
   margin-bottom: 20px;
   animation: ${fadeSlide} 1.5s ease-in-out;
   .heading {
@@ -129,7 +130,7 @@ const LeftContainer = newStyled.div`
 `;
 
 const ConfirmationMessage = newStyled.div`
-  color: white;
+  color: ${Colors.white};
   display: flex;
   flex-direction: column;
   font-size: 48px;
@@ -148,7 +149,7 @@ const ConfirmationSubMessage = newStyled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: white;
+  color: ${Colors.white};
   font-weight: lighter;
   background-color: #D9D9D933;
   padding: 20px;

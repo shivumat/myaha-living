@@ -1,5 +1,6 @@
 'use client';
 import { useToast } from '#/context/ToastContext';
+import Colors from '#/ui/colors/colors';
 import ContactFormComponent from '#/ui/components/ContactForm';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import styled from '@emotion/styled';
@@ -40,8 +41,8 @@ const Div1 = styled.div`
   }
   .colored {
     font-size: 12px;
-    background-color: black;
-    color: white;
+    background-color: ${Colors.white};
+    color: ${Colors.white};
   }
   @media (max-width: 800px) {
     flex-direction: column;
@@ -76,13 +77,13 @@ const Div2 = styled.div`
     font-size: 14px;
     font-weight: lighter;
     border-radius: 10px;
-    border: 1px solid black;
+    border: 1px solid ${Colors.white};
   }
   .colored {
     border: 1px solid transparent;
     font-size: 12px;
     background-color: #213017;
-    color: white;
+    color: ${Colors.white};
   }
   @media (max-width: 800px) {
     display: flex;

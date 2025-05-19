@@ -3,6 +3,7 @@ import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Colors from '../colors/colors';
 import AccountTextInput from '../components/AccountInput';
 
 const FormContainer = newStyled.div`
@@ -38,17 +39,17 @@ const InputGroup = newStyled.div`
 const Submit = newStyled.button`
     height: 40px;
     width: 120px;
-    background-color: black;
+    background-color: ${Colors.white};
     font-size: 16px;
-    color: white;
+    color: ${Colors.white};
     border-radius: 4px;
     cursor: pointer;
     margin-top: 20px;
     margin-left: auto;
     &.view{
-        background-color: white;
-        color: black;
-        border: 1px solid black;
+        background-color: ${Colors.white};
+        color: ${Colors.white};
+        border: 1px solid ${Colors.white};
     }
     @media (max-width: 800px) {
         font-size: 12px;

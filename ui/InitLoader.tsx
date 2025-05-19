@@ -19,13 +19,13 @@ const LoaderWrapper = styled.div`
       transform: rotate(0deg);
     }
     25% {
-      transform: rotate(10deg);
+      transform: rotate(5deg);
     }
     50% {
-      transform: rotate(-10deg);
+      transform: rotate(-5deg);
     }
     75% {
-      transform: rotate(10deg);
+      transform: rotate(5deg);
     }
     100% {
       transform: rotate(0deg);
@@ -38,7 +38,7 @@ const LoaderWrapper = styled.div`
       scale: 1;
     }
     50% {
-      scale: 1.025;
+      scale: 1.05;
     }
   }
 `;

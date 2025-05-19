@@ -9,6 +9,7 @@ import newStyled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Colors from '../colors/colors';
 import CommandBar from '../components/Commandbar';
 import PlusMInusOpen from '../components/PlusMInusOpen';
 import Sidebar from '../components/Sidebar';
@@ -29,8 +30,8 @@ const NavContainer = newStyled.div<{
   display: flex; 
   width: 100vw;
   height: 60px;
-  background-color: ${({ showTransparent, showAboutUs }) => (showTransparent ? 'transparent' : showAboutUs ? '#5F1E1E' : 'white')};
-  color : ${({ showAboutUs }) => (showAboutUs ? 'white' : 'black')};
+  background-color: ${({ showTransparent, showAboutUs }) => (showTransparent ? 'transparent' : showAboutUs ? '#5F1E1E' : Colors.white)};
+  color : ${({ showAboutUs }) => (showAboutUs ? Colors.white : 'black')};
   transition: background-color 300ms linear;
   align-items: center;
   position: fixed;
@@ -186,11 +187,11 @@ const Navbar = () => {
               alignItems: 'center',
               width: isMobile ? '10px' : '16px',
               height: isMobile ? '10px' : '16px',
-              border: `1px solid ${showAboutUs ? 'white' : 'black'}`,
+              border: `1px solid ${showAboutUs ? Colors.white : 'black'}`,
               fontSize: isMobile ? '5px' : '8px',
               padding: '2px',
               borderRadius: '50%',
-              backgroundColor: showAboutUs ? '#5F1E1E' : 'white',
+              backgroundColor: showAboutUs ? '#5F1E1E' : Colors.white,
               zIndex: 20,
               right: isMobile ? '2px' : '-3px',
               ...(isMobile ? {} : { top: '-3px' }),
@@ -204,7 +205,7 @@ const Navbar = () => {
 
       <StyledCartLogo
         className="clickable"
-        color={showAboutUs ? 'white' : 'black'}
+        color={showAboutUs ? Colors.white : 'black'}
       />
     </div>
   );
@@ -224,7 +225,7 @@ const Navbar = () => {
           <LogosContainer>
             <StyledSearchLogo
               className="clickable"
-              color={showAboutUs ? 'white' : 'black'}
+              color={showAboutUs ? Colors.white : 'black'}
               onClick={() => setShowSearch(true)}
             />
             {Cart}
@@ -402,7 +403,7 @@ const Navbar = () => {
         <LogosContainer showTransparent={showTransparent}>
           <StyledSearchLogo
             className="clickable"
-            color={showAboutUs ? 'white' : 'black'}
+            color={showAboutUs ? Colors.white : 'black'}
             onClick={() => setShowSearch(true)}
           />
 
@@ -410,13 +411,13 @@ const Navbar = () => {
             (!user ? (
               <StyledUserLogo
                 className="clickable"
-                color={showAboutUs ? 'white' : 'black'}
+                color={showAboutUs ? Colors.white : 'black'}
                 onClick={toggleLogin}
               />
             ) : (
               <StyledUserLogo
                 className="clickable"
-                color={showAboutUs ? 'white' : 'black'}
+                color={showAboutUs ? Colors.white : 'black'}
                 onClick={() => router.push('/account')}
               />
             ))}
@@ -434,7 +435,7 @@ const Navbar = () => {
             style={{
               width: '100%',
               height: '450px',
-              backgroundColor: showAboutUs ? '#5F1E1E' : 'white',
+              backgroundColor: showAboutUs ? '#5F1E1E' : Colors.white,
               position: 'absolute',
               top: '60px',
               boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',

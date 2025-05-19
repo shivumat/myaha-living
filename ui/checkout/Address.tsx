@@ -3,6 +3,7 @@ import { useIsMobile } from '#/hooks/useMobile';
 import { OrderPayloadType } from '#/lib/types/order';
 import newStyled from '@emotion/styled';
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import Colors from '../colors/colors';
 import AccountTextInput from '../components/AccountInput';
 // import Dropdown from '../components/AddressCropdowns';
 
@@ -39,19 +40,19 @@ const InputGroup = newStyled.div`
 
 const Submit = newStyled.button`
     height: 50px;
-    background-color: black;
+    background-color: ${Colors.white};
     font-size: 20px;
     padding: 10px 20px;
     max-width: 400px;
     width: 100%;
-    color: white;
+    color: ${Colors.white};
     border-radius: 4px;
     cursor: pointer;
     margin: 20px auto 10px;
     &.view{
-        background-color: white;
-        color: black;
-        border: 1px solid black;
+        background-color: ${Colors.white};
+        color: ${Colors.white};
+        border: 1px solid ${Colors.white};
         margin: 0px auto;
     }
     @media (max-width: 800px) {

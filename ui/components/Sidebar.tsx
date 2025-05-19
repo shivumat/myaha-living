@@ -1,6 +1,7 @@
 'use client';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
+import Colors from '../colors/colors';
 import CrossLogo from '../svg/cross-logo';
 
 interface SidebarProps {
@@ -23,7 +24,7 @@ const SidebarWrapper = styled.div<{
   ${({ side }) => (side === 'left' ? 'left: 0;' : 'right: 0;')}
   width: ${({ width }) => width};
   height: 100dvh;
-  background: white;
+  background: ${Colors.white};
   box-shadow: ${({ side }) =>
     side === 'left'
       ? '2px 0 10px rgba(0, 0, 0, 0.1)'
