@@ -1,5 +1,5 @@
 import { formatPrice, getRandomIntInclusive, searchProducts } from '#/lib/util';
-import MyahaLogo from '#/ui/svg/myaha-logo';
+import FlowerLoader from '#/ui/InitLoader';
 import { useRouter } from 'next/navigation';
 import {
   createContext,
@@ -9,7 +9,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useToast } from './ToastContext';
 
 export type Products = Product[];
 
@@ -77,7 +76,6 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   );
   const [fetching, setFetching] = useState(false);
   const router = useRouter();
-  const { startLoading, stopLoading } = useToast();
   const fetched = useRef(false);
 
   const collectionOrder = [
@@ -151,13 +149,13 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
         (collection) => !collection.id.includes(allCollectionId),
       ),
     );
-    setFetching(false);
-    stopLoading();
+    setTimeout(() => {
+      setFetching(false);
+    }, 1000);
   };
 
   const fetchInitialData = async () => {
     setFetching(true);
-    startLoading();
     fetchData();
   };
 
@@ -181,14 +179,14 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       <div
         style={{
           display: 'flex',
-          backgroundColor: 'black',
+          backgroundColor: '#F1F1F1',
           justifyContent: 'center',
           alignItems: 'center',
           height: '100vh',
           width: '100vw',
         }}
       >
-        <MyahaLogo />
+        <FlowerLoader />
       </div>
     );
 
