@@ -315,7 +315,7 @@ const OrderList = () => {
               justifyContent: 'center',
               fontSize: '20px',
               fontWeight: '400',
-              borderTop: `1px solid ${Colors.white}`,
+              borderTop: `1px solid ${Colors.black}`,
             }}
           >
             Total : {order.currencySymbol} {order.totalPrice}
