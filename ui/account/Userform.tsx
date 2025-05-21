@@ -39,7 +39,7 @@ const InputGroup = newStyled.div`
 const Submit = newStyled.button`
     height: 40px;
     width: 120px;
-    background-color: ${Colors.white};
+    background-color: ${Colors.black};
     font-size: 16px;
     color: ${Colors.white};
     border-radius: 4px;
