@@ -51,7 +51,7 @@ const Submit = newStyled.button`
     margin: 20px auto 10px;
     &.view{
         background-color: ${Colors.white};
-        color: ${Colors.white};
+        color: ${Colors.black};
         border: 1px solid ${Colors.black};
         margin: 0px auto;
     }
