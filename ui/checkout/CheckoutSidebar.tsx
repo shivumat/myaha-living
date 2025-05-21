@@ -98,7 +98,7 @@ const PromoInput = newStyled.input`
 const ApplyButton = newStyled.button`
   padding: 8px 12px;
   background: ${Colors.white};
-  color: ${Colors.white};
+  color: ${Colors.black};
   font-size: 14px;
   border: none;
   cursor: pointer;
