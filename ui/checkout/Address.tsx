@@ -52,7 +52,7 @@ const Submit = newStyled.button`
     &.view{
         background-color: ${Colors.white};
         color: ${Colors.white};
-        border: 1px solid ${Colors.white};
+        border: 1px solid ${Colors.black};
         margin: 0px auto;
     }
     @media (max-width: 800px) {
