@@ -119,7 +119,7 @@ const StyledPasswordLogo = styled(PasswordLogo)`
 `;
 
 const LoginButton = styled(Button)`
-  background: v;
+  background: ${Colors.black};
   color: ${Colors.white};
   padding: 20px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
