@@ -135,7 +135,7 @@ const Div3 = newStyled.div`
         font-size: 16px;
         font-weight: lighter;
         border-radius: 10px;
-        border: 1px solid ${Colors.white};
+        border: 1px solid ${Colors.black};
     }
     .colored{
         border: 1px solid transparent;
