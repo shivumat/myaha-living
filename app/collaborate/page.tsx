@@ -41,7 +41,7 @@ const Div1 = styled.div`
   }
   .colored {
     font-size: 12px;
-    background-color: ${Colors.white};
+    background-color: ${Colors.black};
     color: ${Colors.white};
   }
   @media (max-width: 800px) {
