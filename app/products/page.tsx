@@ -187,7 +187,7 @@ const ProductsPage = () => {
                   width: '200px',
                   display: 'flex',
                   justifyContent: 'space-between',
-                  border: `1px solid ${Colors.white}`,
+                  border: `1px solid ${Colors.black}`,
                   alignItems: 'center',
                   padding: '0px 10px',
                 }}
