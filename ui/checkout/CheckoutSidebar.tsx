@@ -125,7 +125,7 @@ const RemoveButton = newStyled.button`
   border: none;
   font-size: 16px;
   cursor: pointer;
-  color: ${Colors.white};
+  color: ${Colors.black};
 `;
 
 export interface DiscountObjectType {
