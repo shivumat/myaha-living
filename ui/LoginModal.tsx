@@ -59,7 +59,7 @@ const GoogleButton = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${Colors.white};
+  color: ${Colors.black};
   padding: 20px;
   margin-bottom: 20px;
 `;
