@@ -40,7 +40,7 @@ const InputGroup = newStyled.div`
 
 const Submit = newStyled.button`
     height: 50px;
-    background-color: ${Colors.white};
+    background-color: ${Colors.black};
     font-size: 20px;
     padding: 10px 20px;
     max-width: 400px;
