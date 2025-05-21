@@ -115,7 +115,7 @@ const PromoTag = newStyled.div`
   align-items: center;
   gap: 10px;
   background: ${Colors.white};
-  color: ${Colors.white};
+  color: ${Colors.black};
   padding: 8px 12px;
   border-radius: 4px;
 `;
