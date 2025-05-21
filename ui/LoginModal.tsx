@@ -140,7 +140,7 @@ const LoginButton = styled(Button)`
 
 const Footer = styled.p`
   margin-top: 10px;
-  color: ${Colors.white};
+  color: ${Colors.black};
   font-size: 14px;
   > a {
     color: ${Colors.white};
