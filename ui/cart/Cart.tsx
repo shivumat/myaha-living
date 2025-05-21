@@ -135,7 +135,7 @@ const Cart = () => {
               borderRadius: '8px',
               cursor: 'pointer',
               transition: 'background 0.3s',
-              border: `1px solid ${Colors.white}`,
+              border: `1px solid ${Colors.black}`,
             }}
             onClick={() => router.push('/checkout')}
             className="clickable"
