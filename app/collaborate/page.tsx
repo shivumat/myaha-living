@@ -77,7 +77,7 @@ const Div2 = styled.div`
     font-size: 14px;
     font-weight: lighter;
     border-radius: 10px;
-    border: 1px solid ${Colors.white};
+    border: 1px solid ${Colors.black};
   }
   .colored {
     border: 1px solid transparent;
