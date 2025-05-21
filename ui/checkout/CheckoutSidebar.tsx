@@ -67,7 +67,7 @@ const CheckoutButton = newStyled.button`
 
   &:hover {
     background: ${Colors.white};
-    color: ${Colors.white};
+    color: ${Colors.black};
   }
 `;
 
