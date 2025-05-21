@@ -19,7 +19,7 @@ const NoteInput = styled.textarea`
   border-radius: 6px;
   padding: 10px;
   font-size: 14px;
-  color: ${Colors.white};
+  color: ${Colors.black};
   background: ${Colors.white};
   resize: none;
 
