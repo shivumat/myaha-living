@@ -131,7 +131,7 @@ const CheckboxContainer = styled.div`
 `;
 
 const LoginButton = styled(Button)`
-  background: ${Colors.white};
+  background: ${Colors.black};
   color: ${Colors.white};
   padding: 20px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
