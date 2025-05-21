@@ -50,7 +50,7 @@ const Textarea = newStyled.textarea`
 
 const SubmitButton = newStyled.button`
   width: 100%;
-  background-color: ${Colors.white};
+  background-color: ${Colors.black};
   color: ${Colors.white};
   padding: 0.75rem;
   border: none;
