@@ -37,7 +37,7 @@ const ShopifyPrice: React.FC<ShopifyPriceProps> = ({
   const numericPrice = parsePrice(price);
   const numericCompareAt = compareAtPrice ? parsePrice(compareAtPrice) : 0;
 
-  const isDiscounted = numericCompareAt && numericCompareAt !== numericPrice;
+  const isDiscounted = !!numericCompareAt && numericCompareAt !== numericPrice;
 
   return (
     <PriceWrapper fontSize={fontSize}>
