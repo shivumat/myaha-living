@@ -9,8 +9,8 @@ const LoaderWrapper = styled.div`
   justify-content: center;
   align-items: center;
   animation:
-    sway 1000ms ease-in-out infinite,
-    bloom 1000ms ease-in-out infinite;
+    sway 2000ms ease-in-out infinite,
+    bloom 2000ms ease-in-out infinite;
   transform-origin: bottom center;
   width: 120px;
 

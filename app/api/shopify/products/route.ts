@@ -56,6 +56,10 @@ export const POST = async () => {
                     amount
                     currencyCode
                 }
+                compareAtPrice{
+                    amount
+                    currencyCode
+                }
                 image {
                   url
                 }
@@ -120,6 +124,7 @@ export const POST = async () => {
             finish,
             dimensions,
             price,
+            compareAtPrice,
             quantityAvailable,
             image,
           } = variant.node;
@@ -141,6 +146,7 @@ export const POST = async () => {
             finish: finish?.value,
             dimensions: dimensions?.value,
             price: price.amount,
+            compareAtPrice: compareAtPrice?.amount,
             currencyCode: getCurrencySymbol(price.currencyCode),
             images: variantImages.filter(
               (item, index, arr) => arr.indexOf(item) === index,

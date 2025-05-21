@@ -6,15 +6,15 @@ import Colors from '../colors/colors';
 const AddtoCart = newStyled.button`
     height: 30px;
     width: 130px;
-    background-color: ${Colors.white};
+    background-color: ${Colors.black};
     font-size: 18px;
     color: ${Colors.white};
     border-radius: 3px;
     cursor: pointer;
     &.view{
-        background-color: ${Colors.white};
+        background-color: ${Colors.black};
         color: ${Colors.white};
-        border: 1px solid ${Colors.white};
+        border: 1px solid ${Colors.black};
     }
     &.disabled{
         background-color: grey;
@@ -29,9 +29,9 @@ const AddtoCart = newStyled.button`
 const ActiveButtons = newStyled.div`
     height: 30px;
     width: 30px;
-    background-color: ${Colors.white};
+    background-color: ${Colors.black};
     color: ${Colors.white};
-    border: 1px solid ${Colors.white};
+    border: 1px solid ${Colors.black};
     font-size: 18px;
     border-radius: 3px;
     cursor: pointer;
@@ -45,10 +45,10 @@ const ActiveButtons = newStyled.div`
 
 const ActiveInput = newStyled.input`
     height: 30px;
-    background-color: ${Colors.white};
+    background-color: ${Colors.black};
     width: min-content;
     color: ${Colors.white};
-    border: 1px solid ${Colors.white};
+    border: 1px solid ${Colors.black};
     font-size: 18px;
     border-radius: 3px;
     cursor: pointer;

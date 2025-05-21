@@ -8,6 +8,7 @@ import Carousel from '#/ui/components/Carousel';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import PincodeInput from '#/ui/components/Pincode';
 import PlusMInusOpen from '#/ui/components/PlusMInusOpen';
+import ShopifyPrice from '#/ui/components/ShopifyPrice';
 import VariantContainer from '#/ui/components/VariantContainer';
 import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
@@ -325,10 +326,11 @@ const ProductWithId = () => {
               __html: currentProduct?.description ?? '',
             }}
           />
-          <Price>
-            {currentProduct.variants[variant].currencyCode}{' '}
-            {currentProduct.variants[variant].price}
-          </Price>
+          <ShopifyPrice
+            currency={currentProduct.variants[variant].currencyCode}
+            price={currentProduct.variants[variant].price}
+            compareAtPrice={currentProduct.variants[variant]?.compareAtPrice}
+          />
           <AddToCart
             variantId={currentProduct.variants[variant].id}
             inventoryId={currentProduct.variants[variant].inventoryId}
@@ -356,10 +358,11 @@ const ProductWithId = () => {
       <Description
         dangerouslySetInnerHTML={{ __html: currentProduct?.description ?? '' }}
       />
-      <Price>
-        {currentProduct.variants[variant].currencyCode}{' '}
-        {currentProduct.variants[variant].price}
-      </Price>
+      <ShopifyPrice
+        currency={currentProduct.variants[variant].currencyCode}
+        price={currentProduct.variants[variant].price}
+        compareAtPrice={currentProduct.variants[variant]?.compareAtPrice}
+      />
       <AddToCart
         variantId={currentProduct.variants[variant].id}
         inventoryId={currentProduct.variants[variant].inventoryId}

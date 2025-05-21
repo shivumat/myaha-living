@@ -60,10 +60,10 @@ export interface NavRouteTypes {
 }
 
 export const navRoutes: NavRouteTypes[] = [
-  { name: 'Home', path: '/' },
-  { name: 'Shop', path: '/products' },
-  { name: 'About Us', path: '/about-us' },
-  { name: 'Contact Us', path: '/contact' },
+  { name: 'HOME', path: '/' },
+  { name: 'SHOP', path: '/products' },
+  { name: 'ABOUT US', path: '/about-us' },
+  { name: 'CONTACT US', path: '/contact' },
 ];
 
 export const hideNavbarRoutes: string[] = [];

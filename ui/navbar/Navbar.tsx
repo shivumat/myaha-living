@@ -29,7 +29,7 @@ const NavContainer = newStyled.div<{
   padding: 0;
   display: flex; 
   width: 100vw;
-  height: 60px;
+  height: 80px;
   background-color: ${({ showTransparent, showAboutUs }) => (showTransparent ? 'transparent' : showAboutUs ? '#5F1E1E' : Colors.white)};
   color : ${({ showAboutUs }) => (showAboutUs ? Colors.white : 'black')};
   transition: background-color 300ms linear;
@@ -55,7 +55,11 @@ const Burger = newStyled.span`
   }
 `;
 
-const LinksContainer = newStyled.div`
+const LinksContainer = newStyled.div<{
+  showTransparent?: boolean;
+  showAboutUs?: boolean;
+  showCollection?: boolean;
+}>`
   display: flex;
   margin-left: auto;
   column-gap: 20px;
@@ -64,6 +68,7 @@ const LinksContainer = newStyled.div`
     font-weight: lighter;
     cursor: pointer;
   }
+  color: ${({ showTransparent, showAboutUs }) => (showTransparent || showAboutUs ? Colors.white : 'black')};
   @media (max-width: 800px) {
     height: 100%;
     flex-direction: column;
@@ -87,8 +92,8 @@ const LinksContainer = newStyled.div`
   }
 `;
 
-const LogosContainer = newStyled.div<{ showTransparent?: boolean }>`
-  display: ${({ showTransparent }) => (showTransparent ? 'none' : 'flex')};
+const LogosContainer = newStyled.div`
+  display: flex;
   justify-content: flex-end;
   width: 100px;
   align-items: center;
@@ -118,7 +123,7 @@ const StyledCartLogo = newStyled(CartLogo)`
   }
 `;
 
-const StyledSearchLogo = newStyled(SearchLogo)<{ showTransparent?: boolean }>`
+const StyledSearchLogo = newStyled(SearchLogo)`
   cursor: pointer;
   @media (max-width: 800px) {
     transform: scale(0.65);
@@ -135,12 +140,6 @@ const StyledMyahaLogo = newStyled(MyahaLogo)<{
   }
   ${({ showAboutUs, showTransparent }) => (!(showAboutUs || showTransparent) ? 'filter: invert(1);' : '')}
   ${({ margin = '' }) => (!!margin ? `margin: ${margin};` : '')}
-  ${({ showTransparent }) =>
-    showTransparent
-      ? `transform: scale(1.2); &.clickable:hover {
-                                              transform: scale(1.3);
-                                            }`
-      : ''}
 `;
 
 const Navbar = () => {
@@ -170,6 +169,8 @@ const Navbar = () => {
   const totalCartItem = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const { collections, onSearchProducts } = useProduct();
+  const showTransparent =
+    !isOpen && isDesktopHomeOnTop && !showCollection && !showAboutUs;
 
   const Cart = (
     <div style={{ position: 'relative' }} onClick={toggleCart}>
@@ -187,11 +188,12 @@ const Navbar = () => {
               alignItems: 'center',
               width: isMobile ? '10px' : '16px',
               height: isMobile ? '10px' : '16px',
-              border: `1px solid ${showAboutUs ? Colors.white : 'black'}`,
+              color: `${showTransparent || showAboutUs ? Colors.white : 'black'}`,
+              border: `1px solid ${showTransparent || showAboutUs ? Colors.white : 'black'}`,
               fontSize: isMobile ? '5px' : '8px',
               padding: '2px',
               borderRadius: '50%',
-              backgroundColor: showAboutUs ? '#5F1E1E' : Colors.white,
+              backgroundColor: 'transparent',
               zIndex: 20,
               right: isMobile ? '2px' : '-3px',
               ...(isMobile ? {} : { top: '-3px' }),
@@ -205,7 +207,7 @@ const Navbar = () => {
 
       <StyledCartLogo
         className="clickable"
-        color={showAboutUs ? Colors.white : 'black'}
+        color={showTransparent || showAboutUs ? Colors.white : 'black'}
       />
     </div>
   );
@@ -255,7 +257,7 @@ const Navbar = () => {
                 return (
                   <PlusMInusOpen
                     key={index}
-                    label="Shop"
+                    label={route.name}
                     items={['Shop All', ...collections.map((c) => c.title)]}
                     handleLinkClick={(index) => {
                       toggle();
@@ -320,7 +322,6 @@ const Navbar = () => {
     );
   }
 
-  const showTransparent = !isOpen && isDesktopHomeOnTop;
   let timer: NodeJS.Timeout;
   return (
     <>
@@ -329,99 +330,95 @@ const Navbar = () => {
         showAboutUs={showAboutUs}
         showCollection={showCollection}
       >
-        {showTransparent && (
-          <Burger style={{ filter: 'invert(1)' }} onClick={() => toggle()}>
-            ☰
-          </Burger>
-        )}
         <StyledMyahaLogo
           className="clickable"
           onClick={() => router.push('/')}
           showAboutUs={showAboutUs}
-          width={showTransparent ? '111' : '99'}
-          height={showTransparent ? '30' : '27'}
+          width={'166.5'}
+          height={'45'}
           showTransparent={showTransparent}
         />
-        {!showTransparent && (
-          <LinksContainer>
-            {navRoutes.map((route, index) => {
-              if (route.path === '/products') {
-                return (
-                  <div
-                    className="clickable"
-                    onMouseEnter={() => {
-                      setShowCollection(true);
-                      setShowAboutUs(false);
-                      clearTimeout(timer);
-                    }}
-                    onMouseLeave={() => {
-                      timer = setTimeout(() => setShowCollection(false), 500);
-                    }}
-                    onClick={() => {
-                      handleLinkClick(route.path);
-                    }}
-                  >
-                    Shop
-                  </div>
-                );
-              }
-              if (route.path === '/about-us') {
-                return (
-                  <div
-                    className="clickable"
-                    onMouseEnter={() => {
-                      setShowAboutUs(true);
-                      setShowCollection(false);
-                      clearTimeout(timer);
-                    }}
-                    onClick={() => {
-                      if (showAboutUs) {
-                        setShowAboutUs(false);
-                      }
-                      handleLinkClick(route.path);
-                    }}
-                    onMouseLeave={() => {
-                      timer = setTimeout(() => setShowAboutUs(false), 500);
-                    }}
-                  >
-                    About Us
-                  </div>
-                );
-              }
+        <LinksContainer
+          showTransparent={showTransparent}
+          showAboutUs={showAboutUs}
+          showCollection={showCollection}
+        >
+          {navRoutes.map((route, index) => {
+            if (route.path === '/products') {
               return (
                 <div
                   className="clickable"
-                  onClick={() => handleLinkClick(route.path)}
-                  key={index}
+                  onMouseEnter={() => {
+                    setShowCollection(true);
+                    setShowAboutUs(false);
+                    clearTimeout(timer);
+                  }}
+                  onMouseLeave={() => {
+                    timer = setTimeout(() => setShowCollection(false), 500);
+                  }}
+                  onClick={() => {
+                    handleLinkClick(route.path);
+                  }}
                 >
                   {route.name}
                 </div>
               );
-            })}
-          </LinksContainer>
-        )}
-        <LogosContainer showTransparent={showTransparent}>
+            }
+            if (route.path === '/about-us') {
+              return (
+                <div
+                  className="clickable"
+                  onMouseEnter={() => {
+                    setShowAboutUs(true);
+                    setShowCollection(false);
+                    clearTimeout(timer);
+                  }}
+                  onClick={() => {
+                    if (showAboutUs) {
+                      setShowAboutUs(false);
+                    }
+                    handleLinkClick(route.path);
+                  }}
+                  onMouseLeave={() => {
+                    timer = setTimeout(() => setShowAboutUs(false), 500);
+                  }}
+                >
+                  {route.name}
+                </div>
+              );
+            }
+            return (
+              <div
+                className="clickable"
+                onClick={() => handleLinkClick(route.path)}
+                key={index}
+              >
+                {route.name}
+              </div>
+            );
+          })}
+        </LinksContainer>
+        <LogosContainer>
           <StyledSearchLogo
             className="clickable"
-            color={showAboutUs ? Colors.white : 'black'}
+            color={showTransparent || showAboutUs ? Colors.white : 'black'}
             onClick={() => setShowSearch(true)}
           />
 
-          {!showTransparent &&
-            (!user ? (
-              <StyledUserLogo
-                className="clickable"
-                color={showAboutUs ? Colors.white : 'black'}
-                onClick={toggleLogin}
-              />
-            ) : (
-              <StyledUserLogo
-                className="clickable"
-                color={showAboutUs ? Colors.white : 'black'}
-                onClick={() => router.push('/account')}
-              />
-            ))}
-          {!showTransparent && Cart}
+          {!user ? (
+            <StyledUserLogo
+              className="clickable"
+              color={showTransparent || showAboutUs ? Colors.white : 'black'}
+              onClick={toggleLogin}
+            />
+          ) : (
+            <StyledUserLogo
+              className="clickable"
+              color={showTransparent || showAboutUs ? Colors.white : 'black'}
+              onClick={() => router.push('/account')}
+            />
+          )}
+          {Cart}
         </LogosContainer>
         {(showCollection || showAboutUs) && (
           <div
@@ -437,7 +434,7 @@ const Navbar = () => {
               height: '450px',
               backgroundColor: showAboutUs ? '#5F1E1E' : Colors.white,
               position: 'absolute',
-              top: '60px',
+              top: '80px',
               boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
               overflowX: 'auto',
             }}

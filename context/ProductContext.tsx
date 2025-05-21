@@ -34,6 +34,7 @@ export interface Variant {
   id: string;
   availableForSale: boolean;
   price: string;
+  compareAtPrice: string;
   currencyCode: string;
   images: string[];
   material: string;
@@ -102,9 +103,10 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     const productsData: Products = productResponse.data.products.map(
       (product: Product) => {
         const variants = product.variants.map((variant) => {
-          let { images, price } = variant;
+          let { images, price, compareAtPrice } = variant;
           price = formatPrice(Number(price));
-          return { ...variant, images, price };
+          compareAtPrice = formatPrice(Number(compareAtPrice));
+          return { ...variant, images, price, compareAtPrice };
         });
         return { ...product, variants };
       },
@@ -150,9 +152,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
         (collection) => !collection.id.includes(allCollectionId),
       ),
     );
-    setTimeout(() => {
-      setFetching(false);
-    }, 1000);
+    setFetching(false);
   };
 
   const fetchInitialData = async () => {
