@@ -30,7 +30,7 @@ const ActiveButtons = newStyled.div`
     height: 30px;
     width: 30px;
     background-color: ${Colors.black};
-    color: ${Colors.white};
+    color: ${Colors.black};
     border: 1px solid ${Colors.black};
     font-size: 18px;
     border-radius: 3px;
