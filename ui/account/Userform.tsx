@@ -48,7 +48,7 @@ const Submit = newStyled.button`
     margin-left: auto;
     &.view{
         background-color: ${Colors.white};
-        color: ${Colors.white};
+        color: ${Colors.black};
         border: 1px solid ${Colors.black};
     }
     @media (max-width: 800px) {
