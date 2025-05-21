@@ -25,16 +25,19 @@ const CompareAtPrice = styled.span`
   font-weight: 400;
 `;
 
+const parsePrice = (value: string): number =>
+  parseFloat(value.replace(/,/g, ''));
+
 const ShopifyPrice: React.FC<ShopifyPriceProps> = ({
   price,
   compareAtPrice,
   currency,
   fontSize = '24px',
 }) => {
-  const numericPrice = parseFloat(price);
-  const numericCompareAt = parseFloat(compareAtPrice || '');
+  const numericPrice = parsePrice(price);
+  const numericCompareAt = parsePrice(compareAtPrice || '');
 
-  const isDiscounted = compareAtPrice && numericCompareAt > numericPrice;
+  const isDiscounted = compareAtPrice && numericCompareAt !== numericPrice;
 
   return (
     <PriceWrapper fontSize={fontSize}>

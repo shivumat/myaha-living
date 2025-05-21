@@ -73,7 +73,7 @@ const VariantContainer = (props: {
                   backgroundColor,
                   border:
                     props.activeIndex === index
-                      ? `1px solid ${Colors.white}`
+                      ? `1px solid ${Colors.black}`
                       : '0px',
                   position: 'relative',
                 }}
@@ -117,7 +117,7 @@ const VariantContainer = (props: {
                 backgroundColor: '#f5f5f532',
                 border:
                   props.activeIndex === index
-                    ? `1px solid ${Colors.white}`
+                    ? `1px solid ${Colors.black}`
                     : '0px',
                 fontSize: '12px',
                 fontWeight: '300',
