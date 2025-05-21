@@ -45,7 +45,7 @@ const ActiveButtons = newStyled.div`
 
 const ActiveInput = newStyled.input`
     height: 30px;
-    background-color: ${Colors.black};
+    background-color: ${Colors.white};
     width: min-content;
     color: ${Colors.black};
     border: 1px solid ${Colors.black};
