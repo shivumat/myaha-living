@@ -29,7 +29,7 @@ const AddtoCart = newStyled.button`
 const ActiveButtons = newStyled.div`
     height: 30px;
     width: 30px;
-    background-color: ${Colors.black};
+    background-color: ${Colors.white};
     color: ${Colors.black};
     border: 1px solid ${Colors.black};
     font-size: 18px;
