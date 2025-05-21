@@ -180,7 +180,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       <div
         style={{
           display: 'flex',
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.black,
           justifyContent: 'center',
           alignItems: 'center',
           height: '100vh',
