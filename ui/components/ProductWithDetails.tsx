@@ -22,7 +22,7 @@ const AddtoCart = newStyled.button`
     cursor: pointer;
     &.view{
         background-color: ${Colors.white};
-        color: ${Colors.white};
+        color: ${Colors.black};
         border: 1px solid ${Colors.balck};
     }
     @media (max-width: 800px) {
