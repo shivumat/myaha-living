@@ -23,7 +23,7 @@ const Button = newStyled.button`
     margin-top: 20px;
     &:hover {
         background: ${Colors.white};
-        color: ${Colors.white};
+        color: ${Colors.black};
     }
 `;
 
