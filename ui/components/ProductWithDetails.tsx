@@ -15,7 +15,7 @@ const Description = newStyled.div`
 const AddtoCart = newStyled.button`
     height: 30px;
     width: 100px;
-    background-color: ${Colors.white};
+    background-color: ${Colors.black};
     font-size: 14px;
     color: ${Colors.white};
     border-radius: 3px;
