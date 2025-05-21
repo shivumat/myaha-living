@@ -68,7 +68,7 @@ const InputDiv = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  color: ${Colors.white};
+  color: ${Colors.black};
   justify-content: center;
   margin-bottom: 10px;
   background-color: ${Colors.white};
