@@ -2,6 +2,7 @@ import { useToast } from '#/context/ToastContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
+import Colors from '../colors/colors';
 import PaymentComponent from '../components/Payment';
 // import PaymentComponent from "../components/Payment";
 
@@ -21,19 +22,19 @@ const FormContainer = newStyled.div`
 
 const Submit = newStyled.button`
     height: 50px;
-    background-color: black;
+    background-color: ${Colors.black};
     font-size: 20px;
     padding: 10px 20px;
     max-width: 400px;
     width: 100%;
-    color: white;
+    color: ${Colors.white};
     border-radius: 4px;
     cursor: pointer;
     margin: 20px auto;
     &.view{
-        background-color: white;
-        color: black;
-        border: 1px solid black;
+        background-color: ${Colors.white};
+        color: ${Colors.black};
+        border: 1px solid ${Colors.black};
     }
     @media (max-width: 800px) {
         font-size: 18px;

@@ -2,11 +2,13 @@
 import { useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import { Combination } from '#/lib/util';
+import Colors from '#/ui/colors/colors';
 import AddToCart from '#/ui/components/AddToCart';
 import Carousel from '#/ui/components/Carousel';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import PincodeInput from '#/ui/components/Pincode';
 import PlusMInusOpen from '#/ui/components/PlusMInusOpen';
+import ShopifyPrice from '#/ui/components/ShopifyPrice';
 import VariantContainer from '#/ui/components/VariantContainer';
 import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
@@ -92,7 +94,7 @@ const StyledDiv = newStyled.div`
   display: flex;
   gap: 20px;
   align-items: center;
-  background-color: #fff;
+  background-color: ${Colors.white};
   border-radius: 10px;
   margin-bottom: 10px;
   border: 1px solid #000;
@@ -324,10 +326,11 @@ const ProductWithId = () => {
               __html: currentProduct?.description ?? '',
             }}
           />
-          <Price>
-            {currentProduct.variants[variant].currencyCode}{' '}
-            {currentProduct.variants[variant].price}
-          </Price>
+          <ShopifyPrice
+            currency={currentProduct.variants[variant].currencyCode}
+            price={currentProduct.variants[variant].price}
+            compareAtPrice={currentProduct.variants[variant]?.compareAtPrice}
+          />
           <AddToCart
             variantId={currentProduct.variants[variant].id}
             inventoryId={currentProduct.variants[variant].inventoryId}
@@ -355,10 +358,11 @@ const ProductWithId = () => {
       <Description
         dangerouslySetInnerHTML={{ __html: currentProduct?.description ?? '' }}
       />
-      <Price>
-        {currentProduct.variants[variant].currencyCode}{' '}
-        {currentProduct.variants[variant].price}
-      </Price>
+      <ShopifyPrice
+        currency={currentProduct.variants[variant].currencyCode}
+        price={currentProduct.variants[variant].price}
+        compareAtPrice={currentProduct.variants[variant]?.compareAtPrice}
+      />
       <AddToCart
         variantId={currentProduct.variants[variant].id}
         inventoryId={currentProduct.variants[variant].inventoryId}

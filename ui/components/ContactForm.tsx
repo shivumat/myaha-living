@@ -1,9 +1,10 @@
 import newStyled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
+import Colors from '../colors/colors';
 
 const Form = newStyled.form`
   margin: 30px 0;
-  background-color: white;
+  background-color: ${Colors.white};
   padding: 1.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -49,8 +50,8 @@ const Textarea = newStyled.textarea`
 
 const SubmitButton = newStyled.button`
   width: 100%;
-  background-color: black;
-  color: white;
+  background-color: ${Colors.black};
+  color: ${Colors.white};
   padding: 0.75rem;
   border: none;
   border-radius: 4px;

@@ -1,5 +1,6 @@
 import { useAuth } from '#/context/AuthContext';
 import styled from '@emotion/styled';
+import Colors from './colors/colors';
 import Modal from './components/ModalComponent';
 
 const Container = styled.div`
@@ -25,7 +26,7 @@ const Container = styled.div`
 const Card = styled.div`
   width: 100%;
   text-align: center;
-  color: white;
+  color: ${Colors.white};
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,6 +1,7 @@
 'use client';
 import newStyled from '@emotion/styled';
 import React from 'react';
+import Colors from '../colors/colors';
 
 const InputWrapper = newStyled.div`
   position: relative;
@@ -13,7 +14,7 @@ const Label = newStyled.label`
   position: absolute;
   top: -7px;
   left: 12px;
-  background: white;
+  background: ${Colors.white};
   padding: 0 4px;
   font-size: 14px;
   font-weight: 600;
@@ -31,7 +32,7 @@ const StyledInput = newStyled.input<{ disabled?: boolean; hasError?: boolean }>`
   border-radius: 4px;
   font-size: 16px;
   outline: none;
-  background: ${({ disabled }) => (disabled ? '#d1d1d1' : 'white')};
+  background: ${({ disabled }) => (disabled ? '#d1d1d1' : Colors.white)};
   @media (max-width: 800px) {
     font-size: 14px;
   }

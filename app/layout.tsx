@@ -1,5 +1,6 @@
 import { SearchProvider } from '#/context/SearchContext';
 import '#/styles/globals.css';
+import Colors from '#/ui/colors/colors';
 import LayoutWrapper from '#/ui/LayoutWrapper';
 import { Metadata } from 'next';
 
@@ -59,7 +60,10 @@ export default function RootLayout({
           />
         </noscript>
       </head>
-      <body className="h-full w-full overflow-y-scroll">
+      <body
+        className="h-full w-full overflow-y-scroll"
+        style={{ backgroundColor: Colors.white }}
+      >
         <SearchProvider>
           <LayoutWrapper>{children}</LayoutWrapper>
         </SearchProvider>

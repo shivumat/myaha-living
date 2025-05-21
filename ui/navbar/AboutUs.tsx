@@ -1,11 +1,12 @@
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
+import Colors from '../colors/colors';
 
 const Container = newStyled.div`
     padding: 0px 60px;
     display: grid;
     grid-template-columns: 2fr 7fr;
-    color: white;
+    color: ${Colors.white};
     gap: 20px;
 `;
 
@@ -13,16 +14,16 @@ const Button = newStyled.button`
     width: 200px;
     padding: 12px;
     background: transparent;
-    border: 1px solid white;
-    color: white;
+    border: 1px solid ${Colors.white};
+    color: ${Colors.white};
     font-size: 16px;
     cursor: pointer;
     border-radius: 6px;
     transition: background 0.3s;
     margin-top: 20px;
     &:hover {
-        background: white;
-        color: black;
+        background: ${Colors.white};
+        color: ${Colors.black};
     }
 `;
 

@@ -2,6 +2,7 @@ import { useAuth } from '#/context/AuthContext';
 import { useToggle } from '#/hooks/useToggle';
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import Colors from './colors/colors';
 import Modal from './components/ModalComponent';
 import EmailLogo from './svg/email-logo';
 import EyeOffLogo from './svg/eye-off-logo';
@@ -30,7 +31,7 @@ const Container = styled.div`
 const Card = styled.div`
   width: 100%;
   text-align: center;
-  color: white;
+  color: ${Colors.white};
 `;
 
 const Title = styled.h2`
@@ -54,11 +55,11 @@ const Button = styled.button`
 `;
 
 const GoogleButton = styled(Button)`
-  background: white;
+  background: ${Colors.white};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: ${Colors.black};
   padding: 20px;
   margin-bottom: 20px;
 `;
@@ -67,10 +68,10 @@ const InputDiv = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  color: black;
+  color: ${Colors.black};
   justify-content: center;
   margin-bottom: 10px;
-  background-color: white;
+  background-color: ${Colors.white};
   border-radius: 5px;
   padding: 0px 20px;
   border: 2px solid transparent;
@@ -90,7 +91,7 @@ const InputField = styled.input`
   font-weight: 600;
   border: none;
   font-size: 16px;
-  color: black;
+  color: ${Colors.black};
   :focus {
     outline: none;
     border: none;
@@ -108,7 +109,7 @@ const InputLabel = styled.div`
 `;
 
 const ErrorText = styled.p`
-  color: white;
+  color: ${Colors.white};
   height: 20px;
   opacity: 0.5;
   font-size: 14px;
@@ -130,8 +131,8 @@ const CheckboxContainer = styled.div`
 `;
 
 const LoginButton = styled(Button)`
-  background: black;
-  color: white;
+  background: ${Colors.black};
+  color: ${Colors.white};
   padding: 20px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
@@ -139,10 +140,10 @@ const LoginButton = styled(Button)`
 
 const Footer = styled.p`
   margin-top: 10px;
-  color: black;
+  color: ${Colors.black};
   font-size: 14px;
   > a {
-    color: white;
+    color: ${Colors.white};
     cursor: pointer;
   }
 `;
@@ -157,7 +158,7 @@ const FlexContainer = styled.div`
 const Ordiv = styled.div`
   flex: 1;
   height: 0.5px;
-  background-color: white;
+  background-color: ${Colors.white};
 `;
 
 const Login = (props: {

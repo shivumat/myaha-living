@@ -4,6 +4,7 @@ import { useIsMobile } from '#/hooks/useMobile';
 import { formatPrice } from '#/lib/util';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
+import Colors from '../colors/colors';
 import CartItem from '../components/CartItem';
 
 const FormContainer = newStyled.div`
@@ -43,7 +44,7 @@ const OrderList: React.FC<OrderListProps> = ({ note, setNote }) => {
         alignItems: 'center',
         gap: '12px',
         padding: '40px 20px',
-        color: '#fff',
+        color: Colors.white,
         backgroundColor: '#5B1D1D',
         borderRadius: '12px',
         boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
@@ -62,12 +63,12 @@ const OrderList: React.FC<OrderListProps> = ({ note, setNote }) => {
         style={{
           marginTop: '10px',
           backgroundColor: 'transparent',
-          color: 'white',
+          color: Colors.white,
           fontSize: '16px',
           fontWeight: '500',
           padding: '10px 20px',
           borderRadius: '8px',
-          border: '1px solid white',
+          border: `1px solid ${Colors.white}`,
           cursor: 'pointer',
           transition: 'background 0.3s',
         }}

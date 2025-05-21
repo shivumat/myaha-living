@@ -1,19 +1,20 @@
 import { useCart } from '#/context/CartContext';
 import newStyled from '@emotion/styled';
 import { useState } from 'react';
+import Colors from '../colors/colors';
 
 const AddtoCart = newStyled.button`
     height: 30px;
     width: 130px;
-    background-color: black;
+    background-color: ${Colors.black};
     font-size: 18px;
-    color: white;
+    color: ${Colors.white};
     border-radius: 3px;
     cursor: pointer;
     &.view{
-        background-color: white;
-        color: black;
-        border: 1px solid black;
+        background-color: ${Colors.black};
+        color: ${Colors.black};
+        border: 1px solid ${Colors.black};
     }
     &.disabled{
         background-color: grey;
@@ -28,9 +29,9 @@ const AddtoCart = newStyled.button`
 const ActiveButtons = newStyled.div`
     height: 30px;
     width: 30px;
-    background-color: white;
-    color: black;
-    border: 1px solid black;
+    background-color: ${Colors.white};
+    color: ${Colors.black};
+    border: 1px solid ${Colors.black};
     font-size: 18px;
     border-radius: 3px;
     cursor: pointer;
@@ -44,10 +45,10 @@ const ActiveButtons = newStyled.div`
 
 const ActiveInput = newStyled.input`
     height: 30px;
-    background-color: white;
+    background-color: ${Colors.white};
     width: min-content;
-    color: black;
-    border: 1px solid black;
+    color: ${Colors.black};
+    border: 1px solid ${Colors.black};
     font-size: 18px;
     border-radius: 3px;
     cursor: pointer;

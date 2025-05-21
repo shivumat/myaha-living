@@ -5,12 +5,13 @@ import { useIsMobile } from '#/hooks/useMobile';
 import { formatPrice } from '#/lib/util';
 import newStyled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
+import Colors from '../colors/colors';
 import CartItem from '../components/CartItem';
 
 const SummaryContainer = newStyled.div`
     width: 500px;
     background-color: #192211;
-    color: white;
+    color: ${Colors.white};
     padding: 60px 10px;
     display: flex;
     flex-direction: column;
@@ -57,16 +58,16 @@ const CheckoutButton = newStyled.button`
   width: 100%;
   padding: 12px;
   background: transparent;
-  border: 1px solid white;
-  color: white;
+  border: 1px solid ${Colors.white};
+  color: ${Colors.white};
   font-size: 16px;
   cursor: pointer;
   border-radius: 6px;
   transition: background 0.3s;
 
   &:hover {
-    background: white;
-    color: black;
+    background: ${Colors.white};
+    color: ${Colors.black};
   }
 `;
 
@@ -87,17 +88,17 @@ const PromoInputContainer = newStyled.div`
 const PromoInput = newStyled.input`
   padding: 8px;
   font-size: 14px;
-  border: 1px solid white;
+  border: 1px solid ${Colors.white};
   border-radius: 4px;
   background: transparent;
-  color: white;
+  color: ${Colors.white};
   outline: none;
 `;
 
 const ApplyButton = newStyled.button`
   padding: 8px 12px;
-  background: white;
-  color: black;
+  background: ${Colors.white};
+  color: ${Colors.black};
   font-size: 14px;
   border: none;
   cursor: pointer;
@@ -113,8 +114,8 @@ const PromoTag = newStyled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #fff;
-  color: black;
+  background: ${Colors.white};
+  color: ${Colors.black};
   padding: 8px 12px;
   border-radius: 4px;
 `;
@@ -124,7 +125,7 @@ const RemoveButton = newStyled.button`
   border: none;
   font-size: 16px;
   cursor: pointer;
-  color: black;
+  color: ${Colors.black};
 `;
 
 export interface DiscountObjectType {
@@ -241,7 +242,11 @@ const CheckoutSummary = (props: {
               </PromoInputContainer>
               {promoError && (
                 <span
-                  style={{ color: 'white', fontSize: '12px', display: 'block' }}
+                  style={{
+                    color: Colors.white,
+                    fontSize: '12px',
+                    display: 'block',
+                  }}
                 >
                   {promoError}
                 </span>

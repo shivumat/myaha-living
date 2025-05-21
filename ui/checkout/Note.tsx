@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Colors from '../colors/colors';
 
 const NoteContainer = styled.div`
   margin-top: 20px;
@@ -18,8 +19,8 @@ const NoteInput = styled.textarea`
   border-radius: 6px;
   padding: 10px;
   font-size: 14px;
-  color: black;
-  background: white;
+  color: ${Colors.black};
+  background: ${Colors.white};
   resize: none;
 
   &::placeholder {

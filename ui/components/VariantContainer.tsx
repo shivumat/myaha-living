@@ -1,5 +1,6 @@
 import { mergeHexColorsWithWeights } from '#/lib/util';
 import { useState } from 'react';
+import Colors from '../colors/colors';
 
 const basicColors: { name: string; hex: string }[] = [
   { name: 'red', hex: '#FF0000' },
@@ -71,7 +72,9 @@ const VariantContainer = (props: {
                   borderRadius: '50%',
                   backgroundColor,
                   border:
-                    props.activeIndex === index ? '1px solid black' : '0px',
+                    props.activeIndex === index
+                      ? `1px solid ${Colors.black}`
+                      : '0px',
                   position: 'relative',
                 }}
               >
@@ -84,7 +87,7 @@ const VariantContainer = (props: {
                       left: '50%',
                       transform: 'translateX(-50%)',
                       backgroundColor: 'black',
-                      color: 'white',
+                      color: Colors.white,
                       padding: '5px',
                       fontSize: '10px',
                       borderRadius: '3px',
@@ -112,7 +115,10 @@ const VariantContainer = (props: {
                 padding: '5px',
                 borderRadius: '5px',
                 backgroundColor: '#f5f5f532',
-                border: props.activeIndex === index ? '1px solid black' : '0px',
+                border:
+                  props.activeIndex === index
+                    ? `1px solid ${Colors.black}`
+                    : '0px',
                 fontSize: '12px',
                 fontWeight: '300',
                 display: 'flex',

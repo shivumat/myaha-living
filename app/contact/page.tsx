@@ -1,6 +1,7 @@
 'use client';
 import { useToast } from '#/context/ToastContext';
 import { useIsMobile } from '#/hooks/useMobile';
+import Colors from '#/ui/colors/colors';
 import ContactFormComponent from '#/ui/components/ContactForm';
 import styled from '@emotion/styled';
 
@@ -33,7 +34,7 @@ const InfoText = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  color: white;
+  color: ${Colors.white};
   font-size: 18px;
   padding: 30px;
   font-weight: lighter;

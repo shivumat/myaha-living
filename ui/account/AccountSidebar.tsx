@@ -2,6 +2,7 @@ import { useAuth } from '#/context/AuthContext';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
+import Colors from '../colors/colors';
 import OrderLogo from '../svg/order-logo';
 import SignInLogo from '../svg/sign-in-logo';
 import UserLogo from '../svg/user-logo';
@@ -9,7 +10,7 @@ import UserLogo from '../svg/user-logo';
 const SidebarContainer = newStyled.div`
     width: 400px;
     background-color: #192211;
-    color: white;
+    color: ${Colors.white};
     padding: 40px 60px;
     display: flex;
     flex-direction: column;
@@ -40,7 +41,7 @@ const AccountSidebar = (props: {
           margin: '60px 0px',
           borderRadius: '10px',
           width: '100%',
-          backgroundColor: 'white',
+          backgroundColor: Colors.white,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -61,7 +62,7 @@ const AccountSidebar = (props: {
             display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            backgroundColor: props.index === 0 ? 'lightgray' : 'white',
+            backgroundColor: props.index === 0 ? 'lightgray' : Colors.white,
           }}
         >
           <OrderLogo />{' '}
@@ -80,7 +81,7 @@ const AccountSidebar = (props: {
             justifyContent: 'flex-start',
             alignItems: 'center',
             gap: '5px',
-            backgroundColor: props.index === 1 ? 'lightgray' : 'white',
+            backgroundColor: props.index === 1 ? 'lightgray' : Colors.white,
           }}
         >
           <UserLogo />{' '}

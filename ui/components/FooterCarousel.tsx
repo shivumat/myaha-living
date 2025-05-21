@@ -10,6 +10,7 @@ const Container = newStyled.div<{ rounded: boolean }>`
 `;
 
 import { TouchEvent, useState } from 'react';
+import Colors from '../colors/colors';
 
 const CarouselContainer = newStyled.div<{ rounded: boolean }>`
     background-color: #4B4B39;
@@ -38,7 +39,7 @@ const CarousleIcon = newStyled.div`
     display: flex;
     flex-direction: column;
     gap: 15px;
-    color: white;
+    color: ${Colors.white};
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -58,7 +59,7 @@ const Dot = newStyled.div<{ active: boolean }>`
   width: 40px;
   height: 5px;
   border-radius: 12px;
-  border: 1px solid black;
+  border: 1px solid ${Colors.black};
   background: ${(props) => (props.active ? 'black' : 'transparent')};
   cursor: pointer;
 `;

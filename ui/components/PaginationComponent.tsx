@@ -1,5 +1,6 @@
 import newStyled from '@emotion/styled';
 import React, { JSX } from 'react';
+import Colors from '../colors/colors';
 
 type PaginationProps = {
   totalItems: number;
@@ -21,7 +22,7 @@ const PageNumber = newStyled.button<{ active: boolean }>`
   padding: 8px 12px;
   border: none;
   background-color: ${(props) => (props.active ? '#000000' : '#f0f0f0')};
-  color: ${(props) => (props.active ? 'white' : 'black')};
+  color: ${(props) => (props.active ? Colors.white : 'black')};
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s;

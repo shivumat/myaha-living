@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import Colors from '../colors/colors';
 
 interface DropdownProps<T> {
   options: T[];
@@ -120,7 +121,7 @@ const Wrapper = styled.div`
 
 const DropdownMenu = styled.div<{ noOptions?: boolean }>`
   position: absolute;
-  background: white;
+  background: ${Colors.white};
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   border-radius: 6px;
   min-width: 160px;

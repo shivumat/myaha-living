@@ -1,6 +1,7 @@
 'use client';
 import { Collection, Products, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
+import Colors from '#/ui/colors/colors';
 import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import Pagination from '#/ui/components/PaginationComponent';
@@ -26,7 +27,7 @@ const CollectionDetails = newStyled.div`
     font-weight: 900;
     transform: translate(-50%, 0%);
     padding: 10px;
-    color: #ffffff;
+    color: ${Colors.white};
     @media (max-width: 800px) {
       top: 250px;
       font-size: 40px;
@@ -202,7 +203,7 @@ const ProductsCategory = () => {
                   width: '200px',
                   display: 'flex',
                   justifyContent: 'space-between',
-                  border: '1px solid black',
+                  border: `1px solid ${Colors.black}`,
                   alignItems: 'center',
                   padding: '0px 10px',
                 }}

@@ -2,13 +2,14 @@
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
+import Colors from '../colors/colors';
 import MyahaLogo from '../svg/myaha-logo';
 
 const FooterContainer = newStyled.div`
   width: 100%;
   display: flex;
-  background-color: black;
-  color: white;
+  background-color: ${Colors.black};
+  color: ${Colors.white};
   padding: 40px;
   @media (max-width: 800px) {
     flex-direction: column;
@@ -139,7 +140,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                backgroundColor: 'white',
+                backgroundColor: Colors.white,
                 padding: '2px',
                 borderRadius: '2px',
               }}
@@ -195,7 +196,7 @@ const Footer = () => {
       <div
         style={{
           display: 'flex',
-          borderBottom: '1px solid white',
+          borderBottom: `1px solid ${Colors.white}`,
           width: '100%',
           gap: '100px',
           padding: '20px 0px',
@@ -221,7 +222,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                backgroundColor: 'white',
+                backgroundColor: Colors.white,
                 padding: '5px',
                 borderRadius: '5px',
               }}

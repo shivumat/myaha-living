@@ -4,6 +4,7 @@ import { useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Colors from '../colors/colors';
 import CartItem from '../components/CartItem';
 import Sidebar from '../components/Sidebar';
 
@@ -38,7 +39,7 @@ const Cart = () => {
         alignItems: 'center',
         gap: '12px',
         padding: '40px 20px',
-        color: '#fff',
+        color: Colors.white,
         backgroundColor: '#5B1D1D',
         borderRadius: '12px',
         boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
@@ -57,12 +58,12 @@ const Cart = () => {
         style={{
           marginTop: '10px',
           backgroundColor: 'transparent',
-          color: 'white',
+          color: Colors.white,
           fontSize: '16px',
           fontWeight: '500',
           padding: '10px 20px',
           borderRadius: '8px',
-          border: '1px solid white',
+          border: `1px solid ${Colors.white}`,
           cursor: 'pointer',
           transition: 'background 0.3s',
         }}
@@ -127,14 +128,14 @@ const Cart = () => {
             style={{
               marginTop: 'auto',
               backgroundColor: 'black',
-              color: 'white',
+              color: Colors.white,
               fontSize: '16px',
               fontWeight: '500',
               padding: '10px 20px',
               borderRadius: '8px',
               cursor: 'pointer',
               transition: 'background 0.3s',
-              border: '1px solid black',
+              border: `1px solid ${Colors.black}`,
             }}
             onClick={() => router.push('/checkout')}
             className="clickable"
@@ -150,7 +151,7 @@ const Cart = () => {
               fontWeight: '500',
               padding: '10px 20px',
               borderRadius: '8px',
-              border: '1px solid black',
+              border: `1px solid ${Colors.black}`,
               cursor: 'pointer',
               transition: 'background 0.3s',
             }}

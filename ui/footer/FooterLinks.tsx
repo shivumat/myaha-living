@@ -5,6 +5,7 @@ import { footerRoutes, FooterRouteTypes } from '#/lib/constants/routes';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Colors from '../colors/colors';
 
 const Container = newStyled.div`
   width: 85%;
@@ -32,7 +33,7 @@ const Links = newStyled.div`
 `;
 
 const MobileContainer = newStyled.div`
-  border-top: 0.5px solid white;
+  border-top: 0.5px solid ${Colors.white};
   margin-bottom: 20px;
 `;
 const MobileHeaderContainer = newStyled.div`

@@ -2,6 +2,7 @@ import { Product, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import Carousel from './Carousel';
+import ShopifyPrice from './ShopifyPrice';
 
 const StyleCarousel = newStyled(Carousel)`
     cursor: pointer;
@@ -84,7 +85,12 @@ const ProductWithVariants = (props: { product: Product }) => {
             }}
           >
             <div style={{ minWidth: '80px', textAlign: 'left' }}>
-              {`${product.variants[0].currencyCode} ${product.variants[0].price}`}
+              <ShopifyPrice
+                fontSize="16px"
+                currency={product.variants[0].currencyCode}
+                price={product.variants[0].price}
+                compareAtPrice={product.variants[0]?.compareAtPrice}
+              />
             </div>
           </div>
         </div>

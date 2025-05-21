@@ -1,5 +1,6 @@
 import { formatPrice, getRandomIntInclusive, searchProducts } from '#/lib/util';
-import MyahaLogo from '#/ui/svg/myaha-logo';
+import Colors from '#/ui/colors/colors';
+import FlowerLoader from '#/ui/InitLoader';
 import { useRouter } from 'next/navigation';
 import {
   createContext,
@@ -9,7 +10,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useToast } from './ToastContext';
 
 export type Products = Product[];
 
@@ -34,6 +34,7 @@ export interface Variant {
   id: string;
   availableForSale: boolean;
   price: string;
+  compareAtPrice: string;
   currencyCode: string;
   images: string[];
   material: string;
@@ -77,7 +78,6 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
   );
   const [fetching, setFetching] = useState(false);
   const router = useRouter();
-  const { startLoading, stopLoading } = useToast();
   const fetched = useRef(false);
 
   const collectionOrder = [
@@ -103,9 +103,10 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     const productsData: Products = productResponse.data.products.map(
       (product: Product) => {
         const variants = product.variants.map((variant) => {
-          let { images, price } = variant;
+          let { images, price, compareAtPrice } = variant;
           price = formatPrice(Number(price));
-          return { ...variant, images, price };
+          compareAtPrice = formatPrice(Number(compareAtPrice));
+          return { ...variant, images, price, compareAtPrice };
         });
         return { ...product, variants };
       },
@@ -152,12 +153,10 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       ),
     );
     setFetching(false);
-    stopLoading();
   };
 
   const fetchInitialData = async () => {
     setFetching(true);
-    startLoading();
     fetchData();
   };
 
@@ -181,14 +180,14 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       <div
         style={{
           display: 'flex',
-          backgroundColor: 'black',
+          backgroundColor: Colors.white,
           justifyContent: 'center',
           alignItems: 'center',
           height: '100vh',
           width: '100vw',
         }}
       >
-        <MyahaLogo />
+        <FlowerLoader />
       </div>
     );
 

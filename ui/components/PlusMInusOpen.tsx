@@ -1,8 +1,9 @@
 import newStyled from '@emotion/styled';
 import { ReactNode, useState } from 'react';
+import Colors from '../colors/colors';
 
 const MobileContainer = newStyled.div`
-  border-top: 0.5px solid white;
+  border-top: 0.5px solid ${Colors.white};
 `;
 const MobileHeaderContainer = newStyled.div`
   padding: 2px 0px;

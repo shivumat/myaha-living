@@ -1,5 +1,6 @@
 'use client';
 import newStyled from '@emotion/styled';
+import Colors from '../colors/colors';
 
 const InputWrapper = newStyled.div`
   position: relative;
@@ -12,7 +13,7 @@ const Label = newStyled.label`
   position: absolute;
   top: -7px;
   left: 12px;
-  background: white;
+  background: ${Colors.white};
   padding: 0 4px;
   font-size: 14px;
   font-weight: 600;
@@ -30,7 +31,7 @@ const StyledSelect = newStyled.select<{ hasError?: boolean }>`
   border-radius: 4px;
   font-size: 16px;
   outline: none;
-  background: white;
+  background: ${Colors.white};
   @media (max-width: 800px) {
     font-size: 14px;
   }

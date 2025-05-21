@@ -1,6 +1,7 @@
 import { Product, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
+import Colors from '../colors/colors';
 import AddToCart from './AddToCart';
 
 const Description = newStyled.div`
@@ -14,15 +15,15 @@ const Description = newStyled.div`
 const AddtoCart = newStyled.button`
     height: 30px;
     width: 100px;
-    background-color: black;
+    background-color: ${Colors.black};
     font-size: 14px;
-    color: white;
+    color: ${Colors.white};
     border-radius: 3px;
     cursor: pointer;
     &.view{
-        background-color: white;
-        color: black;
-        border: 1px solid black;
+        background-color: ${Colors.white};
+        color: ${Colors.black};
+        border: 1px solid ${Colors.black};
     }
     @media (max-width: 800px) {
         font-size: 10px;
