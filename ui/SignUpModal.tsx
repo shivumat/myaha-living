@@ -81,7 +81,7 @@ const InputField = styled.input`
   font-weight: 600;
   border: none;
   font-size: 16px;
-  color: ${Colors.white};
+  color: ${Colors.black};
   :focus {
     outline: none;
     border: none;
