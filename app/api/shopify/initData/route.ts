@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 export const POST = async () => {
   try {
     const query = `{
-      metaobjects(first: 10, type: "website_data") {
+      metaobjects(first: 15, type: "website_data") {
         edges {
           node {
             handle
@@ -22,7 +22,7 @@ export const POST = async () => {
       }
     }`;
 
-    const data = await shopifyFetch({ query });
+    const data = await shopifyFetch({ query }, true);
 
     const initData = data.data.data.metaobjects.edges.map((data: any) => {
       const formattedFields = data?.node?.fields.reduce(

@@ -1,7 +1,10 @@
-export async function shopifyFetch(payload: {
-  query: string;
-  variables?: any;
-}) {
+export async function shopifyFetch(
+  payload: {
+    query: string;
+    variables?: any;
+  },
+  noCache?: boolean,
+) {
   const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
   try {
@@ -11,6 +14,9 @@ export async function shopifyFetch(payload: {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          ...(noCache
+            ? { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+            : {}),
           ...(key && { 'X-Shopify-Storefront-Access-Token': key }),
         },
         body: JSON.stringify({

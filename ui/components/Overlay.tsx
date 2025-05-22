@@ -31,9 +31,9 @@ const StyledOverlay = styled.div<
     blurBackground ? 'blur(4px)' : 'none'};
   z-index: ${({ zIndex }) => zIndex};
   transition: opacity 0.3s ease;
-  opacity: ${({ visible }) => (visible ? 0.5 : 0)};
+  opacity: ${({ visible }) => (visible ? 0.6 : 0)};
   :hover {
-    opacity: 0.8;
+    opacity: 1;
   }
 `;
 

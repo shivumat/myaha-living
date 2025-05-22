@@ -2,7 +2,7 @@
 import { AnnouncementData } from '#/context/ProductContext';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 import Conatiner from '../components/Conatiner';
 
 type Props = {
@@ -20,7 +20,6 @@ const NavButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.2);
   border: none;
   color: white;
   padding: 6px;
@@ -28,7 +27,7 @@ const NavButton = styled.button`
   z-index: 1;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -80,10 +79,10 @@ export const AnnouncementTicker: React.FC<Props> = ({
       {total > 1 && (
         <>
           <LeftButton onClick={handlePrev} aria-label="Previous">
-            <FaChevronLeft />
+            <HiOutlineChevronLeft />
           </LeftButton>
           <RightButton onClick={handleNext} aria-label="Next">
-            <FaChevronRight />
+            <HiOutlineChevronRight />
           </RightButton>
         </>
       )}
