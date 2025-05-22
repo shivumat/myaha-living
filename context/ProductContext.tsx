@@ -66,6 +66,10 @@ export interface AnnouncementData {
 
 export interface InitData {
   announcementData: AnnouncementData[];
+  bannerImages: { url: string; altText: string }[];
+  bannerRoutes: string[];
+  mobileBannerImages: { url: string; altText: string }[];
+  mobileBannerRoutes: string[];
 }
 
 interface ProductContextType {
@@ -112,7 +116,19 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     });
     const { data: initResponse } = await data.json();
     const announcementData = JSON.parse(initResponse?.[0]?.announcements_data);
-    setInitData({ announcementData });
+    const bannerImages = initResponse?.[0]?.banner_images;
+    const bannerRoutes = JSON.parse(initResponse?.[0]?.banner_routes);
+    const mobileBannerImages = initResponse?.[0]?.mobile_banner_images;
+    const mobileBannerRoutes = JSON.parse(
+      initResponse?.[0]?.mobile_banner_routes_1,
+    );
+    setInitData({
+      announcementData,
+      bannerImages,
+      bannerRoutes,
+      mobileBannerImages,
+      mobileBannerRoutes,
+    });
   };
 
   const getProductData = async () => {

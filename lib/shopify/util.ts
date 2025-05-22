@@ -36,6 +36,39 @@ export async function shopifyFetch(
   }
 }
 
+export async function getShopifyMediaInfo(mediaId: any) {
+  const query = `
+      query GetShopifyMediaImage($id: ID!) {
+      node(id: $id) {
+          ... on MediaImage {
+          image {
+              url
+              altText
+          }
+          }
+      }
+      }
+  `;
+
+  const { data } = await shopifyFetch({ query, variables: { id: mediaId } });
+  if (data.errors) {
+    console.error('Error fetching media image:', data.errors);
+    return null;
+  }
+  const mediaImage = data.data.node;
+  if (!mediaImage) {
+    console.error('Media image not found');
+    return null;
+  }
+  const imageUrl = mediaImage.image.url;
+  const altText = mediaImage.image.altText;
+  const formattedImage = {
+    url: imageUrl,
+    altText: altText,
+  };
+  return formattedImage;
+}
+
 export async function shopifyAdminFetch(payload: {
   query: string;
   variables?: any;

@@ -1,4 +1,4 @@
-import { shopifyFetch } from '#/lib/shopify/util';
+import { getShopifyMediaInfo, shopifyFetch } from '#/lib/shopify/util';
 import { notFound } from 'next/navigation';
 export const revalidate = 0;
 export const POST = async () => {
@@ -24,20 +24,42 @@ export const POST = async () => {
 
     const data = await shopifyFetch({ query }, true);
 
-    const initData = data.data.data.metaobjects.edges.map((data: any) => {
-      const formattedFields = data?.node?.fields.reduce(
-        (acc: any, field: any) => {
-          console.log('Field:', field);
-          acc[field.key] = field.value;
-          return acc;
-        },
-        {},
-      );
+    const initData = await Promise.all(
+      data.data.data.metaobjects.edges.map(async (data: any) => {
+        const formattedFields = await data?.node?.fields.reduce(
+          async (accPromise: Promise<any>, field: any) => {
+            const acc = await accPromise;
+            if (field.key === 'banner_images') {
+              const imageArray = JSON.parse(field.value);
+              const imagesData = [];
+              for (let i = 0; i < imageArray.length; i++) {
+                const image = imageArray[i];
+                const imageData = await getShopifyMediaInfo(image);
+                imagesData.push(imageData);
+              }
+              acc[field.key] = imagesData;
+            } else if (field.key === 'mobile_banner_images_1') {
+              const imageArray = JSON.parse(field.value);
+              const imagesData = [];
+              for (let i = 0; i < imageArray.length; i++) {
+                const image = imageArray[i];
+                const imageData = await getShopifyMediaInfo(image);
+                imagesData.push(imageData);
+              }
+              acc['mobile_banner_images'] = imagesData;
+            } else {
+              acc[field.key] = field.value;
+            }
+            return acc;
+          },
+          Promise.resolve({}),
+        );
 
-      return {
-        ...formattedFields,
-      };
-    });
+        return {
+          ...formattedFields,
+        };
+      }),
+    );
 
     return new Response(
       JSON.stringify({

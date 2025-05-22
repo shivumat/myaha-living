@@ -84,6 +84,7 @@ const Categories = () => {
           `products/${collection.id.replace('gid://shopify/Collection/', '')}`,
         )
       }
+      className="clickable"
       key={collection.id}
     >
       <Overlay>
@@ -118,7 +119,7 @@ const Categories = () => {
   return (
     <Container>
       <div className="title">
-        <div>Product Category</div>
+        <div>SHOP BY CATEGORY</div>
         {!isMobile && (
           <div style={{ display: 'flex', columnGap: '40px' }}>
             <Arrow className="clickable" onClick={() => scroll()}>

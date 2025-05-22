@@ -54,7 +54,7 @@ const Carousel = (props: {
   images?: string[];
   height: string;
   children?: ReactNode;
-  onClick?: () => void;
+  onClick?: (index: number) => void;
   className?: string;
   isCircle?: boolean;
   autoScroll?: boolean;
@@ -132,7 +132,7 @@ const Carousel = (props: {
         <CarouselImageDiv
           key={idx}
           onClick={() =>
-            props.clickableImages?.includes(idx) && props.onClick?.()
+            props.clickableImages?.includes(idx) && props.onClick?.(idx)
           }
         >
           <Image
@@ -161,7 +161,7 @@ const Carousel = (props: {
     >
       <CarouselWrapper
         index={index}
-        onClick={() => !props.clickableImages?.length && props.onClick?.()}
+        onClick={() => !props.clickableImages?.length && props.onClick?.(index)}
       >
         {CarouselComponents}
       </CarouselWrapper>

@@ -17,7 +17,7 @@ const Gallery = styled.div`
   width: 100%;
   column-gap: 20px;
   margin: auto;
-  height: 90%;
+  height: 60%;
 `;
 
 const ImageWrapper = styled.div`
@@ -36,7 +36,7 @@ const ImageWrapper = styled.div`
 
 const MobileWrapper = styled.div`
   padding: 20px;
-  height: 720px;
+  height: 650px;
 `;
 
 // Desktop Grid Layout Component
