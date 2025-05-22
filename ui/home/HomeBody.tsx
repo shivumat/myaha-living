@@ -68,6 +68,9 @@ const HomeBody = () => {
 
   return (
     <>
+      <Container>
+        <Categories />
+      </Container>
       <Div1 isMobile={isMobile}>
         <div className="title">
           Crafting emotions, not just essentials – where every design tells your
@@ -75,7 +78,6 @@ const HomeBody = () => {
         </div>
       </Div1>
       <Container>
-        <Categories />
         <FetaureConstainer>
           <div className="title">Featured products</div>
           <FeaturedProducts />

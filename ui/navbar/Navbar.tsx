@@ -24,6 +24,7 @@ const NavContainer = newStyled.div<{
   showTransparent?: boolean;
   showAboutUs?: boolean;
   showCollection?: boolean;
+  hasAnnouncements?: boolean;
 }>`
   margin: 0;
   padding: 0;
@@ -35,7 +36,7 @@ const NavContainer = newStyled.div<{
   transition: background-color 300ms linear;
   align-items: center;
   position: fixed;
-  top: 0;
+  top: ${({ hasAnnouncements }) => (hasAnnouncements ? '40' : '0')};
   z-index: 1000;
   border-bottom: 0.2px solid ${({ showTransparent, showAboutUs, showCollection }) => (showTransparent || showAboutUs || showCollection ? 'transparent' : '#00000033')};
   @media (max-width: 800px) {
@@ -168,7 +169,7 @@ const Navbar = () => {
 
   const totalCartItem = cart.reduce((acc, item) => acc + item.quantity, 0);
 
-  const { collections, onSearchProducts } = useProduct();
+  const { collections, onSearchProducts, hasAnnouncements } = useProduct();
   const showTransparent =
     !isOpen && isDesktopHomeOnTop && !showCollection && !showAboutUs;
 
@@ -215,7 +216,7 @@ const Navbar = () => {
   if (isMobile) {
     return (
       <>
-        <NavContainer>
+        <NavContainer hasAnnouncements={hasAnnouncements && isDesktopHomeOnTop}>
           <Burger onClick={() => toggle()}>☰</Burger>
           <StyledMyahaLogo
             className="clickable"
@@ -329,6 +330,7 @@ const Navbar = () => {
         showTransparent={showTransparent}
         showAboutUs={showAboutUs}
         showCollection={showCollection}
+        hasAnnouncements={hasAnnouncements && isDesktopHomeOnTop}
       >
         <StyledMyahaLogo
           className="clickable"

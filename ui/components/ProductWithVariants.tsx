@@ -35,8 +35,10 @@ const ProductWithVariants = (props: { product: Product }) => {
         <StyleCarousel
           onClick={() => openProduct(product)}
           height={'100%'}
+          className="clickable"
           images={product.variants[0].images}
           isCircle
+          hoverScroll
         />
       </div>
       <div

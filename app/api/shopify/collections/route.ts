@@ -72,7 +72,7 @@ export const POST = async () => {
     return new Response(
       JSON.stringify({
         status: true,
-        message: 'Products fetched',
+        message: 'Collections fetched',
         data: collections,
       }),
       {
@@ -80,7 +80,7 @@ export const POST = async () => {
       },
     );
   } catch (error) {
-    console.error('Error while fetching products:', error);
+    console.error('Error while fetching Collections:', error);
     notFound();
   }
 };

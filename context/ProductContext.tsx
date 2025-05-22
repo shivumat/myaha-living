@@ -1,6 +1,6 @@
 import { formatPrice, getRandomIntInclusive, searchProducts } from '#/lib/util';
 import Colors from '#/ui/colors/colors';
-import FlowerLoader from '#/ui/InitLoader';
+import InitLoader from '#/ui/InitLoader';
 import { useRouter } from 'next/navigation';
 import {
   createContext,
@@ -59,6 +59,15 @@ export interface Collection {
   products: Product[];
 }
 
+export interface AnnouncementData {
+  text: string;
+  color: string;
+}
+
+export interface InitData {
+  announcementData: AnnouncementData[];
+}
+
 interface ProductContextType {
   products: Products;
   collections: Collections;
@@ -66,6 +75,8 @@ interface ProductContextType {
   onSearchProducts: (searchString: string) => Products;
   fetchData: () => Promise<void>;
   allCollections: Collection | undefined;
+  initData?: InitData;
+  hasAnnouncements: boolean;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -73,6 +84,7 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Products>([]);
   const [collections, setCollections] = useState<Collections>([]);
+  const [initData, setInitData] = useState<InitData | undefined>();
   const [allCollections, setAllCollections] = useState<Collection | undefined>(
     undefined,
   );
@@ -92,8 +104,18 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
 
   const allCollectionId = '480886358263';
 
-  const fetchData = async () => {
-    fetched.current = true;
+  const getInitData = async () => {
+    const data = await fetch('/api/shopify/initData', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ page: 1 }),
+    });
+    const { data: initResponse } = await data.json();
+    const announcementData = JSON.parse(initResponse?.[0]?.announcements_data);
+    setInitData({ announcementData });
+  };
+
+  const getProductData = async () => {
     const productData = await fetch('/api/shopify/products', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -112,7 +134,10 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       },
     );
     setProducts(productsData);
+    return productsData;
+  };
 
+  const getCollectionData = async (productsData: Products) => {
     const collectionData = await fetch('/api/shopify/collections', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -152,6 +177,13 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
         (collection) => !collection.id.includes(allCollectionId),
       ),
     );
+  };
+
+  const fetchData = async () => {
+    fetched.current = true;
+    await getInitData();
+    const productsData = await getProductData();
+    await getCollectionData(productsData);
     setFetching(false);
   };
 
@@ -187,7 +219,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
           width: '100vw',
         }}
       >
-        <FlowerLoader />
+        <InitLoader />
       </div>
     );
 
@@ -200,6 +232,8 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
         onSearchProducts,
         fetchData,
         allCollections,
+        initData,
+        hasAnnouncements: !!initData?.announcementData?.length,
       }}
     >
       {children}
