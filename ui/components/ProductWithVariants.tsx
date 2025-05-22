@@ -70,7 +70,7 @@ const ProductWithVariants = (props: { product: Product }) => {
               width: '100%',
               fontSize: isMobile ? '12px' : '14px',
             }}
-            className="clickable"
+            className="clickable hover_underline"
             onClick={() => openProduct(product)}
           >
             {`${product.title}`}{' '}
