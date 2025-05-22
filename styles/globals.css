@@ -87,4 +87,5 @@ input[type='number'] {
 /* Apply globally */
 * {
   font-family: 'Proxima Nova Condensed', sans-serif;
+  letter-spacing: 2px;
 }
