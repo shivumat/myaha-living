@@ -21,14 +21,14 @@ const ProductWithVariants = (props: { product: Product }) => {
         flexDirection: 'column',
         width: '100%',
         maxWidth: '450px',
-        height: !isMobile ? '470px' : '350px',
+        height: !isMobile ? '600px' : '350px',
         margin: '0px auto 20px',
       }}
     >
       <div
         style={{
           height: '100%',
-          width: isMobile ? '100%' : '75%',
+          width: '100%',
           margin: '10px auto',
         }}
       >
@@ -50,7 +50,7 @@ const ProductWithVariants = (props: { product: Product }) => {
           alignItems: 'basline',
           height: '60px',
           width: isMobile ? '100%' : '80%',
-          margin: '10px auto',
+          margin: '10px 0px',
           flexDirection: isMobile ? 'column' : 'row',
         }}
       >

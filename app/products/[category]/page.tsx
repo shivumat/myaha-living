@@ -6,35 +6,11 @@ import Colors from '#/ui/colors/colors';
 import Container from '#/ui/components/ContainerBox';
 import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
-import Pagination from '#/ui/components/PaginationComponent';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
 import Textbox from '#/ui/components/Textbox';
-import newStyled from '@emotion/styled';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
-
-const ListBody = newStyled.div`
-    padding: 20px;
-`;
-
-const Conatiner = newStyled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 20px;
-    width: 100%;
-    margin: 20px 0px 0px 0px; 
-    padding-bottom: 20px; 
-    @media (max-width: 1400px) {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-    @media (max-width: 800px) {
-        grid-template-columns: 1fr 1fr;
-    }
-`;
-
-const StyledPagination = newStyled(Pagination)`
-  margin-bottom: 16px;
-`;
+import { Conatiner, ListBody, StyledPagination } from '../util';
 
 const ProductsCategory = () => {
   const [selected, setSelected] = useState<Collection | null>(null);
