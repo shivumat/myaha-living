@@ -70,7 +70,9 @@ export const AnnouncementTicker: React.FC<Props> = ({
     <Wrapper>
       <Conatiner
         padding="12px 48px"
+        height="38px"
         horizontalCenter
+        verticalCenter
         bgColor={announcements[currentIndex].color}
       >
         {announcements[currentIndex].text}

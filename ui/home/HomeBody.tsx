@@ -7,6 +7,7 @@ import Colors from '../colors/colors';
 import FooterCarousel from '../components/FooterCarousel';
 import OrderCreated from '../OrderCreatedModal';
 import Categories from './Categories';
+import InstagramFeed from './InstagramFeed';
 import OurStory from './OurStory';
 import FeaturedProducts from './ProductsFeatured';
 
@@ -83,6 +84,7 @@ const HomeBody = () => {
           <FeaturedProducts />
         </FetaureConstainer>
         <FooterCarousel />
+        <InstagramFeed />
         <OurStory />
         {/* <CategoryProducts /> */}
         <OrderCreated

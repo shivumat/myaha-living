@@ -36,7 +36,7 @@ const NavContainer = newStyled.div<{
   transition: background-color 300ms linear;
   align-items: center;
   position: fixed;
-  top: ${({ hasAnnouncements }) => (hasAnnouncements ? '40' : '0')};
+  top: ${({ hasAnnouncements }) => (hasAnnouncements ? '38' : '0')};
   z-index: 1000;
   border-bottom: 0.2px solid ${({ showTransparent, showAboutUs, showCollection }) => (showTransparent || showAboutUs || showCollection ? 'transparent' : '#00000033')};
   @media (max-width: 800px) {
