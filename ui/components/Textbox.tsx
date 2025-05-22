@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import Colors from '../colors/colors';
 
 interface TextboxProps {
   children?: React.ReactNode;
@@ -22,7 +23,7 @@ interface TextboxProps {
 }
 
 const StyledText = styled.div<TextboxProps>`
-  color: ${({ color = 'inherit' }) => color};
+  color: ${({ color = Colors.black }) => color};
   font-size: ${({ fontSize = 'inherit' }) => fontSize};
   font-weight: ${({ fontWeight = 'normal' }) => fontWeight};
   text-decoration: ${({ textDecoration = 'none' }) => textDecoration};

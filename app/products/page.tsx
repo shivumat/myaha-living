@@ -1,39 +1,17 @@
 'use client';
-import { Collection, Products, useProduct } from '#/context/ProductContext';
+import { Products, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
+import { COLLECTIONS, MATERIALS } from '#/lib/constants/product';
 import Colors from '#/ui/colors/colors';
+import Container from '#/ui/components/ContainerBox';
 import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import Pagination from '#/ui/components/PaginationComponent';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
+import Textbox from '#/ui/components/Textbox';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-
-const BannerImg = newStyled.img`
-    height: 850px;
-    object-fit: cover;
-    object-position: 0% 80%;
-    @media (max-width: 800px) {
-        height: 500px;
-    }
-`;
-
-const CollectionDetails = newStyled.div`
-    position: absolute;
-    top: 425px;
-    left: 50%;
-    font-size: 50px;
-    transform: translate(-50%, 0%);
-    padding: 10px;
-    color: ${Colors.white};
-    font-weight: 900;
-    @media (max-width: 800px) {
-      top: 250px;
-      font-size: 40px;
-      width: max-content;
-    }
-`;
 
 const ListBody = newStyled.div`
     padding: 20px;
@@ -61,32 +39,23 @@ const StyledPagination = newStyled(Pagination)`
 const ProductsPage = () => {
   const [sort, setSort] = useState<string>('Featured');
   const [productsToShow, setProductsToShow] = useState<Products>([]);
-  const [collectionProducts, setColletionProducts] = useState<Products>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { products, collections, allCollections: collection } = useProduct();
+  const {
+    materialCollections,
+    collections,
+    allCollections: collection,
+  } = useProduct();
   const isMobile = useIsMobile();
   const route = useRouter();
 
   const topRef = useRef<HTMLDivElement>(null);
 
   const productsCount = isMobile ? 6 : 12;
+  const allCollectionTypes = [COLLECTIONS, MATERIALS];
 
   useEffect(() => {
-    if (!!collection) {
-      let productsToShow: Products = [];
-      collection.products.forEach((product) => {
-        const productToShow = products.find((p) => p.id === product.id);
-        if (productToShow) {
-          productsToShow.push(productToShow);
-        }
-      });
-      setColletionProducts(productsToShow);
-    }
-  }, [collection, products]);
-
-  useEffect(() => {
-    if (products.length && collection) {
-      let productsToShow: Products = collectionProducts;
+    if (collection) {
+      let productsToShow: Products = collection?.products;
 
       if (productsToShow.length === 0) {
         return;
@@ -111,26 +80,20 @@ const ProductsPage = () => {
       setProductsToShow(
         productsToShow.slice(
           (currentPage - 1) * productsCount,
-          Math.min(collectionProducts.length, productsCount * currentPage),
+          Math.min(collection?.products?.length, productsCount * currentPage),
         ),
       );
     }
-  }, [sort, collectionProducts, collection, currentPage]);
+  }, [sort, collection, currentPage]);
 
   return (
     <>
-      <div>
-        <BannerImg
-          src={
-            collection?.image ?? 'https://i.postimg.cc/2SG8536P/DSCF4911.jpg'
-          }
-          alt={collection?.title ?? 'Myaha products'}
-          width={'100%'}
-        />
-        <CollectionDetails>
-          <div className="header">{collection?.title ?? 'All Products'}</div>
-        </CollectionDetails>
-      </div>
+      <Container
+        margin={isMobile ? '40px 0px 0px' : '120px 0px 0px 0px'}
+        padding="20px"
+      >
+        <Textbox fontSize="28px">All products</Textbox>
+      </Container>
       <ListBody>
         <div
           style={{
@@ -147,23 +110,30 @@ const ProductsPage = () => {
               fontSize: isMobile ? '12px' : '16px',
             }}
           >
-            Home / Collections /&nbsp;
+            Home /&nbsp;
             <Dropdown
-              options={collections}
-              onSelect={(item: Collection) =>
+              options={allCollectionTypes}
+              onSelect={(item: string) => {
+                if (item === MATERIALS) {
+                  route.push(
+                    `/products/${materialCollections[0].id.replace('gid://shopify/Collection/', '')}`,
+                  );
+                  return;
+                }
                 route.push(
-                  `/products/${item.id.replace('gid://shopify/Collection/', '')}`,
-                )
-              }
+                  `/products/${collections[0].id.replace('gid://shopify/Collection/', '')}`,
+                );
+              }}
               renderTrigger={(toggle) => (
                 <div
-                  style={{ cursor: 'pointer', fontWeight: '900' }}
+                  style={{ cursor: 'pointer', fontWeight: '600' }}
                   onClick={(e) => toggle(e)}
+                  className="clickable hover_underline"
                 >
-                  All Products
+                  All products
                 </div>
               )}
-              renderOption={(option) => <span> {option.title}</span>}
+              renderOption={(option: string) => <span>{option}</span>}
             />
           </div>
           <Dropdown
@@ -226,7 +196,7 @@ const ProductsPage = () => {
           setCurrentPage(number);
         }}
         itemsPerPage={productsCount}
-        totalItems={collectionProducts.length}
+        totalItems={collection?.products?.length ?? 0}
       />
       <FooterCarousel rounded={false} />
     </>

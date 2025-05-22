@@ -75,6 +75,7 @@ export interface InitData {
 interface ProductContextType {
   products: Products;
   collections: Collections;
+  materialCollections: Collections;
   openProduct: (product: Product) => void;
   onSearchProducts: (searchString: string) => Products;
   fetchData: () => Promise<void>;
@@ -88,6 +89,9 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Products>([]);
   const [collections, setCollections] = useState<Collections>([]);
+  const [materialCollections, setMaterialCollections] = useState<Collections>(
+    [],
+  );
   const [initData, setInitData] = useState<InitData | undefined>();
   const [allCollections, setAllCollections] = useState<Collection | undefined>(
     undefined,
@@ -105,6 +109,8 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     'planters',
     'drinkware',
   ];
+
+  const materialOrder = ['ceramic', 'glass', 'metal', 'wood'];
 
   const allCollectionId = '480886358263';
 
@@ -160,35 +166,64 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       body: JSON.stringify({ page: 1 }),
     });
     const collectionResponse = await collectionData.json();
-    let collectionsData: Collections = collectionResponse.data
+    const allCollectionsData: Collections = collectionResponse.data
       .filter((collection: Collection) => !!collection.products.length)
-      .filter((collection: Collection) => !collection.type)
       .map((collection: Collection) => {
+        const collectionProducts = collection.products.map(
+          (product: Product) => {
+            const collectionProduct = productsData.find(
+              (prod) => prod.id === product.id,
+            );
+            return { ...collectionProduct };
+          },
+        );
         const collectionProduct = productsData.find((product) => {
-          console.log(collection.products);
-          const firstProduct = collection.products[0];
+          console.log(collection.title, collectionProducts);
+          const firstProduct = collectionProducts[0];
           return product.id === firstProduct.id;
         });
         const productImage =
           collectionProduct?.variants[0].images[0] ??
           `/images/sample/sample${getRandomIntInclusive(6, 1)}.png`;
         const image = collection.image;
-        return { ...collection, productImage, image };
+        return {
+          ...collection,
+          productImage,
+          image,
+          products: collectionProducts,
+        };
       });
 
-    collectionsData = collectionsData.sort((a, b) => {
-      const aIndex = collectionOrder.findIndex((item: string) =>
-        a.title.toLowerCase().includes(item.toLowerCase()),
-      );
-      const bIndex = collectionOrder.findIndex((item: string) =>
-        b.title.toLowerCase().includes(item.toLowerCase()),
-      );
-      return aIndex - bIndex;
-    });
+    const collectionsData = allCollectionsData
+      .filter((collection: Collection) => !collection.type)
+      .sort((a, b) => {
+        const aIndex = collectionOrder.findIndex((item: string) =>
+          a.title.toLowerCase().includes(item.toLowerCase()),
+        );
+        const bIndex = collectionOrder.findIndex((item: string) =>
+          b.title.toLowerCase().includes(item.toLowerCase()),
+        );
+        return aIndex - bIndex;
+      });
+    const materialCollectionsData = allCollectionsData
+      .filter(
+        (collection: Collection) =>
+          collection?.type?.toLowerCase() === 'material',
+      )
+      .sort((a, b) => {
+        const aIndex = materialOrder.findIndex((item: string) =>
+          a.title.toLowerCase().includes(item.toLowerCase()),
+        );
+        const bIndex = materialOrder.findIndex((item: string) =>
+          b.title.toLowerCase().includes(item.toLowerCase()),
+        );
+        return aIndex - bIndex;
+      });
     const allCollectionData = collectionsData.find((collection) =>
       collection.id.includes(allCollectionId),
     );
     setAllCollections(allCollectionData);
+    setMaterialCollections(materialCollectionsData);
     setCollections(
       collectionsData.filter(
         (collection) => !collection.id.includes(allCollectionId),
@@ -245,6 +280,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       value={{
         products,
         collections,
+        materialCollections,
         openProduct,
         onSearchProducts,
         fetchData,

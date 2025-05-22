@@ -3,7 +3,7 @@ import { AnnouncementData } from '#/context/ProductContext';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
-import Conatiner from '../components/Conatiner';
+import Container from '../components/ContainerBox';
 
 type Props = {
   announcements: AnnouncementData[];
@@ -68,7 +68,7 @@ export const AnnouncementTicker: React.FC<Props> = ({
 
   return (
     <Wrapper>
-      <Conatiner
+      <Container
         padding="12px 48px"
         height="38px"
         horizontalCenter
@@ -76,7 +76,7 @@ export const AnnouncementTicker: React.FC<Props> = ({
         bgColor={announcements[currentIndex].color}
       >
         {announcements[currentIndex].text}
-      </Conatiner>
+      </Container>
 
       {total > 1 && (
         <>

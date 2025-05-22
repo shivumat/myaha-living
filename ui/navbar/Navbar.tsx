@@ -349,7 +349,7 @@ const Navbar = () => {
             if (route.path === '/products') {
               return (
                 <div
-                  className="clickable"
+                  className="clickable hover_underline"
                   onMouseEnter={() => {
                     setShowCollection(true);
                     setShowAboutUs(false);
@@ -357,9 +357,6 @@ const Navbar = () => {
                   }}
                   onMouseLeave={() => {
                     timer = setTimeout(() => setShowCollection(false), 500);
-                  }}
-                  onClick={() => {
-                    handleLinkClick(route.path);
                   }}
                 >
                   {route.name}
@@ -369,7 +366,7 @@ const Navbar = () => {
             if (route.path === '/about-us') {
               return (
                 <div
-                  className="clickable"
+                  className="clickable hover_underline"
                   onMouseEnter={() => {
                     setShowAboutUs(true);
                     setShowCollection(false);
@@ -391,7 +388,7 @@ const Navbar = () => {
             }
             return (
               <div
-                className="clickable"
+                className="clickable hover_underline"
                 onClick={() => handleLinkClick(route.path)}
                 key={index}
               >
@@ -433,7 +430,7 @@ const Navbar = () => {
             }}
             style={{
               width: '100%',
-              height: '450px',
+              height: showCollection ? '80px' : '450px',
               backgroundColor: showAboutUs ? '#5F1E1E' : Colors.white,
               position: 'absolute',
               top: '80px',

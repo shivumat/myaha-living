@@ -35,6 +35,13 @@ input[type='number'] {
   transform: none; /* No scaling for disabled */
   pointer-events: none; /* Prevents click events */
 }
+
+.hover_underline:hover {
+  transform: scale(1.05);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
 @font-face {
   font-family: 'Proxima Nova Condensed';
   src: url('/fonts/proxima-nova-condensed-light.otf') format('opentype');

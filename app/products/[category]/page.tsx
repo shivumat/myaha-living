@@ -1,39 +1,17 @@
 'use client';
 import { Collection, Products, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
+import { COLLECTIONS, MATERIALS } from '#/lib/constants/product';
 import Colors from '#/ui/colors/colors';
+import Container from '#/ui/components/ContainerBox';
 import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import Pagination from '#/ui/components/PaginationComponent';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
+import Textbox from '#/ui/components/Textbox';
 import newStyled from '@emotion/styled';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
-
-const BannerImg = newStyled.img<{ collectionStylingChanges?: string }>`
-    height: 850px;
-    object-fit: cover;
-    @media (max-width: 800px) {
-        height: 500px;
-    }
-    ${({ collectionStylingChanges }) => collectionStylingChanges ?? ''}
-`;
-
-const CollectionDetails = newStyled.div`
-    position: absolute;
-    top: 425px;
-    left: 50%;
-    font-size: 50px;
-    font-weight: 900;
-    transform: translate(-50%, 0%);
-    padding: 10px;
-    color: ${Colors.white};
-    @media (max-width: 800px) {
-      top: 250px;
-      font-size: 40px;
-      width: max-content;
-    }
-`;
 
 const ListBody = newStyled.div`
     padding: 20px;
@@ -60,11 +38,11 @@ const StyledPagination = newStyled(Pagination)`
 
 const ProductsCategory = () => {
   const [selected, setSelected] = useState<Collection | null>(null);
+  const [selectedType, setSelectedType] = useState<string>('');
   const [sort, setSort] = useState<string>('Featured');
   const [productsToShow, setProductsToShow] = useState<Products>([]);
-  const [collectionProducts, setColletionProducts] = useState<Products>([]);
   const { category } = useParams<{ category: string }>();
-  const { collections, products } = useProduct();
+  const { collections, materialCollections } = useProduct();
   const route = useRouter();
   const isMobile = useIsMobile();
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -73,32 +51,22 @@ const ProductsCategory = () => {
 
   const productsCount = isMobile ? 6 : 12;
 
+  const allCollections = [...collections, ...materialCollections];
+  const allCollectionTypes = [COLLECTIONS, MATERIALS];
+
   const collection = useMemo(
     () =>
-      collections.find(
+      allCollections.find(
         (collection) =>
           collection.id === `gid://shopify/Collection/${category}`,
       ),
-    [category, collections],
+    [category, allCollections],
   );
-
   useEffect(() => {
-    if (!!collection) {
+    if (collection) {
       setSelected(collection);
-      let productsToShow: Products = [];
-      collection.products.forEach((product) => {
-        const productToShow = products.find((p) => p.id === product.id);
-        if (productToShow) {
-          productsToShow.push(productToShow);
-        }
-      });
-      setColletionProducts(productsToShow);
-    }
-  }, [collection, products]);
-
-  useEffect(() => {
-    if (products.length && collection) {
-      let productsToShow: Products = collectionProducts;
+      setSelectedType(collection?.type ?? 'Collections');
+      let productsToShow: Products = collection?.products;
 
       if (productsToShow.length === 0) {
         return;
@@ -121,32 +89,20 @@ const ProductsCategory = () => {
         );
       }
       setProductsToShow(
-        productsToShow.slice(
-          (currentPage - 1) * productsCount,
-          Math.min(collectionProducts.length, productsCount * currentPage),
-        ),
+        productsToShow.slice((currentPage - 1) * productsCount),
       );
     }
-  }, [sort, collectionProducts, collection, currentPage]);
-
-  const customStyling: Record<string, string> = {
-    '479846400247': '@media (max-width: 800px) { object-position: 65% 0%; }',
-    '479846596855': '@media (max-width: 800px) { object-position: 35% 0%; }',
-  };
+  }, [sort, collection, currentPage]);
 
   return (
     <>
-      <div>
-        <BannerImg
-          src={collection?.image}
-          alt={collection?.title}
-          width={'100%'}
-          collectionStylingChanges={customStyling[category]}
-        />
-        <CollectionDetails>
-          <div className="header">{collection?.title}</div>
-        </CollectionDetails>
-      </div>
+      <Container
+        margin={isMobile ? '40px 0px 0px' : '120px 0px 0px 0px'}
+        padding="20px"
+      >
+        <Textbox fontSize="28px">{collection?.title}</Textbox>
+      </Container>
+
       <ListBody>
         <div
           style={{
@@ -163,9 +119,36 @@ const ProductsCategory = () => {
               fontSize: isMobile ? '12px' : '16px',
             }}
           >
-            Home / Collections /&nbsp;
+            Home /&nbsp;
             <Dropdown
-              options={collections}
+              options={allCollectionTypes}
+              onSelect={(item: string) => {
+                if (item === MATERIALS) {
+                  route.push(
+                    `/products/${materialCollections[0].id.replace('gid://shopify/Collection/', '')}`,
+                  );
+                  return;
+                }
+                route.push(
+                  `/products/${collections[0].id.replace('gid://shopify/Collection/', '')}`,
+                );
+              }}
+              renderTrigger={(toggle) => (
+                <div
+                  style={{ cursor: 'pointer', fontWeight: '600' }}
+                  onClick={(e) => toggle(e)}
+                  className="clickable hover_underline"
+                >
+                  {selectedType}
+                </div>
+              )}
+              renderOption={(option: string) => <span>{option}</span>}
+            />
+            &nbsp;{!!selectedType ? '/' : ''}&nbsp;
+            <Dropdown
+              options={
+                selectedType === MATERIALS ? materialCollections : collections
+              }
               onSelect={(item: Collection) =>
                 route.push(
                   `/products/${item.id.replace('gid://shopify/Collection/', '')}`,
@@ -173,8 +156,9 @@ const ProductsCategory = () => {
               }
               renderTrigger={(toggle) => (
                 <div
-                  style={{ cursor: 'pointer', fontWeight: '500' }}
+                  style={{ cursor: 'pointer', fontWeight: '600' }}
                   onClick={(e) => toggle(e)}
+                  className="clickable hover_underline"
                 >
                   {selected?.title}
                 </div>
@@ -242,7 +226,7 @@ const ProductsCategory = () => {
           setCurrentPage(number);
         }}
         itemsPerPage={productsCount}
-        totalItems={collectionProducts.length}
+        totalItems={collection?.products?.length ?? 0}
       />
       <FooterCarousel rounded={false} />
     </>

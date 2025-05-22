@@ -36,9 +36,9 @@ const StyledContent = newStyled.div<ConatinerProps>`
   transition: background-color 0.3s ease;
 `;
 
-const Conatiner = (props: ConatinerProps) => {
+const Container = (props: ConatinerProps) => {
   const { children, ...styleProps } = props;
   return <StyledContent {...styleProps}>{children}</StyledContent>;
 };
 
-export default Conatiner;
+export default Container;
