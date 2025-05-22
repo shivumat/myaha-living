@@ -127,7 +127,7 @@ const Cart = () => {
           <button
             style={{
               marginTop: 'auto',
-              backgroundColor: 'black',
+              backgroundColor: `${Colors.black}`,
               color: Colors.white,
               fontSize: '16px',
               fontWeight: '500',
@@ -146,7 +146,7 @@ const Cart = () => {
             style={{
               marginTop: '0px',
               backgroundColor: 'transparent',
-              color: 'black',
+              color: `${Colors.black}`,
               fontSize: '16px',
               fontWeight: '500',
               padding: '10px 20px',

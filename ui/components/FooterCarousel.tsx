@@ -60,7 +60,7 @@ const Dot = newStyled.div<{ active: boolean }>`
   height: 5px;
   border-radius: 12px;
   border: 1px solid ${Colors.black};
-  background: ${(props) => (props.active ? 'black' : 'transparent')};
+  background: ${(props) => (props.active ? `${Colors.black}` : 'transparent')};
   cursor: pointer;
 `;
 

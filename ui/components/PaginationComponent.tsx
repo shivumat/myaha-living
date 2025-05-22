@@ -22,7 +22,7 @@ const PageNumber = newStyled.button<{ active: boolean }>`
   padding: 8px 12px;
   border: none;
   background-color: ${(props) => (props.active ? '#000000' : '#f0f0f0')};
-  color: ${(props) => (props.active ? Colors.white : 'black')};
+  color: ${(props) => (props.active ? Colors.white : `${Colors.black}`)};
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s;

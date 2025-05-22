@@ -59,7 +59,7 @@ const Button = styled.button<{ submitted: boolean }>`
   border-radius: 5px;
   cursor: ${(props) => (props.submitted ? 'default' : 'pointer')};
   background: ${(props) => (props.submitted ? '#4CAF50' : Colors.white)};
-  color: ${(props) => (props.submitted ? Colors.white : 'black')};
+  color: ${(props) => (props.submitted ? Colors.white : Colors.black)};
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;

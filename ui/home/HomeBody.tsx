@@ -84,15 +84,18 @@ const HomeBody = () => {
           <FeaturedProducts />
         </FetaureConstainer>
         <FooterCarousel />
-        <InstagramFeed />
-        <OurStory />
-        {/* <CategoryProducts /> */}
-        <OrderCreated
-          isOpen={hasOrderCreated}
-          orderId={searchParams.get('orderCreated')}
-          onClose={toggleOrderCreated}
-        />
       </Container>
+      <InstagramFeed />
+      {isMobile && (
+        <Container>
+          <OurStory />
+        </Container>
+      )}
+      <OrderCreated
+        isOpen={hasOrderCreated}
+        orderId={searchParams.get('orderCreated')}
+        onClose={toggleOrderCreated}
+      />
     </>
   );
 };

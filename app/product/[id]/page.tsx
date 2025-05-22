@@ -97,7 +97,7 @@ const StyledDiv = newStyled.div`
   background-color: ${Colors.white};
   border-radius: 10px;
   margin-bottom: 10px;
-  border: 1px solid #000;
+  border: 1px solid ${Colors.black};
   padding: 5px 10px;
 `;
 

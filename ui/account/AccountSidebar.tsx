@@ -49,7 +49,7 @@ const AccountSidebar = (props: {
         }}
       >
         <img src="/images/dp.png" />
-        <div style={{ color: 'black' }}>
+        <div style={{ color: `${Colors.black}` }}>
           {userDetails?.firstName ?? userDetails?.email}
         </div>
         <div
@@ -66,7 +66,7 @@ const AccountSidebar = (props: {
           }}
         >
           <OrderLogo />{' '}
-          <span style={{ color: 'black', marginLeft: '10px' }}>
+          <span style={{ color: `${Colors.black}`, marginLeft: '10px' }}>
             Orders history
           </span>
         </div>
@@ -85,7 +85,7 @@ const AccountSidebar = (props: {
           }}
         >
           <UserLogo />{' '}
-          <span style={{ color: 'black', marginLeft: '10px' }}>
+          <span style={{ color: `${Colors.black}`, marginLeft: '10px' }}>
             Profile details
           </span>
         </div>
@@ -103,7 +103,9 @@ const AccountSidebar = (props: {
           }}
         >
           <SignInLogo />{' '}
-          <span style={{ color: 'black', marginLeft: '10px' }}>Log out</span>
+          <span style={{ color: `${Colors.black}`, marginLeft: '10px' }}>
+            Log out
+          </span>
         </div>
       </div>
     </SidebarContainer>

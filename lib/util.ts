@@ -1,4 +1,5 @@
 import { Products } from '#/context/ProductContext';
+import Colors from '#/ui/colors/colors';
 
 export const getCurrentTimeStamp = () => {
   let date = new Date();
@@ -154,7 +155,7 @@ export function formatPrice(amount: number): string {
 export const mergeHexColorsWithWeights = (
   colors: { hex: string; weight: number }[],
 ): string => {
-  if (colors.length === 0) return '#000000'; // Default to black if no colors provided
+  if (colors.length === 0) return `${Colors.black}`; // Default to black if no colors provided
 
   // Convert hex to RGB
   const hexToRgb = (hex: string) => {
