@@ -92,7 +92,7 @@ input[type='number'] {
 }
 
 /* Apply globally */
-* {
+body {
   font-family: 'Proxima Nova Condensed', sans-serif;
   letter-spacing: 2px;
   color: #252525;
