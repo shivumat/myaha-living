@@ -35,3 +35,56 @@ input[type='number'] {
   transform: none; /* No scaling for disabled */
   pointer-events: none; /* Prevents click events */
 }
+@font-face {
+  font-family: 'Proxima Nova Condensed';
+  src: url('/fonts/proxima-nova-condensed-light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Condensed';
+  src: url('/fonts/proxima-nova-condensed-light-italic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Condensed';
+  src: url('/fonts/proxima-nova-condensed-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Condensed';
+  src: url('/fonts/proxima-nova-condensed-regular-italic.otf')
+    format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Condensed';
+  src: url('/fonts/proxima-nova-condensed-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Condensed';
+  src: url('/fonts/proxima-nova-condensed-bold-italic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Apply globally */
+* {
+  font-family: 'Proxima Nova Condensed', sans-serif;
+}

@@ -1,6 +1,6 @@
 import { shopifyFetch } from '#/lib/shopify/util';
 import { notFound } from 'next/navigation';
-
+export const revalidate = 0;
 export const POST = async () => {
   try {
     const query = `{
