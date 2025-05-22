@@ -56,6 +56,8 @@ const OurStory = () => {
     setIsPlaying(true);
   };
 
+  if (!isMobile) return null;
+
   return (
     <Container id="our_story">
       {!isPlaying ? (
