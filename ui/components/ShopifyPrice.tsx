@@ -17,12 +17,14 @@ const PriceWrapper = styled.div<{ fontSize: string }>`
 
 const CurrentPrice = styled.span`
   font-weight: 600;
+  letter-spacing: 1px;
 `;
 
 const CompareAtPrice = styled.span`
   text-decoration: line-through;
   color: #999;
   font-weight: 400;
+  letter-spacing: 1px;
 `;
 
 const parsePrice = (value: string): number =>
