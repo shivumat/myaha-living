@@ -1,6 +1,7 @@
 import { Product, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
+import Colors from '../colors/colors';
 import Carousel from './Carousel';
 import ShopifyPrice from './ShopifyPrice';
 
@@ -69,6 +70,7 @@ const ProductWithVariants = (props: { product: Product }) => {
               justifyContent: 'space-between',
               width: '100%',
               fontSize: isMobile ? '12px' : '14px',
+              color: Colors.black,
             }}
             className="clickable hover_underline"
             onClick={() => openProduct(product)}
