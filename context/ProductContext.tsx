@@ -165,6 +165,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       .filter((collection: Collection) => !collection.type)
       .map((collection: Collection) => {
         const collectionProduct = productsData.find((product) => {
+          console.log(collection.products);
           const firstProduct = collection.products[0];
           return product.id === firstProduct.id;
         });
