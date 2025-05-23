@@ -10,6 +10,7 @@ import OrderCreated from '../OrderCreatedModal';
 import Categories from './Categories';
 import HomeLowBanner from './HomeLowBanner';
 import InstagramFeed from './InstagramFeed';
+import MaterialProducts from './MaterialProducts';
 import OurStory from './OurStory';
 import FeaturedProducts from './ProductsFeatured';
 
@@ -83,13 +84,16 @@ const HomeBody = () => {
           story
         </div>
       </Div1>
+      <StyledContainer horizontalCenter>
+        <MaterialProducts />
+      </StyledContainer>
+      <FooterCarousel rounded={false} />
       <StyledContainer>
         <FetaureConstainer>
           <div className="title">Featured products</div>
           <FeaturedProducts />
         </FetaureConstainer>
       </StyledContainer>
-      <FooterCarousel rounded={false} />
       <InstagramFeed />
       <StyledContainer horizontalCenter>
         {isMobile && <OurStory />}

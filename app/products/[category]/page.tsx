@@ -75,7 +75,10 @@ const ProductsCategory = () => {
         );
       }
       setProductsToShow(
-        productsToShow.slice((currentPage - 1) * productsCount),
+        productsToShow.slice(
+          (currentPage - 1) * productsCount,
+          currentPage * productsCount,
+        ),
       );
     }
   }, [sort, collection, currentPage]);

@@ -178,7 +178,6 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
           },
         );
         const collectionProduct = productsData.find((product) => {
-          console.log(collection.title, collectionProducts);
           const firstProduct = collectionProducts[0];
           return product.id === firstProduct.id;
         });
