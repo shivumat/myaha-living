@@ -23,7 +23,7 @@ const ProductWithVariants = (props: { product: Product }) => {
         width: '100%',
         maxWidth: '450px',
         height: !isMobile ? '600px' : '350px',
-        margin: '0px auto 20px',
+        margin: '0px auto',
       }}
     >
       <div

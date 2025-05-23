@@ -3,6 +3,7 @@ import newStyled from '@emotion/styled';
 
 export const ListBody = newStyled.div`
     padding: 20px;
+    width: 100%;
 `;
 
 export const Conatiner = newStyled.div`
@@ -21,5 +22,6 @@ export const Conatiner = newStyled.div`
 `;
 
 export const StyledPagination = newStyled(Pagination)`
-  margin-bottom: 16px;
+  margin: auto auto 16px;
+  
 `;

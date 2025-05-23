@@ -4,7 +4,7 @@ import { useProduct } from '#/context/ProductContext';
 import { useIsDesktopHomeOnTop } from '#/hooks/useIsDesktopHomeOnTop';
 import { useIsMobile } from '#/hooks/useMobile';
 import { useToggle } from '#/hooks/useToggle';
-import { navRoutes } from '#/lib/constants/routes';
+import { mobileNavRoutes, navRoutes } from '#/lib/constants/routes';
 import newStyled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
@@ -32,7 +32,7 @@ const NavContainer = newStyled.div<{
   width: 100vw;
   height: 80px;
   background-color: ${({ showTransparent, showAboutUs }) => (showTransparent ? 'transparent' : showAboutUs ? '#5F1E1E' : Colors.white)};
-  color : ${({ showAboutUs }) => (showAboutUs ? Colors.white : 'black')};
+  color : ${({ showAboutUs }) => (showAboutUs ? Colors.white : Colors.black)};
   transition: background-color 300ms linear;
   align-items: center;
   position: fixed;
@@ -69,7 +69,7 @@ const LinksContainer = newStyled.div<{
     font-weight: lighter;
     cursor: pointer;
   }
-  color: ${({ showTransparent, showAboutUs }) => (showTransparent || showAboutUs ? Colors.white : 'black')};
+  color: ${({ showTransparent, showAboutUs }) => (showTransparent || showAboutUs ? Colors.white : Colors.black)};
   @media (max-width: 800px) {
     height: 100%;
     flex-direction: column;
@@ -112,9 +112,6 @@ const LogosContainer = newStyled.div`
 
 const StyledUserLogo = newStyled(UserLogo)`
   cursor: pointer;
-  @media (max-width: 800px) {
-    transform: scale(0.65);
-  }
 `;
 
 const StyledCartLogo = newStyled(CartLogo)`
@@ -169,7 +166,12 @@ const Navbar = () => {
 
   const totalCartItem = cart.reduce((acc, item) => acc + item.quantity, 0);
 
-  const { collections, onSearchProducts, hasAnnouncements } = useProduct();
+  const {
+    collections,
+    materialCollections,
+    onSearchProducts,
+    hasAnnouncements,
+  } = useProduct();
   const showTransparent =
     !isOpen && isDesktopHomeOnTop && !showCollection && !showAboutUs;
 
@@ -189,10 +191,9 @@ const Navbar = () => {
               alignItems: 'center',
               width: isMobile ? '10px' : '16px',
               height: isMobile ? '10px' : '16px',
-              color: `${showTransparent || showAboutUs ? Colors.white : 'black'}`,
-              border: `1px solid ${showTransparent || showAboutUs ? Colors.white : 'black'}`,
+              color: `${showTransparent || showAboutUs ? Colors.white : Colors.black}`,
+              border: `0.5px solid ${showTransparent || showAboutUs ? Colors.white : Colors.black}`,
               fontSize: isMobile ? '5px' : '8px',
-              padding: '2px',
               borderRadius: '50%',
               backgroundColor: 'transparent',
               zIndex: 20,
@@ -208,7 +209,11 @@ const Navbar = () => {
 
       <StyledCartLogo
         className="clickable"
-        color={showTransparent || showAboutUs ? Colors.white : 'black'}
+        color={
+          (!isMobile && showTransparent) || showAboutUs
+            ? Colors.white
+            : Colors.black
+        }
       />
     </div>
   );
@@ -228,50 +233,50 @@ const Navbar = () => {
           <LogosContainer>
             <StyledSearchLogo
               className="clickable"
-              color={showAboutUs ? Colors.white : 'black'}
+              color={showAboutUs ? Colors.white : Colors.black}
               onClick={() => setShowSearch(true)}
             />
             {Cart}
           </LogosContainer>
         </NavContainer>
         ;
-        <Sidebar
-          title={
-            <StyledMyahaLogo
-              className="clickable"
-              onClick={() => {
-                toggle();
-                router.push('/');
-              }}
-              margin="auto"
-              width="96.75"
-              height="30"
-            />
-          }
-          side="left"
-          isOpen={isOpen}
-          onClose={() => toggle()}
-        >
+        <Sidebar side="left" isOpen={isOpen} onClose={() => toggle()}>
           <LinksContainer>
-            {navRoutes.map((route, index) => {
-              if (route.path === '/products')
+            {mobileNavRoutes.map((route, index) => {
+              if (route.path === '/collections')
                 return (
                   <PlusMInusOpen
                     key={index}
                     label={route.name}
-                    items={['Shop All', ...collections.map((c) => c.title)]}
+                    items={collections.map((c) => c.title.toUpperCase())}
                     handleLinkClick={(index) => {
                       toggle();
                       handleLinkClick(
-                        index === 0
-                          ? '/products'
-                          : `/products/${collections[index - 1]?.id.replace('gid://shopify/Collection/', '')}`,
+                        `/products/${collections[index]?.id.replace('gid://shopify/Collection/', '')}`,
                       );
                     }}
                   />
                 );
+              if (route.path === '/material')
+                return (
+                  <PlusMInusOpen
+                    key={index}
+                    label={route.name}
+                    items={materialCollections.map((c) =>
+                      c.title.toUpperCase(),
+                    )}
+                    handleLinkClick={(index) => {
+                      toggle();
+                      handleLinkClick(
+                        `/products/${materialCollections[index]?.id.replace('gid://shopify/Collection/', '')}`,
+                      );
+                    }}
+                  />
+                );
+
               return (
                 <div
+                  style={{ paddingBottom: '10px' }}
                   className="clickable"
                   onClick={() => {
                     toggle();
@@ -298,6 +303,7 @@ const Navbar = () => {
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
+                  alignItems: 'center',
                   gap: '10px',
                 }}
                 onClick={() => {
@@ -400,20 +406,24 @@ const Navbar = () => {
         <LogosContainer>
           <StyledSearchLogo
             className="clickable"
-            color={showTransparent || showAboutUs ? Colors.white : 'black'}
+            color={showTransparent || showAboutUs ? Colors.white : Colors.black}
             onClick={() => setShowSearch(true)}
           />
 
           {!user ? (
             <StyledUserLogo
               className="clickable"
-              color={showTransparent || showAboutUs ? Colors.white : 'black'}
+              color={
+                showTransparent || showAboutUs ? Colors.white : Colors.black
+              }
               onClick={toggleLogin}
             />
           ) : (
             <StyledUserLogo
               className="clickable"
-              color={showTransparent || showAboutUs ? Colors.white : 'black'}
+              color={
+                showTransparent || showAboutUs ? Colors.white : Colors.black
+              }
               onClick={() => router.push('/account')}
             />
           )}

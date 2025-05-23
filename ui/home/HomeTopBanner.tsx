@@ -21,7 +21,7 @@ const mobileImages: string[] = [
 // Styled Components
 const Gallery = styled.div`
   width: 100%;
-  margin: auto auto 20px;
+  margin: auto;
   height: 85vh;
 `;
 

@@ -47,6 +47,7 @@ const Collections = ({ toggle: onToggle }: { toggle?: () => void }) => {
           SHOP ALL
         </div>
         <Dropdown
+          openOnHover
           options={collections}
           onSelect={(item: Collection) => {
             router.push(
@@ -66,6 +67,7 @@ const Collections = ({ toggle: onToggle }: { toggle?: () => void }) => {
           renderOption={(option) => <span> {option.title}</span>}
         />
         <Dropdown
+          openOnHover
           options={materialCollections}
           onSelect={(item: Collection) => {
             router.push(

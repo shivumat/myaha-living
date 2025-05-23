@@ -3,6 +3,7 @@ import { AnnouncementData } from '#/context/ProductContext';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
+import Colors from '../colors/colors';
 import Container from '../components/ContainerBox';
 
 type Props = {
@@ -14,6 +15,7 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   overflow: hidden;
+  color: ${Colors.white};
 `;
 
 const NavButton = styled.button`
@@ -21,7 +23,7 @@ const NavButton = styled.button`
   top: 50%;
   transform: translateY(-50%);
   border: none;
-  color: white;
+  color: ${Colors.white};
   padding: 6px;
   cursor: pointer;
   z-index: 1;
@@ -71,6 +73,7 @@ export const AnnouncementTicker: React.FC<Props> = ({
       <Container
         padding="12px 48px"
         height="38px"
+        color={Colors.white}
         horizontalCenter
         verticalCenter
         bgColor={announcements[currentIndex].color}

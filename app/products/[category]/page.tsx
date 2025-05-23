@@ -8,9 +8,19 @@ import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
 import Textbox from '#/ui/components/Textbox';
+import newStyled from '@emotion/styled';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Conatiner, ListBody, StyledPagination } from '../util';
+
+const StyledContainer = newStyled(Container)`
+  padding: 0px 60px;
+  margin: 40px 0px;
+  @media (max-width: 800px) {
+    padding: 20px;
+    margin: 20px 0px;
+  }
+`;
 
 const ProductsCategory = () => {
   const [selected, setSelected] = useState<Collection | null>(null);
@@ -72,138 +82,140 @@ const ProductsCategory = () => {
 
   return (
     <>
-      <Container
-        margin={isMobile ? '40px 0px 0px' : '120px 0px 0px 0px'}
-        padding="20px"
-      >
-        <Textbox fontSize="28px">{collection?.title}</Textbox>
-      </Container>
-
-      <ListBody>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: '20px 0',
-            flexDirection: isMobile ? 'column' : 'row',
-          }}
+      <StyledContainer width="100%">
+        <Container
+          margin={isMobile ? '40px 0px 0px' : '60px 0px 0px 0px'}
+          padding="20px"
         >
+          <Textbox fontSize="28px">{collection?.title}</Textbox>
+        </Container>
+
+        <ListBody>
           <div
-            ref={topRef}
             style={{
-              fontWeight: 'lighter',
-              fontSize: isMobile ? '12px' : '16px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              padding: '20px 0',
+              flexDirection: isMobile ? 'column' : 'row',
             }}
           >
-            Home /&nbsp;
-            <Dropdown
-              options={allCollectionTypes}
-              onSelect={(item: string) => {
-                if (item === MATERIALS) {
+            <div
+              ref={topRef}
+              style={{
+                fontWeight: 'lighter',
+                fontSize: isMobile ? '12px' : '16px',
+              }}
+            >
+              Home /&nbsp;
+              <Dropdown
+                options={allCollectionTypes}
+                onSelect={(item: string) => {
+                  if (item === MATERIALS) {
+                    route.push(
+                      `/products/${materialCollections[0].id.replace('gid://shopify/Collection/', '')}`,
+                    );
+                    return;
+                  }
                   route.push(
-                    `/products/${materialCollections[0].id.replace('gid://shopify/Collection/', '')}`,
+                    `/products/${collections[0].id.replace('gid://shopify/Collection/', '')}`,
                   );
-                  return;
+                }}
+                renderTrigger={(toggle) => (
+                  <div
+                    style={{ cursor: 'pointer', fontWeight: '600' }}
+                    onClick={(e) => toggle(e)}
+                    className="clickable hover_underline"
+                  >
+                    {selectedType}
+                  </div>
+                )}
+                renderOption={(option: string) => <span>{option}</span>}
+              />
+              &nbsp;{!!selectedType ? '/' : ''}&nbsp;
+              <Dropdown
+                options={
+                  selectedType === MATERIALS ? materialCollections : collections
                 }
-                route.push(
-                  `/products/${collections[0].id.replace('gid://shopify/Collection/', '')}`,
-                );
+                onSelect={(item: Collection) =>
+                  route.push(
+                    `/products/${item.id.replace('gid://shopify/Collection/', '')}`,
+                  )
+                }
+                renderTrigger={(toggle) => (
+                  <div
+                    style={{ cursor: 'pointer', fontWeight: '600' }}
+                    onClick={(e) => toggle(e)}
+                    className="clickable hover_underline"
+                  >
+                    {selected?.title}
+                  </div>
+                )}
+                renderOption={(option) => <span> {option.title}</span>}
+              />
+            </div>
+            <Dropdown
+              options={[
+                'Featured',
+                'Name: (A-Z)',
+                'Name: (Z-A)',
+                'Price: Low to High',
+                'Price: High to Low',
+              ]}
+              onSelect={(option) => {
+                setCurrentPage(1);
+                setSort(option);
               }}
               renderTrigger={(toggle) => (
                 <div
-                  style={{ cursor: 'pointer', fontWeight: '600' }}
-                  onClick={(e) => toggle(e)}
-                  className="clickable hover_underline"
-                >
-                  {selectedType}
-                </div>
-              )}
-              renderOption={(option: string) => <span>{option}</span>}
-            />
-            &nbsp;{!!selectedType ? '/' : ''}&nbsp;
-            <Dropdown
-              options={
-                selectedType === MATERIALS ? materialCollections : collections
-              }
-              onSelect={(item: Collection) =>
-                route.push(
-                  `/products/${item.id.replace('gid://shopify/Collection/', '')}`,
-                )
-              }
-              renderTrigger={(toggle) => (
-                <div
-                  style={{ cursor: 'pointer', fontWeight: '600' }}
-                  onClick={(e) => toggle(e)}
-                  className="clickable hover_underline"
-                >
-                  {selected?.title}
-                </div>
-              )}
-              renderOption={(option) => <span> {option.title}</span>}
-            />
-          </div>
-          <Dropdown
-            options={[
-              'Featured',
-              'Name: (A-Z)',
-              'Name: (Z-A)',
-              'Price: Low to High',
-              'Price: High to Low',
-            ]}
-            onSelect={(option) => {
-              setCurrentPage(1);
-              setSort(option);
-            }}
-            renderTrigger={(toggle) => (
-              <div
-                onClick={toggle}
-                style={{
-                  cursor: 'pointer',
-                  marginTop: isMobile ? '10px' : '0px',
-                  width: '200px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  border: `1px solid ${Colors.black}`,
-                  alignItems: 'center',
-                  padding: '0px 10px',
-                }}
-              >
-                <div
+                  onClick={toggle}
                   style={{
-                    fontSize: isMobile ? '12px' : '16px',
-                    fontWeight: '500',
-                    padding: '5px 0px',
+                    cursor: 'pointer',
+                    marginTop: isMobile ? '10px' : '0px',
+                    width: '200px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    border: `1px solid ${Colors.black}`,
+                    alignItems: 'center',
+                    padding: '0px 10px',
                   }}
                 >
-                  {sort}
+                  <div
+                    style={{
+                      fontSize: isMobile ? '12px' : '16px',
+                      fontWeight: '500',
+                      padding: '5px 0px',
+                    }}
+                  >
+                    {sort}
+                  </div>
+                  <img
+                    src="/images/caret.png"
+                    alt="sort"
+                    style={{ width: '20px', height: '20px' }}
+                  />
                 </div>
-                <img
-                  src="/images/caret.png"
-                  alt="sort"
-                  style={{ width: '20px', height: '20px' }}
-                />
-              </div>
-            )}
-            renderOption={(option) => <span> {option}</span>}
-          />
-        </div>
-        <Conatiner>
-          {productsToShow.map((product) => (
-            <ProductWithVariants key={product.id} product={product} />
-          ))}
-        </Conatiner>
-      </ListBody>
-      <StyledPagination
-        currentPage={currentPage}
-        onPageChange={(number) => {
-          if (topRef.current) {
-            topRef.current.scrollIntoView({ behavior: 'smooth' });
-          }
-          setCurrentPage(number);
-        }}
-        itemsPerPage={productsCount}
-        totalItems={collection?.products?.length ?? 0}
-      />
+              )}
+              renderOption={(option) => <span> {option}</span>}
+            />
+          </div>
+          <Conatiner>
+            {productsToShow.map((product) => (
+              <ProductWithVariants key={product.id} product={product} />
+            ))}
+          </Conatiner>
+        </ListBody>
+        <StyledPagination
+          currentPage={currentPage}
+          onPageChange={(number) => {
+            if (topRef.current) {
+              topRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+            setCurrentPage(number);
+          }}
+          itemsPerPage={productsCount}
+          totalItems={collection?.products?.length ?? 0}
+        />
+      </StyledContainer>
       <FooterCarousel rounded={false} />
     </>
   );

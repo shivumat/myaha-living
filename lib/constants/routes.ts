@@ -66,6 +66,15 @@ export const navRoutes: NavRouteTypes[] = [
   { name: 'CONTACT US', path: '/contact' },
 ];
 
+export const mobileNavRoutes: NavRouteTypes[] = [
+  { name: 'HOME', path: '/' },
+  { name: 'SHOP ALL', path: '/products' },
+  { name: 'SHOP BY CATEGORY', path: '/collections' },
+  { name: 'SHOP BY MATERIAL', path: '/material' },
+  { name: 'ABOUT US', path: '/about-us' },
+  { name: 'CONTACT US', path: '/contact' },
+];
+
 export const hideNavbarRoutes: string[] = [];
 export const hideFooterRoutes: string[] = [
   '/login',

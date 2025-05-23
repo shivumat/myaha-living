@@ -30,7 +30,7 @@ const StyledContent = newStyled.div<ConatinerProps>`
   margin: ${({ margin = '0' }) => margin};
   height: ${({ height = 'auto' }) => height};
   width: ${({ width = '100%' }) => width};
-  color: ${({ color = Colors.white }) => color};
+  color: ${({ color = Colors.black }) => color};
   font-size: ${({ fontSize = '16px' }) => fontSize};
   font-weight: 500;
   transition: background-color 0.3s ease;

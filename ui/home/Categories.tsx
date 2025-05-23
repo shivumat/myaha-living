@@ -11,9 +11,7 @@ const Container = newStyled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
   width: 100%;
-  padding-bottom: 20px;
   gap: 20px;
-  margin-bottom: 20px;
   .title{
     font-size: 24px;
     font-weight: 500;

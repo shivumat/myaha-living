@@ -9,7 +9,6 @@ const Conatiner = newStyled.div`
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 20px;
     width: 100%;
-    padding-bottom: 20px; 
     @media (max-width: 1200px) {
         grid-template-columns: 1fr 1fr 1fr;
     }

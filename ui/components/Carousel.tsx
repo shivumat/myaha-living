@@ -46,7 +46,7 @@ const Dot = newStyled.div<{ active: boolean; isCircle: boolean }>`
   height: ${(props) => (props.isCircle ? '10px' : '5px')};
   border-radius: ${(props) => (props.isCircle ? '50%' : '12px')};
   border: 1px solid ${Colors.black};
-  background: ${(props) => (props.active ? 'black' : 'transparent')};
+  background: ${(props) => (props.active ? Colors.black : 'transparent')};
   cursor: pointer;
 `;
 

@@ -86,7 +86,7 @@ const VariantContainer = (props: {
                       bottom: '110%',
                       left: '50%',
                       transform: 'translateX(-50%)',
-                      backgroundColor: 'black',
+                      backgroundColor: Colors.black,
                       color: Colors.white,
                       padding: '5px',
                       fontSize: '10px',
