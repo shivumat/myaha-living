@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Colors from '../colors/colors';
 
@@ -7,7 +7,7 @@ interface DropdownProps<T> {
   options: T[];
   onSelect: (option: any) => void;
   renderTrigger: (
-    toggle: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
+    toggle: (e?: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
   ) => ReactNode;
   renderOption: (option: T) => ReactNode;
   children?: ReactNode;
@@ -30,32 +30,37 @@ export function Dropdown<T>({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null); // Ref for the trigger element
-  const [coords, setCoords] = useState<{ top: number; left: number } | null>(
-    null,
-  );
+  const [position, setPosition] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
 
-  const handleOpen = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    let x = e.pageX;
-    let y = e.pageY;
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const threshold = 0.15; // 15% of the window width
+  const calculatePosition = useCallback(() => {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
 
-    if (x >= windowWidth * (1 - threshold)) {
-      x = 1000000000;
+      setPosition({
+        top: rect.bottom + scrollTop,
+        left: rect.left + scrollLeft,
+      });
     }
-    if (y >= windowHeight * (1 - threshold)) {
-      y = windowHeight * (1 - threshold);
-    }
-    setCoords({ top: y, left: x });
+  }, []);
+
+  const handleOpen = useCallback(() => {
+    calculatePosition();
     setOpen(true);
-  };
+  }, [calculatePosition]);
 
-  const toggleDropdown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (!openOnHover) {
-      handleOpen(e);
-    }
-  };
+  const toggleDropdown = useCallback(
+    (e?: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if (!openOnHover) {
+        handleOpen();
+      }
+    },
+    [openOnHover, handleOpen],
+  );
 
   // Close dropdown when clicking outside (for non-hover open)
   useEffect(() => {
@@ -87,20 +92,8 @@ export function Dropdown<T>({
   // Open on hover functionality
   useEffect(() => {
     if (openOnHover && triggerRef.current) {
-      const handleMouseEnter = (e: MouseEvent) => {
-        let x = e.pageX;
-        let y = e.pageY;
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
-        const threshold = 0.15; // 15% of the window width
-
-        if (x >= windowWidth * (1 - threshold)) {
-          x = 1000000000;
-        }
-        if (y >= windowHeight * (1 - threshold)) {
-          y = windowHeight * (1 - threshold);
-        }
-        setCoords({ top: y, left: x });
+      const handleMouseEnter = () => {
+        calculatePosition();
         setOpen(true);
       };
 
@@ -131,7 +124,7 @@ export function Dropdown<T>({
         );
       };
     }
-  }, [openOnHover, onClose]);
+  }, [openOnHover, onClose, calculatePosition]);
 
   // Close on leaving the dropdown menu
   useEffect(() => {
@@ -185,10 +178,8 @@ export function Dropdown<T>({
             noOptions={options.length === 0}
             ref={menuRef}
             style={{
-              top: coords?.top ?? 0,
-              ...((coords?.left ?? 0) >= 1000000000
-                ? { right: 10 }
-                : { left: coords?.left }),
+              top: position?.top ?? 0,
+              left: position?.left ?? 0,
               maxHeight: maxHeight ?? 'auto',
             }}
           >
