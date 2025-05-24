@@ -16,6 +16,9 @@ interface ConatinerProps {
   fontSize?: string;
   flexRow?: boolean;
   className?: string;
+  overflow?: string;
+  style?: React.CSSProperties;
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 const StyledContent = newStyled.div<ConatinerProps>`
@@ -32,6 +35,7 @@ const StyledContent = newStyled.div<ConatinerProps>`
   width: ${({ width = '100%' }) => width};
   color: ${({ color = Colors.black }) => color};
   font-size: ${({ fontSize = '16px' }) => fontSize};
+  overflow: ${({ overflow = 'visible' }) => overflow};
   font-weight: 500;
   transition: background-color 0.3s ease;
 `;

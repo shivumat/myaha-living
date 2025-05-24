@@ -18,6 +18,7 @@ export interface Product {
   handle: string;
   title: string;
   description: string;
+  featured: boolean;
   variantsInfo: VariantInfo[];
   tags: any[];
   variants: Variant[];

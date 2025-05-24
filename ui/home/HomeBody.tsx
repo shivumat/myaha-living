@@ -37,23 +37,10 @@ const Div1 = newStyled.div<{ isMobile: boolean }>`
 const StyledContainer = newStyled(Container)`
   padding: 0px 60px;
   margin: 40px 0px;
+  width: 100%;
   @media (max-width: 800px) {
     padding: 20px;
     margin: 20px 0px;
-  }
-`;
-
-const FetaureConstainer = newStyled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  width: 100%;
-  .title{
-    text-align: center;
-    font-size: 24px;
-    font-weight: 500;
-    width: 100%;
   }
 `;
 
@@ -89,10 +76,7 @@ const HomeBody = () => {
       </StyledContainer>
       <FooterCarousel rounded={false} />
       <StyledContainer>
-        <FetaureConstainer>
-          <div className="title">Featured products</div>
-          <FeaturedProducts />
-        </FetaureConstainer>
+        <FeaturedProducts />
       </StyledContainer>
       <InstagramFeed />
       <StyledContainer horizontalCenter>
