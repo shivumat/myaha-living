@@ -17,6 +17,9 @@ const StyledLeftButton = newStyled(HiOutlineChevronLeft)`
   position: absolute;
   top: 50%;
   left: -30px;
+  @media (max-width: 800px) {
+    left: -20px;
+  }
 `;
 
 const StyledRightButton = newStyled(HiOutlineChevronRight)`
@@ -24,6 +27,9 @@ const StyledRightButton = newStyled(HiOutlineChevronRight)`
   top: 50%;
   right: -30px;
   cursor: pointer;
+  @media (max-width: 800px) {
+    right: -20px;
+  }
 `;
 
 const FeaturedProducts = () => {
