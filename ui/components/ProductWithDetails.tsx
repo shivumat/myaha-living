@@ -29,7 +29,7 @@ const AddtoCart = newStyled.button`
     }
     @media (max-width: 800px) {
         font-size: 10px;
-        width: 70px;
+        width: 150px;
     }
 `;
 
@@ -54,7 +54,6 @@ const ProductWithDetails = (props: {
         justifyContent: 'space-between',
         padding: '20px 0px',
         height: 'auto',
-        marginRight: '40px',
         minWidth: `${props.getGrandparentWidth()}px`,
       }}
     >

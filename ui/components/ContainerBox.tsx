@@ -19,6 +19,7 @@ interface ConatinerProps {
   overflow?: string;
   style?: React.CSSProperties;
   ref?: React.Ref<HTMLDivElement>;
+  position?: string;
 }
 
 const StyledContent = newStyled.div<ConatinerProps>`
