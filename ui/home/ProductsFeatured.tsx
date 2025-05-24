@@ -33,7 +33,7 @@ const FeaturedProducts = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Products>([]);
   const [scrolledItem, setScrolledItem] = useState<number>(0);
 
-  let interval = null as NodeJS.Timeout | null;
+  let interval: NodeJS.Timeout | null = null;
 
   useEffect(() => {
     if (featuredProducts.length === 0) {
@@ -49,7 +49,6 @@ const FeaturedProducts = () => {
   const startTimer = () => {
     if (interval) clearInterval(interval);
     interval = setInterval(() => {
-      console.log('Scrolling to next item');
       setScrolledItem((prev) => (prev + 1) % featuredProducts.length);
     }, 5000); // Change every 5 seconds
   };
@@ -72,13 +71,27 @@ const FeaturedProducts = () => {
         behavior: 'smooth',
       });
     }
-  }, [scrolledItem, innerRef.current]);
+  }, [scrolledItem, innerRef]); // Changed dependency to just innerRef
 
   const getGrandparentWidth = () => {
     if (grandparentRef.current) {
       return grandparentRef.current?.offsetWidth;
     }
     return 0;
+  };
+
+  const handleLeftClick = () => {
+    setScrolledItem(
+      (prev) => (prev - 1 + featuredProducts.length) % featuredProducts.length,
+    );
+    // If you want to reset the automatic scroll timer on manual click, uncomment this:
+    // startTimer();
+  };
+
+  const handleRightClick = () => {
+    setScrolledItem((prev) => (prev + 1) % featuredProducts.length);
+    // If you want to reset the automatic scroll timer on manual click, uncomment this:
+    // startTimer();
   };
 
   return (
@@ -90,21 +103,12 @@ const FeaturedProducts = () => {
     >
       <StyledLeftButton
         color={Colors.black}
-        onClick={() => {
-          startTimer();
-          setScrolledItem(
-            (prev) =>
-              (prev - 1 + featuredProducts.length) % featuredProducts.length,
-          );
-        }}
+        onClick={handleLeftClick}
         size={24}
       />
       <StyledRightButton
         color={Colors.black}
-        onClick={() => {
-          startTimer();
-          setScrolledItem((prev) => (prev + 1) % featuredProducts.length);
-        }}
+        onClick={handleRightClick}
         size={24}
       />
       <Textbox fontSize="24px">MOST LOVED</Textbox>
