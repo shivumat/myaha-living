@@ -69,8 +69,9 @@ const ProductWithVariants = (props: { product: Product }) => {
               gap: '10px',
               justifyContent: 'space-between',
               width: '100%',
-              fontSize: isMobile ? '12px' : '14px',
+              fontSize: '16px',
               color: Colors.black,
+              fontWeight: 600,
             }}
             className="clickable hover_underline"
             onClick={() => openProduct(product)}
