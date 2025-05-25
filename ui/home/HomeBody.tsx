@@ -13,6 +13,7 @@ import InstagramFeed from './InstagramFeed';
 import MaterialProducts from './MaterialProducts';
 import OurStory from './OurStory';
 import FeaturedProducts from './ProductsFeatured';
+import SubscribeEmail from './SubscribeEmail';
 import TestimonialCarousel from './Testimonial';
 
 const Div1 = newStyled.div<{ isMobile: boolean }>`
@@ -83,6 +84,7 @@ const HomeBody = () => {
       <InstagramFeed />
       <StyledContainer horizontalCenter>
         {isMobile && <OurStory />}
+        <SubscribeEmail />
         <HomeLowBanner />
       </StyledContainer>
       <OrderCreated
