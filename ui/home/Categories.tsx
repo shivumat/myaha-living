@@ -88,7 +88,7 @@ const Categories = () => {
       <Overlay>
         <Textbox
           htmlTag="h3"
-          fontSize="16px"
+          fontSize="32px"
           fontWeight="500"
           italic
           allLowercase
