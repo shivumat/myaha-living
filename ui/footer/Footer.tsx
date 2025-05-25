@@ -210,9 +210,7 @@ const Footer = () => {
             <div style={{ display: 'block' }}>Jagatpura, Jaipur 303903,</div>
             <div style={{ display: 'block' }}>Rajasthan, India.</div>
           </TextContainer>
-          <div
-            style={{ fontSize: '12px', textAlign: 'center', opacity: '0.5' }}
-          >
+          <div style={{ fontSize: '12px', textAlign: 'left', opacity: '0.5' }}>
             ® Myaha, 2023. All rights reserved
           </div>
         </div>
