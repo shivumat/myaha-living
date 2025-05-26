@@ -75,8 +75,9 @@ export const mobileNavRoutes: NavRouteTypes[] = [
   { name: 'CONTACT US', path: '/contact' },
 ];
 
-export const hideNavbarRoutes: string[] = [];
+export const hideNavbarRoutes: string[] = ['/admin'];
 export const hideFooterRoutes: string[] = [
+  '/admin',
   '/login',
   '/signup',
   '/forgot-password',
