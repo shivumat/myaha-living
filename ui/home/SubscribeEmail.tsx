@@ -4,11 +4,12 @@ import React, { useState } from 'react';
 import Colors from '../colors/colors'; // adjust the import path if different
 
 const Section = styled.section`
-  background-image: url('/images/subscribe_bg_imae.png'); // replace with actual path
+  background: #5b1d1d; // replace with actual path
   background-size: cover;
   background-position: center;
   border-radius: 12px;
-  padding: 60px 20px;
+  padding: 40px 20px;
+  margin: 40px 0px 0px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -98,14 +99,14 @@ const Button = styled.button`
 
 const Message = styled.p<{ success: boolean }>`
   margin-top: 16px;
-  color: ${({ success }) => (success ? '#4B4B39' : '#5B1D1D')};
+  color: ${Colors.white};
   font-size: 0.9rem;
   transition: opacity 0.3s ease;
 `;
 
 const InfoText = styled.p`
   font-size: 0.85rem;
-  color: ${Colors.black};
+  color: ${Colors.white};
   opacity: 0.7;
   margin-top: 8px;
   transition: all 0.3s ease;

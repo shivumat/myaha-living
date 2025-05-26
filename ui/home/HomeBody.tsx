@@ -84,8 +84,8 @@ const HomeBody = () => {
       <InstagramFeed />
       <StyledContainer horizontalCenter>
         {isMobile && <OurStory />}
-        <SubscribeEmail />
         <HomeLowBanner />
+        <SubscribeEmail />
       </StyledContainer>
       <OrderCreated
         isOpen={hasOrderCreated}

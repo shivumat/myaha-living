@@ -17,7 +17,6 @@ const PriceWrapper = styled.div<{ fontSize: string }>`
 `;
 
 const CurrentPrice = styled.span`
-  font-weight: 600;
   letter-spacing: 1px;
   color: ${Colors.black};
 `;

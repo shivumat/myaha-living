@@ -15,10 +15,10 @@ const Description = newStyled.div`
 `;
 
 const AddtoCart = newStyled.button`
-    height: 30px;
+    height: 40px;
     width: 160px;
     background-color: ${Colors.black};
-    font-size: 14px;
+    font-size: 16px;
     color: ${Colors.white};
     border-radius: 3px;
     cursor: pointer;
@@ -52,7 +52,7 @@ const ProductWithDetails = (props: {
             : 'row-reverse',
         gap: '20px',
         justifyContent: 'space-between',
-        padding: '20px 0px',
+        padding: '20px 0px 0px',
         height: 'auto',
         minWidth: `${props.getGrandparentWidth()}px`,
       }}
@@ -69,7 +69,7 @@ const ProductWithDetails = (props: {
           onClick={() => openProduct(product)}
           className="clickable hover_underline"
           style={{
-            fontSize: '14px',
+            fontSize: '18px',
             fontWeight: '600',
             textAlign: isEven ? 'left' : 'right',
           }}
@@ -78,14 +78,13 @@ const ProductWithDetails = (props: {
         </div>
         <Description
           style={{
-            fontSize: '12px',
+            fontSize: '16px',
             fontWeight: 'lighter',
             textAlign: isEven ? 'left' : 'right',
           }}
           dangerouslySetInnerHTML={{ __html: product.description }}
         />
         <ShopifyPrice
-          fontSize="12px"
           currency={product.variants[0].currencyCode}
           price={product.variants[0].price}
           compareAtPrice={product.variants[0]?.compareAtPrice}

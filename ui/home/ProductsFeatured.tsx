@@ -108,6 +108,7 @@ const FeaturedProducts = () => {
       padding="0px"
       margin="0px"
       width="100%"
+      horizontalCenter
     >
       <StyledLeftButton
         color={Colors.black}
