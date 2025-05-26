@@ -70,10 +70,10 @@ const CardBack = styled(CardFace)`
 `;
 
 const CardText = styled.div`
-  font-size: 40px;
+  font-size: 44px;
   margin: 30px;
   @media (max-width: 800px) {
-    font-size: 32px;
+    font-size: 36px;
     margin: 36px;
   }
 `;
@@ -234,6 +234,7 @@ const GiftCardComponent: React.FC = () => {
   const [selectedPrice, setSelectedPrice] = useState<number | null>(1500);
   const [customPrice, setCustomPrice] = useState('');
   const [isHovered, setIsHovered] = useState(false);
+  const phoneNumber = '916350533372';
 
   const tags = ['Best wishes', 'Congratulations', 'Birthday', 'Anniversary'];
   const prices = [1500, 2000, 5000, 10000];
@@ -352,10 +353,20 @@ const GiftCardComponent: React.FC = () => {
       </div>
 
       <CTAGroup>
-        <CTAButton href="https://wa.me/your-number" className="whatsapp">
+        <CTAButton
+          href={`https://wa.me/${phoneNumber}`}
+          className="whatsapp"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <FaWhatsapp /> WhatsApp Us
         </CTAButton>
-        <CTAButton href="tel:your-number" className="call">
+        <CTAButton
+          href={`tel:${phoneNumber}`}
+          className="call"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <FaPhoneAlt /> Call Us
         </CTAButton>
       </CTAGroup>

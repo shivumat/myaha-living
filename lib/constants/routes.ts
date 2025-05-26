@@ -64,6 +64,7 @@ export const navRoutes: NavRouteTypes[] = [
   { name: 'SHOP', path: '/products' },
   { name: 'ABOUT US', path: '/about-us' },
   { name: 'CONTACT US', path: '/contact' },
+  { name: 'GIFT & BULK', path: '/gifting' },
 ];
 
 export const mobileNavRoutes: NavRouteTypes[] = [
@@ -73,6 +74,7 @@ export const mobileNavRoutes: NavRouteTypes[] = [
   { name: 'SHOP BY MATERIAL', path: '/material' },
   { name: 'ABOUT US', path: '/about-us' },
   { name: 'CONTACT US', path: '/contact' },
+  { name: 'GIFT & BULK', path: '/gifting' },
 ];
 
 export const hideNavbarRoutes: string[] = ['/admin'];
