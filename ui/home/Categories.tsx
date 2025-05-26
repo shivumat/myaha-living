@@ -26,8 +26,8 @@ const Container = newStyled.div`
 const Arrow = newStyled.span`
     cursor: pointer;
     font-size: 12px;
-    color: darkgray;
-    border: 1px solid darkgray;
+    color: ${Colors.black};
+    border: 1px solid ${Colors.black};
     border-radius: 50%;
     padding: 2px;
     display: flex;
@@ -88,7 +88,7 @@ const Categories = () => {
       <Overlay>
         <Textbox
           htmlTag="h3"
-          fontSize="32px"
+          fontSize="24px"
           fontWeight="500"
           italic
           allLowercase
@@ -119,7 +119,9 @@ const Categories = () => {
       <div className="title">
         <div>SHOP BY CATEGORY</div>
         {!isMobile && (
-          <div style={{ display: 'flex', columnGap: '40px' }}>
+          <div
+            style={{ display: 'flex', columnGap: '40px', marginTop: '10px' }}
+          >
             <Arrow className="clickable" onClick={() => scroll()}>
               <img
                 src="/images/caret.png"

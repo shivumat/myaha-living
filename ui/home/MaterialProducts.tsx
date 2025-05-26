@@ -15,8 +15,8 @@ const Heading = newStyled.h2`
   font-weight: 500;
   text-align: center;
   margin-bottom: 20px;
-  letter-spacing: 0.5px;
-  color: #111;
+  letter-spacing: 2px;
+  color: ${Colors.black};
 `;
 
 const Nav = newStyled.div`

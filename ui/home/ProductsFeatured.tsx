@@ -1,4 +1,5 @@
 import { Products, useProduct } from '#/context/ProductContext';
+import { useIsMobile } from '#/hooks/useMobile';
 import { getRandomSubArray } from '#/lib/util';
 import newStyled from '@emotion/styled';
 import React, { useEffect, useRef, useState } from 'react';
@@ -34,12 +35,13 @@ const StyledRightButton = newStyled(HiOutlineChevronRight)`
 
 const FeaturedProducts = () => {
   const { products } = useProduct();
+  const isMobile = useIsMobile();
   const grandparentRef = useRef<HTMLDivElement | null>(null);
   const innerRef = useRef<HTMLDivElement | null>(null);
   const [featuredProducts, setFeaturedProducts] = useState<Products>([]);
   const [scrolledItem, setScrolledItem] = useState<number>(0);
 
-  let interval: NodeJS.Timeout | null = null;
+  // let interval: NodeJS.Timeout | null = null;
 
   useEffect(() => {
     if (featuredProducts.length === 0) {
@@ -52,21 +54,21 @@ const FeaturedProducts = () => {
     }
   }, [products]);
 
-  const startTimer = () => {
-    if (interval) clearInterval(interval);
-    interval = setInterval(() => {
-      setScrolledItem((prev) => (prev + 1) % featuredProducts.length);
-    }, 5000); // Change every 5 seconds
-  };
+  // const startTimer = () => {
+  //   if (interval) clearInterval(interval);
+  //   interval = setInterval(() => {
+  //     setScrolledItem((prev) => (prev + 1) % featuredProducts.length);
+  //   }, 5000); // Change every 5 seconds
+  // };
 
-  useEffect(() => {
-    const totalItems = featuredProducts.length;
-    if (totalItems === 0) return; // No items to scroll
-    startTimer();
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [featuredProducts.length]);
+  // useEffect(() => {
+  //   const totalItems = featuredProducts.length;
+  //   if (totalItems === 0) return; // No items to scroll
+  //   startTimer();
+  //   return () => {
+  //     if (interval) clearInterval(interval);
+  //   };
+  // }, [featuredProducts.length]);
 
   useEffect(() => {
     if (innerRef.current) {
@@ -81,7 +83,7 @@ const FeaturedProducts = () => {
 
   const getGrandparentWidth = () => {
     if (grandparentRef.current) {
-      return grandparentRef.current?.offsetWidth;
+      return grandparentRef.current?.offsetWidth * (isMobile ? 0.8 : 0.75);
     }
     return 0;
   };
@@ -121,9 +123,9 @@ const FeaturedProducts = () => {
       <Container
         ref={innerRef}
         padding="0px"
-        margin="0px"
+        margin="0px auto"
         flexRow
-        width="max-content"
+        width={isMobile ? '80%' : '75%'}
         overflow="hidden"
         style={{ maxWidth: '100%' }}
       >
