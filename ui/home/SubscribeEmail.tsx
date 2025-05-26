@@ -147,10 +147,10 @@ const SubscribeEmail: React.FC = () => {
 
   return (
     <Section>
-      <Title>Join the MYAHA Circle</Title>
+      <Title>Join the Myaha Commune</Title>
       <Subtitle>
-        Rooted in nature, crafted for your home. Be the first to discover
-        soulful spaces and mindful design.
+        Be a part of commune that loves design, art and experimenting. Oh, and
+        get exclusive discounts!
       </Subtitle>
       <Form onSubmit={handleSubmit}>
         <Input
