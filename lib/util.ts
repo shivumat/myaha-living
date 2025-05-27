@@ -198,3 +198,41 @@ export const mergeHexColorsWithWeights = (
 
   return rgbToHex(avgRgb.r, avgRgb.g, avgRgb.b);
 };
+
+// lib/localStorageUtils.ts
+
+const LOCAL_STORAGE_KEY = 'lastViewedProductIds';
+
+export function updateLastViewedProducts(productId: string) {
+  if (typeof window === 'undefined') return;
+
+  try {
+    const existing = localStorage.getItem(LOCAL_STORAGE_KEY);
+    let ids: string[] = existing ? JSON.parse(existing) : [];
+
+    // Remove the product if it already exists
+    ids = ids.filter((id) => id !== productId);
+
+    // Add it to the beginning
+    ids.unshift(productId);
+
+    // Limit to last 4
+    if (ids.length > 4) {
+      ids = ids.slice(0, 4);
+    }
+
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(ids));
+  } catch (error) {
+    console.error('Error updating last viewed products:', error);
+  }
+}
+
+export function getLastViewedProducts(): string[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const ids = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return ids ? JSON.parse(ids) : [];
+  } catch {
+    return [];
+  }
+}

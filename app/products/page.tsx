@@ -8,6 +8,7 @@ import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
 import Textbox from '#/ui/components/Textbox';
+import RecentlyViewedProducts from '#/ui/home/RecentlyViewedProducts';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -185,6 +186,7 @@ const ProductsPage = () => {
           itemsPerPage={productsCount}
           totalItems={collection?.products?.length ?? 0}
         />
+        <RecentlyViewedProducts />
       </StyledContainer>
       <FooterCarousel rounded={false} />
     </>

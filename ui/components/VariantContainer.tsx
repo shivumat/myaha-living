@@ -31,14 +31,12 @@ const getColorFromName = (colorName: string): string => {
   const matchedColors = basicColors.filter((color) =>
     lowerCaseColor.includes(color.name),
   );
-  console.log('matchedColors', matchedColors);
   const matchedColor = mergeHexColorsWithWeights(
     matchedColors.map((c, index) => ({
       hex: c.hex,
       weight: matchedColors.length - index,
     })),
   );
-  console.log('matchedColor', matchedColor);
   return matchedColor ? matchedColor : '#ccc'; // Default gray if no match
 };
 

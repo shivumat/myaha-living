@@ -8,6 +8,7 @@ import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
 import Textbox from '#/ui/components/Textbox';
+import RecentlyViewedProducts from '#/ui/home/RecentlyViewedProducts';
 import newStyled from '@emotion/styled';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -218,6 +219,7 @@ const ProductsCategory = () => {
           itemsPerPage={productsCount}
           totalItems={collection?.products?.length ?? 0}
         />
+        <RecentlyViewedProducts />
       </StyledContainer>
       <FooterCarousel rounded={false} />
     </>
