@@ -83,7 +83,7 @@ const FeaturedProducts = () => {
 
   const getGrandparentWidth = () => {
     if (grandparentRef.current) {
-      return grandparentRef.current?.offsetWidth * (isMobile ? 0.8 : 0.75);
+      return grandparentRef.current?.offsetWidth * (isMobile ? 1 : 0.75);
     }
     return 0;
   };
@@ -119,12 +119,14 @@ const FeaturedProducts = () => {
         onClick={handleRightClick}
         size={24}
       />
-      <Textbox fontSize="24px">BESTSELLER</Textbox>
+      <Textbox style={{ marginBottom: '15px' }} fontSize="24px">
+        BESTSELLER
+      </Textbox>
       <Container
         ref={innerRef}
         padding="0px"
         flexRow
-        width={isMobile ? '80%' : '75%'}
+        width={isMobile ? '100%' : '75%'}
         overflow="hidden"
         style={{ maxWidth: '100%' }}
       >

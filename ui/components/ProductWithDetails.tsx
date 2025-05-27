@@ -63,6 +63,7 @@ const ProductWithDetails = (props: {
           flexDirection: 'column',
           gap: '10px',
           width: isMobile ? '100%' : 'calc(100% - 400px)',
+          marginLeft: isMobile ? '0px' : '20px',
         }}
       >
         <div
@@ -88,12 +89,14 @@ const ProductWithDetails = (props: {
           currency={product.variants[0].currencyCode}
           price={product.variants[0].price}
           compareAtPrice={product.variants[0]?.compareAtPrice}
+          fontSize="16px"
         />
         <div
           style={{
             display: 'flex',
             gap: '10px',
             justifyContent: isEven ? 'flex-start' : 'flex-end',
+            marginTop: '10px',
           }}
         >
           <AddtoCart className="clickable" onClick={() => openProduct(product)}>

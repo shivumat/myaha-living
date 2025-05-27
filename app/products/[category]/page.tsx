@@ -165,7 +165,7 @@ const ProductsCategory = () => {
                     flexRow
                     horizontalCenter
                   >
-                    AVAILABILITY :
+                    Availability :
                     <div
                       onClick={toggle}
                       style={{
@@ -216,11 +216,14 @@ const ProductsCategory = () => {
                   width={isMobile ? '100%' : 'auto'}
                   padding="0px"
                   margin={isMobile ? '10px 0px 0px' : '0px'}
-                  style={{ gap: '10px', justifyContent: 'space-between' }}
+                  style={{
+                    gap: '10px',
+                    justifyContent: isMobile ? 'space-between' : 'flex-end',
+                  }}
                   flexRow
                   horizontalCenter
                 >
-                  SORT BY :
+                  Sort By :
                   <div
                     onClick={toggle}
                     style={{

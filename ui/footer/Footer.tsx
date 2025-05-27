@@ -1,8 +1,9 @@
 'use client';
 import { useIsMobile } from '#/hooks/useMobile';
-import { mergeHexColorsWithWeights } from '#/lib/util';
+// import { mergeHexColorsWithWeights } from '#/lib/util';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
+import { BiMailSend, BiPhoneCall } from 'react-icons/bi';
 import {
   LiaInstagram,
   LiaLinkedinIn,
@@ -10,16 +11,15 @@ import {
   LiaTwitter,
 } from 'react-icons/lia';
 import Colors from '../colors/colors';
+import Container from '../components/ContainerBox';
+import Textbox, { TextboxProps } from '../components/Textbox';
 import MyahaLogo from '../svg/myaha-logo';
 
 const FooterContainer = newStyled.div`
   width: 100%;
   display: flex;
-  background-color: ${mergeHexColorsWithWeights([
-    { hex: Colors.white, weight: 1 },
-    { hex: Colors.black, weight: 1 },
-  ])};
-  color: ${Colors.black};
+  background-color: #5b1d1d;
+  color: ${Colors.white};
   padding: 40px;
   @media (max-width: 800px) {
     flex-direction: column;
@@ -37,13 +37,31 @@ const TextContainer = newStyled.div`
 `;
 
 const StyleLogo = newStyled(MyahaLogo)`
-  filter: invert(1);
   position: relative;
-  right: 30px;
+  bottom: 15px;
+   right: 30px;
   @media (max-width: 800px) {
     right: 0px;
+    bottom: 0px;
   }
 `;
+
+const StyledTextbox = (props: TextboxProps & { route: string }) => {
+  const route = useRouter();
+  const handleClick = () => {
+    if (props.route) {
+      route.push(props.route);
+    }
+  };
+
+  return (
+    <Textbox
+      onClick={handleClick}
+      className="clickable hover_underline"
+      {...props}
+    />
+  );
+};
 
 const Footer = () => {
   const isMobile = useIsMobile();
@@ -192,9 +210,172 @@ const Footer = () => {
           width: '100%',
           gap: '100px',
           padding: '20px 0px',
+          justifyContent: 'space-between',
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <Container height="35px" padding="0px" margin="0px 0px 20px">
+            {''}
+          </Container>
+          <Textbox color={Colors.white} fontWeight="lighter">
+            MYAHA INDIA
+          </Textbox>
+          <Textbox color={Colors.white} fontWeight="lighter">
+            Plot No. B-26, Mathurawala,
+          </Textbox>
+          <Textbox color={Colors.white} fontWeight="lighter">
+            Jagatpura, Jaipur 303903,
+          </Textbox>
+          <Textbox
+            style={{ marginBottom: '40px' }}
+            color={Colors.white}
+            fontWeight="lighter"
+          >
+            Rajasthan, India.
+          </Textbox>
+          <Container horizontalCenter flexRow padding="0px" margin="0px">
+            <BiMailSend color={Colors.white} />
+            <Textbox
+              style={{ marginLeft: '10px' }}
+              color={Colors.white}
+              fontSize="14px"
+              fontWeight="lighter"
+            >
+              hello@myahaliving.com
+            </Textbox>
+          </Container>
+          <Container horizontalCenter flexRow padding="0px" margin="0px">
+            <BiPhoneCall color={Colors.white} />
+            <Textbox
+              style={{ marginLeft: '10px' }}
+              color={Colors.white}
+              fontSize="14px"
+              fontWeight="lighter"
+            >
+              +91 6350533372
+            </Textbox>
+          </Container>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <Container height="35px" padding="0px" margin="0px 0px 20px">
+            <Textbox color={Colors.white} fontWeight="600" fontSize="20px">
+              About us
+            </Textbox>
+          </Container>
+          <StyledTextbox
+            route="/about-us"
+            color={Colors.white}
+            fontWeight="lighter"
+          >
+            Our story
+          </StyledTextbox>
+          <StyledTextbox
+            route="/contact"
+            color={Colors.white}
+            fontWeight="lighter"
+          >
+            Contact us
+          </StyledTextbox>
+          <StyledTextbox
+            route="/collaborate"
+            color={Colors.white}
+            fontWeight="lighter"
+          >
+            Collaborate with us
+          </StyledTextbox>
+          <StyledTextbox
+            route="/gifting"
+            style={{ marginBottom: '40px' }}
+            color={Colors.white}
+            fontWeight="lighter"
+          >
+            Gifting
+          </StyledTextbox>
+          <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+            <a
+              href={`https://www.instagram.com/myaha.co?igsh=MXVneTY0cnl3a2ZwNQ==`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ padding: '2px', borderRadius: '2px' }}
+            >
+              <LiaInstagram size={'32px'} />
+            </a>
+            <a
+              href={`https://x.com/MyahaIndia`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                padding: '2px',
+                borderRadius: '2px',
+              }}
+            >
+              <LiaTwitter size={'32px'} />
+            </a>
+            <a
+              href={`https://in.pinterest.com/06espov87v6s4p8p49qexdj4fnqr6h/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ padding: '2px', borderRadius: '2px' }}
+            >
+              <LiaPinterestSquare size={'32px'} />
+            </a>
+            <a
+              href={`https://www.linkedin.com/company/myaha-home/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ padding: '2px', borderRadius: '2px' }}
+            >
+              <LiaLinkedinIn size={'32px'} />
+            </a>
+          </div>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <Container height="35px" padding="0px" margin="0px 0px 20px">
+            <Textbox color={Colors.white} fontWeight="600" fontSize="20px">
+              Quick Links
+            </Textbox>
+          </Container>
+          <StyledTextbox
+            route="/shipping"
+            color={Colors.white}
+            fontWeight="lighter"
+          >
+            Shipping & delivery
+          </StyledTextbox>
+          <StyledTextbox
+            route="/cancellation"
+            color={Colors.white}
+            fontWeight="lighter"
+          >
+            Cancellation & refunds
+          </StyledTextbox>
+          <StyledTextbox
+            route="/terms"
+            color={Colors.white}
+            fontWeight="lighter"
+          >
+            Terms & Conditions
+          </StyledTextbox>
+          <StyledTextbox
+            route="/privacy"
+            color={Colors.white}
+            fontWeight="lighter"
+          >
+            Provacy Policy
+          </StyledTextbox>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <StyleLogo height={'90'} width={'281.25'} />
+          <Textbox
+            style={{ marginTop: 'auto' }}
+            fontSize="12px"
+            color={Colors.white}
+            fontWeight="lighter"
+          >
+            ® Myaha, 2023. All rights reserved
+          </Textbox>
+        </div>
+        {/* <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <StyleLogo height={'120'} width={'350'} />
           <TextContainer
             style={{
@@ -214,7 +395,7 @@ const Footer = () => {
             ® Myaha, 2023. All rights reserved
           </div>
         </div>
-        <div style={{ display: 'flex', gap: '30px', marginLeft: 'auto' }}>
+        <div style={{ display: 'flex', gap: '30px'}}>
           <TextContainer
             style={{
               textAlign: 'left',
@@ -341,7 +522,7 @@ const Footer = () => {
               Shipping and Delivery
             </div>
           </TextContainer>
-        </div>
+        </div> */}
       </div>
     </FooterContainer>
   );

@@ -2,9 +2,11 @@ import styled from '@emotion/styled';
 import React from 'react';
 import Colors from '../colors/colors';
 
-interface TextboxProps {
+export interface TextboxProps {
   children?: React.ReactNode;
+  className?: string;
   color?: string;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
   fontSize?: string;
   fontWeight?: string;
   textDecoration?: string;
@@ -20,6 +22,7 @@ interface TextboxProps {
   italic?: boolean;
   allCaps?: boolean;
   allLowercase?: boolean;
+  style?: React.CSSProperties;
 }
 
 const StyledText = styled.div<TextboxProps>`

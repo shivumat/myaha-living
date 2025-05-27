@@ -152,7 +152,7 @@ const ProductsPage = () => {
                     flexRow
                     horizontalCenter
                   >
-                    AVAILABILITY :
+                    Availability :
                     <div
                       onClick={toggle}
                       style={{
@@ -207,7 +207,7 @@ const ProductsPage = () => {
                   flexRow
                   horizontalCenter
                 >
-                  SORT BY :
+                  Sort By :
                   <div
                     onClick={toggle}
                     style={{

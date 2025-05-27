@@ -67,7 +67,7 @@ const PriceFilter = ({ min, max, value, onChange }: PriceFilterProps) => {
 
   return (
     <Wrapper>
-      FILTER BY PRICE :
+      Filter by Price: :
       <Trigger ref={triggerRef} onClick={toggleDropdown}>
         <span>
           ₹{range[0]} - ₹{range[1]}
