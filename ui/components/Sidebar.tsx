@@ -23,7 +23,8 @@ const SidebarWrapper = styled.div<{
   top: 0;
   ${({ side }) => (side === 'left' ? 'left: 0;' : 'right: 0;')}
   width: ${({ width }) => width};
-  height: 100dvh;
+  height: 100vh;
+  overflow-y: auto;
   background: ${Colors.white};
   box-shadow: ${({ side }) =>
     side === 'left'
@@ -47,7 +48,7 @@ const Backdrop = styled.div<{ isOpen: boolean }>`
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100dvh;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.4);
   opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
   visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
