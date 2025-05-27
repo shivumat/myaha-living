@@ -62,9 +62,8 @@ export interface NavRouteTypes {
 export const navRoutes: NavRouteTypes[] = [
   { name: 'HOME', path: '/' },
   { name: 'SHOP', path: '/products' },
-  { name: 'ABOUT US', path: '/about-us' },
   { name: 'CONTACT US', path: '/contact' },
-  { name: 'GIFT & BULK', path: '/gifting' },
+  { name: 'GIFTING & BULK', path: '/gifting' },
 ];
 
 export const mobileNavRoutes: NavRouteTypes[] = [
@@ -72,9 +71,8 @@ export const mobileNavRoutes: NavRouteTypes[] = [
   { name: 'SHOP ALL', path: '/products' },
   { name: 'SHOP BY CATEGORY', path: '/collections' },
   { name: 'SHOP BY MATERIAL', path: '/material' },
-  { name: 'ABOUT US', path: '/about-us' },
   { name: 'CONTACT US', path: '/contact' },
-  { name: 'GIFT & BULK', path: '/gifting' },
+  { name: 'GIFTING & BULK', path: '/gifting' },
 ];
 
 export const hideNavbarRoutes: string[] = ['/admin'];

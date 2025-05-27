@@ -27,7 +27,7 @@ const Gallery = styled.div`
 
 const MobileWrapper = styled.div`
   padding: 0px;
-  height: 450px;
+  height: 500px;
   position: relative;
   top: 15px;
 `;
@@ -94,7 +94,7 @@ const HomeTopBanner: React.FC = () => {
         isCircle
         autoScroll
         images={initData?.mobileBannerImages?.map((i) => i.url) ?? mobileImages}
-        height="450px"
+        height="500px"
       />
     </MobileWrapper>
   ) : (

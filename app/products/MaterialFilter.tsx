@@ -24,7 +24,6 @@ const CollectionFilter = (props: {
       .join(', ')} +${selected.length - 2} more`;
   };
 
-  console.log('Selected Materials:', collections);
   return (
     <FilterWrapper>
       <MultiSelectDropdown

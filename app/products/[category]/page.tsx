@@ -1,18 +1,19 @@
 'use client';
-import { Collection, Products, useProduct } from '#/context/ProductContext';
+import { Products, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
-import { COLLECTIONS, MATERIALS } from '#/lib/constants/product';
 import Colors from '#/ui/colors/colors';
 import Container from '#/ui/components/ContainerBox';
 import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
+// import PriceFilter from '#/ui/components/PriceDropdown';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
 import Textbox from '#/ui/components/Textbox';
 import RecentlyViewedProducts from '#/ui/home/RecentlyViewedProducts';
 import newStyled from '@emotion/styled';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import CollectionFilter from '../MaterialFilter';
+// import CollectionFilter from '../MaterialFilter';
+import PriceFilter from '#/ui/components/PriceDropdown';
 import { Conatiner, ListBody, StyledPagination } from '../util';
 
 const StyledContainer = newStyled(Container)`
@@ -28,17 +29,15 @@ const SortDropdown = newStyled(Dropdown)`
   margin-left: auto;
   @media (max-width: 800px) {
     margin-left: 0px;
+    width: 100%;
   }
 `;
 
 const ProductsCategory = () => {
-  const [selected, setSelected] = useState<Collection | null>(null);
-  const [selectedType, setSelectedType] = useState<string>('');
   const [sort, setSort] = useState<string>('Featured');
   const [productsToShow, setProductsToShow] = useState<Products>([]);
   const { category } = useParams<{ category: string }>();
   const { collections, materialCollections } = useProduct();
-  const route = useRouter();
   const isMobile = useIsMobile();
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -47,7 +46,6 @@ const ProductsCategory = () => {
   const productsCount = isMobile ? 6 : 12;
 
   const allCollections = [...collections, ...materialCollections];
-  const allCollectionTypes = [COLLECTIONS, MATERIALS];
 
   const collection = useMemo(
     () =>
@@ -59,8 +57,6 @@ const ProductsCategory = () => {
   );
   useEffect(() => {
     if (collection) {
-      setSelected(collection);
-      setSelectedType(collection?.type ?? COLLECTIONS);
       let productsToShow: Products = collection?.products;
 
       if (productsToShow.length === 0) {
@@ -112,68 +108,17 @@ const ProductsCategory = () => {
               flexDirection: isMobile ? 'column' : 'row',
             }}
           >
-            <div
-              ref={topRef}
-              style={{
-                fontWeight: 'lighter',
-              }}
-            >
-              Home /&nbsp;
-              <Dropdown
-                options={allCollectionTypes}
-                onSelect={(item: string) => {
-                  if (item === MATERIALS) {
-                    route.push(
-                      `/products/${materialCollections[0].id.replace('gid://shopify/Collection/', '')}`,
-                    );
-                    return;
-                  }
-                  route.push(
-                    `/products/${collections[0].id.replace('gid://shopify/Collection/', '')}`,
-                  );
-                }}
-                renderTrigger={(toggle) => (
-                  <div
-                    style={{ cursor: 'pointer', fontWeight: '600' }}
-                    onClick={(e) => toggle(e)}
-                    className="clickable hover_underline"
-                  >
-                    {selectedType}
-                  </div>
-                )}
-                renderOption={(option: string) => <span>{option}</span>}
-              />
-              &nbsp;{!!selectedType ? '/' : ''}&nbsp;
-              <Dropdown
-                options={
-                  selectedType === MATERIALS ? materialCollections : collections
-                }
-                onSelect={(item: Collection) =>
-                  route.push(
-                    `/products/${item.id.replace('gid://shopify/Collection/', '')}`,
-                  )
-                }
-                renderTrigger={(toggle) => (
-                  <div
-                    style={{ cursor: 'pointer', fontWeight: '600' }}
-                    onClick={(e) => toggle(e)}
-                    className="clickable hover_underline"
-                  >
-                    {selected?.title}
-                  </div>
-                )}
-                renderOption={(option) => <span> {option.title}</span>}
-              />
-            </div>
-            {selectedType === MATERIALS && (
-              <CollectionFilter collections={collections} label={COLLECTIONS} />
-            )}
-            {selectedType === COLLECTIONS && (
-              <CollectionFilter
-                collections={materialCollections}
-                label={MATERIALS}
-              />
-            )}
+            {/* <CollectionFilter collections={collections} label={COLLECTIONS} />
+            <CollectionFilter
+              collections={materialCollections}
+              label={MATERIALS}
+            />*/}
+            <PriceFilter
+              min={0}
+              max={10000}
+              value={[0, 10000]}
+              onChange={(v) => console.log(v)}
+            />
             <SortDropdown
               options={[
                 'Featured',
@@ -187,34 +132,44 @@ const ProductsCategory = () => {
                 setSort(option);
               }}
               renderTrigger={(toggle) => (
-                <div
-                  onClick={toggle}
-                  style={{
-                    cursor: 'pointer',
-                    marginTop: isMobile ? '10px' : '0px',
-                    width: '200px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    border: `1px solid ${Colors.black}`,
-                    alignItems: 'center',
-                    padding: '0px 10px',
-                  }}
+                <Container
+                  width={isMobile ? '100%' : 'auto'}
+                  padding="0px"
+                  margin={isMobile ? '10px 0px 0px' : '0px'}
+                  style={{ gap: '10px', justifyContent: 'space-between' }}
+                  flexRow
+                  horizontalCenter
                 >
+                  SORT BY :
                   <div
+                    onClick={toggle}
                     style={{
-                      fontSize: isMobile ? '12px' : '16px',
-                      fontWeight: '500',
-                      padding: '5px 0px',
+                      cursor: 'pointer',
+                      width: '200px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      border: `1px solid ${Colors.black}`,
+                      alignItems: 'center',
+                      padding: '3.5px 10px',
+                      borderRadius: '4px',
                     }}
                   >
-                    {sort}
+                    <div
+                      style={{
+                        fontSize: '16px',
+                        fontWeight: '500',
+                        padding: '5px 0px',
+                      }}
+                    >
+                      {sort}
+                    </div>
+                    <img
+                      src="/images/caret.png"
+                      alt="sort"
+                      style={{ width: '20px', height: '20px' }}
+                    />
                   </div>
-                  <img
-                    src="/images/caret.png"
-                    alt="sort"
-                    style={{ width: '20px', height: '20px' }}
-                  />
-                </div>
+                </Container>
               )}
               renderOption={(option: any) => <span> {option}</span>}
             />

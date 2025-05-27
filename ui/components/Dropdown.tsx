@@ -167,7 +167,11 @@ export function Dropdown<T>({
 
   return (
     <Wrapper className={className} ref={dropdownRef}>
-      <div ref={triggerRef} onMouseEnter={openOnHover ? handleOpen : undefined}>
+      <div
+        style={{ width: '100%' }}
+        ref={triggerRef}
+        onMouseEnter={openOnHover ? handleOpen : undefined}
+      >
         {renderTrigger(toggleDropdown)}
       </div>
 
@@ -206,6 +210,7 @@ export function Dropdown<T>({
 const Wrapper = styled.div`
   display: inline-block;
   position: relative;
+  width: max-content;
 `;
 
 const DropdownMenu = styled.div<{ noOptions?: boolean }>`

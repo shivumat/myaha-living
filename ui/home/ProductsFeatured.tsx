@@ -108,7 +108,6 @@ const FeaturedProducts = () => {
       padding="0px"
       margin="0px"
       width="100%"
-      horizontalCenter
     >
       <StyledLeftButton
         color={Colors.black}
@@ -120,11 +119,10 @@ const FeaturedProducts = () => {
         onClick={handleRightClick}
         size={24}
       />
-      <Textbox fontSize="24px">MOST LOVED</Textbox>
+      <Textbox fontSize="24px">BESTSELLER</Textbox>
       <Container
         ref={innerRef}
         padding="0px"
-        margin="0px auto"
         flexRow
         width={isMobile ? '80%' : '75%'}
         overflow="hidden"

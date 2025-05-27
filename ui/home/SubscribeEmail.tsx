@@ -7,8 +7,7 @@ const Section = styled.section`
   background: #5b1d1d; // replace with actual path
   background-size: cover;
   background-position: center;
-  border-radius: 12px;
-  padding: 40px 20px;
+  padding: 60px 20px;
   margin: 40px 0px 0px;
   text-align: center;
   display: flex;
@@ -24,7 +23,7 @@ const Title = styled.h2`
 `;
 
 const Subtitle = styled.p`
-  max-width: 520px;
+  max-width: 800px;
   font-size: 1rem;
   color: ${Colors.white};
   opacity: 0.9;
@@ -38,6 +37,7 @@ const Form = styled.form`
   gap: 12px;
   max-width: 420px;
   width: 100%;
+  margin-top: 20px;
 
   @media (max-width: 600px) {
     flex-direction: column;

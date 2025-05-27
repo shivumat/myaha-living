@@ -37,8 +37,8 @@ const Div1 = newStyled.div<{ isMobile: boolean }>`
 `;
 
 const StyledContainer = newStyled(Container)`
-  padding: 0px 60px;
-  margin: 40px 0px;
+  padding: 0px 80px;
+  margin: 60px 0px;
   width: 100%;
   @media (max-width: 800px) {
     padding: 20px;
@@ -85,8 +85,8 @@ const HomeBody = () => {
       <StyledContainer horizontalCenter>
         {isMobile && <OurStory />}
         <HomeLowBanner />
-        <SubscribeEmail />
       </StyledContainer>
+      <SubscribeEmail />
       <OrderCreated
         isOpen={hasOrderCreated}
         orderId={searchParams.get('orderCreated')}
