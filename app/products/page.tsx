@@ -5,14 +5,13 @@ import Colors from '#/ui/colors/colors';
 import Container from '#/ui/components/ContainerBox';
 import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
-// import PriceFilter from '#/ui/components/PriceDropdown';
+import PriceFilter from '#/ui/components/PriceDropdown';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
 import Textbox from '#/ui/components/Textbox';
 import RecentlyViewedProducts from '#/ui/home/RecentlyViewedProducts';
 import newStyled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
-// import CollectionFilter from './MaterialFilter';
-import PriceFilter from '#/ui/components/PriceDropdown';
+import NoProductsAvailable from './NoProductsAvailable';
 import { Conatiner, ListBody, StyledPagination } from './util';
 
 const StyledContainer = newStyled(Container)`
@@ -43,47 +42,66 @@ const AvailabilityDropdown = newStyled(Dropdown)`
 const ProductsPage = () => {
   const [sort, setSort] = useState<string>('Featured');
   const [avaialble, setAvailable] = useState<string>('Available');
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
   const [productsToShow, setProductsToShow] = useState<Products>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { allCollections: collection } = useProduct();
   const isMobile = useIsMobile();
-
   const topRef = useRef<HTMLDivElement>(null);
 
   const productsCount = isMobile ? 6 : 12;
 
   useEffect(() => {
-    if (collection) {
-      let productsToShow: Products = collection?.products;
+    if (!collection) return;
 
-      if (productsToShow.length === 0) {
-        return;
-      }
-      if (productsToShow.length < 2) {
-        setProductsToShow(productsToShow);
-        return;
-      }
-      if (sort === 'Name: (A-Z)') {
-        productsToShow.sort((a, b) => a.title.localeCompare(b.title));
-      } else if (sort === 'Name: (Z-A)') {
-        productsToShow.sort((a, b) => b.title.localeCompare(a.title));
-      } else if (sort === 'Price: Low to High') {
-        productsToShow.sort(
-          (a, b) => Number(a.variants[0].price) - Number(b.variants[0].price),
-        );
-      } else if (sort === 'Price: High to Low') {
-        productsToShow.sort(
-          (a, b) => Number(b.variants[0].price) - Number(a.variants[0].price),
-        );
-      }
-      setProductsToShow(
-        productsToShow.slice(
-          (currentPage - 1) * productsCount,
-          Math.min(collection?.products?.length, productsCount * currentPage),
-        ),
+    let filtered: Products = collection.products;
+
+    // Filter by availability
+    if (avaialble === 'Available') {
+      filtered = filtered.filter((product) =>
+        product.variants.some((variant) => variant.quantityAvailable > 0),
+      );
+    } else if (avaialble === 'Out of Stock') {
+      filtered = filtered.filter((product) =>
+        product.variants.every((variant) => variant.quantityAvailable <= 0),
       );
     }
-  }, [sort, collection, currentPage]);
+
+    // Filter by price
+    filtered = filtered.filter((product) =>
+      product.variants.some((variant) => {
+        const price = parseFloat(variant.price.replace(/,/g, ''));
+        return price >= priceRange[0] && price <= priceRange[1];
+      }),
+    );
+
+    // Sorting
+    if (sort === 'Name: (A-Z)') {
+      filtered.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sort === 'Name: (Z-A)') {
+      filtered.sort((a, b) => b.title.localeCompare(a.title));
+    } else if (sort === 'Price: Low to High') {
+      filtered.sort(
+        (a, b) =>
+          parseFloat(a.variants[0].price.replace(/,/g, '')) -
+          parseFloat(b.variants[0].price.replace(/,/g, '')),
+      );
+    } else if (sort === 'Price: High to Low') {
+      filtered.sort(
+        (a, b) =>
+          parseFloat(b.variants[0].price.replace(/,/g, '')) -
+          parseFloat(a.variants[0].price.replace(/,/g, '')),
+      );
+    }
+
+    // Pagination
+    setProductsToShow(
+      filtered.slice(
+        (currentPage - 1) * productsCount,
+        currentPage * productsCount,
+      ),
+    );
+  }, [sort, avaialble, priceRange, collection, currentPage]);
 
   return (
     <>
@@ -113,8 +131,11 @@ const ProductsPage = () => {
               <PriceFilter
                 min={0}
                 max={10000}
-                value={[0, 10000]}
-                onChange={(v) => console.log(v)}
+                value={priceRange}
+                onChange={(v) => {
+                  setCurrentPage(1);
+                  setPriceRange(v);
+                }}
               />
               <AvailabilityDropdown
                 options={['Available', 'Out of Stock']}
@@ -131,7 +152,7 @@ const ProductsPage = () => {
                     flexRow
                     horizontalCenter
                   >
-                    AVAILABILTY :
+                    AVAILABILITY :
                     <div
                       onClick={toggle}
                       style={{
@@ -220,11 +241,15 @@ const ProductsPage = () => {
               renderOption={(option: any) => <span> {option}</span>}
             />
           </div>
-          <Conatiner>
-            {productsToShow.map((product) => (
-              <ProductWithVariants key={product.id} product={product} />
-            ))}
-          </Conatiner>
+          {productsToShow.length === 0 ? (
+            <NoProductsAvailable />
+          ) : (
+            <Conatiner>
+              {productsToShow.map((product) => (
+                <ProductWithVariants key={product.id} product={product} />
+              ))}
+            </Conatiner>
+          )}
         </ListBody>
         <StyledPagination
           currentPage={currentPage}
@@ -235,7 +260,27 @@ const ProductsPage = () => {
             setCurrentPage(number);
           }}
           itemsPerPage={productsCount}
-          totalItems={collection?.products?.length ?? 0}
+          totalItems={
+            collection?.products?.filter((product) => {
+              const isAvailable =
+                avaialble === 'Available'
+                  ? product.variants.some(
+                      (variant) => variant.quantityAvailable > 0,
+                    )
+                  : avaialble === 'Out of Stock'
+                    ? product.variants.every(
+                        (variant) => variant.quantityAvailable <= 0,
+                      )
+                    : true;
+
+              const isInPriceRange = product.variants.some((variant) => {
+                const price = parseFloat(variant.price.replace(/,/g, ''));
+                return price >= priceRange[0] && price <= priceRange[1];
+              });
+
+              return isAvailable && isInPriceRange;
+            }).length ?? 0
+          }
         />
         <RecentlyViewedProducts />
       </StyledContainer>
