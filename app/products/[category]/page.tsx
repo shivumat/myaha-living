@@ -12,6 +12,7 @@ import RecentlyViewedProducts from '#/ui/home/RecentlyViewedProducts';
 import newStyled from '@emotion/styled';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import CollectionFilter from '../MaterialFilter';
 import { Conatiner, ListBody, StyledPagination } from '../util';
 
 const StyledContainer = newStyled(Container)`
@@ -20,6 +21,13 @@ const StyledContainer = newStyled(Container)`
   @media (max-width: 800px) {
     padding: 20px;
     margin: 20px 0px;
+  }
+`;
+
+const SortDropdown = newStyled(Dropdown)`
+  margin-left: auto;
+  @media (max-width: 800px) {
+    margin-left: 0px;
   }
 `;
 
@@ -52,7 +60,7 @@ const ProductsCategory = () => {
   useEffect(() => {
     if (collection) {
       setSelected(collection);
-      setSelectedType(collection?.type ?? 'Collections');
+      setSelectedType(collection?.type ?? COLLECTIONS);
       let productsToShow: Products = collection?.products;
 
       if (productsToShow.length === 0) {
@@ -98,7 +106,8 @@ const ProductsCategory = () => {
           <div
             style={{
               display: 'flex',
-              justifyContent: 'space-between',
+              alignItems: !isMobile ? 'center' : 'flex-start',
+              columnGap: '20px',
               padding: '20px 0',
               flexDirection: isMobile ? 'column' : 'row',
             }}
@@ -107,7 +116,6 @@ const ProductsCategory = () => {
               ref={topRef}
               style={{
                 fontWeight: 'lighter',
-                fontSize: isMobile ? '12px' : '16px',
               }}
             >
               Home /&nbsp;
@@ -157,7 +165,16 @@ const ProductsCategory = () => {
                 renderOption={(option) => <span> {option.title}</span>}
               />
             </div>
-            <Dropdown
+            {selectedType === MATERIALS && (
+              <CollectionFilter collections={collections} label={COLLECTIONS} />
+            )}
+            {selectedType === COLLECTIONS && (
+              <CollectionFilter
+                collections={materialCollections}
+                label={MATERIALS}
+              />
+            )}
+            <SortDropdown
               options={[
                 'Featured',
                 'Name: (A-Z)',
@@ -199,7 +216,7 @@ const ProductsCategory = () => {
                   />
                 </div>
               )}
-              renderOption={(option) => <span> {option}</span>}
+              renderOption={(option: any) => <span> {option}</span>}
             />
           </div>
           <Conatiner>

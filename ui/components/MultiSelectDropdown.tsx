@@ -1,41 +1,62 @@
 import styled from '@emotion/styled';
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { FaCheck } from 'react-icons/fa';
 import Colors from '../colors/colors';
 
-interface DropdownProps<T> {
-  className?: string;
+const Checkbox = styled.div<{ checked: boolean }>`
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 2px solid ${Colors.black};
+  background: ${({ checked }) => (checked ? Colors.black : Colors.white)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    color: ${Colors.white};
+    font-size: 10px;
+    visibility: ${({ checked }) => (checked ? 'visible' : 'hidden')};
+  }
+`;
+
+interface MultiSelectDropdownProps<T> {
   options: T[];
-  onSelect: (option: any) => void;
-  renderTrigger: (
-    toggle: (e?: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
-  ) => ReactNode;
-  renderOption: (option: T) => ReactNode;
-  children?: ReactNode;
+  selectedOptions: T[];
+  onChange: (selected: T[]) => void;
+  renderTrigger: (toggle: () => void, selected: T[]) => ReactNode;
+  renderOptionLabel: (option: T) => string;
   maxHeight?: string;
   onClose?: () => void;
-  openOnHover?: boolean; // New prop
+  openOnHover?: boolean; // New prop to control hover behavior
 }
 
-export function Dropdown<T>({
+export function MultiSelectDropdown<T>({
   options,
-  onSelect,
+  selectedOptions,
   renderTrigger,
-  renderOption,
-  children,
+  renderOptionLabel,
   maxHeight,
   onClose,
-  className,
-  openOnHover = false, // Default value is false
-}: DropdownProps<T>) {
+  onChange,
+  openOnHover = false,
+}: MultiSelectDropdownProps<T>) {
   const [open, setOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLDivElement>(null); // Ref for the trigger element
+  const triggerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<{
     top: number;
     left: number;
   } | null>(null);
+
+  const handleSelect = (option: T) => {
+    const exists = selectedOptions.includes(option);
+    const newSelection = exists
+      ? selectedOptions.filter((o) => o !== option)
+      : [...selectedOptions, option];
+    onChange(newSelection);
+  };
 
   const calculatePosition = useCallback(() => {
     if (triggerRef.current) {
@@ -54,12 +75,6 @@ export function Dropdown<T>({
     calculatePosition();
     setOpen(true);
   }, [calculatePosition]);
-
-  const toggleDropdown = useCallback(() => {
-    if (!openOnHover) {
-      handleOpen();
-    }
-  }, [openOnHover, handleOpen]);
 
   // Close dropdown when clicking outside (for non-hover open)
   useEffect(() => {
@@ -166,15 +181,14 @@ export function Dropdown<T>({
   };
 
   return (
-    <Wrapper className={className} ref={dropdownRef}>
-      <div ref={triggerRef} onMouseEnter={openOnHover ? handleOpen : undefined}>
-        {renderTrigger(toggleDropdown)}
+    <Wrapper>
+      <div ref={triggerRef} onClick={handleOpen}>
+        {renderTrigger(handleOpen, selectedOptions)}
       </div>
 
       {open &&
         createPortal(
           <DropdownMenu
-            noOptions={options.length === 0}
             ref={menuRef}
             style={{
               top: position?.top ?? 0,
@@ -182,19 +196,18 @@ export function Dropdown<T>({
               maxHeight: maxHeight ?? 'auto',
             }}
           >
-            <div style={{ position: 'sticky', top: 0 }}>{children}</div>
-            {options.map((option, index) => (
-              <DropdownItem
-                key={index}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onSelect(option);
-                  setTimeout(() => setOpen(false), 0); // Ensure selection before closing
-                }}
-              >
-                {renderOption(option)}
-              </DropdownItem>
-            ))}
+            {options.map((option, index) => {
+              const label = renderOptionLabel(option);
+              const checked = selectedOptions.includes(option);
+              return (
+                <DropdownItem key={index} onClick={() => handleSelect(option)}>
+                  <Checkbox checked={checked}>
+                    <FaCheck />
+                  </Checkbox>
+                  <OptionLabel>{label}</OptionLabel>
+                </DropdownItem>
+              );
+            })}
           </DropdownMenu>,
           document.body,
         )}
@@ -202,28 +215,36 @@ export function Dropdown<T>({
   );
 }
 
-// Emotion-styled components
+// === Styled Components ===
 const Wrapper = styled.div`
   display: inline-block;
   position: relative;
 `;
 
-const DropdownMenu = styled.div<{ noOptions?: boolean }>`
+const DropdownMenu = styled.div`
   position: absolute;
   background: ${Colors.white};
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   border-radius: 6px;
-  min-width: 160px;
-  padding: ${({ noOptions }) => (noOptions ? '0px' : '8px 0')};
+  min-width: 260px;
   z-index: 1500;
   overflow-y: auto;
 `;
 
 const DropdownItem = styled.div`
   padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
   transition: background 0.2s;
+
   &:hover {
     background: #f3f3f3;
   }
+`;
+
+const OptionLabel = styled.div`
+  font-size: 14px;
+  color: ${Colors.black};
 `;

@@ -12,6 +12,7 @@ import RecentlyViewedProducts from '#/ui/home/RecentlyViewedProducts';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import CollectionFilter from './MaterialFilter';
 import { Conatiner, ListBody, StyledPagination } from './util';
 
 const StyledContainer = newStyled(Container)`
@@ -20,6 +21,13 @@ const StyledContainer = newStyled(Container)`
   @media (max-width: 800px) {
     padding: 20px;
     margin: 20px 0px;
+  }
+`;
+
+const SortDropdown = newStyled(Dropdown)`
+  margin-left: auto;
+  @media (max-width: 800px) {
+    margin-left: 0px;
   }
 `;
 
@@ -86,7 +94,8 @@ const ProductsPage = () => {
           <div
             style={{
               display: 'flex',
-              justifyContent: 'space-between',
+              alignItems: !isMobile ? 'center' : 'flex-start',
+              columnGap: '20px',
               padding: '20px 0',
               flexDirection: isMobile ? 'column' : 'row',
             }}
@@ -95,7 +104,6 @@ const ProductsPage = () => {
               ref={topRef}
               style={{
                 fontWeight: 'lighter',
-                fontSize: isMobile ? '12px' : '16px',
               }}
             >
               Home /&nbsp;
@@ -124,7 +132,12 @@ const ProductsPage = () => {
                 renderOption={(option: string) => <span>{option}</span>}
               />
             </div>
-            <Dropdown
+            <CollectionFilter collections={collections} label={COLLECTIONS} />
+            <CollectionFilter
+              collections={materialCollections}
+              label={MATERIALS}
+            />
+            <SortDropdown
               options={[
                 'Featured',
                 'Name: (A-Z)',
@@ -166,7 +179,7 @@ const ProductsPage = () => {
                   />
                 </div>
               )}
-              renderOption={(option) => <span> {option}</span>}
+              renderOption={(option: any) => <span> {option}</span>}
             />
           </div>
           <Conatiner>
