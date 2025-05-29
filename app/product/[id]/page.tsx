@@ -1,7 +1,7 @@
 'use client';
 import { useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
-import { Combination } from '#/lib/util';
+import { Combination, updateLastViewedProducts } from '#/lib/util';
 import Colors from '#/ui/colors/colors';
 import AddToCart from '#/ui/components/AddToCart';
 import Carousel from '#/ui/components/Carousel';
@@ -10,6 +10,7 @@ import PincodeInput from '#/ui/components/Pincode';
 import PlusMInusOpen from '#/ui/components/PlusMInusOpen';
 import ShopifyPrice from '#/ui/components/ShopifyPrice';
 import VariantContainer from '#/ui/components/VariantContainer';
+import RecentlyViewedProducts from '#/ui/home/RecentlyViewedProducts';
 import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -97,7 +98,7 @@ const StyledDiv = newStyled.div`
   background-color: ${Colors.white};
   border-radius: 10px;
   margin-bottom: 10px;
-  border: 1px solid #000;
+  border: 1px solid ${Colors.black};
   padding: 5px 10px;
 `;
 
@@ -132,6 +133,14 @@ const ProductWithId = () => {
       }) ?? 0,
     );
   }, [currentProduct]);
+
+  useEffect(() => {
+    return () => {
+      if (currentProduct) {
+        updateLastViewedProducts(currentProduct.id);
+      }
+    };
+  }, [currentProduct?.id]);
 
   useEffect(() => {
     if (!currentProduct) return;
@@ -378,6 +387,7 @@ const ProductWithId = () => {
   return (
     <Container>
       {Images}
+      <RecentlyViewedProducts />
       <FooterCarousel rounded={false} />
       {/* <PaymentComponent {...order}/> */}
     </Container>

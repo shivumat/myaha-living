@@ -2,7 +2,9 @@ import { Product, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import Colors from '../colors/colors';
-import AddToCart from './AddToCart';
+import Carousel from './Carousel';
+import Container from './ContainerBox';
+import ShopifyPrice from './ShopifyPrice';
 
 const Description = newStyled.div`
     text-overflow: ellipsis;
@@ -13,10 +15,10 @@ const Description = newStyled.div`
 `;
 
 const AddtoCart = newStyled.button`
-    height: 30px;
-    width: 100px;
+    height: 40px;
+    width: 160px;
     background-color: ${Colors.black};
-    font-size: 14px;
+    font-size: 16px;
     color: ${Colors.white};
     border-radius: 3px;
     cursor: pointer;
@@ -27,11 +29,15 @@ const AddtoCart = newStyled.button`
     }
     @media (max-width: 800px) {
         font-size: 10px;
-        width: 70px;
+        width: 150px;
     }
 `;
 
-const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
+const ProductWithDetails = (props: {
+  product: Product;
+  isEven: boolean;
+  getGrandparentWidth: () => number;
+}) => {
   const { product, isEven } = props;
   const isMobile = useIsMobile();
   const { openProduct } = useProduct();
@@ -46,16 +52,25 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
             : 'row-reverse',
         gap: '20px',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '20px',
-        height: isMobile ? 'auto' : '350px',
-        width: '100%',
+        padding: '20px 0px 0px',
+        height: 'auto',
+        minWidth: `${props.getGrandparentWidth()}px`,
       }}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          width: isMobile ? '100%' : 'calc(100% - 400px)',
+          marginLeft: isMobile ? '0px' : '20px',
+        }}
+      >
         <div
+          onClick={() => openProduct(product)}
+          className="clickable hover_underline"
           style={{
-            fontSize: '14px',
+            fontSize: '18px',
             fontWeight: '600',
             textAlign: isEven ? 'left' : 'right',
           }}
@@ -64,43 +79,41 @@ const ProductWithDetails = (props: { product: Product; isEven: boolean }) => {
         </div>
         <Description
           style={{
-            fontSize: '12px',
+            fontSize: '16px',
             fontWeight: 'lighter',
             textAlign: isEven ? 'left' : 'right',
           }}
           dangerouslySetInnerHTML={{ __html: product.description }}
         />
+        <ShopifyPrice
+          currency={product.variants[0].currencyCode}
+          price={product.variants[0].price}
+          compareAtPrice={product.variants[0]?.compareAtPrice}
+          fontSize="16px"
+        />
         <div
           style={{
             display: 'flex',
             gap: '10px',
-            marginTop: 'auto',
             justifyContent: isEven ? 'flex-start' : 'flex-end',
+            marginTop: '10px',
           }}
         >
-          <AddToCart
-            variantId={product.variants[0].id}
-            inventoryId={product.variants[0].inventoryId}
-            quantityAvailable={product.variants[0].quantityAvailable}
-          />
-          <AddtoCart
-            className="view clickable"
-            onClick={() => openProduct(product)}
-          >
-            View
+          <AddtoCart className="clickable" onClick={() => openProduct(product)}>
+            VIEW PRODUCT
           </AddtoCart>
         </div>
       </div>
-      <img
-        className="clickable"
-        onClick={() => openProduct(product)}
-        src={product.variants[0].images[0]}
-        alt={product.title}
-        style={{
-          height: isMobile ? '70%' : '100%',
-          width: isMobile ? '70%' : '200px',
-        }}
-      />
+      <Container padding="0px" margin="0px" height="500px" width="400px">
+        <Carousel
+          onClick={() => openProduct(product)}
+          height={'100%'}
+          className="clickable"
+          images={product.variants[0].images}
+          isCircle
+          hoverScroll
+        />
+      </Container>
     </div>
   );
 };

@@ -9,7 +9,7 @@ const Container = newStyled.div`
     width: 100%;
     cursor: pointer;
     border-radius: 10px;
-    margin: 20px 0px;
+    margin: 0px 0px 20px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,6 +55,8 @@ const OurStory = () => {
   const playVideo = () => {
     setIsPlaying(true);
   };
+
+  if (!isMobile) return null;
 
   return (
     <Container id="our_story">

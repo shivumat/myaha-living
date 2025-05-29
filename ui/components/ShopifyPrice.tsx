@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import Colors from '../colors/colors';
 
 type ShopifyPriceProps = {
   price: string;
@@ -16,13 +17,15 @@ const PriceWrapper = styled.div<{ fontSize: string }>`
 `;
 
 const CurrentPrice = styled.span`
-  font-weight: 600;
+  letter-spacing: 1px;
+  color: ${Colors.black};
 `;
 
 const CompareAtPrice = styled.span`
   text-decoration: line-through;
   color: #999;
   font-weight: 400;
+  letter-spacing: 1px;
 `;
 
 const parsePrice = (value: string): number =>

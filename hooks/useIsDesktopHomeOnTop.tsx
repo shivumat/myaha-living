@@ -12,7 +12,7 @@ export function useIsDesktopHomeOnTop(props?: {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsAtTop(!!props?.turnBackToTransparent && window.scrollY < 20);
+      setIsAtTop(!!props?.turnBackToTransparent && window.scrollY < 40);
     };
 
     window.addEventListener('scroll', handleScroll);

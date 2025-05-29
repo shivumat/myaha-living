@@ -1,3 +1,5 @@
+import Colors from '../colors/colors';
+
 interface OrderLogoProps {
   width?: string;
   height?: string;
@@ -10,7 +12,7 @@ const OrderLogo = (props: OrderLogoProps) => {
   const {
     width = '24',
     height = '24',
-    color = 'black',
+    color = `${Colors.black}`,
     className,
     onClick,
   } = props;

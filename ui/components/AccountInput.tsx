@@ -28,7 +28,7 @@ const StyledInput = newStyled.input<{ disabled?: boolean; hasError?: boolean }>`
   width: 100%;
   padding: 12px;
   padding-top: 18px;
-  border: 2px solid ${({ hasError }) => (hasError ? 'red' : '#000')};
+  border: 2px solid ${({ hasError }) => (hasError ? 'red' : Colors.black)};
   border-radius: 4px;
   font-size: 16px;
   outline: none;

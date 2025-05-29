@@ -1,7 +1,9 @@
 'use client';
+import { useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 import Carousel from '../components/Carousel';
 
 // List of images in the public folder
@@ -25,46 +27,78 @@ const Gallery = styled.div`
 
 const MobileWrapper = styled.div`
   padding: 0px;
-  height: 450px;
+  height: 500px;
+  position: relative;
+  top: 35px;
 `;
 
 const StyledCarousel = styled(Carousel)``;
 
 // Desktop Grid Layout Component
-const ImageGrid: React.FC<{ onClick: () => void }> = (props) => (
-  <Gallery>
-    <Carousel
-      clickableImages={[0]}
-      onClick={props.onClick}
-      isCircle
-      autoScroll
-      images={desktopImages}
-      height="100%"
-    />
-  </Gallery>
-);
+const ImageGrid: React.FC = () => {
+  const { initData } = useProduct();
+  const router = useRouter();
+  const onClick = (index: number) => {
+    router.push(`/${initData?.bannerRoutes?.[index]}`);
+  };
+
+  const clickableImages = useMemo(() => {
+    const indices: number[] = [];
+    initData?.bannerRoutes?.forEach((route, index) => {
+      if (!!route) {
+        indices.push(index);
+      }
+    });
+    return indices;
+  }, [initData?.bannerRoutes]);
+
+  return (
+    <Gallery>
+      <Carousel
+        clickableImages={clickableImages}
+        onClick={onClick}
+        isCircle
+        autoScroll
+        images={initData?.bannerImages?.map((i) => i.url) ?? desktopImages}
+        height="100%"
+      />
+    </Gallery>
+  );
+};
 
 // Main Component
 const HomeTopBanner: React.FC = () => {
   const isMobile = useIsMobile();
+  const { initData } = useProduct();
   const router = useRouter();
-  const onClick = () => {
-    router.push('/products');
+
+  const onClick = (index: number) => {
+    router.push(`/${initData?.mobileBannerRoutes?.[index]}`);
   };
+
+  const clickableImages = useMemo(() => {
+    const indices: number[] = [];
+    initData?.mobileBannerRoutes?.forEach((route, index) => {
+      if (!!route) {
+        indices.push(index);
+      }
+    });
+    return indices;
+  }, [initData?.mobileBannerRoutes]);
 
   return isMobile ? (
     <MobileWrapper>
       <StyledCarousel
-        clickableImages={[0]}
+        clickableImages={clickableImages}
         onClick={onClick}
         isCircle
         autoScroll
-        images={mobileImages}
-        height="450px"
+        images={initData?.mobileBannerImages?.map((i) => i.url) ?? mobileImages}
+        height="500px"
       />
     </MobileWrapper>
   ) : (
-    <ImageGrid onClick={onClick} />
+    <ImageGrid />
   );
 };
 

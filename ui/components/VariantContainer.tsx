@@ -11,8 +11,8 @@ const basicColors: { name: string; hex: string }[] = [
   { name: 'purple', hex: '#800080' },
   { name: 'orange', hex: '#FFA500' },
   { name: 'brown', hex: '#A52A2A' },
-  { name: 'black', hex: '#000000' },
-  { name: 'white', hex: '#FFFFFF' },
+  { name: 'black', hex: `${Colors.black}` },
+  { name: 'white', hex: `${Colors.white}` },
   { name: 'gray', hex: '#808080' },
   { name: 'cyan', hex: '#00FFFF' },
   { name: 'magenta', hex: '#FF00FF' },
@@ -31,14 +31,12 @@ const getColorFromName = (colorName: string): string => {
   const matchedColors = basicColors.filter((color) =>
     lowerCaseColor.includes(color.name),
   );
-  console.log('matchedColors', matchedColors);
   const matchedColor = mergeHexColorsWithWeights(
     matchedColors.map((c, index) => ({
       hex: c.hex,
       weight: matchedColors.length - index,
     })),
   );
-  console.log('matchedColor', matchedColor);
   return matchedColor ? matchedColor : '#ccc'; // Default gray if no match
 };
 
@@ -86,7 +84,7 @@ const VariantContainer = (props: {
                       bottom: '110%',
                       left: '50%',
                       transform: 'translateX(-50%)',
-                      backgroundColor: 'black',
+                      backgroundColor: Colors.black,
                       color: Colors.white,
                       padding: '5px',
                       fontSize: '10px',

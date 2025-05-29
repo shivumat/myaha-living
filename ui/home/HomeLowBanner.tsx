@@ -11,13 +11,12 @@ const mobileImages: string[] = [
 
 // Styled Components
 const Gallery = styled.div`
-  padding: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   column-gap: 20px;
-  margin: auto;
-  height: 90%;
+  margin: 20px auto auto;
+  height: 60%;
 `;
 
 const ImageWrapper = styled.div`
@@ -35,8 +34,9 @@ const ImageWrapper = styled.div`
 `;
 
 const MobileWrapper = styled.div`
-  padding: 20px;
-  height: 720px;
+  padding: 20px 0px 0px;
+  height: 650px;
+  width: 100%;
 `;
 
 // Desktop Grid Layout Component
@@ -62,19 +62,11 @@ const HomeLowBanner: React.FC = () => {
   );
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '10px',
-        textAlign: 'center',
-      }}
-    >
+    <>
       <div
         style={{
           fontSize: isMobile ? '24px' : '36px',
           fontWeight: '600',
-          padding: '0px 20px',
         }}
       >
         Stories you can feel, designs you can cherish.
@@ -83,7 +75,6 @@ const HomeLowBanner: React.FC = () => {
         style={{
           fontSize: isMobile ? '14px' : '16px',
           fontWeight: 'lighter',
-          padding: '0px 20px',
         }}
       >
         Step behind the scenes at Myaha, where stories come to life through
@@ -94,7 +85,7 @@ const HomeLowBanner: React.FC = () => {
         meaningful—designed to be cherished for a lifetime.
       </div>
       {Body}
-    </div>
+    </>
   );
 };
 

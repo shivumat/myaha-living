@@ -1,6 +1,7 @@
 import { Product, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
+import Colors from '../colors/colors';
 import Carousel from './Carousel';
 import ShopifyPrice from './ShopifyPrice';
 
@@ -21,22 +22,24 @@ const ProductWithVariants = (props: { product: Product }) => {
         flexDirection: 'column',
         width: '100%',
         maxWidth: '450px',
-        height: !isMobile ? '470px' : '350px',
-        margin: '0px auto 20px',
+        height: !isMobile ? '600px' : '350px',
+        margin: '0px auto',
       }}
     >
       <div
         style={{
           height: '100%',
-          width: isMobile ? '100%' : '75%',
+          width: '100%',
           margin: '10px auto',
         }}
       >
         <StyleCarousel
           onClick={() => openProduct(product)}
           height={'100%'}
+          className="clickable"
           images={product.variants[0].images}
           isCircle
+          hoverScroll
         />
       </div>
       <div
@@ -48,7 +51,7 @@ const ProductWithVariants = (props: { product: Product }) => {
           alignItems: 'basline',
           height: '60px',
           width: isMobile ? '100%' : '80%',
-          margin: '10px auto',
+          margin: '10px 0px',
           flexDirection: isMobile ? 'column' : 'row',
         }}
       >
@@ -66,9 +69,10 @@ const ProductWithVariants = (props: { product: Product }) => {
               gap: '10px',
               justifyContent: 'space-between',
               width: '100%',
-              fontSize: isMobile ? '12px' : '14px',
+              fontSize: '18px',
+              color: Colors.black,
             }}
-            className="clickable"
+            className="clickable hover_underline"
             onClick={() => openProduct(product)}
           >
             {`${product.title}`}{' '}

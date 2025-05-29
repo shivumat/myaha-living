@@ -1,3 +1,5 @@
+import Colors from '../colors/colors';
+
 const PasswordLogo = (props: {
   width?: string;
   height?: string;
@@ -8,7 +10,7 @@ const PasswordLogo = (props: {
   const {
     width = '24',
     height = '24',
-    color = '#1D1B20',
+    color = Colors.black,
     className,
     onClick,
   } = props;

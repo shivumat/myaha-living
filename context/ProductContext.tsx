@@ -1,6 +1,6 @@
 import { formatPrice, getRandomIntInclusive, searchProducts } from '#/lib/util';
 import Colors from '#/ui/colors/colors';
-import FlowerLoader from '#/ui/InitLoader';
+import InitLoader from '#/ui/InitLoader';
 import { useRouter } from 'next/navigation';
 import {
   createContext,
@@ -18,6 +18,7 @@ export interface Product {
   handle: string;
   title: string;
   description: string;
+  featured: boolean;
   variantsInfo: VariantInfo[];
   tags: any[];
   variants: Variant[];
@@ -59,13 +60,29 @@ export interface Collection {
   products: Product[];
 }
 
+export interface AnnouncementData {
+  text: string;
+  color: string;
+}
+
+export interface InitData {
+  announcementData: AnnouncementData[];
+  bannerImages: { url: string; altText: string }[];
+  bannerRoutes: string[];
+  mobileBannerImages: { url: string; altText: string }[];
+  mobileBannerRoutes: string[];
+}
+
 interface ProductContextType {
   products: Products;
   collections: Collections;
+  materialCollections: Collections;
   openProduct: (product: Product) => void;
   onSearchProducts: (searchString: string) => Products;
   fetchData: () => Promise<void>;
   allCollections: Collection | undefined;
+  initData?: InitData;
+  hasAnnouncements: boolean;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -73,6 +90,10 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Products>([]);
   const [collections, setCollections] = useState<Collections>([]);
+  const [materialCollections, setMaterialCollections] = useState<Collections>(
+    [],
+  );
+  const [initData, setInitData] = useState<InitData | undefined>();
   const [allCollections, setAllCollections] = useState<Collection | undefined>(
     undefined,
   );
@@ -90,10 +111,34 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     'drinkware',
   ];
 
+  const materialOrder = ['ceramic', 'glass', 'metal', 'wood'];
+
   const allCollectionId = '480886358263';
 
-  const fetchData = async () => {
-    fetched.current = true;
+  const getInitData = async () => {
+    const data = await fetch('/api/shopify/initData', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ page: 1 }),
+    });
+    const { data: initResponse } = await data.json();
+    const announcementData = JSON.parse(initResponse?.[0]?.announcements_data);
+    const bannerImages = initResponse?.[0]?.banner_images;
+    const bannerRoutes = JSON.parse(initResponse?.[0]?.banner_routes);
+    const mobileBannerImages = initResponse?.[0]?.mobile_banner_images;
+    const mobileBannerRoutes = JSON.parse(
+      initResponse?.[0]?.mobile_banner_routes_1,
+    );
+    setInitData({
+      announcementData,
+      bannerImages,
+      bannerRoutes,
+      mobileBannerImages,
+      mobileBannerRoutes,
+    });
+  };
+
+  const getProductData = async () => {
     const productData = await fetch('/api/shopify/products', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -112,46 +157,85 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       },
     );
     setProducts(productsData);
+    return productsData;
+  };
 
+  const getCollectionData = async (productsData: Products) => {
     const collectionData = await fetch('/api/shopify/collections', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ page: 1 }),
     });
     const collectionResponse = await collectionData.json();
-    let collectionsData: Collections = collectionResponse.data
+    const allCollectionsData: Collections = collectionResponse.data
       .filter((collection: Collection) => !!collection.products.length)
-      .filter((collection: Collection) => !collection.type)
       .map((collection: Collection) => {
+        const collectionProducts = collection.products.map(
+          (product: Product) => {
+            const collectionProduct = productsData.find(
+              (prod) => prod.id === product.id,
+            );
+            return { ...collectionProduct };
+          },
+        );
         const collectionProduct = productsData.find((product) => {
-          const firstProduct = collection.products[0];
+          const firstProduct = collectionProducts[0];
           return product.id === firstProduct.id;
         });
         const productImage =
           collectionProduct?.variants[0].images[0] ??
           `/images/sample/sample${getRandomIntInclusive(6, 1)}.png`;
         const image = collection.image;
-        return { ...collection, productImage, image };
+        return {
+          ...collection,
+          productImage,
+          image,
+          products: collectionProducts,
+        };
       });
 
-    collectionsData = collectionsData.sort((a, b) => {
-      const aIndex = collectionOrder.findIndex((item: string) =>
-        a.title.toLowerCase().includes(item.toLowerCase()),
-      );
-      const bIndex = collectionOrder.findIndex((item: string) =>
-        b.title.toLowerCase().includes(item.toLowerCase()),
-      );
-      return aIndex - bIndex;
-    });
+    const collectionsData = allCollectionsData
+      .filter((collection: Collection) => !collection.type)
+      .sort((a, b) => {
+        const aIndex = collectionOrder.findIndex((item: string) =>
+          a.title.toLowerCase().includes(item.toLowerCase()),
+        );
+        const bIndex = collectionOrder.findIndex((item: string) =>
+          b.title.toLowerCase().includes(item.toLowerCase()),
+        );
+        return aIndex - bIndex;
+      });
+    const materialCollectionsData = allCollectionsData
+      .filter(
+        (collection: Collection) =>
+          collection?.type?.toLowerCase() === 'material',
+      )
+      .sort((a, b) => {
+        const aIndex = materialOrder.findIndex((item: string) =>
+          a.title.toLowerCase().includes(item.toLowerCase()),
+        );
+        const bIndex = materialOrder.findIndex((item: string) =>
+          b.title.toLowerCase().includes(item.toLowerCase()),
+        );
+        return aIndex - bIndex;
+      });
     const allCollectionData = collectionsData.find((collection) =>
       collection.id.includes(allCollectionId),
     );
     setAllCollections(allCollectionData);
+    setMaterialCollections(materialCollectionsData);
     setCollections(
       collectionsData.filter(
         (collection) => !collection.id.includes(allCollectionId),
       ),
     );
+  };
+
+  const fetchData = async () => {
+    fetched.current = true;
+    await getInitData();
+    const productsData = await getProductData();
+    await getCollectionData(productsData);
     setFetching(false);
   };
 
@@ -187,7 +271,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
           width: '100vw',
         }}
       >
-        <FlowerLoader />
+        <InitLoader />
       </div>
     );
 
@@ -196,10 +280,13 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       value={{
         products,
         collections,
+        materialCollections,
         openProduct,
         onSearchProducts,
         fetchData,
         allCollections,
+        initData,
+        hasAnnouncements: !!initData?.announcementData?.length,
       }}
     >
       {children}

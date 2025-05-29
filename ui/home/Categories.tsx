@@ -3,15 +3,15 @@ import { useIsMobile } from '#/hooks/useMobile';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import Colors from '../colors/colors';
+import Overlay from '../components/Overlay';
+import Textbox from '../components/Textbox';
 
 const Container = newStyled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
   width: 100%;
-  padding-bottom: 20px;
-  border-bottom: 1px solid lightgray;
   gap: 20px;
-  margin-bottom: 20px;
   .title{
     font-size: 24px;
     font-weight: 500;
@@ -26,8 +26,8 @@ const Container = newStyled.div`
 const Arrow = newStyled.span`
     cursor: pointer;
     font-size: 12px;
-    color: darkgray;
-    border: 1px solid darkgray;
+    color: ${Colors.black};
+    border: 1px solid ${Colors.black};
     border-radius: 50%;
     padding: 2px;
     display: flex;
@@ -39,25 +39,26 @@ const CollectionContainer = newStyled.div`
     display: flex;
     column-gap: 20px;
     overflow-x: auto;
+    overflow-y: hidden;
     width: 100%;
     scroll-behavior: smooth;
 `;
 
 const CategoryContainer = newStyled.div`
-    padding: 20px 0px;
     cursor: pointer;
     display: flex;
+    position: relative;
     flex: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 20px;
-    width: calc(33.33% - 20px);
-    border: 1px solid black;
+    width: calc(30%);
+    height: 450px;
     @media (max-width: 800px) {
         padding: 20px 0px 30px;
-        width: calc(100% - 100px);
-        height: 440px;
+        width: calc(75%);
+        height: 350px;
     }
 `;
 
@@ -82,15 +83,32 @@ const Categories = () => {
           `products/${collection.id.replace('gid://shopify/Collection/', '')}`,
         )
       }
+      className="clickable"
       key={collection.id}
     >
+      <Overlay>
+        <Textbox
+          htmlTag="h3"
+          fontSize="24px"
+          fontWeight="500"
+          italic
+          allLowercase
+          color={Colors.white}
+        >
+          {collection.title}
+        </Textbox>
+      </Overlay>
       <img
         className="clickable"
         src={collection.categoryImage}
         alt={collection.title}
-        style={{ width: '200px', height: '300px', objectFit: 'cover' }}
+        style={{
+          width: '100%',
+          height: isMobile ? '350px' : '450px',
+          objectFit: 'cover',
+        }}
       />
-      <span className="clickable">{collection.title}</span>
+      {/* <span className="clickable">{collection.title}</span> */}
     </CategoryContainer>
   );
 
@@ -104,9 +122,11 @@ const Categories = () => {
   return (
     <Container>
       <div className="title">
-        <div>Product Category</div>
+        <div>SHOP BY CATEGORY</div>
         {!isMobile && (
-          <div style={{ display: 'flex', columnGap: '40px' }}>
+          <div
+            style={{ display: 'flex', columnGap: '40px', marginTop: '10px' }}
+          >
             <Arrow className="clickable" onClick={() => scroll()}>
               <img
                 src="/images/caret.png"

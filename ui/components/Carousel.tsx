@@ -1,6 +1,12 @@
 import newStyled from '@emotion/styled';
 import Image from 'next/image';
-import React, { ReactNode, TouchEvent, useEffect, useState } from 'react';
+import React, {
+  ReactNode,
+  TouchEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Colors from '../colors/colors';
 
 const CarouselContainer = newStyled.div`
@@ -10,6 +16,7 @@ const CarouselContainer = newStyled.div`
   height: 100%;
   position: relative;
   background: #f5f5f5;
+  cursor: pointer;
 `;
 
 const CarouselWrapper = newStyled.div<{ index: number }>`
@@ -39,7 +46,7 @@ const Dot = newStyled.div<{ active: boolean; isCircle: boolean }>`
   height: ${(props) => (props.isCircle ? '10px' : '5px')};
   border-radius: ${(props) => (props.isCircle ? '50%' : '12px')};
   border: 1px solid ${Colors.black};
-  background: ${(props) => (props.active ? 'black' : 'transparent')};
+  background: ${(props) => (props.active ? Colors.black : 'transparent')};
   cursor: pointer;
 `;
 
@@ -47,15 +54,24 @@ const Carousel = (props: {
   images?: string[];
   height: string;
   children?: ReactNode;
-  onClick?: () => void;
+  onClick?: (index: number) => void;
   className?: string;
   isCircle?: boolean;
   autoScroll?: boolean;
+  hoverScroll?: boolean; // ✅ New prop
   clickableImages?: number[];
 }) => {
-  const { images = [], children, isCircle = false, autoScroll = false } = props;
+  const {
+    images = [],
+    children,
+    isCircle = false,
+    autoScroll = false,
+    hoverScroll = false,
+  } = props;
+
   const [index, setIndex] = useState<number>(0);
   const [startX, setStartX] = useState<number | null>(null);
+  const scrollRef = useRef<NodeJS.Timeout | null>(null);
 
   const dotMap = images.length ? images : React.Children.toArray(children);
 
@@ -88,31 +104,46 @@ const Carousel = (props: {
     setIndex(0);
   }, [images]);
 
+  const handleMouseEnter = () => {
+    if (!hoverScroll || dotMap.length <= 1) return;
+
+    setIndex((prev) => (prev + 1) % dotMap.length);
+    scrollRef.current = setInterval(() => {
+      setIndex((prev) => (prev + 1) % dotMap.length);
+    }, 1500);
+  };
+
+  const handleMouseLeave = () => {
+    if (scrollRef.current) {
+      clearInterval(scrollRef.current);
+      scrollRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (scrollRef.current) clearInterval(scrollRef.current);
+    };
+  }, []);
+
   const CarouselComponents = images.length ? (
     <>
-      {images.map((src, idx) => {
-        return (
-          <CarouselImageDiv
-            key={idx}
-            style={{
-              cursor: props.clickableImages?.includes(idx)
-                ? 'pointer'
-                : 'default',
-            }}
-            onClick={() =>
-              props.clickableImages?.includes(idx) && props.onClick?.()
-            }
-          >
-            <Image
-              src={src}
-              alt={`Image ${idx + 1}`}
-              layout="fill"
-              objectFit="cover"
-              priority={idx === index} // ✅ Prioritize loading the first image
-            />
-          </CarouselImageDiv>
-        );
-      })}
+      {images.map((src, idx) => (
+        <CarouselImageDiv
+          key={idx}
+          onClick={() =>
+            props.clickableImages?.includes(idx) && props.onClick?.(idx)
+          }
+        >
+          <Image
+            src={src}
+            alt={`Image ${idx + 1}`}
+            layout="fill"
+            objectFit="cover"
+            priority={idx === index}
+          />
+        </CarouselImageDiv>
+      ))}
     </>
   ) : (
     React.Children.map(children, (child) => (
@@ -125,13 +156,16 @@ const Carousel = (props: {
       className={props.className}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <CarouselWrapper
         index={index}
-        onClick={() => !props.clickableImages?.length && props.onClick?.()}
+        onClick={() => !props.clickableImages?.length && props.onClick?.(index)}
       >
         {CarouselComponents}
       </CarouselWrapper>
+
       {dotMap.length > 1 && (
         <DotsContainer isCircle={isCircle}>
           {dotMap.map((_, idx) => (

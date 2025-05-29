@@ -36,6 +36,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <script
+          src="https://static.elfsight.com/platform/platform.js"
+          async
+        ></script>
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)

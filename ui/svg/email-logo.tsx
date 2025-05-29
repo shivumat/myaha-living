@@ -1,3 +1,5 @@
+import Colors from '../colors/colors';
+
 const EmailLogo = (props: {
   width?: string;
   height?: string;
@@ -8,7 +10,7 @@ const EmailLogo = (props: {
   const {
     width = '24',
     height = '24',
-    color = '#1D1B20',
+    color = Colors.black,
     className,
     onClick,
   } = props;

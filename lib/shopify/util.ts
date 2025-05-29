@@ -1,7 +1,10 @@
-export async function shopifyFetch(payload: {
-  query: string;
-  variables?: any;
-}) {
+export async function shopifyFetch(
+  payload: {
+    query: string;
+    variables?: any;
+  },
+  noCache?: boolean,
+) {
   const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
   try {
@@ -11,6 +14,9 @@ export async function shopifyFetch(payload: {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          ...(noCache
+            ? { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+            : {}),
           ...(key && { 'X-Shopify-Storefront-Access-Token': key }),
         },
         body: JSON.stringify({
@@ -28,6 +34,39 @@ export async function shopifyFetch(payload: {
       error: 'Error receiving data',
     };
   }
+}
+
+export async function getShopifyMediaInfo(mediaId: any) {
+  const query = `
+      query GetShopifyMediaImage($id: ID!) {
+      node(id: $id) {
+          ... on MediaImage {
+          image {
+              url
+              altText
+          }
+          }
+      }
+      }
+  `;
+
+  const { data } = await shopifyFetch({ query, variables: { id: mediaId } });
+  if (data.errors) {
+    console.error('Error fetching media image:', data.errors);
+    return null;
+  }
+  const mediaImage = data.data.node;
+  if (!mediaImage) {
+    console.error('Media image not found');
+    return null;
+  }
+  const imageUrl = mediaImage.image.url;
+  const altText = mediaImage.image.altText;
+  const formattedImage = {
+    url: imageUrl,
+    altText: altText,
+  };
+  return formattedImage;
 }
 
 export async function shopifyAdminFetch(payload: {
