@@ -9,6 +9,7 @@ import newStyled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import Colors from '../colors/colors';
 import CommandBar from '../components/Commandbar';
 import PlusMInusOpen from '../components/PlusMInusOpen';
@@ -40,20 +41,12 @@ const NavContainer = newStyled.div<{
   z-index: 1000;
   border-bottom: 0.2px solid ${({ showTransparent, showAboutUs, showCollection }) => (showTransparent || showAboutUs || showCollection ? 'transparent' : '#00000033')};
   @media (max-width: 800px) {
-    height: 40px;
+    height: 60px;
   }
 `;
 
-const Burger = newStyled.span`
-  font-size: 36px;
-  cursor: pointer;
-  margin-bottom: 10px;
+const Burger = newStyled(GiHamburgerMenu)`
   margin-left: 20px;
-  
-  @media (max-width: 800px) {
-    font-size: 20px;
-    margin-bottom: 5px;
-  }
 `;
 
 const LinksContainer = newStyled.div<{
@@ -222,7 +215,7 @@ const Navbar = () => {
     return (
       <>
         <NavContainer hasAnnouncements={hasAnnouncements && isDesktopHomeOnTop}>
-          <Burger onClick={() => toggle()}>☰</Burger>
+          <Burger size={35} onClick={() => toggle()} />
           <StyledMyahaLogo
             className="clickable"
             onClick={() => router.push('/')}

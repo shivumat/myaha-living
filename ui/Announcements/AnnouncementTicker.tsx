@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { AnnouncementData } from '#/context/ProductContext';
+import { useIsMobile } from '#/hooks/useMobile';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
@@ -47,6 +48,7 @@ export const AnnouncementTicker: React.FC<Props> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const total = announcements.length;
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (total <= 1) return;
@@ -73,6 +75,7 @@ export const AnnouncementTicker: React.FC<Props> = ({
       <Container
         padding="12px 48px"
         height="38px"
+        fontSize={isMobile ? '14px' : '16px'}
         color={Colors.white}
         horizontalCenter
         verticalCenter

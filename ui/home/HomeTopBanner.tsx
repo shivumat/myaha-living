@@ -29,7 +29,7 @@ const MobileWrapper = styled.div`
   padding: 0px;
   height: 500px;
   position: relative;
-  top: 15px;
+  top: 35px;
 `;
 
 const StyledCarousel = styled(Carousel)``;

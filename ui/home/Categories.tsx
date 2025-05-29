@@ -54,10 +54,11 @@ const CategoryContainer = newStyled.div`
     justify-content: center;
     gap: 20px;
     width: calc(30%);
+    height: 450px;
     @media (max-width: 800px) {
         padding: 20px 0px 30px;
-        width: calc(85%);
-        height: 440px;
+        width: calc(75%);
+        height: 350px;
     }
 `;
 
@@ -101,7 +102,11 @@ const Categories = () => {
         className="clickable"
         src={collection.categoryImage}
         alt={collection.title}
-        style={{ width: '100%', height: '450px', objectFit: 'cover' }}
+        style={{
+          width: '100%',
+          height: isMobile ? '350px' : '450px',
+          objectFit: 'cover',
+        }}
       />
       {/* <span className="clickable">{collection.title}</span> */}
     </CategoryContainer>
