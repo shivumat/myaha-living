@@ -72,6 +72,8 @@ export const mobileNavRoutes: NavRouteTypes[] = [
   { name: 'SHOP BY CATEGORY', path: '/collections' },
   { name: 'SHOP BY MATERIAL', path: '/material' },
   { name: 'CONTACT US', path: '/contact' },
+  { name: 'ABOUT US', path: '/about-us' },
+  { name: 'COLABORATE WITH US', path: '/collaborate' },
   { name: 'GIFTING & BULK', path: '/gifting' },
 ];
 

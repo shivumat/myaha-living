@@ -124,8 +124,9 @@ const ContactForm = () => {
           </div> */}
         <div>
           We'll get back to you in upto 3 business days. For immediate
-          assistance, please reach out to us at hello@myahaliving.com or +91
-          6350533372.
+          assistance, please reach out to us at{' '}
+          <strong>hello@myahaliving.com</strong> or{' '}
+          <strong>+91 6350533372.</strong>
         </div>
       </InfoText>
       <div

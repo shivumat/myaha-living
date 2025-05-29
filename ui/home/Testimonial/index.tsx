@@ -8,32 +8,32 @@ import TestimonialCard, { Testimonial } from './TestimonialCard';
 
 const testimonials: Testimonial[] = [
   {
-    name: 'Priya S.',
-    rating: 4,
+    name: 'Vidhi Agarwal',
+    rating: 5,
     review:
-      'Elevate your indoor or outdoor greenery with our Beige Vase. Its soft, soothing hue and clean lines add a touch of elegance to any space, blending seamlessly with a variety of decor styles.',
-    images: ['/images/vase1.jpg', '/images/vase2.jpg'],
+      'Received my second order from Myaha today. Packaging is top notch which ensures all glass products are delivered safely. Fits multiple flower stems and makes a beautiful centrepiece.',
+    images: [],
   },
   {
-    name: 'Priya S1.',
-    rating: 4,
+    name: 'Swati Choudhary',
+    rating: 5,
     review:
-      'Elevate your indoor or outdoor greenery with our Beige Vase. Its soft, soothing hue and clean lines add a touch of elegance to any space, blending seamlessly with a variety of decor styles.',
-    images: ['/images/vase1.jpg', '/images/vase2.jpg'],
+      'Myaha offers a refreshing blend of innovation and elegance. As promised, each design reflects a deep inspiration drawn from nature. I purchased the N.Y.C tumblers, they are exceptional in both form and function. A classy addition to my drinkware collection.',
+    images: [],
   },
   {
-    name: 'Priya S2.',
-    rating: 4,
+    name: 'Rajat khandelwal',
+    rating: 5,
     review:
-      'Elevate your indoor or outdoor greenery with our Beige Vase. Its soft, soothing hue and clean lines add a touch of elegance to any space, blending seamlessly with a variety of decor styles.',
-    images: ['/images/vase1.jpg', '/images/vase2.jpg'],
+      'Loved the design and quality. Has made my work-from-home days so much more fun!',
+    images: [],
   },
   {
-    name: 'Priya S3.',
-    rating: 4,
+    name: 'Vidhi Agarwal',
+    rating: 5,
     review:
-      'Elevate your indoor or outdoor greenery with our Beige Vase. Its soft, soothing hue and clean lines add a touch of elegance to any space, blending seamlessly with a variety of decor styles.',
-    images: ['/images/vase1.jpg', '/images/vase2.jpg'],
+      'True to its photos, the sunset vases add elegance to any dinner party tablescape. This visually stunning piece makes for a perfect gift for any occasion.',
+    images: [],
   },
   // Add more testimonials here
 ];
