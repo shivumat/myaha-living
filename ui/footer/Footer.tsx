@@ -285,13 +285,19 @@ const Footer = () => {
           </StyledTextbox>
           {/* <StyledTextbox
             route="/gifting"
-            style={{ marginBottom: '40px' }}
             color={Colors.white}
             fontWeight="lighter"
           >
             Gifting
           </StyledTextbox> */}
-          <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              gap: '5px',
+              alignItems: 'center',
+              marginTop: '40px',
+            }}
+          >
             <a
               href={`https://www.instagram.com/myaha.co?igsh=MXVneTY0cnl3a2ZwNQ==`}
               target="_blank"
