@@ -285,6 +285,10 @@ const Footer = () => {
           </StyledTextbox>
           {/* <StyledTextbox
             route="/gifting"
+
+          <StyledTextbox
+            route="/gifting"
+            style={{ marginBottom: '40px' }}
             color={Colors.white}
             fontWeight="lighter"
           >
