@@ -12,28 +12,28 @@ const testimonials: Testimonial[] = [
     rating: 5,
     review:
       'Received my second order from Myaha today. Packaging is top notch which ensures all glass products are delivered safely. Fits multiple flower stems and makes a beautiful centrepiece.',
-    images: [],
+    images: ['/images/testimonials/1/1.jpeg', '/images/testimonials/1/2.jpeg'],
   },
   {
     name: 'Swati Choudhary',
     rating: 5,
     review:
       'Myaha offers a refreshing blend of innovation and elegance. As promised, each design reflects a deep inspiration drawn from nature. I purchased the N.Y.C tumblers, they are exceptional in both form and function. A classy addition to my drinkware collection.',
-    images: [],
+    images: ['/images/testimonials/2/1.jpeg'],
   },
   {
     name: 'Rajat khandelwal',
     rating: 5,
     review:
       'Loved the design and quality. Has made my work-from-home days so much more fun!',
-    images: [],
+    images: ['/images/testimonials/3/1.jpeg'],
   },
   {
     name: 'Vidhi Agarwal',
     rating: 5,
     review:
       'True to its photos, the sunset vases add elegance to any dinner party tablescape. This visually stunning piece makes for a perfect gift for any occasion.',
-    images: [],
+    images: ['/images/testimonials/4/1.jpeg', '/images/testimonials/4/2.jpeg'],
   },
   // Add more testimonials here
 ];

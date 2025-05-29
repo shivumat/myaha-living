@@ -21,10 +21,9 @@ const Images = styled.div`
   display: flex;
   gap: 12px;
   margin-top: 16px;
-
   img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 8px;
   }
