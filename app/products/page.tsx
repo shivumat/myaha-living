@@ -1,16 +1,16 @@
 'use client';
 import { Products, useProduct } from '#/context/ProductContext';
 import { useIsMobile } from '#/hooks/useMobile';
-import Colors from '#/ui/colors/colors';
 import Container from '#/ui/components/ContainerBox';
-import { Dropdown } from '#/ui/components/Dropdown';
 import FooterCarousel from '#/ui/components/FooterCarousel';
-import PriceFilter from '#/ui/components/PriceDropdown';
 import ProductWithVariants from '#/ui/components/ProductWithVariants';
 import Textbox from '#/ui/components/Textbox';
 import RecentlyViewedProducts from '#/ui/home/RecentlyViewedProducts';
+import Filter from '#/ui/product-filter/Filter';
+import MobileFilter from '#/ui/product-filter/MobileFilter';
 import newStyled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
+import { VscSettings } from 'react-icons/vsc';
 import NoProductsAvailable from './NoProductsAvailable';
 import { Conatiner, ListBody, StyledPagination } from './util';
 
@@ -23,28 +23,13 @@ const StyledContainer = newStyled(Container)`
   }
 `;
 
-const SortDropdown = newStyled(Dropdown)`
-  margin-left: auto;
-  width: 400px;
-  @media (max-width: 800px) {
-    margin-left: 0px;
-    width: 100%;
-  }
-`;
-
-const AvailabilityDropdown = newStyled(Dropdown)`
-  @media (max-width: 800px) {
-    margin-left: 0px;
-    width: 100%;
-  }
-`;
-
 const ProductsPage = () => {
   const [sort, setSort] = useState<string>('Featured');
   const [avaialble, setAvailable] = useState<string>('Available');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
   const [productsToShow, setProductsToShow] = useState<Products>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [openMobileFilter, setOpenMobileFilter] = useState<boolean>(false);
   const { allCollections: collection } = useProduct();
   const isMobile = useIsMobile();
   const topRef = useRef<HTMLDivElement>(null);
@@ -113,137 +98,30 @@ const ProductsPage = () => {
           <Textbox fontSize="28px">All products</Textbox>
         </Container>
         <ListBody>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: !isMobile ? 'center' : 'flex-start',
-              columnGap: '20px',
-              padding: '20px 0',
-              flexDirection: isMobile ? 'column' : 'row',
-            }}
-          >
+          {isMobile ? (
             <Container
+              style={{ gap: '20px' }}
               padding="0px"
-              {...(!isMobile
-                ? { flexRow: true, style: { gap: '20px' } }
-                : { width: '100%' })}
+              margin="0p"
+              flexRow
             >
-              <PriceFilter
-                min={0}
-                max={10000}
-                value={priceRange}
-                onChange={(v) => {
-                  setCurrentPage(1);
-                  setPriceRange(v);
-                }}
+              <VscSettings
+                onClick={() => setOpenMobileFilter(true)}
+                size={24}
               />
-              <AvailabilityDropdown
-                options={['Available', 'Out of Stock']}
-                onSelect={(option) => {
-                  setCurrentPage(1);
-                  setAvailable(option);
-                }}
-                renderTrigger={(toggle) => (
-                  <Container
-                    width={isMobile ? '100%' : 'auto'}
-                    padding="0px"
-                    margin={isMobile ? '10px 0px 0px' : '0px'}
-                    style={{ gap: '10px', justifyContent: 'space-between' }}
-                    flexRow
-                    horizontalCenter
-                  >
-                    Availability :
-                    <div
-                      onClick={toggle}
-                      style={{
-                        cursor: 'pointer',
-                        width: '200px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        border: `1px solid ${Colors.black}`,
-                        alignItems: 'center',
-                        padding: '3.5px 10px',
-                        borderRadius: '4px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontSize: '16px',
-                          fontWeight: '500',
-                          padding: '5px 0px',
-                        }}
-                      >
-                        {avaialble}
-                      </div>
-                      <img
-                        src="/images/caret.png"
-                        alt="sort"
-                        style={{ width: '20px', height: '20px' }}
-                      />
-                    </div>
-                  </Container>
-                )}
-                renderOption={(option: any) => <span> {option}</span>}
-              />
+              Filter & Sort
             </Container>
-            <SortDropdown
-              options={[
-                'Featured',
-                'Name: (A-Z)',
-                'Name: (Z-A)',
-                'Price: Low to High',
-                'Price: High to Low',
-              ]}
-              onSelect={(option) => {
-                setCurrentPage(1);
-                setSort(option);
-              }}
-              renderTrigger={(toggle) => (
-                <Container
-                  width={isMobile ? '100%' : 'auto'}
-                  padding="0px"
-                  margin={isMobile ? '10px 0px 0px' : '0px'}
-                  style={{
-                    gap: '10px',
-                    justifyContent: isMobile ? 'space-between' : 'flex-end',
-                  }}
-                  flexRow
-                  horizontalCenter
-                >
-                  Sort By :
-                  <div
-                    onClick={toggle}
-                    style={{
-                      cursor: 'pointer',
-                      width: '200px',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      border: `1px solid ${Colors.black}`,
-                      alignItems: 'center',
-                      padding: '3.5px 10px',
-                      borderRadius: '4px',
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: '16px',
-                        fontWeight: '500',
-                        padding: '5px 0px',
-                      }}
-                    >
-                      {sort}
-                    </div>
-                    <img
-                      src="/images/caret.png"
-                      alt="sort"
-                      style={{ width: '20px', height: '20px' }}
-                    />
-                  </div>
-                </Container>
-              )}
-              renderOption={(option: any) => <span> {option}</span>}
+          ) : (
+            <Filter
+              setSort={setSort}
+              setAvailable={setAvailable}
+              setPriceRange={setPriceRange}
+              setCurrentPage={setCurrentPage}
+              priceRange={priceRange}
+              sort={sort}
+              avaialble={avaialble}
             />
-          </div>
+          )}
           {productsToShow.length === 0 ? (
             <NoProductsAvailable />
           ) : (
@@ -288,6 +166,17 @@ const ProductsPage = () => {
         <RecentlyViewedProducts />
       </StyledContainer>
       <FooterCarousel rounded={false} />
+      <MobileFilter
+        isOpen={openMobileFilter}
+        setIsOpen={setOpenMobileFilter}
+        setSort={setSort}
+        setAvailable={setAvailable}
+        setPriceRange={setPriceRange}
+        setCurrentPage={setCurrentPage}
+        priceRange={priceRange}
+        sort={sort}
+        avaialble={avaialble}
+      />
     </>
   );
 };

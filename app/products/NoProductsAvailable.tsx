@@ -22,10 +22,15 @@ const SubText = newStyled(Textbox)`
 const NoProductsAvailable = () => {
   return (
     <Wrapper horizontalCenter width="100%">
-      <Textbox fontSize="20px" fontWeight="600">
+      <Textbox
+        fontSize="20px"
+        fontWeight="600"
+        style={{ whiteSpace: 'break-spaces' }}
+        textAlign="center"
+      >
         No products match the selected filters
       </Textbox>
-      <SubText>
+      <SubText style={{ whiteSpace: 'break-spaces' }} textAlign="center">
         Try adjusting the filters to find what you're looking for.
       </SubText>
     </Wrapper>
