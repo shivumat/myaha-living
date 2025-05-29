@@ -283,14 +283,14 @@ const Footer = () => {
           >
             Collaborate with us
           </StyledTextbox>
-          <StyledTextbox
+          {/* <StyledTextbox
             route="/gifting"
             style={{ marginBottom: '40px' }}
             color={Colors.white}
             fontWeight="lighter"
           >
             Gifting
-          </StyledTextbox>
+          </StyledTextbox> */}
           <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
             <a
               href={`https://www.instagram.com/myaha.co?igsh=MXVneTY0cnl3a2ZwNQ==`}
