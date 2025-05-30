@@ -2,7 +2,12 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-const collections = ['contact-us-form', 'subscriber_emails', 'user_details'];
+const collections = [
+  'contact-us-form',
+  'gifting',
+  'subscriber_emails',
+  'user_details',
+];
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -232,12 +237,15 @@ const Dashboard = () => {
                 {headers.map((h) => (
                   <td key={h}>
                     {(() => {
-                      const rawValue =
+                      let rawValue =
                         editedData[row.id]?.[h] ??
                         (row[h] !== undefined ? row[h] : '');
                       const isMultiline =
                         typeof rawValue === 'string' && rawValue.includes('\n');
-
+                      if (h === 'createdAt')
+                        rawValue = new Date(
+                          row[h]._seconds * 1000,
+                        ).toLocaleString();
                       return isMultiline ? (
                         <Textarea
                           value={rawValue}

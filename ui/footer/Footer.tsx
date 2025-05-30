@@ -283,17 +283,13 @@ const Footer = () => {
           >
             Collaborate with us
           </StyledTextbox>
-          {/* <StyledTextbox
-            route="/gifting"
-
           <StyledTextbox
             route="/gifting"
-            style={{ marginBottom: '40px' }}
             color={Colors.white}
             fontWeight="lighter"
           >
             Gifting
-          </StyledTextbox> */}
+          </StyledTextbox>
           <div
             style={{
               display: 'flex',

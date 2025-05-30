@@ -1,4 +1,5 @@
 'use client';
+import { useIsMobile } from '#/hooks/useMobile';
 import MyahaLogo from '#/ui/svg/myaha-logo';
 import styled from '@emotion/styled';
 import Head from 'next/head';
@@ -142,30 +143,11 @@ const PriceButton = styled.button<{ selected: boolean }>`
 
 const Input = styled.input`
   padding: 12px;
-  width: 60%;
+  width: 100%;
   font-size: 16px;
   margin-bottom: 12px;
   border-radius: 6px;
   border: 1px solid #ccc;
-
-  &:focus {
-    border-color: #5b1d1d;
-    outline: none;
-  }
-  @media (max-width: ${BREAKPOINT}) {
-    width: 100%;
-  }
-`;
-
-const Textarea = styled.textarea`
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  resize: vertical;
-  min-height: 80px;
-  margin-bottom: 12px;
-  width: 60%;
 
   &:focus {
     border-color: #5b1d1d;
@@ -193,7 +175,7 @@ const Submit = styled.button`
   border: none;
   border-radius: 6px;
   font-size: 16px;
-  margin-top: 12px auto;
+  margin: 12px auto;
   cursor: pointer;
   width: 300px;
 
@@ -233,6 +215,13 @@ const GiftCardComponent: React.FC = () => {
   const [selectedTag, setSelectedTag] = useState('Congratulations');
   const [selectedPrice, setSelectedPrice] = useState<number | null>(1500);
   const [customPrice, setCustomPrice] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const isMobile = useIsMobile();
+
   const [isHovered, setIsHovered] = useState(false);
   const phoneNumber = '916350533372';
 
@@ -250,6 +239,23 @@ const GiftCardComponent: React.FC = () => {
     ? '/images/mustard-card.png'
     : '/images/red-card.png';
 
+  const [error, setError] = useState<string>('');
+
+  const submitForm = async () => {
+    await fetch('/api/gifting/addGifting', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        price: customPrice.trim() || selectedPrice,
+        ocassion: selectedTag,
+        name: `${firstName} ${lastName}`,
+        email,
+        phone,
+      }),
+    });
+  };
   return (
     <>
       <Head>
@@ -319,6 +325,16 @@ const GiftCardComponent: React.FC = () => {
               </PriceButton>
             ))}
           </PriceGroup>
+          {customPrice && (
+            <div
+              style={{
+                color: !customPrice.trim() ? 'red' : '#333',
+                marginBottom: 8,
+              }}
+            >
+              {customPrice.trim() === '' ? 'Custom price is required.' : ''}
+            </div>
+          )}
           <Input
             type="number"
             placeholder="Customise the price"
@@ -332,8 +348,7 @@ const GiftCardComponent: React.FC = () => {
         Please enter the details and we will get in touch with you within 48
         hours or you can always contact us
       </MaroonStrip>
-
-      <div
+      <form
         style={{
           padding: '0 40px',
           display: 'flex',
@@ -341,16 +356,100 @@ const GiftCardComponent: React.FC = () => {
           gap: '12px',
           justifyContent: 'center',
           alignItems: 'center',
+          width: '100%',
+          maxWidth: isMobile ? 500 : 900,
+          margin: '0 auto',
+        }}
+        onSubmit={async (e) => {
+          e.preventDefault();
+          // Clear previous errors
+          setError('');
+
+          if (
+            !firstName.trim() ||
+            !lastName.trim() ||
+            !email.trim() ||
+            !phone.trim() ||
+            (!selectedPrice && !customPrice.trim())
+          ) {
+            setError('Please fill all fields.');
+            return;
+          }
+          // Simple email and phone validation
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            setError('Please enter a valid email address.');
+            return;
+          }
+          if (!/^\d{10,}$/.test(phone)) {
+            setError('Please enter a valid phone number.');
+            return;
+          }
+          // Submit logic here (e.g., API call)
+          await submitForm();
+          setError('Form submitted successfully!');
+          setFirstName('');
+          setLastName('');
+          setEmail('');
+          setPhone('');
+          setSelectedPrice(1500);
+          setCustomPrice('');
+          setSelectedTag('Congratulations');
         }}
       >
-        <Input placeholder="First Name" />
-        <Input placeholder="Last Name" />
-        <Input placeholder="Email Address" />
-        <Input placeholder="Contact Number" />
-        <Input placeholder="Address" />
-        <Textarea placeholder="Notes (Optional)" />
+        <div
+          style={{
+            display: isMobile ? 'flex' : 'grid',
+            ...(!isMobile
+              ? {
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: '20px',
+                }
+              : { flexDirection: 'column' }),
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <Input
+            value={firstName}
+            placeholder="First Name"
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+          <Input
+            value={lastName}
+            placeholder="Last Name"
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+          <Input
+            value={email}
+            placeholder="Your Email"
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <Input
+            value={phone}
+            placeholder="Your Number"
+            type="tel"
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          />
+        </div>
+        {error && (
+          <div
+            style={{
+              color: error === 'Form submitted successfully!' ? 'green' : 'red',
+              marginTop: 8,
+            }}
+          >
+            {error}
+          </div>
+        )}
         <Submit type="submit">Submit</Submit>
-      </div>
+      </form>
 
       <CTAGroup>
         <CTAButton
