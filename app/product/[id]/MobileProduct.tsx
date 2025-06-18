@@ -289,7 +289,7 @@ const MobileProduct = () => {
 
   const Images = (
     <MobileWrapper>
-      <div style={{ height: '600px' }} ref={topRef}>
+      <div style={{ height: '550px' }} ref={topRef}>
         <Carousel
           images={currentProduct?.variants[variant]?.images}
           height="100%"
