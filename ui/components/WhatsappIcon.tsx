@@ -16,6 +16,7 @@ const FloatingButton = styled.a`
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   text-decoration: none;
   transition: all 0.3s ease-in-out;
+  z-index: 1000;
 
   &:hover {
     background-color: #1ebe57;

@@ -7,6 +7,7 @@ type ShopifyPriceProps = {
   compareAtPrice?: string;
   currency: string;
   fontSize?: string;
+  showInclusiveOfTaxes?: boolean;
 };
 
 const PriceWrapper = styled.div<{ fontSize: string }>`
@@ -36,6 +37,7 @@ const ShopifyPrice: React.FC<ShopifyPriceProps> = ({
   compareAtPrice,
   currency,
   fontSize = '24px',
+  showInclusiveOfTaxes,
 }) => {
   const numericPrice = parsePrice(price);
   const numericCompareAt = compareAtPrice ? parsePrice(compareAtPrice) : 0;
@@ -43,16 +45,23 @@ const ShopifyPrice: React.FC<ShopifyPriceProps> = ({
   const isDiscounted = compareAtPrice && numericCompareAt > numericPrice;
 
   return (
-    <PriceWrapper fontSize={fontSize}>
-      <CurrentPrice>
-        {currency} {price}
-      </CurrentPrice>
-      {isDiscounted && (
-        <CompareAtPrice>
-          {currency} {compareAtPrice}
-        </CompareAtPrice>
+    <div>
+      <PriceWrapper fontSize={fontSize}>
+        <CurrentPrice>
+          {currency} {price}
+        </CurrentPrice>
+        {isDiscounted && (
+          <CompareAtPrice>
+            {currency} {compareAtPrice}
+          </CompareAtPrice>
+        )}
+      </PriceWrapper>
+      {showInclusiveOfTaxes && (
+        <span style={{ fontSize: '12px', color: '#666', marginLeft: '4px' }}>
+          (inclusive of all taxes)
+        </span>
       )}
-    </PriceWrapper>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 import newStyled from '@emotion/styled';
 import { ChangeEventHandler, useState } from 'react';
-import { FiCheck, FiLoader } from 'react-icons/fi';
+import { FiLoader, FiSearch } from 'react-icons/fi';
 
 const InputContainer = newStyled.div`
   position: relative;
@@ -76,7 +76,7 @@ const PincodeInput = (props: { className?: string }) => {
           disabled={fetching}
         />
         <Button onClick={checkPincode} disabled={fetching}>
-          {fetching ? <FiLoader className="animate-spin" /> : <FiCheck />}
+          {fetching ? <FiLoader className="animate-spin" /> : <FiSearch />}
         </Button>
       </div>
       {!isValid && pincode.length > 0 && (
