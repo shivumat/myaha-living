@@ -331,6 +331,8 @@ const MobileProduct = () => {
         }}
       >
         <AddToCart
+          width="350px"
+          height="40px"
           variantId={currentProduct.variants[variant].id}
           inventoryId={currentProduct.variants[variant].inventoryId}
           quantityAvailable={currentProduct.variants[variant].quantityAvailable}
