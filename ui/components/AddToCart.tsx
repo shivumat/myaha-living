@@ -3,9 +3,9 @@ import newStyled from '@emotion/styled';
 import { useState } from 'react';
 import Colors from '../colors/colors';
 
-const AddtoCart = newStyled.button`
-    height: 30px;
-    width: 130px;
+const AddtoCart = newStyled.button<{ width?: string; height?: string }>`
+    height: ${(props) => props.height || '30px'};
+    width: ${(props) => props.width || '130px'};
     background-color: ${Colors.black};
     font-size: 18px;
     color: ${Colors.white};
@@ -22,7 +22,7 @@ const AddtoCart = newStyled.button`
     }
     @media (max-width: 800px) {
         font-size: 14px;
-        width: 100px;
+        width: ${(props) => props.width || '100px'};
     }
 `;
 
@@ -88,6 +88,8 @@ const AddToCart = (props: {
   inventoryId: string;
   quantityAvailable: number;
   className?: string;
+  width?: string;
+  height?: string;
 }) => {
   const { addItem, cart, removeItem, setVariantCount, toggleCart } = useCart();
   const [error, setError] = useState('');
@@ -162,6 +164,8 @@ const AddToCart = (props: {
   return (
     <div>
       <AddtoCart
+        width={props.width}
+        height={props.height}
         className={`clickable ${props.className} ${quantityAvailable <= 0 ? 'disabled' : ''}`}
         onClick={() => {
           if (quantityAvailable > 0) {
