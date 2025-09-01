@@ -38,8 +38,8 @@ const ProductImageCarousel = (props: { images: string[] }) => {
         src={images[index]}
         alt={`Image ${index + 1}`}
         objectFit="cover"
-        height={600}
-        width={400}
+        height={660}
+        width={440}
         style={{ borderRadius: '10px' }}
       />
       <Container
@@ -48,7 +48,7 @@ const ProductImageCarousel = (props: { images: string[] }) => {
           gap: '10px',
           marginLeft: '10px',
           overflowY: 'scroll',
-          height: '600px',
+          height: '660px',
         }}
       >
         {images.map((src, idx) => (

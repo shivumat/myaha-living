@@ -92,7 +92,7 @@ export const POST = async () => {
       }
     }`;
 
-    const data = await shopifyFetch({ query }, true);
+    const data = await shopifyFetch({ query });
     const inventoryData = await shopifyAdminFetch({ query: inventoryQuery });
     const inventoryItems = inventoryData.data.data.inventoryItems.edges.map(
       (item: any) => {

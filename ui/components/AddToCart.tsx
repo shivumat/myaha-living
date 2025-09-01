@@ -3,9 +3,17 @@ import newStyled from '@emotion/styled';
 import { useState } from 'react';
 import Colors from '../colors/colors';
 
-const AddtoCart = newStyled.button<{ width?: string; height?: string }>`
+const Container = newStyled.div<{ width?: string; height?: string }>`
     height: ${(props) => props.height || '30px'};
     width: ${(props) => props.width || '130px'};
+    @media (max-width: 800px) {
+        width: ${(props) => props.width || '100px'};
+    }
+  `;
+
+const AddtoCart = newStyled.button<{ width?: string; height?: string }>`
+    height: 100%;
+    width: 100%;
     background-color: ${Colors.black};
     font-size: 18px;
     color: ${Colors.white};
@@ -22,7 +30,6 @@ const AddtoCart = newStyled.button<{ width?: string; height?: string }>`
     }
     @media (max-width: 800px) {
         font-size: 14px;
-        width: ${(props) => props.width || '100px'};
     }
 `;
 
@@ -162,10 +169,8 @@ const AddToCart = (props: {
   }
 
   return (
-    <div>
+    <Container width={props.width} height={props.height}>
       <AddtoCart
-        width={props.width}
-        height={props.height}
         className={`clickable ${props.className} ${quantityAvailable <= 0 ? 'disabled' : ''}`}
         onClick={() => {
           if (quantityAvailable > 0) {
@@ -180,7 +185,7 @@ const AddToCart = (props: {
       {quantityAvailable > 0 && quantityAvailable <= 3 && (
         <WarningMessage>Only {quantityAvailable} left in stock!</WarningMessage>
       )}
-    </div>
+    </Container>
   );
 };
 

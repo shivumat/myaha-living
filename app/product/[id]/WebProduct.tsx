@@ -2,7 +2,6 @@
 import { useProduct } from '#/context/ProductContext';
 import { Combination, updateLastViewedProducts } from '#/lib/util';
 import Colors from '#/ui/colors/colors';
-import AddToCart from '#/ui/components/AddToCart';
 import Container from '#/ui/components/ContainerBox';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import PincodeInput from '#/ui/components/Pincode';
@@ -14,6 +13,7 @@ import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FiHeart, FiTruck } from 'react-icons/fi';
+import BuyButtons from './BuyButtons';
 import ProductImageCarousel from './ProductImageCarousel';
 
 const MainContainer = newStyled.div`
@@ -36,7 +36,8 @@ const Gallery = newStyled.div`
 `;
 
 const Title = newStyled.h1`
-  font-size: 24px;
+  font-size: 36px;
+  marding-top: 10px;
   font-weight: 600;
 `;
 
@@ -45,7 +46,7 @@ const Description = newStyled.div`
     overflow: hidden;
     display: -webkit-box;
     font-weight: lighter;
-    font-size: 14px;
+    font-size: 16px;
     -webkit-line-clamp: 30;
     -webkit-box-orient: vertical;
     @media (max-width: 800px) {
@@ -285,6 +286,7 @@ const WebProduct = () => {
               price={currentProduct.variants[variant].price}
               compareAtPrice={currentProduct.variants[variant]?.compareAtPrice}
               showInclusiveOfTaxes
+              fontSize="32px"
             />
             {!!showVariants &&
               currentProduct.variantsInfo.map((variantInfo, index) => (
@@ -310,13 +312,14 @@ const WebProduct = () => {
                 </div>
               ))}
           </Container>
-          <AddToCart
-            variantId={currentProduct.variants[variant].id}
-            inventoryId={currentProduct.variants[variant].inventoryId}
-            quantityAvailable={
-              currentProduct.variants[variant].quantityAvailable
-            }
-          />
+          <Container width="100%" style={{ gap: '30px', marginTop: '10px' }}>
+            <BuyButtons
+              product={currentProduct}
+              variant={variant}
+              width="100%"
+              height="50px"
+            />
+          </Container>
           <Description
             dangerouslySetInnerHTML={{
               __html: currentProduct?.description ?? '',

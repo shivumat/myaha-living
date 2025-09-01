@@ -2,7 +2,6 @@
 import { useProduct } from '#/context/ProductContext';
 import { Combination, updateLastViewedProducts } from '#/lib/util';
 import Colors from '#/ui/colors/colors';
-import AddToCart from '#/ui/components/AddToCart';
 import Carousel from '#/ui/components/Carousel';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import PincodeInput from '#/ui/components/Pincode';
@@ -14,6 +13,7 @@ import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FiHeart, FiTruck } from 'react-icons/fi';
+import BuyButtons from './BuyButtons';
 
 const Container = newStyled.div`
   padding: 50px 0px 0px;
@@ -330,13 +330,28 @@ const MobileProduct = () => {
           boxShadow: '0 -2px 8px rgba(0,0,0,0.05)',
         }}
       >
-        <AddToCart
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '20px',
+            flexDirection: 'column',
+          }}
+        >
+          <BuyButtons
+            product={currentProduct}
+            variant={variant}
+            width="350px"
+            height="40px"
+          />
+        </div>
+        {/* <AddToCart
           width="350px"
           height="40px"
           variantId={currentProduct.variants[variant].id}
           inventoryId={currentProduct.variants[variant].inventoryId}
           quantityAvailable={currentProduct.variants[variant].quantityAvailable}
-        />
+        /> */}
       </div>
       <RecentlyViewedProducts />
       <FooterCarousel rounded={false} />
