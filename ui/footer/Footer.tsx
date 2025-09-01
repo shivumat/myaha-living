@@ -367,7 +367,7 @@ const Footer = () => {
             color={Colors.white}
             fontWeight="lighter"
           >
-            Provacy Policy
+            Privacy Policy
           </StyledTextbox>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>

@@ -152,24 +152,24 @@ const Userform = ({
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!firstName) newErrors.firstName = 'First name is required';
-    if (!lastName) newErrors.lastName = 'Last name is required';
-    if (!address) newErrors.address = 'Address is required';
-    if (!city) newErrors.city = 'City is required';
-    if (!pinCode) newErrors.pinCode = 'Pin-code is required';
-    if (!state) newErrors.state = 'State is required';
-    if (!phone) newErrors.phone = 'Phone is required';
-    if (!country) newErrors.country = 'Country is required';
+    if (!firstName.trim()) newErrors.firstName = 'First name is required';
+    if (!lastName.trim()) newErrors.lastName = 'Last name is required';
+    if (!address.trim()) newErrors.address = 'Address is required';
+    if (!city.trim()) newErrors.city = 'City is required';
+    if (!pinCode.trim()) newErrors.pinCode = 'Pin-code is required';
+    if (!state.trim()) newErrors.state = 'State is required';
+    if (!phone.trim()) newErrors.phone = 'Phone is required';
+    if (!country.trim()) newErrors.country = 'Country is required';
 
     if (!sameAsShipping) {
-      if (!firstName1) newErrors.firstName1 = 'First name is required';
-      if (!lastName1) newErrors.lastName1 = 'Last name is required';
-      if (!address1) newErrors.address1 = 'Address is required';
-      if (!city1) newErrors.city1 = 'City is required';
-      if (!pinCode1) newErrors.pinCode1 = 'Pin-code is required';
-      if (!state1) newErrors.state1 = 'State is required';
-      if (!phone1) newErrors.phone1 = 'Phone is required';
-      if (!country1) newErrors.country1 = 'Country is required';
+      if (!firstName1.trim()) newErrors.firstName1 = 'First name is required';
+      if (!lastName1.trim()) newErrors.lastName1 = 'Last name is required';
+      if (!address1.trim()) newErrors.address1 = 'Address is required';
+      if (!city1.trim()) newErrors.city1 = 'City is required';
+      if (!pinCode1.trim()) newErrors.pinCode1 = 'Pin-code is required';
+      if (!state1.trim()) newErrors.state1 = 'State is required';
+      if (!phone1.trim()) newErrors.phone1 = 'Phone is required';
+      if (!country1.trim()) newErrors.country1 = 'Country is required';
     }
 
     setErrors(newErrors);
