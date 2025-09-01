@@ -19,6 +19,7 @@ export interface Product {
   title: string;
   description: string;
   featured: boolean;
+  customOrder: boolean;
   variantsInfo: VariantInfo[];
   tags: any[];
   variants: Variant[];

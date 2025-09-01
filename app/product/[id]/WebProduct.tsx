@@ -3,7 +3,6 @@ import { useProduct } from '#/context/ProductContext';
 import { Combination, updateLastViewedProducts } from '#/lib/util';
 import Colors from '#/ui/colors/colors';
 import AddToCart from '#/ui/components/AddToCart';
-import Carousel from '#/ui/components/Carousel';
 import Container from '#/ui/components/ContainerBox';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import PincodeInput from '#/ui/components/Pincode';
@@ -15,9 +14,10 @@ import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FiHeart, FiTruck } from 'react-icons/fi';
+import ProductImageCarousel from './ProductImageCarousel';
 
 const MainContainer = newStyled.div`
-  padding: 50px 0px 0px;
+  padding: 70px 0px 0px;
   @media (max-width: 800px) {
     padding: 30px 0px 0px;
   }
@@ -27,22 +27,12 @@ const MainContainer = newStyled.div`
 const Gallery = newStyled.div`
   padding: 20px;
   display: grid;
-  grid-template-columns: 1fr 0.75fr 0.75fr 0.75fr;
-  grid-template-rows: 1fr 0.25fr;
-  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  width: 75%;
   height: 100%;
-  gap: 10px;
+  gap: 40px;
   margin: auto auto 20px; 
-`;
-
-const ImageWrapper = newStyled.div`
-  position: relative;
-  overflow: hidden;
-  max-width: 500px;
-  max-height: 850px;
-  img {
-    width: 100%;
-  }
 `;
 
 const Title = newStyled.h1`
@@ -170,8 +160,6 @@ const WebProduct = () => {
     <div
       style={{
         marginTop: '10px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
@@ -185,29 +173,6 @@ const WebProduct = () => {
           <FiTruck style={{ marginRight: '5px' }} /> Free Shipping on All Orders
         </StyledDiv>
       </Description>
-      {!!showVariants &&
-        currentProduct.variantsInfo.map((variantInfo, index) => (
-          <div
-            style={{
-              marginTop: '10px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-              cursor: 'pointer',
-            }}
-            key={index}
-          >
-            <VariantContainer
-              {...variantInfo}
-              activeIndex={
-                variantInfo.values?.findIndex(
-                  (value) => value === currentVariantInfo?.[index]?.value,
-                ) ?? 0
-              }
-              onVariantChange={onVariantChange}
-            />
-          </div>
-        ))}
     </div>
   );
 
@@ -299,91 +264,73 @@ const WebProduct = () => {
     </div>
   );
 
-  const remaininiglImages = currentProduct?.variants[variant]?.images.slice(-3);
-  const carouselImages = currentProduct?.variants[variant]?.images.slice(0, -3);
+  const carouselImages = currentProduct?.variants[variant]?.images;
 
   const ImageGrid: React.FC = () => (
     <>
-      <Gallery ref={topRef}>
-        {!!carouselImages.length && (
-          <div
-            style={{
-              gridRow: 'span 2',
-            }}
-          >
-            <Carousel images={carouselImages} height="100%" />
-          </div>
-        )}
-        {Array.from({ length: 3 }).map((_, index) => {
-          if (remaininiglImages && remaininiglImages[index]) {
-            if (index === 0 && carouselImages.length === 0) {
-              return (
-                <div
-                  style={{
-                    gridRow: 'span 2',
-                  }}
-                  key={index}
-                >
-                  <ImageWrapper style={{ height: '100%' }}>
-                    <img
-                      style={{ height: '100%' }}
-                      src={remaininiglImages[index]}
-                      alt={`Image ${index + 1}`}
-                    />
-                  </ImageWrapper>
-                </div>
-              );
-            }
-            return (
-              <ImageWrapper key={index}>
-                <img
-                  src={remaininiglImages[index]}
-                  alt={`Image ${index + 1}`}
-                />
-              </ImageWrapper>
-            );
-          }
-          // Render empty div to preserve space if image is missing
-          return <ImageWrapper key={index} />;
-        })}
+      <Gallery>
+        <ProductImageCarousel images={carouselImages} />
+        {/* <Carousel images={carouselImages} height="100%" />  */}
         <div
           style={{
-            gridColumn: 'span 2',
             display: 'flex',
             flexDirection: 'column',
             gap: '10px',
           }}
         >
           <Title>{currentProduct?.title}</Title>
-          <Container flexRow style={{ gap: '10px' }}>
+          <Container padding="0px" flexRow style={{ gap: '10px' }}>
             <ShopifyPrice
               currency={currentProduct.variants[variant].currencyCode}
               price={currentProduct.variants[variant].price}
               compareAtPrice={currentProduct.variants[variant]?.compareAtPrice}
               showInclusiveOfTaxes
             />
-            <AddToCart
-              variantId={currentProduct.variants[variant].id}
-              inventoryId={currentProduct.variants[variant].inventoryId}
-              quantityAvailable={
-                currentProduct.variants[variant].quantityAvailable
-              }
-            />
+            {!!showVariants &&
+              currentProduct.variantsInfo.map((variantInfo, index) => (
+                <div
+                  style={{
+                    marginTop: '10px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    cursor: 'pointer',
+                  }}
+                  key={index}
+                >
+                  <VariantContainer
+                    {...variantInfo}
+                    activeIndex={
+                      variantInfo.values?.findIndex(
+                        (value) => value === currentVariantInfo?.[index]?.value,
+                      ) ?? 0
+                    }
+                    onVariantChange={onVariantChange}
+                  />
+                </div>
+              ))}
           </Container>
+          <AddToCart
+            variantId={currentProduct.variants[variant].id}
+            inventoryId={currentProduct.variants[variant].inventoryId}
+            quantityAvailable={
+              currentProduct.variants[variant].quantityAvailable
+            }
+          />
           <Description
             dangerouslySetInnerHTML={{
               __html: currentProduct?.description ?? '',
             }}
           />
         </div>
-        {Manufacture}
         {Material}
+        {Manufacture}
       </Gallery>
     </>
   );
 
   return (
-    <MainContainer>
+    <MainContainer ref={topRef}>
       <ImageGrid />
       <RecentlyViewedProducts />
       <FooterCarousel rounded={false} />
