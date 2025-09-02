@@ -325,9 +325,9 @@ const WebProduct = () => {
               __html: currentProduct?.description ?? '',
             }}
           />
+          {Manufacture}
         </div>
         {Material}
-        {Manufacture}
       </Gallery>
     </>
   );

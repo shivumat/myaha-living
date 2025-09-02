@@ -34,26 +34,18 @@ const ProductImageCarousel = (props: { images: string[] }) => {
 
   return (
     <Container flexRow>
-      <Image
-        src={images[index]}
-        alt={`Image ${index + 1}`}
-        objectFit="cover"
-        height={660}
-        width={440}
-        style={{ borderRadius: '10px' }}
-      />
       <Container
         padding="5px 10px"
         style={{
           gap: '10px',
-          marginLeft: '10px',
+          marginRight: '10px',
           overflowY: 'scroll',
           height: '660px',
         }}
       >
         {images.map((src, idx) => (
           <Image
-            key={idx}
+            key={src}
             src={src}
             alt={`Image ${idx + 1}`}
             objectFit="cover"
@@ -80,6 +72,14 @@ const ProductImageCarousel = (props: { images: string[] }) => {
           />
         ))}
       </Container>
+      <Image
+        src={images[index]}
+        alt={`Image ${index + 1}`}
+        objectFit="cover"
+        height={660}
+        width={440}
+        style={{ borderRadius: '10px' }}
+      />
     </Container>
   );
 };
