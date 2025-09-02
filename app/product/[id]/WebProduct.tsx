@@ -30,6 +30,7 @@ const Gallery = newStyled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   width: 75%;
+  min-width: 900px;
   height: 100%;
   gap: 40px;
   margin: auto auto 20px; 

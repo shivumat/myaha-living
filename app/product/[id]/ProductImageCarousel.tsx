@@ -41,6 +41,7 @@ const ProductImageCarousel = (props: { images: string[] }) => {
           marginRight: '10px',
           overflowY: 'scroll',
           height: '660px',
+          width: '560px',
         }}
       >
         {images.map((src, idx) => (
