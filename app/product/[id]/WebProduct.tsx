@@ -37,9 +37,15 @@ const Gallery = newStyled.div`
 `;
 
 const Title = newStyled.h1`
-  font-size: 36px;
-  marding-top: 10px;
+  font-size: 32px;
+  margin-top: 10px;
   font-weight: 600;
+`;
+
+const StyledShopifyPrice = newStyled(ShopifyPrice)`
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
 `;
 
 const Description = newStyled.div`
@@ -282,12 +288,12 @@ const WebProduct = () => {
         >
           <Title>{currentProduct?.title}</Title>
           <Container padding="0px" style={{ gap: '10px' }}>
-            <ShopifyPrice
+            <StyledShopifyPrice
               currency={currentProduct.variants[variant].currencyCode}
               price={currentProduct.variants[variant].price}
               compareAtPrice={currentProduct.variants[variant]?.compareAtPrice}
               showInclusiveOfTaxes
-              fontSize="32px"
+              fontSize="28px"
             />
             {!!showVariants &&
               currentProduct.variantsInfo.map((variantInfo, index) => (
@@ -313,7 +319,11 @@ const WebProduct = () => {
                 </div>
               ))}
           </Container>
-          <Container width="100%" style={{ gap: '30px', marginTop: '10px' }}>
+          <Container
+            padding="0px"
+            width="100%"
+            style={{ alignItems: 'flex-start', gap: '30px', marginTop: '10px' }}
+          >
             <BuyButtons
               product={currentProduct}
               variant={variant}
