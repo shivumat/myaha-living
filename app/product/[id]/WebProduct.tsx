@@ -167,7 +167,6 @@ const WebProduct = () => {
   const Manufacture = (
     <div
       style={{
-        marginTop: '10px',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
@@ -187,7 +186,6 @@ const WebProduct = () => {
   const Material = (
     <div
       style={{
-        marginTop: '10px',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
@@ -283,7 +281,7 @@ const WebProduct = () => {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '10px',
+            gap: '15px',
           }}
         >
           <Title>{currentProduct?.title}</Title>
@@ -299,7 +297,6 @@ const WebProduct = () => {
               currentProduct.variantsInfo.map((variantInfo, index) => (
                 <div
                   style={{
-                    marginTop: '10px',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '10px',
@@ -322,7 +319,7 @@ const WebProduct = () => {
           <Container
             padding="0px"
             width="100%"
-            style={{ alignItems: 'flex-start', gap: '30px', marginTop: '10px' }}
+            style={{ alignItems: 'flex-start', gap: '10px' }}
           >
             <BuyButtons
               product={currentProduct}
