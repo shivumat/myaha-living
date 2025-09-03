@@ -281,7 +281,7 @@ const WebProduct = () => {
           }}
         >
           <Title>{currentProduct?.title}</Title>
-          <Container padding="0px" flexRow style={{ gap: '10px' }}>
+          <Container padding="0px" style={{ gap: '10px' }}>
             <ShopifyPrice
               currency={currentProduct.variants[variant].currencyCode}
               price={currentProduct.variants[variant].price}
