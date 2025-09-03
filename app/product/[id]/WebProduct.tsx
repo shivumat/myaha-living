@@ -2,8 +2,6 @@
 import { useProduct } from '#/context/ProductContext';
 import { Combination, updateLastViewedProducts } from '#/lib/util';
 import Colors from '#/ui/colors/colors';
-import AddToCart from '#/ui/components/AddToCart';
-import Carousel from '#/ui/components/Carousel';
 import Container from '#/ui/components/ContainerBox';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import PincodeInput from '#/ui/components/Pincode';
@@ -15,9 +13,11 @@ import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FiHeart, FiTruck } from 'react-icons/fi';
+import BuyButtons from './BuyButtons';
+import ProductImageCarousel from './ProductImageCarousel';
 
 const MainContainer = newStyled.div`
-  padding: 50px 0px 0px;
+  padding: 70px 0px 0px;
   @media (max-width: 800px) {
     padding: 30px 0px 0px;
   }
@@ -27,27 +27,26 @@ const MainContainer = newStyled.div`
 const Gallery = newStyled.div`
   padding: 20px;
   display: grid;
-  grid-template-columns: 1fr 0.75fr 0.75fr 0.75fr;
-  grid-template-rows: 1fr 0.25fr;
-  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  width: 75%;
+  min-width: 900px;
   height: 100%;
-  gap: 10px;
+  gap: 40px;
   margin: auto auto 20px; 
 `;
 
-const ImageWrapper = newStyled.div`
-  position: relative;
-  overflow: hidden;
-  max-width: 500px;
-  max-height: 850px;
-  img {
-    width: 100%;
-  }
+const Title = newStyled.h1`
+  font-size: 32px;
+  margin-top: 10px;
+  font-weight: 600;
+  margin-bottom: -20px;
 `;
 
-const Title = newStyled.h1`
-  font-size: 24px;
-  font-weight: 600;
+const StyledShopifyPrice = newStyled(ShopifyPrice)`
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
 `;
 
 const Description = newStyled.div`
@@ -55,7 +54,7 @@ const Description = newStyled.div`
     overflow: hidden;
     display: -webkit-box;
     font-weight: lighter;
-    font-size: 14px;
+    font-size: 16px;
     -webkit-line-clamp: 30;
     -webkit-box-orient: vertical;
     @media (max-width: 800px) {
@@ -169,9 +168,6 @@ const WebProduct = () => {
   const Manufacture = (
     <div
       style={{
-        marginTop: '10px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
@@ -185,39 +181,16 @@ const WebProduct = () => {
           <FiTruck style={{ marginRight: '5px' }} /> Free Shipping on All Orders
         </StyledDiv>
       </Description>
-      {!!showVariants &&
-        currentProduct.variantsInfo.map((variantInfo, index) => (
-          <div
-            style={{
-              marginTop: '10px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-              cursor: 'pointer',
-            }}
-            key={index}
-          >
-            <VariantContainer
-              {...variantInfo}
-              activeIndex={
-                variantInfo.values?.findIndex(
-                  (value) => value === currentVariantInfo?.[index]?.value,
-                ) ?? 0
-              }
-              onVariantChange={onVariantChange}
-            />
-          </div>
-        ))}
     </div>
   );
 
   const Material = (
     <div
       style={{
-        marginTop: '10px',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
+        padding: '10px',
       }}
     >
       <Price>Product details</Price>
@@ -299,75 +272,62 @@ const WebProduct = () => {
     </div>
   );
 
-  const remaininiglImages = currentProduct?.variants[variant]?.images.slice(-3);
-  const carouselImages = currentProduct?.variants[variant]?.images.slice(0, -3);
+  const carouselImages = currentProduct?.variants[variant]?.images;
 
   const ImageGrid: React.FC = () => (
     <>
-      <Gallery ref={topRef}>
-        {!!carouselImages.length && (
-          <div
-            style={{
-              gridRow: 'span 2',
-            }}
-          >
-            <Carousel images={carouselImages} height="100%" />
-          </div>
-        )}
-        {Array.from({ length: 3 }).map((_, index) => {
-          if (remaininiglImages && remaininiglImages[index]) {
-            if (index === 0 && carouselImages.length === 0) {
-              return (
-                <div
-                  style={{
-                    gridRow: 'span 2',
-                  }}
-                  key={index}
-                >
-                  <ImageWrapper style={{ height: '100%' }}>
-                    <img
-                      style={{ height: '100%' }}
-                      src={remaininiglImages[index]}
-                      alt={`Image ${index + 1}`}
-                    />
-                  </ImageWrapper>
-                </div>
-              );
-            }
-            return (
-              <ImageWrapper key={index}>
-                <img
-                  src={remaininiglImages[index]}
-                  alt={`Image ${index + 1}`}
-                />
-              </ImageWrapper>
-            );
-          }
-          // Render empty div to preserve space if image is missing
-          return <ImageWrapper key={index} />;
-        })}
+      <Gallery>
+        <ProductImageCarousel images={carouselImages} />
+        {/* <Carousel images={carouselImages} height="100%" />  */}
         <div
           style={{
-            gridColumn: 'span 2',
             display: 'flex',
             flexDirection: 'column',
-            gap: '10px',
+            gap: '25px',
           }}
         >
           <Title>{currentProduct?.title}</Title>
-          <Container flexRow style={{ gap: '10px' }}>
-            <ShopifyPrice
+          <Container padding="0px" style={{ gap: '10px' }}>
+            <StyledShopifyPrice
               currency={currentProduct.variants[variant].currencyCode}
               price={currentProduct.variants[variant].price}
               compareAtPrice={currentProduct.variants[variant]?.compareAtPrice}
               showInclusiveOfTaxes
+              fontSize="28px"
             />
-            <AddToCart
-              variantId={currentProduct.variants[variant].id}
-              inventoryId={currentProduct.variants[variant].inventoryId}
-              quantityAvailable={
-                currentProduct.variants[variant].quantityAvailable
-              }
+            {!!showVariants &&
+              currentProduct.variantsInfo.map((variantInfo, index) => (
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    cursor: 'pointer',
+                  }}
+                  key={index}
+                >
+                  <VariantContainer
+                    {...variantInfo}
+                    activeIndex={
+                      variantInfo.values?.findIndex(
+                        (value) => value === currentVariantInfo?.[index]?.value,
+                      ) ?? 0
+                    }
+                    onVariantChange={onVariantChange}
+                  />
+                </div>
+              ))}
+          </Container>
+          <Container
+            padding="0px"
+            width="100%"
+            style={{ alignItems: 'flex-start', gap: '10px' }}
+          >
+            <BuyButtons
+              product={currentProduct}
+              variant={variant}
+              width="100%"
+              height="50px"
             />
           </Container>
           <Description
@@ -375,15 +335,15 @@ const WebProduct = () => {
               __html: currentProduct?.description ?? '',
             }}
           />
+          {Manufacture}
         </div>
-        {Manufacture}
         {Material}
       </Gallery>
     </>
   );
 
   return (
-    <MainContainer>
+    <MainContainer ref={topRef}>
       <ImageGrid />
       <RecentlyViewedProducts />
       <FooterCarousel rounded={false} />

@@ -116,7 +116,10 @@ const VariantContainer = (props: {
                 border:
                   props.activeIndex === index
                     ? `1px solid ${Colors.black}`
-                    : '0px',
+                    : `1px solid ${mergeHexColorsWithWeights([
+                        { hex: Colors.black, weight: 2 },
+                        { hex: Colors.white, weight: 9 },
+                      ])}`,
                 fontSize: '12px',
                 fontWeight: '300',
                 display: 'flex',

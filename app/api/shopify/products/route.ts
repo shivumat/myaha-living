@@ -21,6 +21,9 @@ export const POST = async () => {
         featured: metafield(namespace: "custom", key: "featured") {
           value
         }
+        customOrder: metafield(namespace: "custom", key: "custom_order") {
+          value
+        }
         collections(first: 5) {
           edges {
             node {
@@ -89,7 +92,7 @@ export const POST = async () => {
       }
     }`;
 
-    const data = await shopifyFetch({ query }, true);
+    const data = await shopifyFetch({ query });
     const inventoryData = await shopifyAdminFetch({ query: inventoryQuery });
     const inventoryItems = inventoryData.data.data.inventoryItems.edges.map(
       (item: any) => {
@@ -107,6 +110,7 @@ export const POST = async () => {
         tags,
         careGuide,
         featured,
+        customOrder,
       } = product.node;
       const variantsInfo: { name: string; values: string[] }[] = options.map(
         (option: any) => {
@@ -177,6 +181,7 @@ export const POST = async () => {
         handle,
         title,
         featured: !!featured?.value,
+        customOrder: customOrder?.value,
         description: descriptionHtml,
         variantsInfo,
         careGuide: careGuide?.value,

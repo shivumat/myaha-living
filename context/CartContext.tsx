@@ -97,6 +97,7 @@ interface CartContextType {
     count: number;
   }) => void;
   toggleCart: () => void;
+  buyNow: (variant_id: string, inventoryId: string) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -152,6 +153,17 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setCart(getCart());
   };
 
+  const buyNow = (variant_id: string, inventoryId: string) => {
+    const cartItems = getCart();
+    const updatedCart =
+      cartItems?.filter((item) => item.variant_id === variant_id) ?? [];
+    if (updatedCart.length === 0) {
+      updatedCart.push({ variant_id, quantity: 1, inventoryId });
+    }
+    localStorage.setItem(CART_KEY, JSON.stringify(updatedCart));
+    setCart(getCart());
+  };
+
   const clear = () => {
     clearCart();
     setCart([]);
@@ -168,7 +180,15 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addItem, removeItem, clear, setVariantCount, toggleCart }}
+      value={{
+        cart,
+        addItem,
+        removeItem,
+        clear,
+        setVariantCount,
+        toggleCart,
+        buyNow,
+      }}
     >
       {children}
     </CartContext.Provider>

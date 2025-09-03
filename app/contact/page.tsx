@@ -1,4 +1,5 @@
 'use client';
+import { useProduct } from '#/context/ProductContext';
 import { useToast } from '#/context/ToastContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import Colors from '#/ui/colors/colors';
@@ -55,6 +56,7 @@ const StyledImg = styled.img`
 
 const ContactForm = () => {
   const { showToast } = useToast();
+  const { initData } = useProduct();
   const isMobile = useIsMobile();
 
   const onSubmit = async (data: any) => {
@@ -68,7 +70,7 @@ const ContactForm = () => {
 
   return (
     <>
-      <StyledImg src="https://i.postimg.cc/2SG8536P/DSCF4911.jpg" />
+      <StyledImg src={initData?.contactUsImage.url} />
       <Container>
         <Title>Contact Us</Title>
         <div className="subHeader">

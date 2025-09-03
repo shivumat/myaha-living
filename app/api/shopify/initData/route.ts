@@ -47,6 +47,10 @@ export const POST = async () => {
                 imagesData.push(imageData);
               }
               acc['mobile_banner_images'] = imagesData;
+            } else if (field.key === 'contact_us_image') {
+              const image = field.value;
+              const imageData = await getShopifyMediaInfo(image);
+              acc['contact_us_image'] = imageData;
             } else {
               acc[field.key] = field.value;
             }

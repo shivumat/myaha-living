@@ -19,6 +19,7 @@ export interface Product {
   title: string;
   description: string;
   featured: boolean;
+  customOrder: boolean;
   variantsInfo: VariantInfo[];
   tags: any[];
   variants: Variant[];
@@ -71,6 +72,7 @@ export interface InitData {
   bannerRoutes: string[];
   mobileBannerImages: { url: string; altText: string }[];
   mobileBannerRoutes: string[];
+  contactUsImage: { url: string; altText: string };
 }
 
 interface ProductContextType {
@@ -126,6 +128,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
     const bannerImages = initResponse?.[0]?.banner_images;
     const bannerRoutes = JSON.parse(initResponse?.[0]?.banner_routes);
     const mobileBannerImages = initResponse?.[0]?.mobile_banner_images;
+    const contactUsImage = initResponse?.[0]?.contact_us_image;
     const mobileBannerRoutes = JSON.parse(
       initResponse?.[0]?.mobile_banner_routes_1,
     );
@@ -135,6 +138,7 @@ const ProductProvider = ({ children }: { children: ReactNode }) => {
       bannerRoutes,
       mobileBannerImages,
       mobileBannerRoutes,
+      contactUsImage,
     });
   };
 
