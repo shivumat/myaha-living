@@ -40,7 +40,7 @@ const Title = newStyled.h1`
   font-size: 32px;
   margin-top: 10px;
   font-weight: 600;
-  margin-bottom: -10px;
+  margin-bottom: -20px;
 `;
 
 const StyledShopifyPrice = newStyled(ShopifyPrice)`
