@@ -33,7 +33,7 @@ const ProductImageCarousel = (props: { images: string[] }) => {
   }, [length]);
 
   return (
-    <Container flexRow>
+    <Container padding="0px" flexRow>
       <Container
         padding="5px 10px"
         style={{

@@ -189,6 +189,7 @@ const WebProduct = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
+        padding: '10px',
       }}
     >
       <Price>Product details</Price>
@@ -281,7 +282,7 @@ const WebProduct = () => {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '15px',
+            gap: '25px',
           }}
         >
           <Title>{currentProduct?.title}</Title>
