@@ -1,14 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        destination: 'https://myahaliving.co.in/:path*',
-        permanent: true, // 308 Permanent redirect
-      },
-    ];
-  },
   images: {
     domains: [
       'localhost',
