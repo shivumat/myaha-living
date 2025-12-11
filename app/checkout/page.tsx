@@ -8,7 +8,6 @@ import Userform from '#/ui/checkout/Address';
 import CheckoutSidebar, {
   DiscountObjectType,
 } from '#/ui/checkout/CheckoutSidebar';
-import OrderList from '#/ui/checkout/OrderList';
 import Payment from '#/ui/checkout/Payment';
 import newStyled from '@emotion/styled';
 import { useState } from 'react';
@@ -30,13 +29,13 @@ interface DBOrderType extends OrderPayloadType {
 const Checkout = () => {
   const shippingCharges = 0;
   const [orderObj, setOrderObj] = useState<DBOrderType | null>(null);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(1);
   const [codCharges, setCodCharges] = useState(0);
   const [discountObject, setDiscountObject] =
     useState<DiscountObjectType | null>(null);
   const { userDetails } = useAuth();
 
-  const [note, setNote] = useState('');
+  const [note] = useState('');
   const [email, setEmail] = useState('');
   const [shippingAddress, setShippingAddress] = useState<
     OrderPayloadType['shipping_address']
@@ -47,7 +46,7 @@ const Checkout = () => {
     phone: '',
     city: '',
     province: '',
-    country: '',
+    country: 'India',
     zip: '',
   });
   const [sameAsShipping, setChecked] = useState(true);
@@ -60,7 +59,7 @@ const Checkout = () => {
     phone: '',
     city: '',
     province: '',
-    country: '',
+    country: 'India',
     zip: '',
   });
 
@@ -211,7 +210,6 @@ const Checkout = () => {
   return (
     <>
       <Container>
-        {index === 0 && <OrderList note={note} setNote={setNote} />}
         {index === 1 && (
           <Userform
             nextStep={setIndex}
@@ -241,7 +239,6 @@ const Checkout = () => {
             setCodCharges={setCodCharges}
           />
         )}
-
         <CheckoutSidebar
           total={total}
           index={index}

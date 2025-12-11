@@ -204,23 +204,14 @@ const Userform = ({
 
   return (
     <FormContainer>
-      <h2
-        style={{
-          fontSize: isMobile ? '20px' : '28px',
-          fontWeight: '500',
-          margin: isMobile ? '30px 0px 20px' : '60px 0px 20px',
-        }}
-      >
-        01 Shipping
-      </h2>
       <h3
         style={{
           fontSize: isMobile ? '16px' : '24px',
           fontWeight: '400',
-          margin: isMobile ? '10px 0px' : '10px 0px 10px',
+          margin: isMobile ? '30px 0px 10px' : '60px 0px 10px',
         }}
       >
-        Shipping Address
+        Contact
       </h3>
       <Form onChange={() => validateForm()}>
         {showEmail ? (
@@ -240,6 +231,15 @@ const Userform = ({
             disabled
           />
         )}
+        <h3
+          style={{
+            fontSize: isMobile ? '16px' : '24px',
+            fontWeight: '400',
+            margin: isMobile ? '10px 0px 10px' : '20px 0px 10px',
+          }}
+        >
+          Delivery
+        </h3>
         <InputGroup>
           <AccountTextInput
             label="First Name"
@@ -300,6 +300,7 @@ const Userform = ({
           value={country}
           setValue={setCountry}
           error={errors.country}
+          disabled
         />
       </Form>
       <label
@@ -390,6 +391,7 @@ const Userform = ({
               value={country1}
               setValue={setCountry1}
               error={errors.country1}
+              disabled
             />
           </Form>
         </>
@@ -402,13 +404,6 @@ const Userform = ({
         disabled={isDisabled}
       >
         Checkout
-      </Submit>
-      <Submit
-        className="view clickable"
-        type="submit"
-        onClick={() => nextStep((prev) => prev - 1)}
-      >
-        Go Back
       </Submit>
     </FormContainer>
   );

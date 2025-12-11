@@ -1,16 +1,17 @@
 import { Product } from '#/context/ProductContext';
 import newStyled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
+import Colors from '../colors/colors';
 import AddToCart from './AddToCart';
 import VariantContainer from './VariantContainer';
 
 const Container = newStyled.div<{ width: string; background: string }>`
-    width: ${({ width }) => width ?? '60%'};
+    width: ${({ width }) => width ?? '100%'};
     border-radius: 10px;
     background-color: ${({ background }) => background ?? 'transparent'};
     padding: 20px;
     display: flex;
-    gap: 10px;
+    gap: 20px;
     @media (max-width: 800px) {
         width: 100%;
         flex-direction: column;
@@ -43,25 +44,46 @@ const CartItem = (props: {
       width={props.width ?? '60%'}
       background={props.background ?? 'transparent'}
     >
-      <img
-        onClick={() =>
-          router.push(
-            `/product/${product.id.replace('gid://shopify/Product/', '')}`,
-          )
-        }
-        className="clickable"
-        width="175px"
-        height={'350px'}
-        src={imageSrc}
-        alt={props.product.title}
-      />
+      <div style={{ position: 'relative' }}>
+        {quantity && (
+          <div
+            style={{
+              position: 'absolute',
+              right: '-5px',
+              top: '-10px',
+              background: Colors.black,
+              color: Colors.white,
+              borderRadius: '20%',
+              padding: '3px 6px',
+              fontSize: '16px',
+              border: `1px solid ${Colors.white}`,
+            }}
+          >
+            {quantity}
+          </div>
+        )}
+        <img
+          onClick={() =>
+            !quantity &&
+            router.push(
+              `/product/${product.id.replace('gid://shopify/Product/', '')}`,
+            )
+          }
+          className={quantity ? '' : 'clickable'}
+          width="105px"
+          height={'210px'}
+          src={imageSrc}
+          alt={props.product.title}
+        />
+      </div>
+
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
           gap: '10px',
           width: '100%',
-          margin: '10px 0px',
+          margin: '0px',
         }}
       >
         <div
@@ -89,7 +111,6 @@ const CartItem = (props: {
         </div>
         <Price>
           {product.variants[0].currencyCode} {product.variants[0].price}{' '}
-          {quantity && `x ${quantity}`}
         </Price>
         {props.showAddtoCart && (
           <StyledAddToCart

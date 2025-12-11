@@ -24,6 +24,7 @@ export const POST = async (req: Request) => {
 
     const codeCountData = await codeCountResponse.json();
 
+    const discountId = codeCountData.discount_code.price_rule_id;
     const usageCount = codeCountData.discount_code.usage_count;
 
     const response = await fetch(
@@ -32,12 +33,15 @@ export const POST = async (req: Request) => {
     );
 
     const data = await response.json();
+    const priceRules = data.price_rules.filter(
+      (rule: any) => rule.id === discountId,
+    );
 
     const {
       value_type: valueType,
       value,
       usage_limit: usageLimit,
-    } = data.price_rules[0];
+    } = priceRules[0];
 
     if (usageCount >= usageLimit) {
       return NextResponse.json(
