@@ -140,7 +140,6 @@ const Carousel = (props: {
             alt={`Image ${idx + 1}`}
             layout="fill"
             objectFit="cover"
-            priority={idx === index}
           />
         </CarouselImageDiv>
       ))}
