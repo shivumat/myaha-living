@@ -104,6 +104,9 @@ const IconsRow = newStyled.div`
   display:flex;
   align-items:center;
   gap:8px;
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 /* illustration area (big grey box like screenshot) */
