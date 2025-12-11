@@ -321,7 +321,7 @@ const WebProduct = () => {
           <Container
             padding="0px"
             width="100%"
-            style={{ alignItems: 'flex-start', gap: '10px' }}
+            style={{ alignItems: 'flex-start', gap: '25px' }}
           >
             <BuyButtons
               product={currentProduct}
