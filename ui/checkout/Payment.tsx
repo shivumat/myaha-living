@@ -13,7 +13,7 @@ const FormContainer = newStyled.div`
   padding: 40px;
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin: 60px 0px 10px;
   justify-content: flex-start;
   align-items: stretch;
   gap: 24px;
@@ -21,6 +21,7 @@ const FormContainer = newStyled.div`
   @media (max-width: 800px) {
     padding: 20px;
     max-width: 100%;
+    margin: 10px 0px 10px;
   }
 `;
 
