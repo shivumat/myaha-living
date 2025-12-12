@@ -1,7 +1,7 @@
 'use client';
 import { useToast } from '#/context/ToastContext';
 import newStyled from '@emotion/styled';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Colors from '../colors/colors';
 import PaymentComponent from '../components/Payment';
 
@@ -33,7 +33,7 @@ const Container = newStyled.div`
 `;
 
 /* Payment option card */
-const OptionCard = newStyled.label<{ selected?: boolean }>`
+const OptionCard = newStyled.label<{ selected?: boolean; disabled?: boolean }>`
   display: flex;
   flex-direction: column;
   border-radius: 8px;
@@ -44,6 +44,8 @@ const OptionCard = newStyled.label<{ selected?: boolean }>`
   transition: all 160ms ease-in-out;
   background: #fff;
   overflow: hidden;
+  opacity: ${(p) => (p.disabled ? 0.6 : 1)};
+  pointer-events: ${(p) => (p.disabled ? 'none' : 'auto')};
 
   @media (max-width: 800px) {
     padding: 12px;
@@ -175,6 +177,8 @@ const ActionRow = newStyled.div`
   margin-top:8px;
 `;
 
+const COD_LIMIT = 2500;
+
 /* ----- end styled ----- */
 
 type Props = {
@@ -209,6 +213,12 @@ const PaymentOptions = ({
   const [disabled, setDisabled] = useState(false);
   const [openRazorPay, setOpenRazorPay] = useState(false);
   const { startLoading } = useToast();
+
+  useEffect(() => {
+    if (amount > COD_LIMIT) {
+      setCodCharges(0);
+    }
+  }, [amount]);
 
   const onRazorPayCompletion = (razorPayKey: string) => {
     setOpenRazorPay(false);
@@ -330,6 +340,7 @@ const PaymentOptions = ({
             setOpenRazorPay(false);
             setCodCharges(CONST_COD_CHARGES);
           }}
+          disabled={amount > COD_LIMIT}
         >
           <OptionTopRow>
             <OptionLeft>
@@ -357,7 +368,7 @@ const PaymentOptions = ({
 
           <CODRow>
             <Muted style={{ fontSize: 13 }}>
-              Orders above ₹8,000 may not be eligible for COD.
+              Orders above ₹2,500 may not be eligible for COD.
             </Muted>
           </CODRow>
         </OptionCard>
