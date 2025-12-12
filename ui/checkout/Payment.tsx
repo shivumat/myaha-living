@@ -2,6 +2,7 @@
 import { useToast } from '#/context/ToastContext';
 import newStyled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
+import Colors from '../colors/colors';
 import PaymentComponent from '../components/Payment';
 
 export const CONST_COD_CHARGES = 40;
@@ -10,25 +11,18 @@ export const CONST_COD_CHARGES = 40;
 
 const FormContainer = newStyled.div`
   flex: 1;
-  padding: 40px;
   display: flex;
   flex-direction: column;
-  margin: 60px 0px 10px;
+  margin: 20px 0px 10px;
   justify-content: flex-start;
   align-items: stretch;
   gap: 24px;
-  background: #fff;
+  width: 100%;
+  background: ${Colors.white};
   @media (max-width: 800px) {
-    padding: 20px;
     max-width: 100%;
     margin: 10px 0px 10px;
   }
-`;
-
-const SectionTitle = newStyled.h2<{ small?: boolean }>`
-  font-size: ${(p) => (p.small ? '18px' : '28px')};
-  font-weight: 500;
-  margin: 0 0 ${(p) => (p.small ? '8px' : '24px')};
 `;
 
 const Container = newStyled.div`
@@ -186,15 +180,16 @@ const ActionRow = newStyled.div`
 type Props = {
   codCharges: number;
   setCodCharges: Dispatch<SetStateAction<number>>;
-  orderId: string;
+  orderId?: string;
   amount: number;
   shippingCharges: number;
-  email: string;
-  customerName: string;
+  email?: string;
+  customerName?: string;
   customerNumber: string;
-  nextStep: Dispatch<SetStateAction<number>>;
   onPaymentCompletion: (paymentId: string) => Promise<void>;
   discount: number;
+  isDisabled: boolean;
+  isMobile?: boolean;
 };
 
 const PaymentOptions = ({
@@ -204,15 +199,18 @@ const PaymentOptions = ({
   shippingCharges,
   email,
   orderId,
-  nextStep,
   onPaymentCompletion,
   discount,
   customerName,
   customerNumber,
+  isDisabled,
+  isMobile,
 }: Props) => {
   const [disabled, setDisabled] = useState(false);
   const [openRazorPay, setOpenRazorPay] = useState(false);
   const { startLoading } = useToast();
+
+  console.log(isDisabled && disabled);
 
   const onRazorPayCompletion = (razorPayKey: string) => {
     setOpenRazorPay(false);
@@ -238,7 +236,15 @@ const PaymentOptions = ({
 
   return (
     <FormContainer>
-      <SectionTitle>Payment</SectionTitle>
+      <h3
+        style={{
+          fontSize: isMobile ? '16px' : '24px',
+          fontWeight: '400',
+          margin: isMobile ? '10px 0px 10px' : '10px 0px 10px',
+        }}
+      >
+        Payment
+      </h3>
 
       <Container>
         {/* Razorpay */}
@@ -365,23 +371,18 @@ const PaymentOptions = ({
       {/* Action buttons */}
       <ActionRow>
         <div style={{ flex: 1 }}>
-          <PayButton onClick={onSubmit} disabled={disabled}>
-            Pay now
-          </PayButton>
-        </div>
-
-        <div style={{ width: 160 }}>
           <PayButton
-            variant="outline"
-            onClick={() => nextStep((prev) => prev - 1)}
+            className={`clickable ${disabled || isDisabled ? 'disabled' : ''}`}
+            onClick={onSubmit}
+            disabled={disabled || isDisabled}
           >
-            Go Back
+            Pay now
           </PayButton>
         </div>
       </ActionRow>
 
       {/* Payment modal / component */}
-      {openRazorPay && (
+      {openRazorPay && email && customerName && (
         <PaymentComponent
           orderId={orderId}
           email={email}

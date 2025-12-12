@@ -73,7 +73,7 @@ const StyledInput = newStyled.input<{ disabled?: boolean; hasError?: boolean }>`
   flex: 1;
   min-width: 0; /* allow truncation in flex */
   font-size: 16px;
-  padding: 10px 6px;
+  padding: 6px;
   background: transparent;
   color: #111;
 
@@ -109,7 +109,7 @@ const StyledInput = newStyled.input<{ disabled?: boolean; hasError?: boolean }>`
 
   @media (max-width: 800px) {
     font-size: 14px;
-    padding: 8px 4px;
+    padding: 4px;
   }
 `;
 /* ----------------------------------------------------------------------------------- */

@@ -3,8 +3,8 @@ import { useIsMobile } from '#/hooks/useMobile';
 import { OrderPayloadType } from '#/lib/types/order';
 import newStyled from '@emotion/styled';
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import Colors from '../colors/colors';
 import AccountTextInput from '../components/AccountInput';
+import PaymentOptions from './Payment';
 // import Dropdown from '../components/AddressCropdowns';
 
 const FormContainer = newStyled.div`
@@ -16,8 +16,12 @@ const FormContainer = newStyled.div`
   justify-content: flex-start;
   align-items: flex-start;
   gap: 20px;
+  overflow-y: auto;
+  height: calc(100vh - 10px);
   @media (max-width: 800px) {
     padding: 20px;
+    overflow-y: hidden;
+    height: auto;
     }
 `;
 
@@ -38,27 +42,10 @@ const InputGroup = newStyled.div`
   }
 `;
 
-const Submit = newStyled.button`
-    height: 50px;
-    background-color: ${Colors.black};
-    font-size: 20px;
-    padding: 10px 20px;
-    max-width: 400px;
-    width: 100%;
-    color: ${Colors.white};
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 20px auto 10px;
-    &.view{
-        background-color: ${Colors.white};
-        color: ${Colors.black};
-        border: 1px solid ${Colors.black};
-        margin: 0px auto;
-    }
-    @media (max-width: 800px) {
-        font-size: 18px;
-    }
-`;
+export interface DBOrderType extends OrderPayloadType {
+  status: string;
+  id: string;
+}
 
 interface UserformProps {
   shippingAddress: OrderPayloadType['shipping_address'];
@@ -71,10 +58,20 @@ interface UserformProps {
   >;
   sameAsShipping: boolean;
   setChecked: Dispatch<SetStateAction<boolean>>;
-  email: string;
   setEmail: Dispatch<SetStateAction<string>>;
-  nextStep: Dispatch<SetStateAction<number>>;
   createDBOrder: () => Promise<void>;
+  codCharges: number;
+  setCodCharges: Dispatch<SetStateAction<number>>;
+  orderId?: string;
+  amount: number;
+  shippingCharges: number;
+  email?: string;
+  customerName?: string;
+  customerNumber: string;
+  onPaymentCompletion: (paymentId: string) => Promise<void>;
+  discount: number;
+  orderObj: DBOrderType | null;
+  total: number;
 }
 
 const Userform = ({
@@ -86,8 +83,13 @@ const Userform = ({
   setChecked,
   email,
   setEmail,
-  nextStep,
-  createDBOrder,
+  onPaymentCompletion,
+  codCharges,
+  setCodCharges,
+  shippingCharges,
+  discount,
+  orderObj,
+  total,
 }: UserformProps) => {
   const [showEmail, setShowEmail] = React.useState(false);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
@@ -176,18 +178,9 @@ const Userform = ({
     return Object.keys(newErrors).length === 0; // Return true if no errors
   };
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (validateForm()) {
-      nextStep((prev) => prev + 1);
-      createDBOrder();
-    }
-  };
-
   const isEmailValid = userDetails?.email
     ? true
-    : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email ?? '');
 
   // const fetchStates = async () => {
   //     const response = await fetch('https://api.teleport.org/api/countries/iso_alpha2:IN/admin1_divisions/');
@@ -218,7 +211,7 @@ const Userform = ({
           <>
             <AccountTextInput
               label="Email"
-              value={email}
+              value={email ?? ''}
               setValue={setEmail}
               error={!isEmailValid ? 'Invalid email' : undefined}
             />
@@ -396,15 +389,20 @@ const Userform = ({
           </Form>
         </>
       )}
-
-      <Submit
-        className={`clickable ${isDisabled ? 'disabled' : ''}`}
-        type="submit"
-        onClick={onSubmit}
-        disabled={isDisabled}
-      >
-        Checkout
-      </Submit>
+      <PaymentOptions
+        onPaymentCompletion={onPaymentCompletion}
+        email={orderObj?.customerInfo.email}
+        customerName={`${orderObj?.customerInfo.first_name ?? ''} ${orderObj?.customerInfo.last_name ?? ''}`}
+        customerNumber={orderObj?.customerInfo.phone ?? ''}
+        shippingCharges={shippingCharges}
+        amount={total}
+        orderId={orderObj?.id}
+        codCharges={codCharges}
+        discount={discount}
+        setCodCharges={setCodCharges}
+        isDisabled={isDisabled}
+        isMobile={isMobile}
+      />
     </FormContainer>
   );
 };

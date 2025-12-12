@@ -4,11 +4,10 @@ import { useCart } from '#/context/CartContext';
 import { useProduct } from '#/context/ProductContext';
 import { useToast } from '#/context/ToastContext';
 import { OrderPayloadType } from '#/lib/types/order';
-import Userform from '#/ui/checkout/Address';
+import Userform, { DBOrderType } from '#/ui/checkout/Address';
 import CheckoutSidebar, {
   DiscountObjectType,
 } from '#/ui/checkout/CheckoutSidebar';
-import Payment from '#/ui/checkout/Payment';
 import newStyled from '@emotion/styled';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,20 +15,15 @@ import { v4 as uuidv4 } from 'uuid';
 const Container = newStyled.div`
   display: flex;
   min-height: 100vh;
+  overflow: hidden;
   @media (max-width: 1200px) {
     flex-direction: column-reverse;
   }
 `;
 
-interface DBOrderType extends OrderPayloadType {
-  status: string;
-  id: string;
-}
-
 const Checkout = () => {
   const shippingCharges = 0;
   const [orderObj, setOrderObj] = useState<DBOrderType | null>(null);
-  const [index, setIndex] = useState(1);
   const [codCharges, setCodCharges] = useState(0);
   const [discountObject, setDiscountObject] =
     useState<DiscountObjectType | null>(null);
@@ -210,39 +204,30 @@ const Checkout = () => {
   return (
     <>
       <Container>
-        {index === 1 && (
-          <Userform
-            nextStep={setIndex}
-            email={email}
-            setEmail={setEmail}
-            sameAsShipping={sameAsShipping}
-            setChecked={setChecked}
-            shippingAddress={shippingAddress}
-            setShippingAddress={setShippingAddress}
-            billingAddress={billingAddress}
-            setBillingAddress={setBillingAddress}
-            createDBOrder={createDBOrder}
-          />
-        )}
-        {index === 2 && orderObj && (
-          <Payment
-            nextStep={setIndex}
-            onPaymentCompletion={onPaymentCompletion}
-            email={orderObj.customerInfo.email}
-            customerName={`${orderObj.customerInfo.first_name ?? ''} ${orderObj.customerInfo.last_name ?? ''}`}
-            customerNumber={orderObj.customerInfo.phone ?? ''}
-            shippingCharges={shippingCharges}
-            amount={total}
-            orderId={orderObj.id}
-            codCharges={codCharges}
-            discount={discount}
-            setCodCharges={setCodCharges}
-          />
-        )}
+        <Userform
+          email={email}
+          setEmail={setEmail}
+          sameAsShipping={sameAsShipping}
+          setChecked={setChecked}
+          shippingAddress={shippingAddress}
+          setShippingAddress={setShippingAddress}
+          billingAddress={billingAddress}
+          setBillingAddress={setBillingAddress}
+          createDBOrder={createDBOrder}
+          onPaymentCompletion={onPaymentCompletion}
+          customerName={`${orderObj?.customerInfo.first_name ?? ''} ${orderObj?.customerInfo.last_name ?? ''}`}
+          customerNumber={orderObj?.customerInfo.phone ?? ''}
+          shippingCharges={shippingCharges}
+          amount={total}
+          orderId={orderObj?.id}
+          codCharges={codCharges}
+          discount={discount}
+          setCodCharges={setCodCharges}
+          orderObj={orderObj}
+          total={total}
+        />
         <CheckoutSidebar
           total={total}
-          index={index}
-          setIndex={setIndex}
           shippingCharges={shippingCharges}
           codCharges={codCharges}
           discountObject={discountObject}

@@ -10,8 +10,8 @@ import CartItem from '../components/CartItem';
 
 const SummaryContainer = newStyled.div`
     width: 45%;
-    background-color: #192211;
-    color: ${Colors.white};
+    background-color: #dddddd;
+    color: ${Colors.black};
     padding: 60px 10px;
     display: flex;
     flex-direction: column;
@@ -68,17 +68,17 @@ const PromoInput = newStyled.input`
   padding: 8px;
   width: 100%;
   font-size: 14px;
-  border: 1px solid ${Colors.white};
+  border: 1px solid ${Colors.black};
   border-radius: 4px;
   background: transparent;
-  color: ${Colors.white};
+  color: ${Colors.black};
   outline: none;
 `;
 
 const ApplyButton = newStyled.button`
   padding: 8px 12px;
-  background: ${Colors.white};
-  color: ${Colors.black};
+  background: ${Colors.black};
+  color: ${Colors.white};
   font-size: 14px;
   border: none;
   cursor: pointer;
@@ -86,7 +86,7 @@ const ApplyButton = newStyled.button`
   transition: background 0.3s;
 
   &:hover {
-    background: #ccc;
+    background: #333;
   }
 `;
 
@@ -116,8 +116,6 @@ export interface DiscountObjectType {
 }
 
 const CheckoutSummary = (props: {
-  index: number;
-  setIndex: Dispatch<SetStateAction<number>>;
   total: number;
   shippingCharges: number;
   codCharges: number;
@@ -128,7 +126,6 @@ const CheckoutSummary = (props: {
   ) => Promise<DiscountObjectType | string | null>;
   discount: number;
 }) => {
-  const { index } = props;
   const [promoCode, setPromoCode] = useState('');
   const [promoError, setPromoError] = useState('');
 
@@ -161,22 +158,18 @@ const CheckoutSummary = (props: {
     );
   };
 
-  const LastStepComp =
-    index === 2 ? (
-      <>
-        {!!props.codCharges && (
-          <Row>
-            <span>COD charges</span>
-            <span>₹ {props.codCharges}</span>
-          </Row>
-        )}
-      </>
-    ) : null;
+  const LastStepComp = (
+    <>
+      {!!props.codCharges && (
+        <Row>
+          <span>COD charges</span>
+          <span>₹ {props.codCharges}</span>
+        </Row>
+      )}
+    </>
+  );
 
-  const total =
-    index === 2
-      ? props.total + props.shippingCharges + props.codCharges
-      : props.total;
+  const total = props.total + props.shippingCharges + props.codCharges;
 
   const onApplyPromo = async () => {
     if (!promoCode.trim()) return;
@@ -207,8 +200,6 @@ const CheckoutSummary = (props: {
             backgroundColor: 'transparent',
             gap: '20px',
             width: '100%',
-            maxHeight: isMobile ? '40vh' : '50vh',
-            overflowY: 'auto',
           }}
         >
           {cart.map((item, index) => getOrderComponent(item, index))}
