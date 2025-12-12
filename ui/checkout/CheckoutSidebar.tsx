@@ -44,9 +44,6 @@ const Row = newStyled.div`
   font-size: 16px;
   margin-bottom: 10px;
   gap: 20px;
-  @media (max-width: 800px) {
-    font-size: 12px;
-  }
 `;
 
 const PromoSection = newStyled.div`
@@ -186,8 +183,8 @@ const CheckoutSummary = (props: {
     <SummaryContainer>
       <div
         style={{
-          width: '70%',
-          margin: !isMobile ? '70px auto 0px 20px' : 'auto',
+          width: !isMobile ? '70%' : '95%',
+          margin: !isMobile ? '70px auto 0px 20px' : '40px auto',
           display: 'flex',
           flexDirection: 'column',
           gap: isMobile ? '10px' : '20px',
