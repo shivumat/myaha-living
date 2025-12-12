@@ -215,10 +215,10 @@ const PaymentOptions = ({
   const { startLoading } = useToast();
 
   useEffect(() => {
-    if (amount > COD_LIMIT) {
+    if (amount + shippingCharges - discount > COD_LIMIT) {
       setCodCharges(0);
     }
-  }, [amount]);
+  }, [amount, shippingCharges, discount]);
 
   const onRazorPayCompletion = (razorPayKey: string) => {
     setOpenRazorPay(false);

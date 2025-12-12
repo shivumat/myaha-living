@@ -90,6 +90,7 @@ const Userform = ({
   discount,
   orderObj,
   total,
+  createDBOrder,
 }: UserformProps) => {
   const [showEmail, setShowEmail] = React.useState(false);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
@@ -206,7 +207,13 @@ const Userform = ({
       >
         Contact
       </h3>
-      <Form onChange={() => validateForm()}>
+      <Form
+        onChange={() => {
+          if (validateForm()) {
+            createDBOrder();
+          }
+        }}
+      >
         {showEmail ? (
           <>
             <AccountTextInput
