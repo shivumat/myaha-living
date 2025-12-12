@@ -20,7 +20,7 @@ const SummaryContainer = newStyled.div`
     gap: 10px;
     @media (max-width: 1200px) {
         width: 100%;
-        padding: 40px 10px;
+        padding: 10px 10px;
     }
 `;
 
@@ -34,7 +34,7 @@ const SummaryContainer = newStyled.div`
 
 const Divider = newStyled.hr`
   border: 0;
-  border-top: 1px solid #ffffff33;
+  border-top: 1px solid #00000033;
   margin: 15px 0;
 `;
 
@@ -227,7 +227,7 @@ const CheckoutSummary = (props: {
               {promoError && (
                 <span
                   style={{
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: '12px',
                     display: 'block',
                   }}
