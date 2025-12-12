@@ -61,7 +61,7 @@ interface UserformProps {
   setEmail: Dispatch<SetStateAction<string>>;
   createDBOrder: () => Promise<void>;
   codCharges: number;
-  setCodCharges: Dispatch<SetStateAction<number>>;
+  setCodCharges: (codCharges: number, fetchDiscount?: boolean) => void;
   orderId?: string;
   amount: number;
   shippingCharges: number;

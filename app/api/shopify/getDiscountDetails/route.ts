@@ -43,7 +43,7 @@ export const POST = async (req: Request) => {
       usage_limit: usageLimit,
     } = priceRules[0];
 
-    if (usageCount >= usageLimit) {
+    if (usageLimit && usageCount >= usageLimit) {
       return NextResponse.json(
         {
           status: false,

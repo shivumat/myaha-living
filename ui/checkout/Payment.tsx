@@ -1,7 +1,7 @@
 'use client';
 import { useToast } from '#/context/ToastContext';
 import newStyled from '@emotion/styled';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Colors from '../colors/colors';
 import PaymentComponent from '../components/Payment';
 
@@ -183,7 +183,7 @@ const COD_LIMIT = 2500;
 
 type Props = {
   codCharges: number;
-  setCodCharges: Dispatch<SetStateAction<number>>;
+  setCodCharges: (codCharges: number, fetchDiscount?: boolean) => void;
   orderId?: string;
   amount: number;
   shippingCharges: number;
@@ -216,7 +216,7 @@ const PaymentOptions = ({
 
   useEffect(() => {
     if (amount + shippingCharges - discount > COD_LIMIT) {
-      setCodCharges(0);
+      setCodCharges(0, false);
     }
   }, [amount, shippingCharges, discount]);
 
@@ -343,7 +343,7 @@ const PaymentOptions = ({
             setOpenRazorPay(false);
             setCodCharges(CONST_COD_CHARGES);
           }}
-          disabled={amount > COD_LIMIT}
+          disabled={amount + shippingCharges - discount > COD_LIMIT}
         >
           <OptionTopRow>
             <OptionLeft>
