@@ -9,6 +9,7 @@ import PlusMInusOpen from '#/ui/components/PlusMInusOpen';
 import ShopifyPrice from '#/ui/components/ShopifyPrice';
 import VariantContainer from '#/ui/components/VariantContainer';
 import RecentlyViewedProducts from '#/ui/home/RecentlyViewedProducts';
+import TestimonialCarousel from '#/ui/home/Testimonial';
 import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -354,6 +355,7 @@ const MobileProduct = () => {
         /> */}
       </div>
       <RecentlyViewedProducts />
+      <TestimonialCarousel />
       <FooterCarousel rounded={false} />
       {/* <PaymentComponent {...order}/> */}
     </Container>
