@@ -271,9 +271,12 @@ const PaymentOptions = ({
               </RadioCircle>
               <div>
                 <OptionTitle>
-                  Razorpay Secure (UPI, Cards, Wallets, NetBanking)
+                  Razorpay Secure (UPI, Cards, Wallets) - Flat 5% OFF
                 </OptionTitle>
-                <Muted>All transactions are secure and encrypted.</Muted>
+                <Muted>
+                  Secure payment via UPI/Cards. 5% discount applied
+                  automatically.
+                </Muted>
               </div>
             </OptionLeft>
 
@@ -359,7 +362,7 @@ const PaymentOptions = ({
               </RadioCircle>
               <div>
                 <OptionTitle>Cash on Delivery</OptionTitle>
-                <Muted>Pay with cash upon delivery</Muted>
+                <Muted>No prepaid discount applicable.</Muted>
               </div>
             </OptionLeft>
 

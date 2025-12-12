@@ -169,23 +169,25 @@ const AddToCart = (props: {
   }
 
   return (
-    <Container width={props.width} height={props.height}>
-      <AddtoCart
-        className={`clickable ${props.className} ${quantityAvailable <= 0 ? 'disabled' : ''}`}
-        onClick={() => {
-          if (quantityAvailable > 0) {
-            addItem({ variant_id: id, inventoryId });
-            toggleCart();
-          }
-        }}
-      >
-        Add to cart
-      </AddtoCart>
+    <div style={{ width: '100%' }}>
       {quantityAvailable <= 0 && <ErrorMessage>Out of Stock</ErrorMessage>}
       {quantityAvailable > 0 && quantityAvailable <= 3 && (
         <WarningMessage>Only {quantityAvailable} left in stock!</WarningMessage>
       )}
-    </Container>
+      <Container width={props.width} height={props.height}>
+        <AddtoCart
+          className={`clickable ${props.className} ${quantityAvailable <= 0 ? 'disabled' : ''}`}
+          onClick={() => {
+            if (quantityAvailable > 0) {
+              addItem({ variant_id: id, inventoryId });
+              toggleCart();
+            }
+          }}
+        >
+          Add to cart
+        </AddtoCart>
+      </Container>
+    </div>
   );
 };
 
