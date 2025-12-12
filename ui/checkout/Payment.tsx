@@ -210,8 +210,6 @@ const PaymentOptions = ({
   const [openRazorPay, setOpenRazorPay] = useState(false);
   const { startLoading } = useToast();
 
-  console.log(isDisabled && disabled);
-
   const onRazorPayCompletion = (razorPayKey: string) => {
     setOpenRazorPay(false);
     startLoading();
@@ -359,11 +357,8 @@ const PaymentOptions = ({
 
           <CODRow>
             <Muted style={{ fontSize: 13 }}>
-              Orders above ₹2,000 may not be eligible for COD.
+              Orders above ₹8,000 may not be eligible for COD.
             </Muted>
-            <div style={{ fontSize: 13, color: '#666' }}>
-              Estimated delivery charges apply
-            </div>
           </CODRow>
         </OptionCard>
       </Container>
