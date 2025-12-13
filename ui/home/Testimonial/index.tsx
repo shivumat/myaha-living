@@ -98,7 +98,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     review:
       ' love how this Grace vase from Myaha doesn’t overpower my desk, but still adds such subtle character to it. The packaging was done really well, all the glass pieces arrived safely. Definitely ordering this one in more colours.',
-    images: ['/images/testimonials/12/1.jpeg'],
+    images: ['/images/testimonials/13/1.jpeg'],
   },
 ];
 
