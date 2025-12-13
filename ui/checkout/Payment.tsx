@@ -1,5 +1,6 @@
 'use client';
 import { useToast } from '#/context/ToastContext';
+import { formatPrice } from '#/lib/util';
 import newStyled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import Colors from '../colors/colors';
@@ -178,7 +179,7 @@ const ActionRow = newStyled.div`
   margin-top:8px;
 `;
 
-const COD_LIMIT = 2500;
+const COD_LIMIT = 4000;
 
 /* ----- end styled ----- */
 
@@ -380,7 +381,8 @@ const PaymentOptions = ({
 
           <CODRow>
             <Muted style={{ fontSize: 13 }}>
-              Orders above ₹2,500 may not be eligible for COD.
+              Orders above ₹{formatPrice(COD_LIMIT, 0)} may not be eligible for
+              COD.
             </Muted>
           </CODRow>
         </OptionCard>

@@ -148,8 +148,11 @@ export function debounce<T extends (...args: any[]) => void>(
   };
 }
 
-export function formatPrice(amount: number): string {
-  return `${amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+export function formatPrice(
+  amount: number,
+  fractionDigits: number = 2,
+): string {
+  return `${amount.toLocaleString('en-IN', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits })}`;
 }
 
 export const mergeHexColorsWithWeights = (
