@@ -56,12 +56,18 @@ const SlideTrack = styled.div<{ index: number }>`
   transform: translateX(${({ index }) => index * -100}%);
 `;
 
-const Arrow = styled.div<{ direction: 'left' | 'right' }>`
+const Arrow = styled.div<{
+  direction: 'left' | 'right';
+  isProductPage?: boolean;
+}>`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   ${({ direction }) => (direction === 'left' ? `left: 20px;` : `right: 20px;`)}
-  background: rgba(255, 255, 255, 0.7);
+  background: ${({ isProductPage }) =>
+    isProductPage ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)'};
+  color: ${({ isProductPage }) =>
+    isProductPage ? Colors.white : Colors.black};
   border-radius: 50%;
   padding: 10px;
   cursor: pointer;
@@ -118,10 +124,18 @@ const TestimonialCarousel: React.FC<{ isProductPage?: boolean }> = ({
       >
         What our customers are saying?
       </Textbox>
-      <Arrow direction="left" onClick={handlePrev}>
+      <Arrow
+        isProductPage={isProductPage}
+        direction="left"
+        onClick={handlePrev}
+      >
         <HiOutlineChevronLeft />
       </Arrow>
-      <Arrow direction="right" onClick={handleNext}>
+      <Arrow
+        isProductPage={isProductPage}
+        direction="right"
+        onClick={handleNext}
+      >
         <HiOutlineChevronRight />
       </Arrow>
       <CarouselContainer>
