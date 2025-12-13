@@ -79,15 +79,18 @@ const Dots = styled.div`
   gap: 8px;
 `;
 
-const Dot = styled.span<{ active: boolean }>`
+const Dot = styled.span<{ active: boolean; isProductPage?: boolean }>`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: ${({ active }) => (active ? '#fff' : '#999')};
+  background-color: ${({ active, isProductPage }) =>
+    !isProductPage ? (active ? '#fff' : '#999') : active ? '#000' : '#AAA'};
   transition: background-color 0.3s ease;
 `;
 
-const TestimonialCarousel: React.FC = () => {
+const TestimonialCarousel: React.FC<{ isProductPage?: boolean }> = ({
+  isProductPage,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () =>
@@ -104,13 +107,13 @@ const TestimonialCarousel: React.FC = () => {
     <StyledContainer
       margin="0px"
       horizontalCenter
-      bgColor="#5B1D1D"
+      bgColor={!isProductPage ? '#5B1D1D' : Colors.white}
       padding="40px"
     >
       <Textbox
         htmlTag={'h2'}
         fontSize="24px"
-        color={Colors.white}
+        color={!isProductPage ? Colors.white : Colors.black}
         textAlign="center"
       >
         What our customers are saying?
@@ -124,13 +127,21 @@ const TestimonialCarousel: React.FC = () => {
       <CarouselContainer>
         <SlideTrack index={currentIndex}>
           {testimonials.map((testimonial, idx) => (
-            <TestimonialCard key={idx} testimonial={testimonial} />
+            <TestimonialCard
+              key={idx}
+              testimonial={testimonial}
+              isProductPage={isProductPage}
+            />
           ))}
         </SlideTrack>
       </CarouselContainer>
       <Dots>
         {testimonials.map((_, i) => (
-          <Dot key={i} active={i === currentIndex} />
+          <Dot
+            key={i}
+            active={i === currentIndex}
+            isProductPage={isProductPage}
+          />
         ))}
       </Dots>
     </StyledContainer>

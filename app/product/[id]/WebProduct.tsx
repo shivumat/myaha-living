@@ -346,8 +346,8 @@ const WebProduct = () => {
   return (
     <MainContainer ref={topRef}>
       <ImageGrid />
+      <TestimonialCarousel isProductPage={true} />
       <RecentlyViewedProducts />
-      <TestimonialCarousel />
       <FooterCarousel rounded={false} />
       {/* <PaymentComponent {...order}/> */}
     </MainContainer>

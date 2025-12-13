@@ -9,12 +9,15 @@ export type Testimonial = {
   images: string[];
 };
 
-const Card = styled.div`
+const Card = styled.div<{ isProductPage?: boolean }>`
   min-width: 100%;
-  background-color: ${Colors.white}32;
+  background-color: ${({ isProductPage }) =>
+    !isProductPage ? `${Colors.white}32` : `${Colors.black}32`};
   padding: 24px;
-  color: white;
+  color: ${({ isProductPage }) =>
+    !isProductPage ? `${Colors.white}` : `${Colors.black}`};
   box-sizing: border-box;
+  border-radius: 8px;
 `;
 
 const Images = styled.div`
@@ -34,11 +37,12 @@ const Stars = styled.div`
   color: gold;
 `;
 
-const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
-  testimonial,
-}) => {
+const TestimonialCard: React.FC<{
+  testimonial: Testimonial;
+  isProductPage?: boolean;
+}> = ({ testimonial, isProductPage }) => {
   return (
-    <Card>
+    <Card isProductPage={isProductPage}>
       <strong>{testimonial.name}</strong>
       <Stars>
         {'★'.repeat(testimonial.rating) + '☆'.repeat(5 - testimonial.rating)}

@@ -354,8 +354,8 @@ const MobileProduct = () => {
           quantityAvailable={currentProduct.variants[variant].quantityAvailable}
         /> */}
       </div>
+      <TestimonialCarousel isProductPage={true} />
       <RecentlyViewedProducts />
-      <TestimonialCarousel />
       <FooterCarousel rounded={false} />
       {/* <PaymentComponent {...order}/> */}
     </Container>

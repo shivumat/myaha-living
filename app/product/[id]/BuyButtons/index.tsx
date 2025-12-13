@@ -4,8 +4,8 @@ import BuyNowButton from '#/ui/components/BuyNowButton';
 import CustomiseAndOrder from '#/ui/components/CustomiseAndOrder';
 import ProductOffer from '#/ui/components/ProductOffer';
 
-const OfferText =
-  '🎉 &nbsp; "Limited-Time Offer! 5% OFF on Prepaid Orders. Hurry! Offer ends soon."';
+const OfferText = `EXTRA 5% OFF ON PREPAID ORDERS. </br>
+  Use code PREPAID5 at checkout. Limited-time offer. 🎉`;
 
 const BuyButtons = ({
   product,
