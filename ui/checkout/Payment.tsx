@@ -4,6 +4,7 @@ import newStyled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import Colors from '../colors/colors';
 import PaymentComponent from '../components/Payment';
+import { DiscountObjectType } from './CheckoutSidebar';
 
 export const CONST_COD_CHARGES = 40;
 
@@ -183,7 +184,7 @@ const COD_LIMIT = 2500;
 
 type Props = {
   codCharges: number;
-  setCodCharges: (codCharges: number, fetchDiscount?: boolean) => void;
+  setCodCharges: (newCodCharges: number) => void;
   orderId?: string;
   amount: number;
   shippingCharges: number;
@@ -194,6 +195,7 @@ type Props = {
   discount: number;
   isDisabled: boolean;
   isMobile?: boolean;
+  discountObject: DiscountObjectType | null;
 };
 
 const PaymentOptions = ({
@@ -209,16 +211,20 @@ const PaymentOptions = ({
   customerNumber,
   isDisabled,
   isMobile,
+  discountObject,
 }: Props) => {
   const [disabled, setDisabled] = useState(false);
   const [openRazorPay, setOpenRazorPay] = useState(false);
   const { startLoading } = useToast();
 
   useEffect(() => {
-    if (amount + shippingCharges - discount > COD_LIMIT) {
-      setCodCharges(0, false);
+    if (
+      amount + shippingCharges - discount > COD_LIMIT ||
+      discountObject?.code === 'PREPAID5'
+    ) {
+      setCodCharges(0);
     }
-  }, [amount, shippingCharges, discount]);
+  }, [amount, shippingCharges, discount, discountObject]);
 
   const onRazorPayCompletion = (razorPayKey: string) => {
     setOpenRazorPay(false);
@@ -343,7 +349,10 @@ const PaymentOptions = ({
             setOpenRazorPay(false);
             setCodCharges(CONST_COD_CHARGES);
           }}
-          disabled={amount + shippingCharges - discount > COD_LIMIT}
+          disabled={
+            amount + shippingCharges - discount > COD_LIMIT ||
+            discountObject?.code === 'PREPAID5'
+          }
         >
           <OptionTopRow>
             <OptionLeft>

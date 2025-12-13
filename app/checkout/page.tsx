@@ -9,7 +9,7 @@ import CheckoutSidebar, {
   DiscountObjectType,
 } from '#/ui/checkout/CheckoutSidebar';
 import newStyled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 const Container = newStyled.div`
@@ -201,28 +201,6 @@ const Checkout = () => {
     return null;
   };
 
-  useEffect(() => {
-    fetchDiscoutDetails('PREPAID5');
-  }, []);
-
-  const updatePaymentStyles = (
-    newCodCharges: number,
-    fetchDiscount?: boolean,
-  ) => {
-    if (fetchDiscount === false) {
-      setCodCharges(newCodCharges);
-      return;
-    }
-
-    if (!newCodCharges && !discountObject?.code) {
-      fetchDiscoutDetails('PREPAID5');
-    }
-    if (newCodCharges && discountObject?.code === 'PREPAID5') {
-      setDiscountObject(null);
-    }
-    setCodCharges(newCodCharges);
-  };
-
   return (
     <>
       <Container>
@@ -244,9 +222,10 @@ const Checkout = () => {
           orderId={orderObj?.id}
           codCharges={codCharges}
           discount={discount}
-          setCodCharges={updatePaymentStyles}
+          setCodCharges={setCodCharges}
           orderObj={orderObj}
           total={total}
+          discountObject={discountObject}
         />
         <CheckoutSidebar
           total={total}

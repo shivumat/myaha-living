@@ -34,6 +34,7 @@ const BuyButtons = ({
 
   return (
     <>
+      <ProductOffer text={OfferText} />
       <AddToCart
         width={width}
         height={height}
@@ -41,7 +42,6 @@ const BuyButtons = ({
         inventoryId={product.variants[variant].inventoryId}
         quantityAvailable={product.variants[variant].quantityAvailable}
       />
-      <ProductOffer text={OfferText} />
       <BuyNowButton
         width={width}
         height={height}

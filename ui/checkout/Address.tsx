@@ -4,6 +4,7 @@ import { OrderPayloadType } from '#/lib/types/order';
 import newStyled from '@emotion/styled';
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import AccountTextInput from '../components/AccountInput';
+import { DiscountObjectType } from './CheckoutSidebar';
 import PaymentOptions from './Payment';
 // import Dropdown from '../components/AddressCropdowns';
 
@@ -61,7 +62,7 @@ interface UserformProps {
   setEmail: Dispatch<SetStateAction<string>>;
   createDBOrder: () => Promise<void>;
   codCharges: number;
-  setCodCharges: (codCharges: number, fetchDiscount?: boolean) => void;
+  setCodCharges: (newCodCharges: number) => void;
   orderId?: string;
   amount: number;
   shippingCharges: number;
@@ -72,6 +73,7 @@ interface UserformProps {
   discount: number;
   orderObj: DBOrderType | null;
   total: number;
+  discountObject: DiscountObjectType | null;
 }
 
 const Userform = ({
@@ -91,6 +93,7 @@ const Userform = ({
   orderObj,
   total,
   createDBOrder,
+  discountObject,
 }: UserformProps) => {
   const [showEmail, setShowEmail] = React.useState(false);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
@@ -409,6 +412,7 @@ const Userform = ({
         setCodCharges={setCodCharges}
         isDisabled={isDisabled}
         isMobile={isMobile}
+        discountObject={discountObject}
       />
     </FormContainer>
   );
