@@ -239,3 +239,22 @@ export function getLastViewedProducts(): string[] {
     return [];
   }
 }
+
+export function saveUserInfo(userInfo: object) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+  } catch (error) {
+    console.error('Error saving user info:', error);
+  }
+}
+
+export function getUserInfo(): object | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const info = localStorage.getItem('userInfo');
+    return info ? JSON.parse(info) : null;
+  } catch {
+    return null;
+  }
+}

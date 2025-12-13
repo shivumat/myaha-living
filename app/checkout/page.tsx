@@ -44,6 +44,7 @@ const Checkout = () => {
     zip: '',
   });
   const [sameAsShipping, setChecked] = useState(true);
+  const [saveInfo, setSaveInfo] = useState(false);
   const [billingAddress, setBillingAddress] = useState<
     OrderPayloadType['billing_address']
   >({
@@ -207,6 +208,8 @@ const Checkout = () => {
         <Userform
           email={email}
           setEmail={setEmail}
+          saveInfo={saveInfo}
+          setSaveInfo={setSaveInfo}
           sameAsShipping={sameAsShipping}
           setChecked={setChecked}
           shippingAddress={shippingAddress}
