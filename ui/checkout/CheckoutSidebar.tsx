@@ -184,7 +184,7 @@ const CheckoutSummary = (props: {
       <div
         style={{
           width: !isMobile ? '70%' : '95%',
-          margin: !isMobile ? '70px auto 0px 20px' : '40px auto',
+          margin: !isMobile ? '70px auto 0px 20px' : '60px auto',
           display: 'flex',
           flexDirection: 'column',
           gap: isMobile ? '10px' : '20px',

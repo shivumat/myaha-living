@@ -18,9 +18,9 @@ import BuyButtons from './BuyButtons';
 import ProductImageCarousel from './ProductImageCarousel';
 
 const MainContainer = newStyled.div`
-  padding: 70px 0px 0px;
+  padding: 120px 0px 0px;
   @media (max-width: 800px) {
-    padding: 30px 0px 0px;
+    padding: 60px 0px 0px;
   }
 `;
 

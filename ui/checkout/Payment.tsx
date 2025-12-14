@@ -169,6 +169,7 @@ const IconImg = newStyled.img`
 const Muted = newStyled.div`
   font-size:13px;
   color:#666;
+  font-weight:600;
 `;
 
 /* row for two small action buttons */
@@ -277,12 +278,9 @@ const PaymentOptions = ({
                 <InnerCircle selected={!codCharges} />
               </RadioCircle>
               <div>
-                <OptionTitle>
-                  Razorpay Secure (UPI, Cards, Wallets) - Flat 5% OFF
-                </OptionTitle>
+                <OptionTitle>Razorpay Secure (UPI, Cards, Wallets)</OptionTitle>
                 <Muted>
-                  Secure payment via UPI/Cards. 5% discount applied
-                  automatically.
+                  Secure payment via UPI/Cards. - Flat 5% OFF CODE: PREPAID5.
                 </Muted>
               </div>
             </OptionLeft>
@@ -372,7 +370,6 @@ const PaymentOptions = ({
               </RadioCircle>
               <div>
                 <OptionTitle>Cash on Delivery</OptionTitle>
-                <Muted>No prepaid discount applicable.</Muted>
               </div>
             </OptionLeft>
 
@@ -381,8 +378,7 @@ const PaymentOptions = ({
 
           <CODRow>
             <Muted style={{ fontSize: 13 }}>
-              Orders above ₹{formatPrice(COD_LIMIT, 0)} may not be eligible for
-              COD.
+              Avaialable on orders below ₹{formatPrice(COD_LIMIT, 0)}.
             </Muted>
           </CODRow>
         </OptionCard>

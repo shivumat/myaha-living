@@ -12,11 +12,13 @@ const BuyButtons = ({
   variant,
   width,
   height,
+  isMobile,
 }: {
   product: Product;
   variant: number;
   width: string;
   height: string;
+  isMobile?: boolean;
 }) => {
   const { customOrder } = product;
 
@@ -34,7 +36,7 @@ const BuyButtons = ({
 
   return (
     <>
-      <ProductOffer text={OfferText} />
+      {!isMobile && <ProductOffer text={OfferText} />}
       <AddToCart
         width={width}
         height={height}

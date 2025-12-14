@@ -6,8 +6,9 @@ const Container = newStyled.div`
     padding: 15px;
     text-align: center;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 15px;
     width: 100%;
+    font-weight: 600;
     border-radius: 4px; /* Slight rounded corners for premium feel */
 `;
 const ProductOffer = ({ text }: { text: string }) => {

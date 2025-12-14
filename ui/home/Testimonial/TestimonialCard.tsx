@@ -12,7 +12,10 @@ export type Testimonial = {
 const Card = styled.div<{ isProductPage?: boolean }>`
   min-width: 100%;
   background-color: ${({ isProductPage }) =>
-    !isProductPage ? `${Colors.white}32` : `${Colors.black}32`};
+    !isProductPage ? `${Colors.white}32` : `${Colors.white}`};
+  border: 1px solid
+    ${({ isProductPage }) =>
+      !isProductPage ? `transparent` : `${Colors.black}20`};
   padding: 24px;
   color: ${({ isProductPage }) =>
     !isProductPage ? `${Colors.white}` : `${Colors.black}`};

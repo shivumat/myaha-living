@@ -273,21 +273,6 @@ const Userform = ({
           }
         }}
       >
-        <label
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            columnGap: '10px',
-          }}
-        >
-          <input
-            style={{ borderRadius: '50%' }}
-            type="checkbox"
-            checked={saveInfo}
-            onClick={() => setSaveInfo((prev) => !prev)}
-          />{' '}
-          Save my information for next time
-        </label>
         {showEmail ? (
           <>
             <AccountTextInput
@@ -378,6 +363,23 @@ const Userform = ({
           disabled
         />
       </Form>
+      <label
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          columnGap: '10px',
+          marginTop: '10px',
+        }}
+      >
+        <input
+          style={{ borderRadius: '50%' }}
+          type="checkbox"
+          checked={saveInfo}
+          onClick={() => setSaveInfo((prev) => !prev)}
+        />{' '}
+        Save my information for next time
+      </label>
+
       <label
         style={{
           display: 'flex',
