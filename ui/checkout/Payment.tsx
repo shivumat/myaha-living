@@ -278,7 +278,7 @@ const PaymentOptions = ({
                 <InnerCircle selected={!codCharges} />
               </RadioCircle>
               <div>
-                <OptionTitle>Razorpay Secure (UPI, Cards, Wallets)</OptionTitle>
+                <OptionTitle>UPI, Cards, Wallets (Razorpay Secure)</OptionTitle>
                 <Muted>
                   Secure payment via UPI/Cards. - Flat 5% OFF CODE: PREPAID5.
                 </Muted>
