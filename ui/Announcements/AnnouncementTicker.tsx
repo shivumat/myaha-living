@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   width: 100%;
   overflow: hidden;
   z-index: 150;
+  top: 0px;
   color: ${Colors.white};
 `;
 

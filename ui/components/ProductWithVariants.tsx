@@ -94,7 +94,7 @@ const ProductWithVariants = (props: { product: Product }) => {
           >
             <div style={{ minWidth: '80px', textAlign: 'left' }}>
               <ShopifyPrice
-                fontSize="16px"
+                fontSize="15px"
                 currency={product.variants[0].currencyCode}
                 price={product.variants[0].price}
                 compareAtPrice={product.variants[0]?.compareAtPrice}
