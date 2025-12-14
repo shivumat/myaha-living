@@ -138,7 +138,8 @@ const Arrow = styled.div<{
   z-index: 1;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.9);
+    background: ${({ isProductPage }) =>
+      isProductPage ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.9)'};
   }
 `;
 
