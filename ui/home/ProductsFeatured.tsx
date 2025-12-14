@@ -126,7 +126,7 @@ const FeaturedProducts = () => {
         ref={innerRef}
         padding="0px"
         flexRow
-        width={isMobile ? '100%' : '74%'}
+        width={isMobile ? '100%' : '75%'}
         overflow="hidden"
         style={{ maxWidth: '100%' }}
       >

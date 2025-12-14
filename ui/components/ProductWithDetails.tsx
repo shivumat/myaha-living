@@ -52,7 +52,7 @@ const ProductWithDetails = (props: {
             : 'row-reverse',
         gap: '20px',
         justifyContent: 'space-between',
-        padding: '20px 0px 0px',
+        padding: '20px 10px 0px',
         height: 'auto',
         minWidth: `${props.getGrandparentWidth()}px`,
       }}
