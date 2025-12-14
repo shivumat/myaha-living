@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import Announcements from '../Announcements';
 import Colors from '../colors/colors';
 import CommandBar from '../components/Commandbar';
 import PlusMInusOpen from '../components/PlusMInusOpen';
@@ -37,7 +38,7 @@ const NavContainer = newStyled.div<{
   transition: background-color 300ms linear;
   align-items: center;
   position: fixed;
-  top: ${({ hasAnnouncements }) => (hasAnnouncements ? '38' : '0')};
+  top: ${({ hasAnnouncements }) => (hasAnnouncements ? '38px' : '0')};
   z-index: 1000;
   border-bottom: 0.2px solid ${({ showTransparent, showAboutUs, showCollection }) => (showTransparent || showAboutUs || showCollection ? 'transparent' : '#00000033')};
   @media (max-width: 800px) {
@@ -214,7 +215,8 @@ const Navbar = () => {
   if (isMobile) {
     return (
       <>
-        <NavContainer hasAnnouncements={hasAnnouncements && isDesktopHomeOnTop}>
+        <Announcements />
+        <NavContainer hasAnnouncements={hasAnnouncements}>
           <Burger size={35} onClick={() => toggle()} />
           <StyledMyahaLogo
             className="clickable"
@@ -325,11 +327,12 @@ const Navbar = () => {
   let timer: NodeJS.Timeout;
   return (
     <>
+      <Announcements />
       <NavContainer
         showTransparent={showTransparent}
         showAboutUs={showAboutUs}
         showCollection={showCollection}
-        hasAnnouncements={hasAnnouncements && isDesktopHomeOnTop}
+        hasAnnouncements={hasAnnouncements}
       >
         <StyledMyahaLogo
           className="clickable"

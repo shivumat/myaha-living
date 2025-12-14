@@ -9,6 +9,7 @@ import PlusMInusOpen from '#/ui/components/PlusMInusOpen';
 import ShopifyPrice from '#/ui/components/ShopifyPrice';
 import VariantContainer from '#/ui/components/VariantContainer';
 import RecentlyViewedProducts from '#/ui/home/RecentlyViewedProducts';
+import TestimonialCarousel from '#/ui/home/Testimonial';
 import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -17,9 +18,9 @@ import BuyButtons from './BuyButtons';
 import ProductImageCarousel from './ProductImageCarousel';
 
 const MainContainer = newStyled.div`
-  padding: 70px 0px 0px;
+  padding: 120px 0px 0px;
   @media (max-width: 800px) {
-    padding: 30px 0px 0px;
+    padding: 60px 0px 0px;
   }
 `;
 
@@ -345,6 +346,7 @@ const WebProduct = () => {
   return (
     <MainContainer ref={topRef}>
       <ImageGrid />
+      <TestimonialCarousel isProductPage={true} />
       <RecentlyViewedProducts />
       <FooterCarousel rounded={false} />
       {/* <PaymentComponent {...order}/> */}

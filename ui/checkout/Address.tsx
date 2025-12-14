@@ -1,11 +1,15 @@
 import { useAuth } from '#/context/AuthContext';
 import { useIsMobile } from '#/hooks/useMobile';
 import { OrderPayloadType } from '#/lib/types/order';
+// Make sure to import your util functions from their actual path
+import { getUserInfo, saveUserInfo } from '#/lib/util';
 import newStyled from '@emotion/styled';
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import Colors from '../colors/colors';
 import AccountTextInput from '../components/AccountInput';
-// import Dropdown from '../components/AddressCropdowns';
+import { DiscountObjectType } from './CheckoutSidebar';
+import PaymentOptions from './Payment';
+
+// ... (Your styled components: FormContainer, Form, InputGroup remain unchanged) ...
 
 const FormContainer = newStyled.div`
   flex: 1;
@@ -16,8 +20,12 @@ const FormContainer = newStyled.div`
   justify-content: flex-start;
   align-items: flex-start;
   gap: 20px;
+  overflow-y: auto;
+  height: calc(100vh - 10px);
   @media (max-width: 800px) {
     padding: 20px;
+    overflow-y: hidden;
+    height: auto;
     }
 `;
 
@@ -38,27 +46,18 @@ const InputGroup = newStyled.div`
   }
 `;
 
-const Submit = newStyled.button`
-    height: 50px;
-    background-color: ${Colors.black};
-    font-size: 20px;
-    padding: 10px 20px;
-    max-width: 400px;
-    width: 100%;
-    color: ${Colors.white};
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 20px auto 10px;
-    &.view{
-        background-color: ${Colors.white};
-        color: ${Colors.black};
-        border: 1px solid ${Colors.black};
-        margin: 0px auto;
-    }
-    @media (max-width: 800px) {
-        font-size: 18px;
-    }
-`;
+export interface DBOrderType extends OrderPayloadType {
+  status: string;
+  id: string;
+}
+
+// Interface for the data structure we save to LocalStorage
+interface SavedUserDataType {
+  shippingAddress: OrderPayloadType['shipping_address'];
+  billingAddress: OrderPayloadType['billing_address'];
+  email: string;
+  sameAsShipping: boolean;
+}
 
 interface UserformProps {
   shippingAddress: OrderPayloadType['shipping_address'];
@@ -71,10 +70,23 @@ interface UserformProps {
   >;
   sameAsShipping: boolean;
   setChecked: Dispatch<SetStateAction<boolean>>;
-  email: string;
+  saveInfo: boolean;
+  setSaveInfo: Dispatch<SetStateAction<boolean>>;
   setEmail: Dispatch<SetStateAction<string>>;
-  nextStep: Dispatch<SetStateAction<number>>;
   createDBOrder: () => Promise<void>;
+  codCharges: number;
+  setCodCharges: (newCodCharges: number) => void;
+  orderId?: string;
+  amount: number;
+  shippingCharges: number;
+  email?: string;
+  customerName?: string;
+  customerNumber: string;
+  onPaymentCompletion: (paymentId: string) => Promise<void>;
+  discount: number;
+  orderObj: DBOrderType | null;
+  total: number;
+  discountObject: DiscountObjectType | null;
 }
 
 const Userform = ({
@@ -86,12 +98,24 @@ const Userform = ({
   setChecked,
   email,
   setEmail,
-  nextStep,
+  onPaymentCompletion,
+  codCharges,
+  setCodCharges,
+  shippingCharges,
+  discount,
+  orderObj,
+  total,
   createDBOrder,
+  discountObject,
+  saveInfo,
+  setSaveInfo,
 }: UserformProps) => {
   const [showEmail, setShowEmail] = React.useState(false);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
+  const { userDetails } = useAuth();
+  const isMobile = useIsMobile();
 
+  // --- 1. SETUP STATE SETTERS (Existing code) ---
   const {
     first_name: firstName,
     last_name: lastName,
@@ -102,6 +126,7 @@ const Userform = ({
     province: state,
     phone,
   } = shippingAddress;
+
   const setFirstName = (value: string) =>
     setShippingAddress((prev) => ({ ...prev, first_name: value }));
   const setLastName = (value: string) =>
@@ -129,6 +154,7 @@ const Userform = ({
     province: state1,
     phone: phone1,
   } = billingAddress;
+
   const setFirstName1 = (value: string) =>
     setBillingAddress((prev) => ({ ...prev, first_name: value }));
   const setLastName1 = (value: string) =>
@@ -146,8 +172,49 @@ const Userform = ({
   const setCountry1 = (value: string) =>
     setBillingAddress((prev) => ({ ...prev, country: value }));
 
-  const isMobile = useIsMobile();
-  const { userDetails } = useAuth();
+  // --- 2. IMPLEMENT LOAD & SAVE LOGIC ---
+
+  // Load saved info on Mount
+  useEffect(() => {
+    // Only load if user is NOT logged in (or if you want local storage to override auth, remove this check)
+    // Typically, we check LocalStorage first for guest checkout flows.
+    const savedData = getUserInfo() as SavedUserDataType | null;
+
+    if (savedData) {
+      // Restore Checkbox State
+      setSaveInfo(true);
+
+      // Restore Addresses
+      setShippingAddress(savedData.shippingAddress);
+      setBillingAddress(savedData.billingAddress);
+      setChecked(savedData.sameAsShipping);
+
+      // Restore Email (only if Auth context doesn't provide one)
+      if (!userDetails?.email && savedData.email) {
+        setEmail(savedData.email);
+      }
+    }
+  }, []); // Run once on mount
+
+  // Save info whenever fields change (IF saveInfo is true)
+  useEffect(() => {
+    if (saveInfo) {
+      const dataToSave: SavedUserDataType = {
+        shippingAddress,
+        billingAddress,
+        email: email || '',
+        sameAsShipping,
+      };
+      saveUserInfo(dataToSave);
+    } else {
+      // If user unchecks the box, clear the storage for privacy
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('userInfo');
+      }
+    }
+  }, [saveInfo, shippingAddress, billingAddress, email, sameAsShipping]);
+
+  // --- 3. EXISTING LOGIC ---
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -173,30 +240,14 @@ const Userform = ({
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Return true if no errors
-  };
-
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (validateForm()) {
-      nextStep((prev) => prev + 1);
-      createDBOrder();
-    }
+    return Object.keys(newErrors).length === 0;
   };
 
   const isEmailValid = userDetails?.email
     ? true
-    : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  // const fetchStates = async () => {
-  //     const response = await fetch('https://api.teleport.org/api/countries/iso_alpha2:IN/admin1_divisions/');
-  //     const data = await response.json();
-  //     console.log(data); // List of Indian states
-  //   };
+    : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email ?? '');
 
   useEffect(() => {
-    // fetchStates()
     setShowEmail(!userDetails?.email);
   }, [userDetails]);
 
@@ -204,30 +255,29 @@ const Userform = ({
 
   return (
     <FormContainer>
-      <h2
-        style={{
-          fontSize: isMobile ? '20px' : '28px',
-          fontWeight: '500',
-          margin: isMobile ? '30px 0px 20px' : '60px 0px 20px',
-        }}
-      >
-        01 Shipping
-      </h2>
       <h3
         style={{
           fontSize: isMobile ? '16px' : '24px',
           fontWeight: '400',
-          margin: isMobile ? '10px 0px' : '10px 0px 10px',
+          margin: isMobile ? '30px 0px 10px' : '60px 0px 10px',
         }}
       >
-        Shipping Address
+        Contact
       </h3>
-      <Form onChange={() => validateForm()}>
+      <Form
+        onChange={() => {
+          // Note: createDBOrder is called here.
+          // Since we are using useEffect to save, we don't need to manually save here.
+          if (validateForm()) {
+            createDBOrder();
+          }
+        }}
+      >
         {showEmail ? (
           <>
             <AccountTextInput
               label="Email"
-              value={email}
+              value={email ?? ''}
               setValue={setEmail}
               error={!isEmailValid ? 'Invalid email' : undefined}
             />
@@ -240,6 +290,19 @@ const Userform = ({
             disabled
           />
         )}
+
+        {/* ... Rest of your Form UI (Delivery, Billing, etc.) ... */}
+        {/* ... I have truncated the UI for brevity as logic is above ... */}
+
+        <h3
+          style={{
+            fontSize: isMobile ? '16px' : '24px',
+            fontWeight: '400',
+            margin: isMobile ? '10px 0px 10px' : '20px 0px 10px',
+          }}
+        >
+          Delivery
+        </h3>
         <InputGroup>
           <AccountTextInput
             label="First Name"
@@ -291,17 +354,32 @@ const Userform = ({
             error={errors.phone}
           />
         </InputGroup>
-        {/* <Dropdown label="Country" options={[]} value={country} setValue={(val) => { setCountry(val); setState(''); setCity(''); }} error={errors.country}/>
-        <Dropdown label="State" options={[]} value={state} setValue={(val) => { setState(val); setCity(''); }} error={errors.state}/>
-        <Dropdown label="City" options={[]} value={city} setValue={setCity} error={errors.city}/> */}
 
         <AccountTextInput
           label="Country"
           value={country}
           setValue={setCountry}
           error={errors.country}
+          disabled
         />
       </Form>
+      <label
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          columnGap: '10px',
+          marginTop: '10px',
+        }}
+      >
+        <input
+          style={{ borderRadius: '50%' }}
+          type="checkbox"
+          checked={saveInfo}
+          onClick={() => setSaveInfo((prev) => !prev)}
+        />{' '}
+        Save my information for next time
+      </label>
+
       <label
         style={{
           display: 'flex',
@@ -380,36 +458,32 @@ const Userform = ({
                 error={errors.phone1}
               />
             </InputGroup>
-            {/* 
-            <Dropdown label="Country" options={[]} value={country1} setValue={(val) => { setCountry1(val); setState1(''); setCity1(''); }} error={errors.country1}/>
-            <Dropdown label="State" options={[]} value={state1} setValue={(val) => { setState1(val); setCity1(''); }} error={errors.state1}/>
-            <Dropdown label="City" options={[]} value={city1} setValue={setCity1} error={errors.city1}/> */}
 
             <AccountTextInput
               label="Country"
               value={country1}
               setValue={setCountry1}
               error={errors.country1}
+              disabled
             />
           </Form>
         </>
       )}
-
-      <Submit
-        className={`clickable ${isDisabled ? 'disabled' : ''}`}
-        type="submit"
-        onClick={onSubmit}
-        disabled={isDisabled}
-      >
-        Checkout
-      </Submit>
-      <Submit
-        className="view clickable"
-        type="submit"
-        onClick={() => nextStep((prev) => prev - 1)}
-      >
-        Go Back
-      </Submit>
+      <PaymentOptions
+        onPaymentCompletion={onPaymentCompletion}
+        email={orderObj?.customerInfo.email}
+        customerName={`${orderObj?.customerInfo.first_name ?? ''} ${orderObj?.customerInfo.last_name ?? ''}`}
+        customerNumber={orderObj?.customerInfo.phone ?? ''}
+        shippingCharges={shippingCharges}
+        amount={total}
+        orderId={orderObj?.id}
+        codCharges={codCharges}
+        discount={discount}
+        setCodCharges={setCodCharges}
+        isDisabled={isDisabled}
+        isMobile={isMobile}
+        discountObject={discountObject}
+      />
     </FormContainer>
   );
 };

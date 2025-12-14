@@ -6,6 +6,7 @@ import Colors from '../colors/colors';
 const Container = newStyled.div<{ width?: string; height?: string }>`
     height: ${(props) => props.height || '30px'};
     width: ${(props) => props.width || '130px'};
+    margin-top: 10px;
     @media (max-width: 800px) {
         width: ${(props) => props.width || '100px'};
     }
@@ -83,10 +84,10 @@ const ErrorMessage = newStyled.div`
 `;
 
 const WarningMessage = newStyled.div`
-    color: orange;
-    font-size: 14px;
+    color: #FF5F15;
+    font-size: 16px;
     @media (max-width: 800px) {
-        font-size: 12px;
+        font-size: 14px;
     }
 `;
 
@@ -169,23 +170,25 @@ const AddToCart = (props: {
   }
 
   return (
-    <Container width={props.width} height={props.height}>
-      <AddtoCart
-        className={`clickable ${props.className} ${quantityAvailable <= 0 ? 'disabled' : ''}`}
-        onClick={() => {
-          if (quantityAvailable > 0) {
-            addItem({ variant_id: id, inventoryId });
-            toggleCart();
-          }
-        }}
-      >
-        Add to cart
-      </AddtoCart>
+    <div style={{ width: '100%' }}>
       {quantityAvailable <= 0 && <ErrorMessage>Out of Stock</ErrorMessage>}
       {quantityAvailable > 0 && quantityAvailable <= 3 && (
         <WarningMessage>Only {quantityAvailable} left in stock!</WarningMessage>
       )}
-    </Container>
+      <Container width={props.width} height={props.height}>
+        <AddtoCart
+          className={`clickable ${props.className} ${quantityAvailable <= 0 ? 'disabled' : ''}`}
+          onClick={() => {
+            if (quantityAvailable > 0) {
+              addItem({ variant_id: id, inventoryId });
+              toggleCart();
+            }
+          }}
+        >
+          Add to cart
+        </AddtoCart>
+      </Container>
+    </div>
   );
 };
 

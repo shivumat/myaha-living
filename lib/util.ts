@@ -148,8 +148,11 @@ export function debounce<T extends (...args: any[]) => void>(
   };
 }
 
-export function formatPrice(amount: number): string {
-  return `${amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+export function formatPrice(
+  amount: number,
+  fractionDigits: number = 2,
+): string {
+  return `${amount.toLocaleString('en-IN', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits })}`;
 }
 
 export const mergeHexColorsWithWeights = (
@@ -234,5 +237,24 @@ export function getLastViewedProducts(): string[] {
     return ids ? JSON.parse(ids) : [];
   } catch {
     return [];
+  }
+}
+
+export function saveUserInfo(userInfo: object) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+  } catch (error) {
+    console.error('Error saving user info:', error);
+  }
+}
+
+export function getUserInfo(): object | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const info = localStorage.getItem('userInfo');
+    return info ? JSON.parse(info) : null;
+  } catch {
+    return null;
   }
 }

@@ -65,12 +65,16 @@ const ProductWithVariants = (props: { product: Product }) => {
         >
           <div
             style={{
-              display: 'flex',
+              display: '-webkit-box',
               gap: '10px',
               justifyContent: 'space-between',
               width: '100%',
               fontSize: '18px',
               color: Colors.black,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: isMobile ? 2 : 1,
             }}
             className="clickable hover_underline"
             onClick={() => openProduct(product)}
@@ -90,7 +94,7 @@ const ProductWithVariants = (props: { product: Product }) => {
           >
             <div style={{ minWidth: '80px', textAlign: 'left' }}>
               <ShopifyPrice
-                fontSize="16px"
+                fontSize="15px"
                 currency={product.variants[0].currencyCode}
                 price={product.variants[0].price}
                 compareAtPrice={product.variants[0]?.compareAtPrice}

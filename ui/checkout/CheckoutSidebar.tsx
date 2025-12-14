@@ -9,9 +9,9 @@ import Colors from '../colors/colors';
 import CartItem from '../components/CartItem';
 
 const SummaryContainer = newStyled.div`
-    width: 500px;
-    background-color: #192211;
-    color: ${Colors.white};
+    width: 45%;
+    background-color: #dddddd;
+    color: ${Colors.black};
     padding: 60px 10px;
     display: flex;
     flex-direction: column;
@@ -20,13 +20,8 @@ const SummaryContainer = newStyled.div`
     gap: 10px;
     @media (max-width: 1200px) {
         width: 100%;
-        padding: 40px 10px;
+        padding: 10px 10px;
     }
-`;
-
-const Title = newStyled.h2`
-  font-size: 20px;
-  margin-bottom: 10px;
 `;
 
 // const PromoSection = newStyled.div`
@@ -39,7 +34,7 @@ const Title = newStyled.h2`
 
 const Divider = newStyled.hr`
   border: 0;
-  border-top: 1px solid #ffffff33;
+  border-top: 1px solid #00000033;
   margin: 15px 0;
 `;
 
@@ -49,26 +44,6 @@ const Row = newStyled.div`
   font-size: 16px;
   margin-bottom: 10px;
   gap: 20px;
-  @media (max-width: 800px) {
-    font-size: 12px;
-  }
-`;
-
-const CheckoutButton = newStyled.button`
-  width: 100%;
-  padding: 12px;
-  background: transparent;
-  border: 1px solid ${Colors.white};
-  color: ${Colors.white};
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: background 0.3s;
-
-  &:hover {
-    background: ${Colors.white};
-    color: ${Colors.black};
-  }
 `;
 
 const PromoSection = newStyled.div`
@@ -83,22 +58,24 @@ const PromoInputContainer = newStyled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
 `;
 
 const PromoInput = newStyled.input`
   padding: 8px;
+  width: 100%;
   font-size: 14px;
-  border: 1px solid ${Colors.white};
+  border: 1px solid ${Colors.black};
   border-radius: 4px;
   background: transparent;
-  color: ${Colors.white};
+  color: ${Colors.black};
   outline: none;
 `;
 
 const ApplyButton = newStyled.button`
   padding: 8px 12px;
-  background: ${Colors.white};
-  color: ${Colors.black};
+  background: ${Colors.black};
+  color: ${Colors.white};
   font-size: 14px;
   border: none;
   cursor: pointer;
@@ -106,7 +83,7 @@ const ApplyButton = newStyled.button`
   transition: background 0.3s;
 
   &:hover {
-    background: #ccc;
+    background: #333;
   }
 `;
 
@@ -136,8 +113,6 @@ export interface DiscountObjectType {
 }
 
 const CheckoutSummary = (props: {
-  index: number;
-  setIndex: Dispatch<SetStateAction<number>>;
   total: number;
   shippingCharges: number;
   codCharges: number;
@@ -148,7 +123,6 @@ const CheckoutSummary = (props: {
   ) => Promise<DiscountObjectType | string | null>;
   discount: number;
 }) => {
-  const { index, setIndex } = props;
   const [promoCode, setPromoCode] = useState('');
   const [promoError, setPromoError] = useState('');
 
@@ -173,7 +147,7 @@ const CheckoutSummary = (props: {
     const cartProduct = { ...product, variants: productVariants };
     return (
       <CartItem
-        width={'90%'}
+        width={'100%'}
         key={index}
         product={cartProduct}
         quantity={item.quantity}
@@ -181,22 +155,18 @@ const CheckoutSummary = (props: {
     );
   };
 
-  const LastStepComp =
-    index === 2 ? (
-      <>
-        {!!props.codCharges && (
-          <Row>
-            <span>COD charges</span>
-            <span>₹ {props.codCharges}</span>
-          </Row>
-        )}
-      </>
-    ) : null;
+  const LastStepComp = (
+    <>
+      {!!props.codCharges && (
+        <Row>
+          <span>COD charges</span>
+          <span>₹ {props.codCharges}</span>
+        </Row>
+      )}
+    </>
+  );
 
-  const total =
-    index === 2
-      ? props.total + props.shippingCharges + props.codCharges
-      : props.total;
+  const total = props.total + props.shippingCharges + props.codCharges;
 
   const onApplyPromo = async () => {
     if (!promoCode.trim()) return;
@@ -213,13 +183,24 @@ const CheckoutSummary = (props: {
     <SummaryContainer>
       <div
         style={{
-          margin: !isMobile ? '70px auto auto' : 'auto',
+          width: !isMobile ? '70%' : '95%',
+          margin: !isMobile ? '70px auto 0px 20px' : '60px auto',
           display: 'flex',
           flexDirection: 'column',
           gap: isMobile ? '10px' : '20px',
         }}
       >
-        <Title>Summary</Title>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: 'transparent',
+            gap: '20px',
+            width: '100%',
+          }}
+        >
+          {cart.map((item, index) => getOrderComponent(item, index))}
+        </div>
         <PromoSection>
           {!props.discountObject ? (
             <>
@@ -231,7 +212,7 @@ const CheckoutSummary = (props: {
                     setPromoError('');
                     setPromoCode(e.target.value);
                   }}
-                  placeholder="Enter promo code"
+                  placeholder="Discount code"
                 />
                 <ApplyButton
                   onClick={onApplyPromo}
@@ -243,7 +224,7 @@ const CheckoutSummary = (props: {
               {promoError && (
                 <span
                   style={{
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: '12px',
                     display: 'block',
                   }}
@@ -287,29 +268,6 @@ const CheckoutSummary = (props: {
           <span>Total</span>
           <span>₹ {formatPrice(total - props.discount)}</span>
         </Row>
-        {index === 0 ? (
-          <CheckoutButton
-            className="clickable"
-            disabled={!total}
-            onClick={() => setIndex((prev) => prev + 1)}
-          >
-            Checkout
-          </CheckoutButton>
-        ) : (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              backgroundColor: 'transparent',
-              gap: '20px',
-              width: '100%',
-              maxHeight: isMobile ? '40vh' : '50vh',
-              overflowY: 'auto',
-            }}
-          >
-            {cart.map((item, index) => getOrderComponent(item, index))}
-          </div>
-        )}
       </div>
     </SummaryContainer>
   );

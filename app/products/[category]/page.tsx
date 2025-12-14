@@ -19,7 +19,7 @@ const StyledContainer = newStyled(Container)`
   padding: 0px 60px;
   margin: 40px 0px;
   @media (max-width: 800px) {
-    padding: 20px;
+    padding: 20px 0px;
     margin: 20px 0px;
   }
 `;
@@ -103,6 +103,10 @@ const ProductsCategory = () => {
   return (
     <>
       <StyledContainer width="100%">
+        <div
+          ref={topRef}
+          style={{ background: 'transparent', width: '10px', height: '0px' }}
+        />
         <Container
           margin={isMobile ? '40px 0px 0px' : '60px 0px 0px 0px'}
           padding="20px"

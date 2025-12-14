@@ -1,109 +1,204 @@
+'use client';
 import { useToast } from '#/context/ToastContext';
-import { useIsMobile } from '#/hooks/useMobile';
+import { formatPrice } from '#/lib/util';
 import newStyled from '@emotion/styled';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Colors from '../colors/colors';
 import PaymentComponent from '../components/Payment';
-// import PaymentComponent from "../components/Payment";
+import { DiscountObjectType } from './CheckoutSidebar';
+
+export const CONST_COD_CHARGES = 40;
+
+/* ---------- Styled ---------- */
 
 const FormContainer = newStyled.div`
   flex: 1;
-  padding: 40px;
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin: 20px 0px 10px;
   justify-content: flex-start;
-  align-items: flex-start;
-  gap: 20px;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+  background: ${Colors.white};
   @media (max-width: 800px) {
-    padding: 20px;
-    }
-`;
-
-const Submit = newStyled.button`
-    height: 50px;
-    background-color: ${Colors.black};
-    font-size: 20px;
-    padding: 10px 20px;
-    max-width: 400px;
-    width: 100%;
-    color: ${Colors.white};
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 20px auto;
-    &.view{
-        background-color: ${Colors.white};
-        color: ${Colors.black};
-        border: 1px solid ${Colors.black};
-    }
-    @media (max-width: 800px) {
-        font-size: 18px;
-    }
+    max-width: 100%;
+    margin: 10px 0px 10px;
+  }
 `;
 
 const Container = newStyled.div`
-  padding: 16px;
   width: 100%;
-  @media (max-width: 800px) {
-  }
-`;
-
-const Option = newStyled.label<{ selected: boolean }>`
   display: flex;
-  align-items: center;
-  border: 2px solid ${(props) => (props.selected ? '#007bff' : '#ccc')};
-  padding: 40px 12px;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+/* Payment option card */
+const OptionCard = newStyled.label<{ selected?: boolean; disabled?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  border: 2px solid ${(p) => (p.selected ? '#1976d2' : '#e6e6e6')};
+  box-shadow: ${(p) => (p.selected ? '0 4px 12px rgba(25,118,210,0.08)' : 'none')};
+  padding: 16px;
   cursor: pointer;
-  box-shadow: ${(props) => (props.selected ? '0px 0px 5px rgba(0, 123, 255, 0.5)' : 'none')};
+  transition: all 160ms ease-in-out;
+  background: #fff;
+  overflow: hidden;
+  opacity: ${(p) => (p.disabled ? 0.6 : 1)};
+  pointer-events: ${(p) => (p.disabled ? 'none' : 'auto')};
+
   @media (max-width: 800px) {
-    padding: 20px 12px;
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
-    min-height: 150px;
-    justify-content: center;
-    align-items: center;
+    padding: 12px;
   }
 `;
 
+/* Top row inside a payment card */
+const OptionTopRow = newStyled.div`
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+`;
+
+/* left block for radio + title */
+const OptionLeft = newStyled.div`
+  display:flex;
+  align-items:center;
+  gap:12px;
+`;
+
+/* radio visuals */
 const HiddenRadio = newStyled.input`
   display: none;
 `;
 
-const RadioCircle = newStyled.div`
+const RadioCircle = newStyled.div<{ selected?: boolean }>`
   width: 20px;
   height: 20px;
-  border: 2px solid #333;
+  border: 2px solid ${(p) => (p.selected ? '#1976d2' : '#333')};
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
 `;
 
-const InnerCircle = newStyled.div<{ selected: boolean }>`
-  width: 12px;
-  height: 12px;
-  background-color: ${(props) => (props.selected ? '#007bff' : 'transparent')};
+const InnerCircle = newStyled.div<{ selected?: boolean }>`
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
+  background-color: ${(p) => (p.selected ? '#1976d2' : 'transparent')};
 `;
 
-const Text = newStyled.span`
-  flex-grow: 1;
-  font-size: 16px;
+/* small title text */
+const OptionTitle = newStyled.div`
+  font-size:16px;
+  font-weight:500;
 `;
 
-const IconsContainer = newStyled.div`
-  display: flex;
-  gap: 8px;
+/* icons area */
+const IconsRow = newStyled.div`
+  display:flex;
+  align-items:center;
+  gap:8px;
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
-const Icon = newStyled.img`
-  width: 32px;
-  height: 20px;
+/* illustration area (big grey box like screenshot) */
+const IllustrationBox = newStyled.div`
+  margin-top:12px;
+  background: #f6f6f6;
+  border-radius: 6px;
+  min-height:140px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#666;
+  padding:18px;
+  border: 1px solid #e9e9e9;
+  text-align:center;
 `;
 
-export const CONST_COD_CHARGES = 40;
+/* small caption under illustration */
+const IllustrationCaption = newStyled.div`
+  margin-top:12px;
+  font-size:14px;
+  color:#444;
+  line-height:1.4;
+`;
+
+/* COD compact row (smaller text) */
+const CODRow = newStyled.div`
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:4px;
+`;
+
+/* Billing address card */
+
+/* Big primary button */
+const PayButton = newStyled.button<{ variant?: 'primary' | 'outline' }>`
+  height:56px;
+  border-radius:8px;
+  border: none;
+  font-size:18px;
+  font-weight:600;
+  cursor:pointer;
+  width:100%;
+  background: ${(p) => (p.variant === 'outline' ? '#fff' : '#0b63d6')};
+  color: ${(p) => (p.variant === 'outline' ? '#111' : '#fff')};
+  box-shadow: ${(p) => (p.variant === 'outline' ? 'none' : '0 6px 18px rgba(11,99,214,0.12)')};
+  border: ${(p) => (p.variant === 'outline' ? '1px solid #ccc' : 'none')};
+`;
+
+/* small utility img */
+const IconImg = newStyled.img`
+  width:36px;
+  height:22px;
+  object-fit:contain;
+`;
+
+/* small muted text */
+const Muted = newStyled.div`
+  font-size:13px;
+  color:#666;
+  font-weight:600;
+`;
+
+/* row for two small action buttons */
+const ActionRow = newStyled.div`
+  display:flex;
+  gap:12px;
+  width:100%;
+  margin-top:8px;
+`;
+
+const COD_LIMIT = 4000;
+
+/* ----- end styled ----- */
+
+type Props = {
+  codCharges: number;
+  setCodCharges: (newCodCharges: number) => void;
+  orderId?: string;
+  amount: number;
+  shippingCharges: number;
+  email?: string;
+  customerName?: string;
+  customerNumber: string;
+  onPaymentCompletion: (paymentId: string) => Promise<void>;
+  discount: number;
+  isDisabled: boolean;
+  isMobile?: boolean;
+  discountObject: DiscountObjectType | null;
+};
 
 const PaymentOptions = ({
   codCharges,
@@ -112,28 +207,26 @@ const PaymentOptions = ({
   shippingCharges,
   email,
   orderId,
-  nextStep,
   onPaymentCompletion,
   discount,
   customerName,
   customerNumber,
-}: {
-  codCharges: number;
-  setCodCharges: Dispatch<SetStateAction<number>>;
-  orderId: string;
-  amount: number;
-  shippingCharges: number;
-  email: string;
-  customerName: string;
-  customerNumber: string;
-  nextStep: Dispatch<SetStateAction<number>>;
-  onPaymentCompletion: (paymentId: string) => Promise<void>;
-  discount: number;
-}) => {
+  isDisabled,
+  isMobile,
+  discountObject,
+}: Props) => {
   const [disabled, setDisabled] = useState(false);
   const [openRazorPay, setOpenRazorPay] = useState(false);
-  const isMobile = useIsMobile();
   const { startLoading } = useToast();
+
+  useEffect(() => {
+    if (
+      amount + shippingCharges - discount > COD_LIMIT ||
+      discountObject?.code === 'PREPAID5'
+    ) {
+      setCodCharges(0);
+    }
+  }, [amount, shippingCharges, discount, discountObject]);
 
   const onRazorPayCompletion = (razorPayKey: string) => {
     setOpenRazorPay(false);
@@ -146,8 +239,10 @@ const PaymentOptions = ({
     setDisabled(true);
     setTimeout(() => {
       setDisabled(false);
-    }, 5000); // 5 seconds
+    }, 3500);
+    // If COD selected, codCharges > 0
     if (!codCharges) {
+      // open razorpay modal
       setOpenRazorPay(true);
       return;
     }
@@ -157,93 +252,153 @@ const PaymentOptions = ({
 
   return (
     <FormContainer>
-      <h2
+      <h3
         style={{
-          fontSize: isMobile ? '20px' : '28px',
-          fontWeight: '500',
-          marginBottom: isMobile ? '30px' : '60px',
+          fontSize: isMobile ? '16px' : '24px',
+          fontWeight: '400',
+          margin: isMobile ? '10px 0px 10px' : '10px 0px 10px',
         }}
       >
-        01 Shipping
-      </h2>
-      <Container>
-        {/* Razorpay Option */}
-        <Option selected={!codCharges} onClick={() => setCodCharges(0)}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              margin: 'auto 0px',
-            }}
-          >
-            <HiddenRadio
-              type="radio"
-              name="payment"
-              value="razorpay"
-              checked={!codCharges}
-              onChange={() => setCodCharges(0)}
-            />
-            <RadioCircle>
-              <InnerCircle selected={!codCharges} />
-            </RadioCircle>
-          </div>
-          <Text>Razorpay Secure (UPI, Cards, Wallets, NetBanking)</Text>
-          <IconsContainer>
-            <Icon
-              src="https://upload.wikimedia.org/wikipedia/commons/6/6f/UPI_logo.svg"
-              alt="UPI"
-            />
-            <Icon
-              src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg"
-              alt="Visa"
-            />
-            <Icon
-              src="https://upload.wikimedia.org/wikipedia/commons/5/59/RuPay_logo.svg"
-              alt="RuPay"
-            />
-            <Icon
-              src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
-              alt="Mastercard"
-            />
-          </IconsContainer>
-        </Option>
+        Payment
+      </h3>
 
-        {/* Cash on Delivery Option */}
-        <Option
+      <Container>
+        {/* Razorpay */}
+        <OptionCard selected={!codCharges} onClick={() => setCodCharges(0)}>
+          <OptionTopRow>
+            <OptionLeft>
+              <HiddenRadio
+                type="radio"
+                name="payment"
+                value="razorpay"
+                checked={!codCharges}
+                onChange={() => setCodCharges(0)}
+              />
+              <RadioCircle selected={!codCharges}>
+                <InnerCircle selected={!codCharges} />
+              </RadioCircle>
+              <div>
+                <OptionTitle>UPI, Cards, Wallets (Razorpay Secure)</OptionTitle>
+                <Muted>
+                  Secure payment via UPI/Cards. - Flat 5% OFF CODE: PREPAID5.
+                </Muted>
+              </div>
+            </OptionLeft>
+
+            <IconsRow>
+              <IconImg
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6f/UPI_logo.svg"
+                alt="upi"
+              />
+              <IconImg
+                src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg"
+                alt="visa"
+              />
+              <IconImg
+                src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                alt="mastercard"
+              />
+            </IconsRow>
+          </OptionTopRow>
+
+          <IllustrationBox>
+            {/* visual placeholder similar to screenshot */}
+            <svg
+              width="84"
+              height="56"
+              viewBox="0 0 84 56"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="1"
+                y="4"
+                width="82"
+                height="48"
+                rx="4"
+                stroke="#dcdcdc"
+                strokeWidth="2"
+                fill="#fff"
+              />
+              <path
+                d="M12 20H56"
+                stroke="#d0d0d0"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M12 32H56"
+                stroke="#d0d0d0"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+
+            <IllustrationCaption>
+              After clicking “Pay now”, you will be redirected to Razorpay to
+              complete your purchase securely.
+            </IllustrationCaption>
+          </IllustrationBox>
+        </OptionCard>
+
+        {/* Cash on Delivery */}
+        <OptionCard
           selected={!!codCharges}
           onClick={() => {
             setOpenRazorPay(false);
             setCodCharges(CONST_COD_CHARGES);
           }}
+          disabled={
+            amount + shippingCharges - discount > COD_LIMIT ||
+            discountObject?.code === 'PREPAID5'
+          }
         >
-          <HiddenRadio
-            type="radio"
-            name="payment"
-            value="cod"
-            checked={!!codCharges}
-            onChange={() => {
-              setOpenRazorPay(false);
-              setCodCharges(CONST_COD_CHARGES);
-            }}
-          />
-          <RadioCircle>
-            <InnerCircle selected={!!codCharges} />
-          </RadioCircle>
-          <Text>Cash on delivery (+ ₹{CONST_COD_CHARGES})</Text>
-        </Option>
+          <OptionTopRow>
+            <OptionLeft>
+              <HiddenRadio
+                type="radio"
+                name="payment"
+                value="cod"
+                checked={!!codCharges}
+                onChange={() => {
+                  setOpenRazorPay(false);
+                  setCodCharges(CONST_COD_CHARGES);
+                }}
+              />
+              <RadioCircle selected={!!codCharges}>
+                <InnerCircle selected={!!codCharges} />
+              </RadioCircle>
+              <div>
+                <OptionTitle>Cash on Delivery</OptionTitle>
+              </div>
+            </OptionLeft>
+
+            <div style={{ fontWeight: 600 }}>+ ₹{CONST_COD_CHARGES}</div>
+          </OptionTopRow>
+
+          <CODRow>
+            <Muted style={{ fontSize: 13 }}>
+              Avaialable on orders below ₹{formatPrice(COD_LIMIT, 0)}.
+            </Muted>
+          </CODRow>
+        </OptionCard>
       </Container>
-      <Submit className="clickable" type="submit" onClick={onSubmit}>
-        Checkout
-      </Submit>
-      <Submit
-        className="view clickable"
-        type="submit"
-        onClick={() => nextStep((prev) => prev - 1)}
-      >
-        Go Back
-      </Submit>
-      {openRazorPay && (
+
+      {/* Action buttons */}
+      <ActionRow>
+        <div style={{ flex: 1 }}>
+          <PayButton
+            className={`clickable ${disabled || isDisabled ? 'disabled' : ''}`}
+            onClick={onSubmit}
+            disabled={disabled || isDisabled}
+          >
+            Pay now
+          </PayButton>
+        </div>
+      </ActionRow>
+
+      {/* Payment modal / component */}
+      {openRazorPay && email && customerName && (
         <PaymentComponent
           orderId={orderId}
           email={email}

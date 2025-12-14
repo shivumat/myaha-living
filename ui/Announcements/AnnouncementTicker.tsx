@@ -13,9 +13,11 @@ type Props = {
 };
 
 const Wrapper = styled.div`
-  position: relative;
+  position: fixed;
   width: 100%;
   overflow: hidden;
+  z-index: 150;
+  top: 0px;
   color: ${Colors.white};
 `;
 
@@ -44,7 +46,7 @@ const RightButton = styled(NavButton)`
 
 export const AnnouncementTicker: React.FC<Props> = ({
   announcements,
-  interval = 5000,
+  interval = 4000,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const total = announcements.length;

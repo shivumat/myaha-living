@@ -6,9 +6,11 @@ import Carousel from '#/ui/components/Carousel';
 import FooterCarousel from '#/ui/components/FooterCarousel';
 import PincodeInput from '#/ui/components/Pincode';
 import PlusMInusOpen from '#/ui/components/PlusMInusOpen';
+import ProductOffer from '#/ui/components/ProductOffer';
 import ShopifyPrice from '#/ui/components/ShopifyPrice';
 import VariantContainer from '#/ui/components/VariantContainer';
 import RecentlyViewedProducts from '#/ui/home/RecentlyViewedProducts';
+import TestimonialCarousel from '#/ui/home/Testimonial';
 import newStyled from '@emotion/styled';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -16,9 +18,9 @@ import { FiHeart, FiTruck } from 'react-icons/fi';
 import BuyButtons from './BuyButtons';
 
 const Container = newStyled.div`
-  padding: 50px 0px 0px;
+  padding: 70px 0px 0px;
   @media (max-width: 800px) {
-    padding: 30px 0px 0px;
+    padding: 60px 0px 0px;
   }
 `;
 
@@ -82,6 +84,9 @@ const StyledDiv = newStyled.div`
   border: 1px solid ${Colors.black};
   padding: 5px 10px;
 `;
+
+const OfferText = `EXTRA 5% OFF ON PREPAID ORDERS. </br>
+  Use code PREPAID5 at checkout. Limited-time offer. 🎉`;
 
 const MobileProduct = () => {
   const { id } = useParams<{ id: string }>();
@@ -305,6 +310,7 @@ const MobileProduct = () => {
         showInclusiveOfTaxes
       />
       {Variants}
+      <ProductOffer text={OfferText} />
       <Description
         dangerouslySetInnerHTML={{ __html: currentProduct?.description ?? '' }}
       />
@@ -343,6 +349,7 @@ const MobileProduct = () => {
             variant={variant}
             width="350px"
             height="40px"
+            isMobile={true}
           />
         </div>
         {/* <AddToCart
@@ -353,6 +360,7 @@ const MobileProduct = () => {
           quantityAvailable={currentProduct.variants[variant].quantityAvailable}
         /> */}
       </div>
+      <TestimonialCarousel isProductPage={true} />
       <RecentlyViewedProducts />
       <FooterCarousel rounded={false} />
       {/* <PaymentComponent {...order}/> */}

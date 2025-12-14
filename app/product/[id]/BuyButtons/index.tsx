@@ -2,17 +2,23 @@ import { Product } from '#/context/ProductContext';
 import AddToCart from '#/ui/components/AddToCart';
 import BuyNowButton from '#/ui/components/BuyNowButton';
 import CustomiseAndOrder from '#/ui/components/CustomiseAndOrder';
+import ProductOffer from '#/ui/components/ProductOffer';
+
+const OfferText = `EXTRA 5% OFF ON PREPAID ORDERS. </br>
+  Use code PREPAID5 at checkout. Limited-time offer. 🎉`;
 
 const BuyButtons = ({
   product,
   variant,
   width,
   height,
+  isMobile,
 }: {
   product: Product;
   variant: number;
   width: string;
   height: string;
+  isMobile?: boolean;
 }) => {
   const { customOrder } = product;
 
@@ -30,6 +36,7 @@ const BuyButtons = ({
 
   return (
     <>
+      {!isMobile && <ProductOffer text={OfferText} />}
       <AddToCart
         width={width}
         height={height}
