@@ -118,6 +118,20 @@ const ProductsCategory = () => {
     });
   }, [productsToShow]);
 
+  const scrollToTop = () => {
+    const el =
+      document.scrollingElement || document.documentElement || document.body;
+
+    el.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    scrollToTop();
+  }, [currentPage]);
+
   return (
     <>
       <StyledContainer width="100%">
