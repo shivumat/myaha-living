@@ -101,11 +101,8 @@ const ProductsCategory = () => {
   }, [sort, collection, currentPage, avaialble, priceRange]);
 
   const scrollToTop = () => {
-    const el =
-      document.scrollingElement || document.documentElement || document.body;
-
-    el.scrollTo({
-      top: 0,
+    window.scrollTo({
+      top: -1, // force scroll
       behavior: 'smooth',
     });
   };
