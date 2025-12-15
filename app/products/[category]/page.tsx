@@ -152,7 +152,11 @@ const ProductsCategory = () => {
         <StyledPagination
           currentPage={currentPage}
           onPageChange={(number) => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            try {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch {
+              window.scrollTo(0, 0);
+            }
             setCurrentPage(number);
           }}
           itemsPerPage={productsCount}
