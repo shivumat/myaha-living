@@ -100,6 +100,16 @@ const ProductsCategory = () => {
     );
   }, [sort, collection, currentPage, avaialble, priceRange]);
 
+  const scrollToTop = () => {
+    const el =
+      document.scrollingElement || document.documentElement || document.body;
+
+    el.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <>
       <StyledContainer width="100%">
@@ -152,11 +162,7 @@ const ProductsCategory = () => {
         <StyledPagination
           currentPage={currentPage}
           onPageChange={(number) => {
-            try {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            } catch {
-              window.scrollTo(0, 0);
-            }
+            scrollToTop();
             setCurrentPage(number);
           }}
           itemsPerPage={productsCount}
