@@ -24,35 +24,36 @@ const StyledContainer = newStyled(Container)`
 `;
 
 const ProductsPage = () => {
-  const [sort, setSort] = useState<string>('Featured');
-  const [avaialble, setAvailable] = useState<string>('Available');
+  const [sort, setSort] = useState('Featured');
+  const [avaialble, setAvailable] = useState('Available');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
   const [productsToShow, setProductsToShow] = useState<Products>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [openMobileFilter, setOpenMobileFilter] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [openMobileFilter, setOpenMobileFilter] = useState(false);
+
   const { allCollections: collection } = useProduct();
   const isMobile = useIsMobile();
-  const topRef = useRef<HTMLDivElement>(null);
-
   const productsCount = isMobile ? 6 : 12;
 
+  /** 🔑 Scroll anchor */
+  const topRef = useRef<HTMLDivElement>(null);
+
+  /** 🔄 Filter + sort + paginate */
   useEffect(() => {
     if (!collection) return;
 
     let filtered: Products = collection.products;
 
-    // Filter by availability
     if (avaialble === 'Available') {
       filtered = filtered.filter((product) =>
-        product.variants.some((variant) => variant.quantityAvailable > 0),
+        product.variants.some((v) => v.quantityAvailable > 0),
       );
     } else if (avaialble === 'Out of Stock') {
       filtered = filtered.filter((product) =>
-        product.variants.every((variant) => variant.quantityAvailable <= 0),
+        product.variants.every((v) => v.quantityAvailable <= 0),
       );
     }
 
-    // Filter by price
     filtered = filtered.filter((product) =>
       product.variants.some((variant) => {
         const price = parseFloat(variant.price.replace(/,/g, ''));
@@ -60,7 +61,6 @@ const ProductsPage = () => {
       }),
     );
 
-    // Sorting
     if (sort === 'Name: (A-Z)') {
       filtered.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sort === 'Name: (Z-A)') {
@@ -79,31 +79,53 @@ const ProductsPage = () => {
       );
     }
 
-    // Pagination
     setProductsToShow(
       filtered.slice(
         (currentPage - 1) * productsCount,
         currentPage * productsCount,
       ),
     );
-  }, [sort, avaialble, priceRange, collection, currentPage]);
+  }, [sort, avaialble, priceRange, collection, currentPage, productsCount]);
+
+  /** 🧹 Reset page when filters change */
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [sort, avaialble, priceRange]);
+
+  /** ✅ Mobile-safe scroll AFTER render */
+  useEffect(() => {
+    if (!topRef.current) return;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        topRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+    });
+  }, [productsToShow]);
 
   return (
     <>
       <StyledContainer width="100%">
+        {/* 🔑 Scroll target */}
+        <div ref={topRef} style={{ position: 'relative', top: '-1px' }} />
+
         <Container
           margin={isMobile ? '40px 0px 0px' : '60px 0px 0px 0px'}
           padding="20px"
         >
           <Textbox fontSize="28px">All products</Textbox>
         </Container>
+
         <ListBody>
           {isMobile ? (
             <Container
-              style={{ gap: '20px' }}
               padding="0px"
-              margin="0p"
+              margin="0px"
               flexRow
+              style={{ gap: '20px' }}
             >
               <VscSettings
                 onClick={() => setOpenMobileFilter(true)}
@@ -122,6 +144,7 @@ const ProductsPage = () => {
               avaialble={avaialble}
             />
           )}
+
           {productsToShow.length === 0 ? (
             <NoProductsAvailable />
           ) : (
@@ -132,26 +155,18 @@ const ProductsPage = () => {
             </Conatiner>
           )}
         </ListBody>
+
         <StyledPagination
           currentPage={currentPage}
-          onPageChange={(number) => {
-            if (topRef.current) {
-              topRef.current.scrollIntoView({ behavior: 'smooth' });
-            }
-            setCurrentPage(number);
-          }}
+          onPageChange={setCurrentPage}
           itemsPerPage={productsCount}
           totalItems={
-            collection?.products?.filter((product) => {
+            collection?.products.filter((product) => {
               const isAvailable =
                 avaialble === 'Available'
-                  ? product.variants.some(
-                      (variant) => variant.quantityAvailable > 0,
-                    )
+                  ? product.variants.some((v) => v.quantityAvailable > 0)
                   : avaialble === 'Out of Stock'
-                    ? product.variants.every(
-                        (variant) => variant.quantityAvailable <= 0,
-                      )
+                    ? product.variants.every((v) => v.quantityAvailable <= 0)
                     : true;
 
               const isInPriceRange = product.variants.some((variant) => {
@@ -163,9 +178,12 @@ const ProductsPage = () => {
             }).length ?? 0
           }
         />
+
         <RecentlyViewedProducts />
       </StyledContainer>
+
       <FooterCarousel rounded={false} />
+
       <MobileFilter
         isOpen={openMobileFilter}
         setIsOpen={setOpenMobileFilter}
