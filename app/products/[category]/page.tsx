@@ -110,6 +110,10 @@ const ProductsCategory = () => {
     });
   };
 
+  useEffect(() => {
+    scrollToTop();
+  }, [currentPage]);
+
   return (
     <>
       <StyledContainer width="100%">
@@ -162,7 +166,6 @@ const ProductsCategory = () => {
         <StyledPagination
           currentPage={currentPage}
           onPageChange={(number) => {
-            scrollToTop();
             setCurrentPage(number);
           }}
           itemsPerPage={productsCount}
