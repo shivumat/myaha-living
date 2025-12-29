@@ -40,6 +40,7 @@ const BuyButtons = ({
       <AddToCart
         width={width}
         height={height}
+        variantPrice={Number(product.variants[variant].price)}
         variantId={product.variants[variant].id}
         inventoryId={product.variants[variant].inventoryId}
         quantityAvailable={product.variants[variant].quantityAvailable}

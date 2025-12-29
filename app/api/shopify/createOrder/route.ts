@@ -1,3 +1,5 @@
+import { sendPurchaseToMeta } from '#/lib/meta/sendPurchaseToMeta';
+import crypto from 'crypto';
 import { NextResponse } from 'next/server';
 
 export const POST = async (req: Request) => {
@@ -94,6 +96,23 @@ export const POST = async (req: Request) => {
       .then((response) => response.json())
       .then((result) => result)
       .catch((error) => console.error(error));
+
+    const eventId = crypto.randomUUID();
+
+    // Variant IDs for catalog matching
+    const contentIds = variants.map(
+      (item: any) => item.variant_id, // gid://shopify/ProductVariant/xxx
+    );
+
+    // 🔥 Send Purchase to Meta (SERVER-SIDE)
+    await sendPurchaseToMeta({
+      eventId,
+      email,
+      value: Number(total_price),
+      currency: 'INR',
+      contentIds,
+      eventSourceUrl: 'https://myahaliving.com/order/success',
+    });
 
     await Promise.all(
       inventoryIdsAndQuantity.map(async (item: any) => {

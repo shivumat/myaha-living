@@ -1,4 +1,5 @@
 import { useCart } from '#/context/CartContext';
+import { trackMeta } from '#/lib/util';
 import newStyled from '@emotion/styled';
 import { useState } from 'react';
 import Colors from '../colors/colors';
@@ -93,6 +94,7 @@ const WarningMessage = newStyled.div`
 
 const AddToCart = (props: {
   variantId: string;
+  variantPrice: number;
   inventoryId: string;
   quantityAvailable: number;
   className?: string;
@@ -136,6 +138,15 @@ const AddToCart = (props: {
                     count: newQuantity,
                     inventoryId,
                   });
+
+                  // 🔥 Meta AddToCart (increment)
+                  trackMeta('AddToCart', {
+                    content_ids: [props.variantId],
+                    content_type: 'product',
+                    value: Number(), // see note below
+                    currency: 'INR',
+                  });
+
                   setError('');
                 } else {
                   setError('Cannot add more than available quantity');
