@@ -114,7 +114,7 @@ const CartItem = (props: {
         </Price>
         {props.showAddtoCart && (
           <StyledAddToCart
-            variantPrice={Number(product.variants[0].price)}
+            variantPrice={product.variants[0].price}
             variantId={product.variants[0].id}
             inventoryId={product.variants[0].inventoryId}
             quantityAvailable={product.variants[0].quantityAvailable}

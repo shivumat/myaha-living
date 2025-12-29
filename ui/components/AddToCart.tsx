@@ -94,7 +94,7 @@ const WarningMessage = newStyled.div`
 
 const AddToCart = (props: {
   variantId: string;
-  variantPrice: number;
+  variantPrice: string;
   inventoryId: string;
   quantityAvailable: number;
   className?: string;
@@ -148,7 +148,7 @@ const AddToCart = (props: {
                       ),
                     ],
                     content_type: 'product',
-                    value: Number(), // see note below
+                    value: Number(props.variantPrice.replace(/[^0-9.]/g, '')), // see note below
                     currency: 'INR',
                   });
 

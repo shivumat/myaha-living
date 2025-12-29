@@ -30,7 +30,7 @@ const ProductWithId = () => {
     trackMeta('ViewContent', {
       content_ids: [variantId.replace('gid://shopify/ProductVariant/', '')],
       content_type: 'product',
-      value: Number(currentProduct.variants[0].price),
+      value: Number(currentProduct.variants[0].price.replace(/[^0-9.]/g, '')),
       currency: 'INR',
     });
 
