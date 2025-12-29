@@ -25,6 +25,8 @@ const ProductWithId = () => {
     // Prefer variant ID if your Meta catalog is variant-based
     const variantId = currentProduct.variants[0].id || currentProduct.id;
 
+    console.log(currentProduct.variants[0].price);
+
     trackMeta('ViewContent', {
       content_ids: [variantId.replace('gid://shopify/ProductVariant/', '')],
       content_type: 'product',
