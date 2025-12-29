@@ -265,7 +265,6 @@ export const trackMeta = (event: string, params = {}) => {
   if (typeof window === 'undefined') return;
 
   const hostname = window.location.hostname;
-  console.log('Hostname:', hostname);
 
   if (!META_ALLOWED_HOSTS.includes(hostname)) {
     // UAT / preview / localhost → do nothing
@@ -273,8 +272,6 @@ export const trackMeta = (event: string, params = {}) => {
   }
 
   if ((window as any).fbq) {
-    console.log('event:', event);
-    console.log('params:', params);
     (window as any).fbq('track', event, params);
   }
 };
