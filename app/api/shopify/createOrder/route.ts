@@ -101,7 +101,8 @@ export const POST = async (req: Request) => {
 
     // Variant IDs for catalog matching
     const contentIds = variants.map(
-      (item: any) => item.variant_id, // gid://shopify/ProductVariant/xxx
+      (item: any) =>
+        item.variant_id.replace('gid://shopify/ProductVariant/', ''), // gid://shopify/ProductVariant/xxx
     );
 
     // 🔥 Send Purchase to Meta (SERVER-SIDE)

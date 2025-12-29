@@ -26,7 +26,7 @@ const ProductWithId = () => {
     const variantId = currentProduct.variants[0].id || currentProduct.id;
 
     trackMeta('ViewContent', {
-      content_ids: [variantId],
+      content_ids: [variantId.replace('gid://shopify/ProductVariant/', '')],
       content_type: 'product',
       value: Number(currentProduct.variants[0].price),
       currency: 'INR',

@@ -141,7 +141,12 @@ const AddToCart = (props: {
 
                   // 🔥 Meta AddToCart (increment)
                   trackMeta('AddToCart', {
-                    content_ids: [props.variantId],
+                    content_ids: [
+                      props.variantId.replace(
+                        'gid://shopify/ProductVariant/',
+                        '',
+                      ),
+                    ],
                     content_type: 'product',
                     value: Number(), // see note below
                     currency: 'INR',
