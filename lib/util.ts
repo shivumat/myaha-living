@@ -258,3 +258,20 @@ export function getUserInfo(): object | null {
     return null;
   }
 }
+
+export const META_ALLOWED_HOSTS = ['www.myahaliving.com', 'myahaliving.com'];
+
+export const trackMeta = (event: string, params = {}) => {
+  if (typeof window === 'undefined') return;
+
+  const hostname = window.location.hostname;
+
+  if (!META_ALLOWED_HOSTS.includes(hostname)) {
+    // UAT / preview / localhost → do nothing
+    return;
+  }
+
+  if ((window as any).fbq) {
+    (window as any).fbq('track', event, params);
+  }
+};
