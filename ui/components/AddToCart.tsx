@@ -196,6 +196,15 @@ const AddToCart = (props: {
           onClick={() => {
             if (quantityAvailable > 0) {
               addItem({ variant_id: id, inventoryId });
+              // 🔥 Meta AddToCart (increment)
+              trackMeta('AddToCart', {
+                content_ids: [
+                  props.variantId.replace('gid://shopify/ProductVariant/', ''),
+                ],
+                content_type: 'product',
+                value: Number(props.variantPrice.replace(/[^0-9.]/g, '')), // see note below
+                currency: 'INR',
+              });
               toggleCart();
             }
           }}
