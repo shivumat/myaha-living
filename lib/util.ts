@@ -272,6 +272,7 @@ export const trackMeta = (event: string, params = {}) => {
   }
 
   if ((window as any).fbq) {
+    console.log(`Tracking Meta event: ${event}`, params);
     (window as any).fbq('track', event, params);
   }
 };
