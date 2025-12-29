@@ -262,7 +262,6 @@ export function getUserInfo(): object | null {
 export const META_ALLOWED_HOSTS = ['www.myahaliving.com', 'myahaliving.com'];
 
 export const trackMeta = (event: string, params = {}) => {
-  console.log('META_ALLOWED_HOSTS:', META_ALLOWED_HOSTS);
   if (typeof window === 'undefined') return;
 
   const hostname = window.location.hostname;
@@ -273,14 +272,6 @@ export const trackMeta = (event: string, params = {}) => {
   }
 
   if ((window as any).fbq) {
-    console.log(typeof (window as any).fbq);
-    console.log((window as any).fbq.getState, (window as any).fbq.getState());
-    console.log(
-      performance
-        .getEntriesByType('resource')
-        .filter((e) => e.name.includes('facebook'))
-        .map((e) => e.name),
-    );
     (window as any).fbq('track', event, params);
   }
 };
