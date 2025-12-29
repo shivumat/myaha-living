@@ -265,6 +265,7 @@ export const trackMeta = (event: string, params = {}) => {
   if (typeof window === 'undefined') return;
 
   const hostname = window.location.hostname;
+  console.log('Hostname:', hostname);
 
   if (!META_ALLOWED_HOSTS.includes(hostname)) {
     // UAT / preview / localhost → do nothing
