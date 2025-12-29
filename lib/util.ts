@@ -262,6 +262,7 @@ export function getUserInfo(): object | null {
 export const META_ALLOWED_HOSTS = ['www.myahaliving.com', 'myahaliving.com'];
 
 export const trackMeta = (event: string, params = {}) => {
+  console.log('META_ALLOWED_HOSTS:', META_ALLOWED_HOSTS);
   if (typeof window === 'undefined') return;
 
   const hostname = window.location.hostname;

@@ -138,7 +138,10 @@ const AddToCart = (props: {
                     count: newQuantity,
                     inventoryId,
                   });
-
+                  console.log(
+                    'Variant count set to:',
+                    Number(props.variantPrice.replace(/[^0-9.]/g, '')),
+                  );
                   // 🔥 Meta AddToCart (increment)
                   trackMeta('AddToCart', {
                     content_ids: [
