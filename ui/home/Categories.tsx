@@ -80,7 +80,7 @@ const Categories = () => {
     <CategoryContainer
       onClick={() =>
         router.push(
-          `products/${collection.id.replace('gid://shopify/Collection/', '')}`,
+          `category/${collection.id.replace('gid://shopify/Collection/', '')}`,
         )
       }
       className="clickable"

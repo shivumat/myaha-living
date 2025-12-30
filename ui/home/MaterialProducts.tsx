@@ -117,7 +117,7 @@ const ShopWickerSection: React.FC = () => {
         <Button
           onClick={() =>
             handleLinkClick(
-              `/products/${selectedMaterial?.id.replace('gid://shopify/Collection/', '')}`,
+              `/category/${selectedMaterial?.id.replace('gid://shopify/Collection/', '')}`,
             )
           }
         >

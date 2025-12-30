@@ -61,14 +61,14 @@ export interface NavRouteTypes {
 
 export const navRoutes: NavRouteTypes[] = [
   { name: 'HOME', path: '/' },
-  { name: 'SHOP', path: '/products' },
+  { name: 'SHOP', path: '/category' },
   { name: 'CONTACT US', path: '/contact' },
   { name: 'GIFTING & BULK', path: '/gifting' },
 ];
 
 export const mobileNavRoutes: NavRouteTypes[] = [
   { name: 'HOME', path: '/' },
-  { name: 'SHOP ALL', path: '/products' },
+  { name: 'SHOP ALL', path: '/category' },
   { name: 'SHOP BY CATEGORY', path: '/collections' },
   { name: 'SHOP BY MATERIAL', path: '/material' },
   { name: 'CONTACT US', path: '/contact' },

@@ -247,7 +247,7 @@ const Navbar = () => {
                     handleLinkClick={(index) => {
                       toggle();
                       handleLinkClick(
-                        `/products/${collections[index]?.id.replace('gid://shopify/Collection/', '')}`,
+                        `/category/${collections[index]?.id.replace('gid://shopify/Collection/', '')}`,
                       );
                     }}
                   />
@@ -263,7 +263,7 @@ const Navbar = () => {
                     handleLinkClick={(index) => {
                       toggle();
                       handleLinkClick(
-                        `/products/${materialCollections[index]?.id.replace('gid://shopify/Collection/', '')}`,
+                        `/category/${materialCollections[index]?.id.replace('gid://shopify/Collection/', '')}`,
                       );
                     }}
                   />
@@ -348,7 +348,7 @@ const Navbar = () => {
           showCollection={showCollection}
         >
           {navRoutes.map((route, index) => {
-            if (route.path === '/products') {
+            if (route.path === '/category') {
               return (
                 <div
                   className="clickable hover_underline"

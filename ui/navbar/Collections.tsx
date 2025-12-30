@@ -39,7 +39,7 @@ const Collections = ({ toggle: onToggle }: { toggle?: () => void }) => {
             justifyContent: 'center',
           }}
           onClick={() => {
-            router.push('/products');
+            router.push('/category');
             onToggle?.();
           }}
           className="clickable hover_underline"
@@ -51,7 +51,7 @@ const Collections = ({ toggle: onToggle }: { toggle?: () => void }) => {
           options={collections}
           onSelect={(item: Collection) => {
             router.push(
-              `/products/${item.id.replace('gid://shopify/Collection/', '')}`,
+              `/category/${item.id.replace('gid://shopify/Collection/', '')}`,
             );
             onToggle?.();
           }}
@@ -71,7 +71,7 @@ const Collections = ({ toggle: onToggle }: { toggle?: () => void }) => {
           options={materialCollections}
           onSelect={(item: Collection) => {
             router.push(
-              `/products/${item.id.replace('gid://shopify/Collection/', '')}`,
+              `/category/${item.id.replace('gid://shopify/Collection/', '')}`,
             );
             onToggle?.();
           }}

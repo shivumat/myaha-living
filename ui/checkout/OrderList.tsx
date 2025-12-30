@@ -72,7 +72,7 @@ const OrderList: React.FC<OrderListProps> = ({ note, setNote }) => {
           cursor: 'pointer',
           transition: 'background 0.3s',
         }}
-        onClick={() => router.push('/products')}
+        onClick={() => router.push('/category')}
       >
         Browse Products
       </button>

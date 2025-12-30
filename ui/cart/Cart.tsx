@@ -67,7 +67,7 @@ const Cart = () => {
           cursor: 'pointer',
           transition: 'background 0.3s',
         }}
-        onClick={() => router.push('/products')}
+        onClick={() => router.push('/category')}
       >
         Browse Products
       </button>
