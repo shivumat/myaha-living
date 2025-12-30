@@ -109,6 +109,18 @@ const AddToCart = (props: {
   const { variantId, inventoryId, quantityAvailable } = props;
   const id = variantId.replace('gid://shopify/ProductVariant/', '');
 
+  const numericPrice = Number(props.variantPrice.replace(/[^0-9.]/g, ''));
+
+  const fireAddToCart = () => {
+    trackMeta('AddToCart', {
+      event_id: `atc_${id}_${Date.now()}`,
+      content_ids: [id],
+      content_type: 'product',
+      value: Number.isFinite(numericPrice) ? numericPrice : 0,
+      currency: 'INR',
+    });
+  };
+
   if (cartItem) {
     return (
       <>
@@ -151,18 +163,6 @@ const AddToCart = (props: {
               onClick={() => {
                 if (cartItem.quantity < quantityAvailable) {
                   addItem({ variant_id: id, inventoryId });
-                  // 🔥 Meta AddToCart (increment)
-                  trackMeta('AddToCart', {
-                    content_ids: [
-                      props.variantId.replace(
-                        'gid://shopify/ProductVariant/',
-                        '',
-                      ),
-                    ],
-                    content_type: 'product',
-                    value: Number(props.variantPrice.replace(/[^0-9.]/g, '')), // see note below
-                    currency: 'INR',
-                  });
                   setError('');
                 } else {
                   setError('Cannot add more than available quantity');
@@ -196,15 +196,7 @@ const AddToCart = (props: {
           onClick={() => {
             if (quantityAvailable > 0) {
               addItem({ variant_id: id, inventoryId });
-              // 🔥 Meta AddToCart (increment)
-              trackMeta('AddToCart', {
-                content_ids: [
-                  props.variantId.replace('gid://shopify/ProductVariant/', ''),
-                ],
-                content_type: 'product',
-                value: Number(props.variantPrice.replace(/[^0-9.]/g, '')), // see note below
-                currency: 'INR',
-              });
+              fireAddToCart();
               toggleCart();
             }
           }}
